@@ -1,0 +1,8 @@
+﻿========================================
+CYBERNEXUS CRYPTO ARCHIVE: STREAM 02
+========================================
+ALGORITHM: Repeating Key XOR + Base64
+CIPHERTEXT (HEX):
+1f030b050f2f382a39343c3f0b2f083d03392f39282539032f38392f3f272a2e
+HINT: The XOR key is 4 bytes long: 0x7E 0x6C 0x6E 0x63 ('~lnc')
+DECRYPT TARGET: logicCTF{x0r_c1ph3r_b4s364_cr4ck3d}

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logic Break CTF - Real-Time Live Leaderboard</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#090e16',
+              surface: '#0e1511',
+              card: '#161d19',
+              cardHover: '#1f2823',
+              border: '#2d3a43',
+              accent: '#5bdcae',
+              gold: '#ffd700',
+              silver: '#c0c0c0',
+              bronze: '#cd7f32'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #090e16;
+      color: #dde4de;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    @keyframes scorePulseGreen {
+      0% { background-color: rgba(91, 220, 174, 0.35); }
+      100% { background-color: transparent; }
+    }
+    @keyframes scorePulseRed {
+      0% { background-color: rgba(239, 68, 68, 0.35); }
+      100% { background-color: transparent; }
+    }
+    .pulse-green { animation: scorePulseGreen 1.8s ease-out; }
+    .pulse-red { animation: scorePulseRed 1.8s ease-out; }
+  </style>
+</head>
+<body class="min-h-screen bg-[#090e16] flex flex-col antialiased selection:bg-[#5bdcae]/20 selection:text-[#5bdcae]">
+
+  <!-- Top Header injected by shared_nav.js -->
+
+  <!-- Main Content Container (Full-Width Desktop) -->
+  <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-8">
+
+    <!-- Header & Live Auto-Sync Status Bar -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-[#161d19] border border-[#2d3a43] shadow-xl">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-[11px] font-mono font-bold text-[#5bdcae]">
+            <span class="w-2 h-2 rounded-full bg-[#5bdcae] animate-ping"></span>
+            <span>AUTO-SYNC ACTIVE // REAL-TIME TELEMETRY</span>
+          </span>
+          <span class="text-xs text-slate-400 font-mono">• ZERO LATENCY</span>
+        </div>
+        <h1 class="text-3xl font-black text-white uppercase tracking-tight font-sans">
+          Collegiate Live Standings
+        </h1>
+        <p class="text-xs text-slate-400 mt-0.5">
+          Real-time score tracking with instant point recalculation (+50/-15 and +100/-25).
+        </p>
+      </div>
+
+      <!-- Quick Stats Metrics -->
+      <div class="grid grid-cols-3 gap-3">
+        <div class="px-4 py-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43]">
+          <span class="text-[10px] font-mono font-bold text-slate-400 uppercase">TEAMS</span>
+          <div class="text-xl font-black text-white font-mono" id="stat-total-teams">8</div>
+        </div>
+        <div class="px-4 py-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43]">
+          <span class="text-[10px] font-mono font-bold text-slate-400 uppercase">FLAGS CLAIMED</span>
+          <div class="text-xl font-black text-[#5bdcae] font-mono" id="stat-total-flags">28</div>
+        </div>
+        <div class="px-4 py-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43]">
+          <span class="text-[10px] font-mono font-bold text-slate-400 uppercase">LEADER SCORE</span>
+          <div class="text-xl font-black text-amber-400 font-mono" id="stat-top-score">350 PTS</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Podium View: Top 3 Teams -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end" id="podiumContainer">
+      <!-- Silver Rank 2 -->
+      <div id="podium-2" class="order-2 md:order-1 flex flex-col items-center p-6 rounded-2xl bg-gradient-to-t from-[#161d19] to-[#121820] border border-slate-500/30 shadow-lg relative">
+        <div class="w-12 h-12 rounded-2xl bg-slate-800 border-2 border-slate-400 text-slate-300 flex items-center justify-center font-black text-xl mb-3 shadow-[0_0_15px_rgba(192,192,192,0.25)]">
+          2
+        </div>
+        <h3 class="text-base font-bold text-white tracking-tight" id="podium-2-name">Byte Raiders</h3>
+        <p class="text-xs text-slate-400 mb-3" id="podium-2-college">Nexus Institute</p>
+        <div class="text-2xl font-black text-white font-mono" id="podium-2-score">285 <span class="text-xs font-normal text-slate-400">PTS</span></div>
+        <span class="mt-2 text-[11px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30" id="podium-2-flags">6 Flags Captured</span>
+      </div>
+
+      <!-- Gold Rank 1 -->
+      <div id="podium-1" class="order-1 md:order-2 flex flex-col items-center p-8 rounded-2xl bg-gradient-to-t from-[#1a251e] via-[#161d19] to-[#1a231b] border-2 border-amber-400/70 shadow-[0_0_30px_rgba(251,191,36,0.15)] relative transform md:-translate-y-3">
+        <div class="absolute -top-4 px-3 py-1 rounded-full bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-widest font-mono shadow-md">
+          👑 1ST PLACE
+        </div>
+        <div class="w-16 h-16 rounded-2xl bg-amber-500/20 border-2 border-amber-400 text-amber-300 flex items-center justify-center font-black text-2xl mb-3 shadow-[0_0_20px_rgba(251,191,36,0.3)]">
+          1
+        </div>
+        <h3 class="text-lg font-black text-white tracking-tight" id="podium-1-name">Null Vector</h3>
+        <p class="text-xs text-slate-300 mb-4" id="podium-1-college">Technova University</p>
+        <div class="text-3xl font-black text-amber-400 font-mono" id="podium-1-score">350 <span class="text-sm font-normal text-slate-400">PTS</span></div>
+        <span class="mt-2 text-xs font-mono text-emerald-300 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-500/50" id="podium-1-flags">7 Flags Captured</span>
+      </div>
+
+      <!-- Bronze Rank 3 -->
+      <div id="podium-3" class="order-3 md:order-3 flex flex-col items-center p-6 rounded-2xl bg-gradient-to-t from-[#161d19] to-[#121820] border border-amber-700/40 shadow-lg relative">
+        <div class="w-12 h-12 rounded-2xl bg-amber-950/60 border-2 border-amber-700 text-amber-500 flex items-center justify-center font-black text-xl mb-3 shadow-[0_0_15px_rgba(205,127,50,0.25)]">
+          3
+        </div>
+        <h3 class="text-base font-bold text-white tracking-tight" id="podium-3-name">Root Squad</h3>
+        <p class="text-xs text-slate-400 mb-3" id="podium-3-college">National Cyber Academy</p>
+        <div class="text-2xl font-black text-white font-mono" id="podium-3-score">250 <span class="text-xs font-normal text-slate-400">PTS</span></div>
+        <span class="mt-2 text-[11px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30" id="podium-3-flags">5 Flags Captured</span>
+      </div>
+    </div>
+
+    <!-- Main Grid: Full Leaderboard Table + Live Activity Ticker -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Full Standings Table (8 Cols) -->
+      <div class="lg:col-span-8 flex flex-col gap-4">
+        <!-- Search & Quick Filter -->
+        <div class="flex items-center justify-between gap-4">
+          <div class="relative flex-1 max-w-sm">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <input type="text" id="leaderboardSearchInput" placeholder="Filter team or college..." class="w-full pl-9 pr-4 py-2 rounded-xl bg-[#161d19] border border-[#2d3a43] text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+          </div>
+          <div class="text-xs font-mono text-slate-400">
+            AUTO-POLL: <span class="text-[#5bdcae]">EVERY 5S + SSE PUSH</span>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <div class="w-full bg-[#161d19] border border-[#2d3a43] rounded-2xl shadow-xl overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs font-sans">
+              <thead class="bg-[#0e1511] border-b border-[#2d3a43] text-[11px] font-mono text-slate-400 uppercase tracking-wider">
+                <tr>
+                  <th class="py-3.5 px-4 text-center w-16">RANK</th>
+                  <th class="py-3.5 px-4">COLLEGIATE TEAM</th>
+                  <th class="py-3.5 px-4 text-center">SOLVES</th>
+                  <th class="py-3.5 px-4 text-center">PENALTIES</th>
+                  <th class="py-3.5 px-4 text-right">TOTAL POINTS</th>
+                  <th class="py-3.5 px-4 text-center">STATUS</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboardTableBody" class="divide-y divide-[#2d3a43]/50 font-mono">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Arena Activity Stream Ticker (4 Cols) -->
+      <div class="lg:col-span-4 flex flex-col gap-4">
+        <div class="flex items-center justify-between px-1">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <h3 class="text-xs font-bold text-white font-mono uppercase tracking-wider">Live Activity Stream</h3>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono">LIVE EVENTS</span>
+        </div>
+
+        <div class="bg-[#161d19] border border-[#2d3a43] rounded-2xl p-4 shadow-xl space-y-3 min-h-[420px] max-h-[600px] overflow-y-auto custom-scrollbar" id="activityFeedContainer">
+          <!-- Feed items injected via JS -->
+          <div class="p-3 bg-[#0e1511] rounded-xl border border-[#2d3a43] text-xs font-mono space-y-1">
+            <div class="flex items-center justify-between text-slate-400 text-[10px]">
+              <span>ARENA TELEMETRY</span>
+              <span>Online</span>
+            </div>
+            <p class="text-slate-300">Listening for real-time flag captures and penalty broadcasts...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Nav script -->
+  <script src="shared_nav.js"></script>
+
+  <script>
+    let currentLeaderboard = [];
+
+    // Load initial leaderboard
+    async function loadLeaderboard() {
+      try {
+        const res = await fetch('/api/leaderboard');
+        const data = await res.json();
+        if (data.success) {
+          currentLeaderboard = data.leaderboard;
+          document.getElementById('stat-total-teams').textContent = data.totalTeams;
+          document.getElementById('stat-total-flags').textContent = data.totalFlagsClaimed;
+          document.getElementById('stat-top-score').textContent = `${data.topScore} PTS`;
+
+          renderPodium(currentLeaderboard);
+          renderTable(currentLeaderboard);
+          if (data.recentActivity) {
+            renderActivityFeed(data.recentActivity);
+          }
+        }
+      } catch (err) {
+        console.warn('Leaderboard fetch error, fallback local');
+      }
+    }
+
+    function renderPodium(teams) {
+      if (!teams || teams.length === 0) return;
+
+      // Rank 1
+      if (teams[0]) {
+        document.getElementById('podium-1-name').textContent = teams[0].name;
+        document.getElementById('podium-1-college').textContent = teams[0].college || 'Collegiate Squad';
+        document.getElementById('podium-1-score').innerHTML = `${teams[0].score} <span class="text-sm font-normal text-slate-400">PTS</span>`;
+        document.getElementById('podium-1-flags').textContent = `${teams[0].solvedCount} Flags Captured`;
+      }
+
+      // Rank 2
+      if (teams[1]) {
+        document.getElementById('podium-2-name').textContent = teams[1].name;
+        document.getElementById('podium-2-college').textContent = teams[1].college || 'Collegiate Squad';
+        document.getElementById('podium-2-score').innerHTML = `${teams[1].score} <span class="text-xs font-normal text-slate-400">PTS</span>`;
+        document.getElementById('podium-2-flags').textContent = `${teams[1].solvedCount} Flags Captured`;
+      }
+
+      // Rank 3
+      if (teams[2]) {
+        document.getElementById('podium-3-name').textContent = teams[2].name;
+        document.getElementById('podium-3-college').textContent = teams[2].college || 'Collegiate Squad';
+        document.getElementById('podium-3-score').innerHTML = `${teams[2].score} <span class="text-xs font-normal text-slate-400">PTS</span>`;
+        document.getElementById('podium-3-flags').textContent = `${teams[2].solvedCount} Flags Captured`;
+      }
+    }
+
+    function renderTable(teams) {
+      const tbody = document.getElementById('leaderboardTableBody');
+      const searchTerm = document.getElementById('leaderboardSearchInput').value.toLowerCase();
+      const activeTeam = (localStorage.getItem('logic_ctf_team') || '').toLowerCase();
+
+      const filtered = teams.filter(t => t.name.toLowerCase().includes(searchTerm) || (t.college && t.college.toLowerCase().includes(searchTerm)));
+
+      tbody.innerHTML = filtered.map((team, index) => {
+        const isMyTeam = team.name.toLowerCase() === activeTeam;
+        let rankBadge = `${index + 1}`;
+        if (index === 0) rankBadge = `<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-400 text-slate-950 font-black text-xs">1</span>`;
+        else if (index === 1) rankBadge = `<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-300 text-slate-950 font-black text-xs">2</span>`;
+        else if (index === 2) rankBadge = `<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-700 text-white font-black text-xs">3</span>`;
+
+        return `
+          <tr id="team-row-${team.id}" class="hover:bg-[#1a231d] transition-colors ${isMyTeam ? 'bg-[#1b2b22] border-l-4 border-l-[#5bdcae]' : ''}">
+            <td class="py-4 px-4 text-center font-bold text-slate-300">${rankBadge}</td>
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-white text-sm font-sans">${team.name}</span>
+                ${isMyTeam ? `<span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono">MY SQUAD</span>` : ''}
+              </div>
+              <span class="text-xs text-slate-400 font-sans">${team.college || 'Collegiate Arena'}</span>
+            </td>
+            <td class="py-4 px-4 text-center">
+              <span class="px-2 py-1 rounded-md bg-[#0e1511] text-emerald-400 border border-[#2d3a43] text-xs font-bold">
+                ${team.solvedCount}
+              </span>
+            </td>
+            <td class="py-4 px-4 text-center">
+              <span class="px-2 py-1 rounded-md bg-[#0e1511] ${team.penalties > 0 ? 'text-red-400 border border-red-500/30' : 'text-slate-500 border border-[#2d3a43]'} text-xs">
+                ${team.penalties || 0}
+              </span>
+            </td>
+            <td class="py-4 px-4 text-right font-black text-white text-sm">
+              ${team.score} <span class="text-[11px] font-normal text-slate-400 font-sans">pts</span>
+            </td>
+            <td class="py-4 px-4 text-center">
+              <span class="inline-flex items-center gap-1 text-[10px] text-emerald-400">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                <span>Active</span>
+              </span>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderActivityFeed(submissions) {
+      const feed = document.getElementById('activityFeedContainer');
+      feed.innerHTML = submissions.map(sub => {
+        const isCorrect = sub.status === 'CORRECT';
+        return `
+          <div class="p-3 bg-[#0e1511] rounded-xl border ${isCorrect ? 'border-emerald-500/30' : 'border-red-500/30'} space-y-1">
+            <div class="flex items-center justify-between text-[10px] font-mono">
+              <span class="font-bold ${isCorrect ? 'text-emerald-400' : 'text-red-400'}">
+                ${isCorrect ? '🚩 FLAG CAPTURED' : '❌ INCORRECT ATTEMPT'}
+              </span>
+              <span class="text-slate-500">${timeAgo(sub.timestamp)}</span>
+            </div>
+            <div class="text-xs font-semibold text-white">
+              ${sub.team}
+            </div>
+            <div class="text-[11px] text-slate-400 flex items-center justify-between">
+              <span>Vector: ${sub.challengeTitle}</span>
+              <strong class="${isCorrect ? 'text-emerald-400' : 'text-red-400'} font-mono">${sub.delta} PTS</strong>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function timeAgo(ts) {
+      if (!ts) return 'just now';
+      const sec = Math.floor((Date.now() - ts) / 1000);
+      if (sec < 60) return `${sec}s ago`;
+      if (sec < 3600) return `${Math.floor(sec / 60)}m ago`;
+      return `${Math.floor(sec / 3600)}h ago`;
+    }
+
+    // Search filter listener
+    document.getElementById('leaderboardSearchInput').addEventListener('input', () => {
+      renderTable(currentLeaderboard);
+    });
+
+    // Auto-Sync Event Hook from shared_nav.js
+    window.onLeaderboardEvent = (data) => {
+      if (data.leaderboard) {
+        currentLeaderboard = data.leaderboard;
+        renderPodium(currentLeaderboard);
+        renderTable(currentLeaderboard);
+
+        // Highlight the updated row
+        const targetRow = document.querySelector(`tr[id*="${data.team}"]`);
+        if (targetRow) {
+          targetRow.classList.remove('pulse-green', 'pulse-red');
+          void targetRow.offsetWidth; // trigger reflow
+          targetRow.classList.add(data.type === 'FLAG_SOLVED' ? 'pulse-green' : 'pulse-red');
+        }
+      }
+      // Re-fetch activity stream
+      loadLeaderboard();
+    };
+
+    // Periodic Fallback Poll every 6 seconds
+    setInterval(loadLeaderboard, 6000);
+
+    // Initial Load
+    loadLeaderboard();
+  </script>
+</body>
+</html>

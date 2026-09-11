@@ -1,0 +1,18 @@
+{
+  "project": "CyberNexus Aethelred",
+  "endpoint": "https://arena.cybernexus.internal/api/graphql",
+  "vulnerability": "GraphQL Introspection Enabled",
+  "introspection_query": "query { __schema { queryType { name fields { name description args { name type { name } } } } mutationType { name fields { name description } } } }",
+  "revealed_mutations": [
+    {
+      "name": "claimSystemAccess",
+      "args": {
+        "accessCode": "HEX_0x992B",
+        "role": "SUPER_ADMIN"
+      },
+      "returns": "AccessPayload { token, flag }"
+    }
+  ],
+  "mission_notes": "Send GraphQL introspection query to uncover unlisted administrative endpoints and extract the master key token.",
+  "flag_encrypted": "bG9naWNDVEZ7Z3I0cGhxbF8xbnRyMHNwM2N0MTBuX2J5cDRzc30="
+}

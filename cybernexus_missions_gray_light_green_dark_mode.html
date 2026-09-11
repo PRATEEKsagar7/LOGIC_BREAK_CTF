@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logic Break CTF - Missions & Exploit Vectors</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#090e16',
+              surface: '#0e1511',
+              card: '#161d19',
+              cardHover: '#1f2823',
+              border: '#2d3a43',
+              borderHover: '#5bdcae',
+              accent: '#5bdcae',
+              accentGlow: 'rgba(91, 220, 174, 0.25)',
+              tier1: '#4edea3',
+              tier2: '#dfc573',
+              penalty: '#ffb4ab'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #090e16;
+      color: #dde4de;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #2d3a43;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#090e16] flex flex-col antialiased selection:bg-[#5bdcae]/20 selection:text-[#5bdcae]">
+
+  <!-- Top Unified Header will be injected by shared_nav.js -->
+
+  <!-- Main Content Container (Full-Width Desktop) -->
+  <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-8">
+
+    <!-- Hero / Title & Point System Briefing Banner -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 p-6 rounded-2xl bg-gradient-to-r from-[#161d19] via-[#131d17] to-[#0e1713] border border-[#2d3a43] shadow-xl">
+      <div class="space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-[11px] font-mono font-bold text-[#5bdcae]">
+          <span class="w-2 h-2 rounded-full bg-[#5bdcae] animate-pulse"></span>
+          <span>ARENA CHALLENGES // WAVE 01 - 02 ACTIVE</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white uppercase font-sans">
+          Missions & Exploit Vectors
+        </h1>
+        <p class="text-sm text-slate-400 max-w-2xl">
+          Deploy live attacks, capture secret flags, and submit telemetry strings. Read challenge briefs carefully, inspect code, and reveal hints when stuck.
+        </p>
+      </div>
+
+      <!-- Point System Protocol Box -->
+      <div class="flex flex-wrap sm:flex-nowrap items-center gap-4 p-4 rounded-xl bg-[#0e1511] border border-[#2d3a43] shadow-inner font-mono text-xs">
+        <div class="flex flex-col gap-1 border-r border-[#2d3a43] pr-4">
+          <span class="text-[10px] text-slate-400 uppercase tracking-wider">Tier 1: Standard (Ch 1 - 7)</span>
+          <div class="flex items-center gap-2 font-bold">
+            <span class="text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">+50 PTS</span>
+            <span class="text-red-400 bg-red-950/60 px-2 py-0.5 rounded border border-red-500/30">-15 PENALTY</span>
+          </div>
+        </div>
+        <div class="flex flex-col gap-1 pl-2">
+          <span class="text-[10px] text-amber-300 uppercase tracking-wider">Tier 2: Elite (Ch 8 - 12)</span>
+          <div class="flex items-center gap-2 font-bold">
+            <span class="text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-500/30">+100 PTS</span>
+            <span class="text-red-400 bg-red-950/60 px-2 py-0.5 rounded border border-red-500/30">-25 PENALTY</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter & Search Controls Bar -->
+    <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-2xl bg-[#161d19] border border-[#2d3a43] shadow-md">
+      <!-- Category Filter Tabs -->
+      <div class="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1 md:pb-0" id="categoryFilterContainer">
+        <button data-cat="all" class="cat-filter-btn active px-3.5 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs shadow-md transition-colors shrink-0">
+          All Vectors (12)
+        </button>
+        <button data-cat="Web Security" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
+          Web (3)
+        </button>
+        <button data-cat="Cryptography" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
+          Crypto (2)
+        </button>
+        <button data-cat="Reverse Engineering" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
+          Reverse (1)
+        </button>
+        <button data-cat="Forensics" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
+          Forensics (2)
+        </button>
+        <button data-cat="Binary Exploitation" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
+          Pwn (1)
+        </button>
+        <button data-cat="Cloud Security" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
+          Cloud / SSRF (1)
+        </button>
+      </div>
+
+      <!-- Search & Tier Filter -->
+      <div class="flex items-center gap-3">
+        <!-- Search Input -->
+        <div class="relative w-full sm:w-64">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <input type="text" id="challengeSearchInput" placeholder="Search mission name..." class="w-full pl-9 pr-4 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+        </div>
+
+        <!-- Tier Selector -->
+        <select id="tierSelector" class="bg-[#0e1511] border border-[#2d3a43] rounded-xl px-3 py-1.5 text-xs text-white font-mono focus:outline-none focus:border-emerald-400">
+          <option value="all">All Tiers</option>
+          <option value="1">Tier 1 (+50 pts)</option>
+          <option value="2">Tier 2 (+100 pts)</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Challenges Grid (Desktop 3-Columns) -->
+    <div id="challengesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Populated dynamically via JS -->
+      <div class="col-span-full py-16 text-center text-slate-400 font-mono text-xs">
+        <div class="animate-spin inline-block w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full mb-3"></div>
+        <p>Connecting to Arena Telemetry Core...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL: FLAG SUBMISSION -->
+  <div id="modal-submit-flag" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-[#121820] border border-[#2d3a43] rounded-2xl p-6 shadow-2xl space-y-5 animate-scale-up">
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between border-b border-[#2d3a43] pb-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span id="modal-flag-tier-badge" class="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-emerald-950 text-emerald-300 border border-emerald-500/40">TIER 1</span>
+            <span id="modal-flag-cat-badge" class="px-2 py-0.5 text-[10px] font-mono text-slate-300 rounded bg-[#1a211d] border border-[#2d3a43]">Web Security</span>
+          </div>
+          <h3 id="modal-flag-title" class="text-xl font-black text-white tracking-tight">Ghost Protocol</h3>
+        </div>
+        <button onclick="closeSubmitModal()" class="text-slate-400 hover:text-white p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Point Staking Alert -->
+      <div class="p-3.5 rounded-xl bg-[#161d19] border border-[#2d3a43] flex items-center justify-between font-mono text-xs">
+        <div>
+          <span class="text-slate-400 block text-[10px]">POTENTIAL GAIN</span>
+          <span id="modal-flag-points" class="font-bold text-emerald-400 text-sm">+50 PTS</span>
+        </div>
+        <div class="text-right">
+          <span class="text-slate-400 block text-[10px]">INCORRECT RISK</span>
+          <span id="modal-flag-penalty" class="font-bold text-red-400 text-sm">-15 PTS PENALTY</span>
+        </div>
+      </div>
+
+      <!-- Active Submitter Details -->
+      <div class="text-xs text-slate-300 flex items-center justify-between">
+        <span>Active Squad: <strong class="text-white font-mono" id="modal-flag-team-name">Logic Breakers</strong></span>
+        <button onclick="document.getElementById('modal-switch-team').classList.remove('hidden')" class="text-emerald-400 hover:underline text-[11px] font-semibold">Change Squad</button>
+      </div>
+
+      <!-- Flag Input Box -->
+      <div class="space-y-2">
+        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Submit Flag String</label>
+        <div class="relative">
+          <input type="text" id="inputFlagString" placeholder="logicCTF{flag_string_here}" class="w-full bg-[#0e1511] border border-[#2d3a43] rounded-xl px-4 py-3 text-sm text-white font-mono placeholder:text-slate-600 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40">
+        </div>
+        <p class="text-[11px] text-slate-500 font-mono">Format: logicCTF{...}. Whitespace is automatically trimmed.</p>
+      </div>
+
+      <!-- Response Alert Container -->
+      <div id="flag-feedback-alert" class="hidden p-3.5 rounded-xl font-mono text-xs"></div>
+
+      <!-- Modal Actions -->
+      <div class="flex items-center justify-end gap-3 pt-2 border-t border-[#2d3a43]">
+        <button onclick="closeSubmitModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition">Cancel</button>
+        <button id="btnConfirmFlagSubmit" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] active:scale-95 text-slate-950 font-bold text-xs shadow-lg transition flex items-center gap-2">
+          <span>Submit Flag Vector</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: HINTS & DOCUMENTATION -->
+  <div id="modal-hints-view" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-[#121820] border border-[#2d3a43] rounded-2xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-[#2d3a43] pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-amber-400 text-lg">💡</span>
+          <h3 id="modal-hints-title" class="text-sm font-bold text-white uppercase tracking-wider">Challenge Hints</h3>
+        </div>
+        <button onclick="document.getElementById('modal-hints-view').classList.add('hidden')" class="text-slate-400 hover:text-white">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div id="modal-hints-content" class="space-y-3 font-mono text-xs text-slate-300">
+        <!-- Injected dynamically -->
+      </div>
+      <div class="pt-3 border-t border-[#2d3a43] flex justify-end">
+        <button onclick="document.getElementById('modal-hints-view').classList.add('hidden')" class="px-4 py-2 rounded-xl bg-[#161d19] border border-[#2d3a43] text-xs font-semibold text-white hover:bg-[#224f3e]">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CODE & FILE PREVIEW -->
+  <div id="modal-code-preview" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-[#121820] border border-[#2d3a43] rounded-2xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-[#2d3a43] pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-cyan-400 text-lg">📄</span>
+          <h3 id="modal-code-title" class="text-sm font-bold text-white uppercase tracking-wider font-mono">Challenge Artifact & Code</h3>
+        </div>
+        <button onclick="document.getElementById('modal-code-preview').classList.add('hidden')" class="text-slate-400 hover:text-white">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span id="modal-code-filename" class="text-xs font-mono text-emerald-400">artifact.txt</span>
+          <a id="modal-code-download-btn" href="#" download class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 font-mono text-xs font-bold transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Download Artifact</span>
+          </a>
+        </div>
+        <pre id="modal-code-body" class="bg-[#090e16] border border-[#2d3a43] rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto max-h-80 custom-scrollbar"></pre>
+      </div>
+      <div class="pt-3 border-t border-[#2d3a43] flex justify-end">
+        <button onclick="document.getElementById('modal-code-preview').classList.add('hidden')" class="px-4 py-2 rounded-xl bg-[#161d19] border border-[#2d3a43] text-xs font-semibold text-white hover:bg-[#224f3e]">Close Preview</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Nav & Logic Scripts -->
+  <script src="shared_nav.js"></script>
+
+  <script>
+    // State
+    let challengesData = [];
+    let currentSelectedChallenge = null;
+
+    // Fetch and render challenges
+    async function fetchChallenges() {
+      const activeTeam = localStorage.getItem('logic_ctf_team') || 'Logic Breakers';
+      try {
+        const res = await fetch(`/api/challenges?team=${encodeURIComponent(activeTeam)}`);
+        const json = await res.json();
+        if (json.success) {
+          challengesData = json.challenges;
+          renderChallenges();
+        }
+      } catch (e) {
+        console.warn('Backend offline, using fallback challenge catalog');
+        challengesData = getFallbackChallenges();
+        renderChallenges();
+      }
+    }
+
+    function renderChallenges() {
+      const container = document.getElementById('challengesGrid');
+      const activeCat = document.querySelector('.cat-filter-btn.active')?.getAttribute('data-cat') || 'all';
+      const searchTerm = document.getElementById('challengeSearchInput').value.toLowerCase();
+      const selectedTier = document.getElementById('tierSelector').value;
+
+      const filtered = challengesData.filter(ch => {
+        const matchCat = activeCat === 'all' || ch.category.toLowerCase().includes(activeCat.toLowerCase());
+        const matchSearch = ch.title.toLowerCase().includes(searchTerm) || ch.description.toLowerCase().includes(searchTerm);
+        const matchTier = selectedTier === 'all' || ch.tier.toString() === selectedTier;
+        return matchCat && matchSearch && matchTier;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400 font-mono text-xs">
+            No missions match your current filter parameters.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(ch => `
+        <article class="relative flex flex-col justify-between p-5 rounded-2xl bg-[#161d19] border ${ch.isSolved ? 'border-emerald-500/50 shadow-[0_0_20px_rgba(91,220,174,0.12)]' : 'border-[#2d3a43]'} hover:border-emerald-500/50 transition-all duration-200 group">
+          <!-- Top Row: Badges & Points -->
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-1.5">
+                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#0e1511] text-slate-300 border border-[#2d3a43]">
+                  ${ch.category}
+                </span>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded ${ch.tier === 1 ? 'bg-emerald-950/60 text-emerald-300 border border-emerald-500/30' : 'bg-amber-950/60 text-amber-300 border border-amber-500/30'}">
+                  Tier ${ch.tier}
+                </span>
+              </div>
+
+              <!-- Points / Solve Pill -->
+              <div class="flex items-center gap-1.5 font-mono">
+                ${ch.isSolved ? `
+                  <span class="text-xs font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-500/60 flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>SOLVED</span>
+                  </span>
+                ` : `
+                  <span class="text-xs font-black ${ch.tier === 1 ? 'text-emerald-400 bg-emerald-950/70 border-emerald-500/40' : 'text-amber-400 bg-amber-950/70 border-amber-500/40'} px-2 py-0.5 rounded border shadow-sm">
+                    +${ch.points} PTS
+                  </span>
+                `}
+              </div>
+            </div>
+
+            <!-- Title & Vector Info -->
+            <div class="mb-2">
+              <div class="text-[10px] font-mono text-slate-400">OP_VECTOR // #0${ch.number}</div>
+              <h3 class="text-lg font-bold text-white tracking-tight group-hover:text-emerald-300 transition-colors">
+                ${ch.title}
+              </h3>
+            </div>
+
+            <!-- Description -->
+            <p class="text-xs text-slate-400 leading-relaxed line-clamp-3 mb-4">
+              ${ch.description}
+            </p>
+          </div>
+
+          <!-- Bottom Action Buttons -->
+          <div class="pt-4 border-t border-[#2d3a43]/70 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5">
+              <!-- Hint Trigger -->
+              <button onclick="openHintsModal('${ch.id}')" title="View Hints" class="w-8 h-8 rounded-lg bg-[#0e1511] border border-[#2d3a43] hover:border-amber-400/50 text-slate-400 hover:text-amber-300 flex items-center justify-center text-xs transition">
+                💡
+              </button>
+
+              <!-- File / Code Preview Trigger -->
+              <button onclick="openCodePreviewModal('${ch.id}')" title="Inspect Code / Download Artifact" class="w-8 h-8 rounded-lg bg-[#0e1511] border border-[#2d3a43] hover:border-cyan-400/50 text-slate-400 hover:text-cyan-300 flex items-center justify-center text-xs transition">
+                📄
+              </button>
+            </div>
+
+            <!-- Primary Action: Submit Flag or View Solved -->
+            <button onclick="openSubmitModal('${ch.id}')" class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${ch.isSolved ? 'bg-[#1a211d] text-emerald-400 border border-emerald-500/40 hover:bg-[#224f3e]' : 'bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 shadow-md active:scale-95'}">
+              <span>${ch.isSolved ? 'Re-Submit' : 'Submit Flag'}</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // Open Submit Flag Modal
+    function openSubmitModal(challengeId) {
+      const ch = challengesData.find(c => c.id === challengeId);
+      if (!ch) return;
+      currentSelectedChallenge = ch;
+
+      const activeTeam = localStorage.getItem('logic_ctf_team') || 'Logic Breakers';
+      document.getElementById('modal-flag-title').textContent = ch.title;
+      document.getElementById('modal-flag-tier-badge').textContent = `TIER ${ch.tier} (${ch.difficulty.toUpperCase()})`;
+      document.getElementById('modal-flag-cat-badge').textContent = ch.category;
+      document.getElementById('modal-flag-points').textContent = `+${ch.points} PTS`;
+      document.getElementById('modal-flag-penalty').textContent = `-${ch.penalty} PTS PENALTY`;
+      document.getElementById('modal-flag-team-name').textContent = activeTeam;
+      document.getElementById('inputFlagString').value = '';
+
+      const alert = document.getElementById('flag-feedback-alert');
+      alert.className = 'hidden';
+      alert.innerHTML = '';
+
+      document.getElementById('modal-submit-flag').classList.remove('hidden');
+      setTimeout(() => document.getElementById('inputFlagString').focus(), 150);
+    }
+
+    function closeSubmitModal() {
+      document.getElementById('modal-submit-flag').classList.add('hidden');
+    }
+
+    // Submit Flag Action
+    document.getElementById('btnConfirmFlagSubmit').addEventListener('click', async () => {
+      if (!currentSelectedChallenge) return;
+
+      const flagInput = document.getElementById('inputFlagString');
+      const flagVal = flagInput.value.trim();
+      const activeTeam = localStorage.getItem('logic_ctf_team') || 'Logic Breakers';
+      const alert = document.getElementById('flag-feedback-alert');
+
+      if (!flagVal) {
+        alert.className = 'p-3 rounded-xl bg-amber-950/70 border border-amber-500 text-amber-300 text-xs font-mono';
+        alert.textContent = 'Please enter a flag string before submitting.';
+        return;
+      }
+
+      const submitBtn = document.getElementById('btnConfirmFlagSubmit');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Validating vector...';
+
+      try {
+        const res = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            team: activeTeam,
+            challengeId: currentSelectedChallenge.id,
+            flag: flagVal
+          })
+        });
+        const data = await res.json();
+
+        if (data.status === 'correct') {
+          alert.className = 'p-3.5 rounded-xl bg-emerald-950 border border-emerald-400 text-emerald-200 text-xs font-mono animate-pulse';
+          alert.innerHTML = `<strong>🚩 ACCESS GRANTED!</strong><br>${data.message}<br>Total Score: ${data.newScore} PTS`;
+          currentSelectedChallenge.isSolved = true;
+          renderChallenges();
+        } else if (data.status === 'already_solved') {
+          alert.className = 'p-3.5 rounded-xl bg-cyan-950 border border-cyan-400 text-cyan-200 text-xs font-mono';
+          alert.innerHTML = `<strong>ℹ️ ALREADY CAPTURED</strong><br>${data.message}`;
+        } else {
+          alert.className = 'p-3.5 rounded-xl bg-red-950 border border-red-500 text-red-200 text-xs font-mono';
+          alert.innerHTML = `<strong>❌ EXPLOIT FAILED</strong><br>${data.message}<br>Total Score: ${data.newScore} PTS`;
+        }
+      } catch (err) {
+        alert.className = 'p-3.5 rounded-xl bg-red-950 border border-red-500 text-red-200 text-xs font-mono';
+        alert.textContent = 'Network error communicating with arena gateway.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Submit Flag Vector</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      }
+    });
+
+    // Enter key submit in flag input
+    document.getElementById('inputFlagString').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('btnConfirmFlagSubmit').click();
+      }
+    });
+
+    // Open Hints Modal
+    async function openHintsModal(challengeId) {
+      const ch = challengesData.find(c => c.id === challengeId);
+      if (!ch) return;
+
+      document.getElementById('modal-hints-title').textContent = `Hints // ${ch.title}`;
+      const content = document.getElementById('modal-hints-content');
+      content.innerHTML = '<div class="py-4 text-center text-slate-400">Loading encrypted hints...</div>';
+      document.getElementById('modal-hints-view').classList.remove('hidden');
+
+      try {
+        const res = await fetch(`/api/hint/${challengeId}`);
+        const data = await res.json();
+        if (data.success && data.hints) {
+          content.innerHTML = data.hints.map((h, i) => `
+            <div class="p-3 bg-[#090e16] border border-[#2d3a43] rounded-xl">
+              <span class="text-amber-400 font-bold block mb-1">Hint 0${i + 1}:</span>
+              <p class="text-slate-300 leading-relaxed">${h}</p>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        content.innerHTML = `<div class="p-3 bg-[#090e16] border border-[#2d3a43] rounded-xl text-slate-400">Hints available on live server connection.</div>`;
+      }
+    }
+
+    // Open Code & File Preview Modal
+    function openCodePreviewModal(challengeId) {
+      const ch = challengesData.find(c => c.id === challengeId);
+      if (!ch) return;
+
+      document.getElementById('modal-code-title').textContent = `${ch.title} // Code & Files`;
+      document.getElementById('modal-code-filename').textContent = `File: ${ch.file}`;
+      document.getElementById('modal-code-download-btn').href = `/api/files/${ch.file}`;
+      document.getElementById('modal-code-body').textContent = ch.codeSnippet || '// No code snippet attached.';
+
+      document.getElementById('modal-code-preview').classList.remove('hidden');
+    }
+
+    // Category Filter Listeners
+    document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-filter-btn').forEach(b => {
+          b.className = 'cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0';
+        });
+        btn.className = 'cat-filter-btn active px-3.5 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs shadow-md transition-colors shrink-0';
+        renderChallenges();
+      });
+    });
+
+    document.getElementById('challengeSearchInput').addEventListener('input', renderChallenges);
+    document.getElementById('tierSelector').addEventListener('change', renderChallenges);
+
+    // Re-fetch challenges when team changes
+    window.onTeamChanged = () => {
+      fetchChallenges();
+    };
+
+    // On SSE event, update challenge card solve status if it matches our active team
+    window.onLeaderboardEvent = (data) => {
+      const activeTeam = localStorage.getItem('logic_ctf_team') || 'Logic Breakers';
+      if (data.type === 'FLAG_SOLVED' && data.team.toLowerCase() === activeTeam.toLowerCase()) {
+        const ch = challengesData.find(c => c.title.toLowerCase() === data.challengeTitle.toLowerCase());
+        if (ch) {
+          ch.isSolved = true;
+          renderChallenges();
+        }
+      }
+    };
+
+    // Fallback challenges in case backend is loading
+    function getFallbackChallenges() {
+      return [
+        { id: 'ch1', number: 1, title: 'Ghost Protocol', category: 'Web Security', tier: 1, points: 50, penalty: 15, difficulty: 'Beginner', file: 'challenge_01_graphql.json', description: 'Explore GraphQL introspection across isolated internal microservices to locate the hidden claim mutation.', codeSnippet: 'POST /api/graphql\n{"query": "query { __schema { queryType { name } } }"}', isSolved: false },
+        { id: 'ch2', number: 2, title: 'Cipher Nexus', category: 'Cryptography', tier: 1, points: 50, penalty: 15, difficulty: 'Beginner', file: 'challenge_02_cipher.txt', description: 'Decrypt repeating XOR stream with key "~lnc" to recover the secret collegiate flag.', codeSnippet: 'key = b"~lnc"\ndecrypted = bytes([b ^ key[i % len(key)] for i, b in enumerate(data)])', isSolved: false },
+        { id: 'ch3', number: 3, title: 'Packet Sniffer', category: 'Network Security', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'challenge_03_network.pcap.txt', description: 'Inspect unencrypted HTTP Basic auth frame in PCAP capture stream.', codeSnippet: 'Authorization: Basic YWRtaW46cDRjazN0X3NuMWZmM3JfY3IzZHNfbDM0aw==', isSolved: false },
+        { id: 'ch4', number: 4, title: 'Logic Gate Bypass', category: 'Reverse Engineering', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'challenge_04_vault.js', description: 'Reverse engineer client-side key verification array charCode check in JavaScript.', codeSnippet: 'const enc = [108, 111, 103, 105, 99, 67, ...];\nString.fromCharCode(...enc)', isSolved: false },
+        { id: 'ch5', number: 5, title: 'Cookie Monster', category: 'Web Security', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'challenge_05_jwt_token.txt', description: 'Brute-force weak dictionary secret "secret123" and forge an admin role JWT token.', codeSnippet: '{"sub":"operative_09","role":"admin"} + HS256("secret123")', isSolved: false },
+        { id: 'ch6', number: 6, title: 'SQL Infiltration', category: 'Database Security', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'challenge_06_sqli_dump.sql', description: 'Perform SQL injection auth bypass using UNION SELECT to dump the secret_vault table.', codeSnippet: "SELECT * FROM users WHERE user='' OR 1=1 UNION SELECT 1, secret_value FROM secret_vault--", isSolved: false },
+        { id: 'ch7', number: 7, title: 'Hidden in Plain Byte', category: 'Forensics', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'challenge_07_stego_secret.txt', description: 'Inspect PNG metadata tEXt chunk and decode hex bytes inside EXIF headers.', codeSnippet: 'strings avatar_recon.png | grep -i logicCTF', isSolved: false },
+        { id: 'ch8', number: 8, title: 'Kernel Panic', category: 'Binary Exploitation', tier: 2, points: 100, penalty: 25, difficulty: 'Advanced', file: 'challenge_08_buffer_overflow.c', description: 'Smash 64-byte stack frame with unsafe gets() to overwrite RIP and jump to win().', codeSnippet: 'char buffer[64]; gets(buffer); // RIP offset = 72 bytes', isSolved: false },
+        { id: 'ch9', number: 9, title: 'Quantum RSA', category: 'Cryptography', tier: 2, points: 100, penalty: 25, difficulty: 'Advanced', file: 'challenge_09_rsa_keys.pem', description: 'Factorize weak primes p=104729, q=879791 in RSA public key and calculate private exponent d.', codeSnippet: 'p = 104729; q = 879791; phi = (p-1)*(q-1); d = pow(e, -1, phi)', isSolved: false },
+        { id: 'ch10', number: 10, title: 'Zero-Day Memory Dump', category: 'Forensics', tier: 2, points: 100, penalty: 25, difficulty: 'Expert', file: 'challenge_10_memory_dump.raw.txt', description: 'Run Volatility 3 malfind to identify process hollowing in svchost PID 4192.', codeSnippet: 'volatility -f memory.raw windows.malfind -p 4192', isSolved: false },
+        { id: 'ch11', number: 11, title: 'Decoupled Shadow API', category: 'Cloud Security', tier: 2, points: 100, penalty: 25, difficulty: 'Expert', file: 'challenge_11_shadow_api.json', description: 'SSRF attack against AWS metadata 169.254.169.254 to grab IAM role access keys.', codeSnippet: 'GET /proxy?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/', isSolved: false },
+        { id: 'ch12', number: 12, title: 'The Root of All Evil', category: 'Privilege Escalation', tier: 2, points: 100, penalty: 25, difficulty: 'Expert', file: 'challenge_12_privesc_suid.sh', description: 'SUID relative path hijacking on tar binary to escalate privileges to root.', codeSnippet: 'echo "/bin/sh" > /tmp/tar; export PATH=/tmp:$PATH; ./backup_agent', isSolved: false }
+      ];
+    }
+
+    // Init
+    fetchChallenges();
+  </script>
+</body>
+</html>

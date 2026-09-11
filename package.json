@@ -1,0 +1,13 @@
+{
+  "name": "logic-break-ctf",
+  "version": "1.0.0",
+  "description": "Logic Break CTF - Collegiate Cybersecurity Tactical Arena",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["ctf", "cybersecurity", "realtime", "leaderboard"],
+  "author": "PRATEEKsagar7",
+  "license": "MIT"
+}

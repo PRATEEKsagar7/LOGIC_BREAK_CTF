@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Logic Break CTF - Admin Command Center</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@100..900&family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-lowest": "#09100c",
+            "background": "#0e1511",
+            "surface": "#0e1511",
+            "surface-container-low": "#161d19",
+            "surface-container": "#1a211d",
+            "surface-container-high": "#252b28",
+            "surface-container-highest": "#303632",
+            "primary": "#5bdcae",
+            "on-primary": "#003827",
+            "primary-container": "#03a77c",
+            "secondary-container": "#224f3e",
+            "outline": "#86948c",
+            "outline-variant": "#3d4a43",
+            "on-surface": "#dde4de",
+            "on-surface-variant": "#bccac1",
+            "tertiary": "#dfc573",
+            "error": "#ffb4ab"
+          },
+          fontFamily: {
+            "body-lg": ["Geist", "sans-serif"],
+            "label-lg": ["JetBrains Mono", "monospace"],
+            "display-lg": ["Bodoni Moda", "serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-body-lg text-on-surface min-h-screen selection:bg-primary selection:text-on-primary">
+
+  <!-- Top Header injected by shared_nav.js -->
+
+  <!-- HARDCODED ADMIN LOGIN GATE MODAL -->
+  <div id="admin-login-modal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-surface-container rounded-2xl border border-primary/40 p-8 shadow-[0_0_50px_rgba(91,220,174,0.15)] flex flex-col gap-6">
+      <div class="flex items-center gap-3 border-b border-outline-variant pb-4">
+        <div class="w-10 h-10 rounded-xl bg-primary/10 border border-primary flex items-center justify-center text-primary">
+          <span class="material-symbols-outlined text-[24px]">security</span>
+        </div>
+        <div>
+          <h2 class="font-display-lg text-xl font-black tracking-tight text-white">ARENA ADMIN CLEARANCE</h2>
+          <p class="font-label-lg text-xs text-outline">Tier-1 Command Authorization</p>
+        </div>
+      </div>
+
+      <div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/60 text-xs font-label-lg space-y-1">
+        <span class="text-tertiary font-bold block">HARDCODED SYSTEM CREDENTIALS:</span>
+        <div class="text-slate-300">Username: <code class="text-primary font-bold">admin</code></div>
+        <div class="text-slate-300">Password: <code class="text-primary font-bold">logicbreak_admin_2026</code> <span class="text-outline">(or admin123)</span></div>
+      </div>
+
+      <form id="admin-login-form" class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1">
+          <label class="font-label-lg text-xs text-on-surface-variant uppercase">Operator ID</label>
+          <input type="text" id="admin-input-user" value="admin" class="w-full px-4 py-2.5 bg-surface-container-high border border-outline-variant rounded-xl font-label-lg text-sm text-white focus:outline-none focus:border-primary">
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label class="font-label-lg text-xs text-on-surface-variant uppercase">Clearance Keyphrase</label>
+          <input type="password" id="admin-input-pass" value="logicbreak_admin_2026" class="w-full px-4 py-2.5 bg-surface-container-high border border-outline-variant rounded-xl font-label-lg text-sm text-white focus:outline-none focus:border-primary">
+        </div>
+
+        <div id="admin-login-error" class="hidden p-3 rounded-xl bg-red-950/80 border border-red-500/50 text-red-300 font-label-lg text-xs"></div>
+
+        <div class="flex items-center gap-3 pt-2">
+          <button type="button" id="btn-quick-fill-admin" class="flex-1 px-4 py-2.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant font-label-lg text-xs rounded-xl border border-outline-variant transition">
+            Auto-Fill
+          </button>
+          <button type="submit" class="flex-1 px-4 py-2.5 bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-xs font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+            <span>Authenticate</span>
+            <span class="material-symbols-outlined text-[18px]">lock_open</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN ADMIN DASHBOARD (UNLOCKED AFTER LOGIN) -->
+  <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-6">
+
+    <!-- Top Admin Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-surface-container-low border border-outline-variant shadow-xl">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-[11px] font-label-lg font-bold text-primary">
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            <span>MASTER OPERATOR // CLEARANCE LEVEL 5</span>
+          </span>
+          <span class="font-label-lg text-xs text-outline">• SECURE CLUSTER US-EAST-09</span>
+        </div>
+        <h1 class="font-display-lg text-3xl font-black text-white tracking-tight">Admin Command Center</h1>
+        <p class="font-body-lg text-xs text-on-surface-variant mt-0.5">
+          Manage operatives, monitor live arena standings, view real-time submission logs, and control scoring.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="lockAdminConsole()" class="px-4 py-2 rounded-xl bg-surface-container border border-outline-variant text-outline hover:text-white hover:border-red-400 font-label-lg text-xs flex items-center gap-1.5 transition">
+          <span class="material-symbols-outlined text-[16px]">lock</span>
+          <span>Lock Console</span>
+        </button>
+        <button onclick="triggerResetModal()" class="px-4 py-2 rounded-xl bg-red-950/60 border border-red-500/40 text-red-300 hover:bg-red-900 font-label-lg text-xs font-bold flex items-center gap-1.5 transition">
+          <span class="material-symbols-outlined text-[16px]">restart_alt</span>
+          <span>Emergency Arena Reset</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Admin View Switcher Navigation Tabs -->
+    <div class="flex items-center gap-2 p-1.5 rounded-xl bg-surface-container-low border border-outline-variant w-max">
+      <button data-tab="tab-leaderboard" class="admin-tab-btn active px-4 py-2 rounded-lg bg-surface-container-high text-primary font-label-lg text-xs font-bold transition flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">leaderboard</span>
+        <span>Live Leaderboard Monitor</span>
+      </button>
+
+      <button data-tab="tab-submissions" class="admin-tab-btn px-4 py-2 rounded-lg text-outline hover:text-white font-label-lg text-xs font-bold transition flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">list_alt</span>
+        <span>Flag Submissions Audit</span>
+      </button>
+
+      <button data-tab="tab-members" class="admin-tab-btn px-4 py-2 rounded-lg text-outline hover:text-white font-label-lg text-xs font-bold transition flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">group</span>
+        <span>Workspace Operatives (7)</span>
+      </button>
+
+      <button data-tab="tab-flags" class="admin-tab-btn px-4 py-2 rounded-lg text-outline hover:text-white font-label-lg text-xs font-bold transition flex items-center gap-2">
+        <span class="material-symbols-outlined text-[18px]">key</span>
+        <span>Master Flags Catalog</span>
+      </button>
+    </div>
+
+    <!-- TAB 1: EMBEDDED LIVE LEADERBOARD (AS REQUESTED) -->
+    <section id="tab-leaderboard" class="admin-tab-panel flex flex-col gap-4">
+      <div class="flex items-center justify-between p-4 rounded-xl bg-surface-container border border-outline-variant">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[22px]">monitoring</span>
+          <h2 class="font-label-lg text-sm font-bold text-white uppercase tracking-wider">Live Collegiate Leaderboard Inside Admin Panel</h2>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="font-label-lg text-xs text-primary bg-surface-container-high px-3 py-1 rounded-full border border-primary/30">
+            AUTO-SYNCING REAL-TIME
+          </span>
+          <button onclick="loadAdminData()" class="px-3 py-1 rounded-lg bg-primary text-on-primary font-label-lg text-xs font-bold hover:bg-primary-fixed">
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <div class="w-full bg-surface-container rounded-xl shadow-lg border border-outline-variant overflow-hidden">
+        <table class="w-full text-left font-label-lg text-xs">
+          <thead class="bg-surface-container-high border-b border-outline-variant text-outline uppercase tracking-wider text-[11px]">
+            <tr>
+              <th class="py-3.5 px-4 text-center w-16">RANK</th>
+              <th class="py-3.5 px-4">COLLEGIATE TEAM</th>
+              <th class="py-3.5 px-4 text-center">SOLVED VECTORS</th>
+              <th class="py-3.5 px-4 text-center">PENALTIES APPLIED</th>
+              <th class="py-3.5 px-4 text-right">TOTAL POINTS</th>
+              <th class="py-3.5 px-4 text-center">ADMIN ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="admin-leaderboard-tbody" class="divide-y divide-outline-variant/40">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 2: AUDIT SUBMISSIONS STREAM -->
+    <section id="tab-submissions" class="admin-tab-panel hidden flex flex-col gap-4">
+      <div class="flex items-center justify-between p-4 rounded-xl bg-surface-container border border-outline-variant">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[22px]">receipt_long</span>
+          <h2 class="font-label-lg text-sm font-bold text-white uppercase tracking-wider">Real-Time Submissions Audit Stream</h2>
+        </div>
+        <span class="font-label-lg text-xs text-outline">Logs all flag captures and incorrect penalty attempts</span>
+      </div>
+
+      <div class="w-full bg-surface-container rounded-xl shadow-lg border border-outline-variant overflow-hidden">
+        <table class="w-full text-left font-label-lg text-xs">
+          <thead class="bg-surface-container-high border-b border-outline-variant text-outline uppercase tracking-wider text-[11px]">
+            <tr>
+              <th class="py-3 px-4">TIMESTAMP</th>
+              <th class="py-3 px-4">TEAM</th>
+              <th class="py-3 px-4">CHALLENGE VECTOR</th>
+              <th class="py-3 px-4 text-center">STATUS</th>
+              <th class="py-3 px-4 text-right">SCORE DELTA</th>
+            </tr>
+          </thead>
+          <tbody id="admin-submissions-tbody" class="divide-y divide-outline-variant/40">
+            <!-- Populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 3: OPERATIVE MEMBERS (ORIGINAL MANAGEMENT FEATURE PRESERVED) -->
+    <section id="tab-members" class="admin-tab-panel hidden flex flex-col gap-4">
+      <div class="flex items-center justify-between p-4 rounded-xl bg-surface-container border border-outline-variant">
+        <div>
+          <h2 class="font-label-lg text-sm font-bold text-white uppercase tracking-wider">Arena Operatives & Access Control</h2>
+          <p class="font-body-lg text-xs text-on-surface-variant">Manage credentials and command permissions across collegiate nodes.</p>
+        </div>
+        <button id="btn-open-add-member" class="px-4 py-2 bg-primary text-on-primary font-label-lg text-xs font-bold rounded-lg hover:bg-primary-fixed transition flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px]">person_add</span>
+          <span>+ Add Operative</span>
+        </button>
+      </div>
+
+      <div class="w-full bg-surface-container rounded-xl shadow-md border border-outline-variant overflow-hidden">
+        <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-3.5 bg-surface-container-high font-label-lg text-outline uppercase tracking-wider text-[11px]">
+          <div class="col-span-4">NAME</div>
+          <div class="col-span-3">EMAIL</div>
+          <div class="col-span-2">ROLE</div>
+          <div class="col-span-2">JOINED</div>
+          <div class="col-span-1 text-right">ACTIONS</div>
+        </div>
+        <div class="flex flex-col" id="members-list-container"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: MASTER FLAGS CATALOG (ADMIN REFERENCE) -->
+    <section id="tab-flags" class="admin-tab-panel hidden flex flex-col gap-4">
+      <div class="p-4 rounded-xl bg-surface-container border border-outline-variant flex items-center justify-between">
+        <div>
+          <h2 class="font-label-lg text-sm font-bold text-tertiary uppercase tracking-wider">CONFIDENTIAL: Arena Master Flags Catalog</h2>
+          <p class="font-body-lg text-xs text-outline">Authorized for event coordinators only. Do not share with contestants.</p>
+        </div>
+      </div>
+
+      <div class="w-full bg-surface-container rounded-xl shadow-md border border-outline-variant overflow-hidden">
+        <table class="w-full text-left font-label-lg text-xs">
+          <thead class="bg-surface-container-high border-b border-outline-variant text-outline uppercase tracking-wider text-[11px]">
+            <tr>
+              <th class="py-3 px-4">#</th>
+              <th class="py-3 px-4">VECTOR</th>
+              <th class="py-3 px-4 text-center">SCORING</th>
+              <th class="py-3 px-4">MASTER FLAG STRING</th>
+            </tr>
+          </thead>
+          <tbody id="admin-flags-tbody" class="divide-y divide-outline-variant/40">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: ADD OPERATIVE -->
+  <div class="fixed inset-0 z-50 hidden bg-surface-container-lowest/80 backdrop-blur-sm flex items-center justify-center p-4" id="modal-add-member">
+    <div class="w-full max-w-lg bg-surface-container-high border border-outline-variant rounded-xl p-6 shadow-xl flex flex-col gap-4">
+      <div class="flex items-center justify-between border-b border-outline-variant pb-3">
+        <span class="font-label-lg font-bold text-primary text-xs uppercase">Provision New Operative</span>
+        <button class="modal-close-trigger text-outline hover:text-white">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+      <div class="flex flex-col gap-3">
+        <div>
+          <label class="font-label-lg text-xs text-on-surface-variant block mb-1">Full Name</label>
+          <input class="w-full px-3 py-2 bg-surface-container rounded-lg font-label-lg text-xs text-white border border-outline-variant focus:outline-none" id="add-member-name" placeholder="e.g. Maya Lin" type="text"/>
+        </div>
+        <div>
+          <label class="font-label-lg text-xs text-on-surface-variant block mb-1">Email Address</label>
+          <input class="w-full px-3 py-2 bg-surface-container rounded-lg font-label-lg text-xs text-white border border-outline-variant focus:outline-none" id="add-member-email" placeholder="e.g. m.lin@cybernexus.edu" type="email"/>
+        </div>
+        <div>
+          <label class="font-label-lg text-xs text-on-surface-variant block mb-1">Clearance Level</label>
+          <select class="w-full px-3 py-2 bg-surface-container rounded-lg font-label-lg text-xs text-white border border-outline-variant focus:outline-none" id="add-member-role">
+            <option value="Admin">Admin</option>
+            <option value="Manager">Manager</option>
+            <option selected value="Member">Member</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-outline-variant">
+        <button class="modal-close-trigger px-4 py-2 rounded-lg font-label-lg text-xs text-outline hover:text-white">Cancel</button>
+        <button class="px-4 py-2 bg-primary text-on-primary font-label-lg text-xs font-bold rounded-lg hover:bg-primary-fixed" id="btn-submit-add-member">Add Operative</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Nav Script -->
+  <script src="shared_nav.js"></script>
+
+  <script>
+    // Hardcoded credentials verification
+    const HARDCODED_ADMIN_USER = 'admin';
+    const HARDCODED_ADMIN_PASS = 'logicbreak_admin_2026';
+    const HARDCODED_ADMIN_PASS_ALT = 'admin123';
+    const ADMIN_TOKEN_KEY = 'logic_ctf_admin_token';
+    const VALID_TOKEN = 'logicbreak_admin_token_active_session_2026';
+
+    // Member Operatives initial catalog
+    let members = [
+      { id: 'usr-1', name: 'Dr. Evelyn Cross', email: 'e.cross@cybernexus.edu', role: 'Admin', joined: '12 Jan 2026' },
+      { id: 'usr-2', name: 'Agent Marcus Vance', email: 'm.vance@cybernexus.edu', role: 'Manager', joined: '18 Jan 2026' },
+      { id: 'usr-3', name: 'Elena Rostova', email: 'e.rostova@cybernexus.edu', role: 'Member', joined: '01 Feb 2026' },
+      { id: 'usr-4', name: 'Chen Wei', email: 'c.wei@cybernexus.edu', role: 'Member', joined: '05 Feb 2026' },
+      { id: 'usr-5', name: 'Sarah Jenkins', email: 's.jenkins@cybernexus.edu', role: 'Member', joined: '14 Feb 2026' },
+      { id: 'usr-6', name: 'Kofi Mensah', email: 'k.mensah@cybernexus.edu', role: 'Manager', joined: '22 Feb 2026' },
+      { id: 'usr-7', name: 'Tariq Al-Mansoor', email: 't.almansoor@cybernexus.edu', role: 'Member', joined: '02 Mar 2026' }
+    ];
+
+    // Master Flags Catalog (Authorized View)
+    const MASTER_FLAGS = [
+      { num: 1, title: 'Ghost Protocol', pts: '+50 / -15', flag: 'logicCTF{gr4phql_1ntr0sp3ct10n_byp4ss}' },
+      { num: 2, title: 'Cipher Nexus', pts: '+50 / -15', flag: 'logicCTF{x0r_c1ph3r_b4s364_cr4ck3d}' },
+      { num: 3, title: 'Packet Sniffer', pts: '+50 / -15', flag: 'logicCTF{p4ck3t_sn1ff3r_cr3ds_l34k}' },
+      { num: 4, title: 'Logic Gate Bypass', pts: '+50 / -15', flag: 'logicCTF{cl13nt_s1d3_auth_1s_n0t_s4f3}' },
+      { num: 5, title: 'Cookie Monster', pts: '+50 / -15', flag: 'logicCTF{jwt_s3cr3t_brut3f0rc3_2026}' },
+      { num: 6, title: 'SQL Infiltration', pts: '+50 / -15', flag: 'logicCTF{sql1_un10n_s3l3ct_4dm1n_fl4g}' },
+      { num: 7, title: 'Hidden in Plain Byte', pts: '+50 / -15', flag: 'logicCTF{st3g0_m3t4d4t4_h1dd3n_fl4g}' },
+      { num: 8, title: 'Kernel Panic', pts: '+100 / -25', flag: 'logicCTF{b1n4ry_0v3rfl0w_r3t2l1bc_pwnd}' },
+      { num: 9, title: 'Quantum RSA', pts: '+100 / -25', flag: 'logicCTF{sm4ll_pr1m3_f4ct0r1z4t10n_rs4}' },
+      { num: 10, title: 'Zero-Day Memory Dump', pts: '+100 / -25', flag: 'logicCTF{m3m0ry_f0r3ns1cs_v0l4t1l1ty_d1sc0v3r3d}' },
+      { num: 11, title: 'Decoupled Shadow API', pts: '+100 / -25', flag: 'logicCTF{ssrf_cl0ud_m3t4d4t4_cr3ds_pwn}' },
+      { num: 12, title: 'The Root of All Evil', pts: '+100 / -25', flag: 'logicCTF{su1d_pr1v1l3g3_3sc4l4t10n_r00t}' }
+    ];
+
+    function checkAuth() {
+      const token = localStorage.getItem(ADMIN_TOKEN_KEY);
+      const modal = document.getElementById('admin-login-modal');
+      if (token === VALID_TOKEN) {
+        modal.classList.add('hidden');
+        loadAdminData();
+      } else {
+        modal.classList.remove('hidden');
+      }
+    }
+
+    // Login Submission
+    document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const u = document.getElementById('admin-input-user').value.trim();
+      const p = document.getElementById('admin-input-pass').value.trim();
+      const err = document.getElementById('admin-login-error');
+
+      if ((u === HARDCODED_ADMIN_USER) && (p === HARDCODED_ADMIN_PASS || p === HARDCODED_ADMIN_PASS_ALT)) {
+        localStorage.setItem(ADMIN_TOKEN_KEY, VALID_TOKEN);
+        document.getElementById('admin-login-modal').classList.add('hidden');
+        err.classList.add('hidden');
+        loadAdminData();
+        window.showLogicToast && window.showLogicToast('Master Admin Authorization Granted', 'success');
+      } else {
+        err.textContent = 'Invalid operator credentials. Access denied.';
+        err.classList.remove('hidden');
+      }
+    });
+
+    document.getElementById('btn-quick-fill-admin').addEventListener('click', () => {
+      document.getElementById('admin-input-user').value = HARDCODED_ADMIN_USER;
+      document.getElementById('admin-input-pass').value = HARDCODED_ADMIN_PASS;
+    });
+
+    function lockAdminConsole() {
+      localStorage.removeItem(ADMIN_TOKEN_KEY);
+      window.location.reload();
+    }
+
+    // Tab Switching
+    document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.admin-tab-btn').forEach(b => {
+          b.className = 'admin-tab-btn px-4 py-2 rounded-lg text-outline hover:text-white font-label-lg text-xs font-bold transition flex items-center gap-2';
+        });
+        btn.className = 'admin-tab-btn active px-4 py-2 rounded-lg bg-surface-container-high text-primary font-label-lg text-xs font-bold transition flex items-center gap-2';
+
+        const target = btn.getAttribute('data-tab');
+        document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.add('hidden'));
+        document.getElementById(target).classList.remove('hidden');
+      });
+    });
+
+    // Load Admin Data (Leaderboard & Submissions)
+    async function loadAdminData() {
+      try {
+        const res = await fetch('/api/leaderboard');
+        const data = await res.json();
+        if (data.success) {
+          renderAdminLeaderboard(data.leaderboard);
+        }
+      } catch (err) {
+        console.warn('Leaderboard API offline');
+      }
+
+      try {
+        const res = await fetch('/api/admin/submissions', {
+          headers: { 'x-admin-token': VALID_TOKEN }
+        });
+        const data = await res.json();
+        if (data.success) {
+          renderAdminSubmissions(data.submissions);
+        }
+      } catch (err) {
+        console.warn('Admin Submissions API offline');
+      }
+
+      renderAdminFlags();
+      renderMembers();
+    }
+
+    function renderAdminLeaderboard(teams) {
+      const tbody = document.getElementById('admin-leaderboard-tbody');
+      tbody.innerHTML = teams.map((t, i) => `
+        <tr class="hover:bg-surface-container-high/60 transition">
+          <td class="py-3 px-4 text-center font-bold text-slate-300">#${i + 1}</td>
+          <td class="py-3 px-4">
+            <span class="font-bold text-white text-sm">${t.name}</span>
+            <span class="block text-[11px] text-outline">${t.college || 'Collegiate Squad'}</span>
+          </td>
+          <td class="py-3 px-4 text-center font-bold text-primary">${t.solvedCount} flags</td>
+          <td class="py-3 px-4 text-center text-red-400 font-bold">${t.penalties || 0}</td>
+          <td class="py-3 px-4 text-right font-black text-white text-sm">${t.score} pts</td>
+          <td class="py-3 px-4 text-center">
+            <button onclick="resetTeamScore('${t.id}', '${t.name}')" class="px-2.5 py-1 rounded bg-red-950/60 text-red-300 hover:bg-red-900 border border-red-500/30 text-[10px] font-bold uppercase transition">
+              Reset Score
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderAdminSubmissions(subs) {
+      const tbody = document.getElementById('admin-submissions-tbody');
+      tbody.innerHTML = subs.map(s => {
+        const isCorrect = s.status === 'CORRECT';
+        return `
+          <tr class="hover:bg-surface-container-high/50 transition">
+            <td class="py-2.5 px-4 text-outline text-[11px]">${new Date(s.timestamp).toLocaleTimeString()}</td>
+            <td class="py-2.5 px-4 font-bold text-white">${s.team}</td>
+            <td class="py-2.5 px-4 text-on-surface-variant">${s.challengeTitle}</td>
+            <td class="py-2.5 px-4 text-center">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isCorrect ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/40' : 'bg-red-950 text-red-300 border border-red-500/40'}">
+                ${s.status}
+              </span>
+            </td>
+            <td class="py-2.5 px-4 text-right font-bold ${isCorrect ? 'text-primary' : 'text-red-400'}">
+              ${s.delta} PTS
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderAdminFlags() {
+      const tbody = document.getElementById('admin-flags-tbody');
+      tbody.innerHTML = MASTER_FLAGS.map(f => `
+        <tr class="hover:bg-surface-container-high/60 transition">
+          <td class="py-3 px-4 text-outline">0${f.num}</td>
+          <td class="py-3 px-4 font-bold text-white">${f.title}</td>
+          <td class="py-3 px-4 text-center text-xs font-mono">${f.pts}</td>
+          <td class="py-3 px-4 font-mono text-primary font-bold select-all">${f.flag}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderMembers() {
+      const container = document.getElementById('members-list-container');
+      container.innerHTML = members.map(m => `
+        <div class="grid grid-cols-12 gap-4 px-6 py-3.5 border-t border-outline-variant/30 items-center font-label-lg text-xs hover:bg-surface-container-high/40 transition">
+          <div class="col-span-4 font-bold text-white flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px] text-primary">person</span>
+            <span>${m.name}</span>
+          </div>
+          <div class="col-span-3 text-outline">${m.email}</div>
+          <div class="col-span-2">
+            <span class="px-2 py-0.5 rounded bg-surface-container text-xs font-bold text-tertiary border border-outline-variant">${m.role}</span>
+          </div>
+          <div class="col-span-2 text-outline">${m.joined}</div>
+          <div class="col-span-1 text-right">
+            <button onclick="removeMember('${m.id}')" class="text-red-400 hover:text-red-300">
+              <span class="material-symbols-outlined text-[16px]">delete</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function resetTeamScore(teamId, teamName) {
+      if (!confirm(`Are you sure you want to reset all scores and solves for squad "${teamName}"?`)) return;
+      try {
+        await fetch('/api/admin/reset', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': VALID_TOKEN
+          },
+          body: JSON.stringify({ teamId })
+        });
+        loadAdminData();
+        window.showLogicToast && window.showLogicToast(`Reset score for ${teamName}`, 'info');
+      } catch (err) {
+        alert('Action failed');
+      }
+    }
+
+    async function triggerResetModal() {
+      if (!confirm('CAUTION // Are you sure you want to reset the ENTIRE tournament? All team scores and submissions will be wiped to zero!')) return;
+      try {
+        await fetch('/api/admin/reset', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': VALID_TOKEN
+          },
+          body: JSON.stringify({ type: 'ALL' })
+        });
+        loadAdminData();
+        window.showLogicToast && window.showLogicToast('All arena scores reset to zero', 'info');
+      } catch (err) {
+        alert('Reset failed');
+      }
+    }
+
+    function removeMember(id) {
+      members = members.filter(m => m.id !== id);
+      renderMembers();
+    }
+
+    // Modal Add Operative
+    document.getElementById('btn-open-add-member').addEventListener('click', () => {
+      document.getElementById('modal-add-member').classList.remove('hidden');
+    });
+
+    document.querySelectorAll('.modal-close-trigger').forEach(b => {
+      b.addEventListener('click', () => {
+        document.getElementById('modal-add-member').classList.add('hidden');
+      });
+    });
+
+    document.getElementById('btn-submit-add-member').addEventListener('click', () => {
+      const name = document.getElementById('add-member-name').value.trim();
+      const email = document.getElementById('add-member-email').value.trim();
+      const role = document.getElementById('add-member-role').value;
+      if (!name || !email) return alert('Name and email required');
+      members.unshift({ id: 'usr-' + Date.now(), name, email, role, joined: 'Just now' });
+      renderMembers();
+      document.getElementById('modal-add-member').classList.add('hidden');
+    });
+
+    // Auto-Sync Hook
+    window.onLeaderboardEvent = () => {
+      loadAdminData();
+    };
+
+    // Initialize
+    checkAuth();
+  </script>
+</body>
+</html>

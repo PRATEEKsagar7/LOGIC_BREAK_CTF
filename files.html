@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logic Break CTF - Files, Code & Documentation Hub</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#090e16',
+              surface: '#0e1511',
+              card: '#161d19',
+              cardHover: '#1f2823',
+              border: '#2d3a43',
+              accent: '#5bdcae'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #090e16;
+      color: #dde4de;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#090e16] flex flex-col antialiased selection:bg-[#5bdcae]/20 selection:text-[#5bdcae]">
+
+  <!-- Top Header injected by shared_nav.js -->
+
+  <!-- Main Content Container (Full-Width Desktop Command View) -->
+  <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-8">
+
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-[#161d19] border border-[#2d3a43] shadow-xl">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-[11px] font-mono font-bold text-[#5bdcae]">
+            <span class="w-2 h-2 rounded-full bg-[#5bdcae]"></span>
+            <span>CENTRAL RESOURCE REPOSITORY</span>
+          </span>
+          <span class="text-xs text-slate-400 font-mono">• SECURE FILE RETRIEVAL</span>
+        </div>
+        <h1 class="text-3xl font-black text-white uppercase tracking-tight font-sans">
+          Files, Code & Documentation Hub
+        </h1>
+        <p class="text-xs text-slate-400 mt-0.5">
+          Download challenge artifacts, capture transcripts, vulnerability source codes, and read official arena manuals.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="cybernexus_missions_gray_light_green_dark_mode.html" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-bold text-xs uppercase tracking-wider transition flex items-center gap-2 shadow-lg">
+          <span>Go to Missions</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Official Tournament Guidelines & Protocol Card -->
+    <div class="p-6 rounded-2xl bg-gradient-to-r from-[#161d19] to-[#0f1713] border border-[#2d3a43] shadow-lg space-y-3">
+      <h2 class="text-sm font-bold text-white uppercase font-mono tracking-wider flex items-center gap-2">
+        <span class="text-amber-400">📜</span>
+        <span>Tournament Rules & Flag Protocol</span>
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono text-slate-300">
+        <div class="p-3 bg-[#0e1511] rounded-xl border border-[#2d3a43]">
+          <span class="text-emerald-400 font-bold block mb-1">1. FLAG FORMAT</span>
+          All captured flags follow standard formatting: <code class="text-white bg-black/40 px-1 py-0.5 rounded">logicCTF{...}</code>. Submit flags exactly as revealed.
+        </div>
+        <div class="p-3 bg-[#0e1511] rounded-xl border border-[#2d3a43]">
+          <span class="text-emerald-400 font-bold block mb-1">2. TIERED SCORING PROTOCOL</span>
+          Challenges 01-07 award <strong>+50 pts</strong> (<strong>-15 penalty</strong> on wrong flag). Challenges 08-12 award <strong>+100 pts</strong> (<strong>-25 penalty</strong> on wrong flag).
+        </div>
+        <div class="p-3 bg-[#0e1511] rounded-xl border border-[#2d3a43]">
+          <span class="text-emerald-400 font-bold block mb-1">3. FAIR PLAY & INFRASTRUCTURE</span>
+          Attacking arena infrastructure or denial of service is prohibited. Work within the scope of designated challenge targets.
+        </div>
+      </div>
+    </div>
+
+    <!-- Challenge Files Explorer (Table) -->
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-bold text-white uppercase font-mono tracking-wider flex items-center gap-2">
+          <span>📁</span>
+          <span>Challenge Artifacts & Source Downloads</span>
+        </h2>
+        <span class="text-xs font-mono text-slate-400">12 Files Verified via SHA-256</span>
+      </div>
+
+      <div class="w-full bg-[#161d19] border border-[#2d3a43] rounded-2xl shadow-xl overflow-hidden">
+        <table class="w-full text-left text-xs font-mono">
+          <thead class="bg-[#0e1511] border-b border-[#2d3a43] text-slate-400 uppercase text-[11px]">
+            <tr>
+              <th class="py-3.5 px-4 w-16">CH#</th>
+              <th class="py-3.5 px-4">FILE ARTIFACT</th>
+              <th class="py-3.5 px-4">ASSOCIATED VECTOR</th>
+              <th class="py-3.5 px-4 text-center">TIER</th>
+              <th class="py-3.5 px-4 text-center">TYPE</th>
+              <th class="py-3.5 px-4 text-right">ACTION</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#2d3a43]/50" id="files-table-body">
+            <!-- Row 1 -->
+            <tr class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">01</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-amber-400">{}</span>
+                <span>challenge_01_graphql.json</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Ghost Protocol (Web Security)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">JSON Schema</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_01_graphql.json" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+
+            <!-- Row 2 -->
+            <tr class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">02</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-cyan-400">📄</span>
+                <span>challenge_02_cipher.txt</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Cipher Nexus (Cryptography)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">Hex Text</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_02_cipher.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+
+            <!-- Row 3 -->
+            <tr class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">03</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-indigo-400">📡</span>
+                <span>challenge_03_network.pcap.txt</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Packet Sniffer (Network Security)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">PCAP Trace</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_03_network.pcap.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+
+            <!-- Row 4 -->
+            <tr class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">04</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-amber-300">JS</span>
+                <span>challenge_04_vault.js</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Logic Gate Bypass (Reverse Eng)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">JavaScript</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_04_vault.js" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+
+            <!-- Row 5 -->
+            <tr class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">05</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-rose-400">🍪</span>
+                <span>challenge_05_jwt_token.txt</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Cookie Monster (Web Security)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">JWT Token</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_05_jwt_token.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+
+            <!-- Row 6 -->
+            <tr class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">06</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-blue-400">SQL</span>
+                <span>challenge_06_sqli_dump.sql</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">SQL Infiltration (Database)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">SQL Schema</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_06_sqli_dump.sql" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+
+            <!-- Row 7 -->
+            <tr class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">07</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-purple-400">🖼️</span>
+                <span>challenge_07_stego_secret.txt</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Hidden in Plain Byte (Forensics)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">EXIF Metadata</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_07_stego_secret.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+
+            <!-- Row 8 (Tier 2) -->
+            <tr class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+              <td class="py-3 px-4 text-amber-400">08</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-red-400">C</span>
+                <span>challenge_08_buffer_overflow.c</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Kernel Panic (Binary Exploitation)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">C Source</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_08_buffer_overflow.c" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+
+            <!-- Row 9 -->
+            <tr class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+              <td class="py-3 px-4 text-amber-400">09</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-amber-400">🔑</span>
+                <span>challenge_09_rsa_keys.pem</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Quantum RSA (Cryptography)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">PEM Key</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_09_rsa_keys.pem" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+
+            <!-- Row 10 -->
+            <tr class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+              <td class="py-3 px-4 text-amber-400">10</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-cyan-400">💾</span>
+                <span>challenge_10_memory_dump.raw.txt</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Zero-Day Memory Dump (Forensics)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">Memory Raw</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_10_memory_dump.raw.txt" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+
+            <!-- Row 11 -->
+            <tr class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+              <td class="py-3 px-4 text-amber-400">11</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-amber-400">☁️</span>
+                <span>challenge_11_shadow_api.json</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Decoupled Shadow API (Cloud / SSRF)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">JSON Meta</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_11_shadow_api.json" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+
+            <!-- Row 12 -->
+            <tr class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+              <td class="py-3 px-4 text-amber-400">12</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-emerald-400">🐚</span>
+                <span>challenge_12_privesc_suid.sh</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">The Root of All Evil (Privilege Esc)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">Bash Script</td>
+              <td class="py-3 px-4 text-right">
+                <a href="/challenge_files/challenge_12_privesc_suid.sh" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                  <span>Download</span> &darr;
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Shared Nav Script -->
+  <script src="shared_nav.js"></script>
+</body>
+</html>

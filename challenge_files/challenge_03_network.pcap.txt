@@ -1,0 +1,7 @@
+﻿# Network Packet Capture Transcript
+# Frame 1: 192.168.1.45 -> 10.0.0.1 TCP 44321 -> 80 [SYN]
+# Frame 2: 10.0.0.1 -> 192.168.1.45 TCP 80 -> 44321 [SYN, ACK]
+# Frame 3: 192.168.1.45 -> 10.0.0.1 HTTP GET /admin/auth.php HTTP/1.1
+# Frame 4: Authorization: Basic YWRtaW46cDRjazN0X3NuMWZmM3JfY3IzZHNfbDM0aw==
+# Decoded: admin:p4ck3t_sn1ff3r_cr3ds_l34k
+# Captured Flag: logicCTF{p4ck3t_sn1ff3r_cr3ds_l34k}

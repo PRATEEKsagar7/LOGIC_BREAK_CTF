@@ -1,0 +1,1179 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>CyberNexus - Projects</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            tactical: {
+              base: '#090E16',
+              surface: '#0F141C',
+              card: '#1A2330',
+              elevated: '#212B3A',
+              border: '#2D3A4B',
+              borderLight: '#3B4A5D',
+              accent: '#00FF9D',
+              accentHover: '#00e08a',
+              secondaryAccent: '#10B981',
+              muted: '#94A3B8',
+              danger: '#EF4444',
+              warning: '#F59E0B'
+            }
+          },
+          fontFamily: {
+            mono: ['JetBrains Mono', 'Courier New', 'monospace'],
+            sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    body {
+      background-color: #090E16;
+      color: #FFFFFF;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0F141C;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #2D3A4B;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #3B4A5D;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#090E16] text-white selection:bg-[#00FF9D]/20 selection:text-[#00FF9D]">
+<!-- Top Navigation Header -->
+<header class="sticky top-0 z-40 w-full border-b border-[#2D3A4B] bg-[#0F141C]/95 backdrop-blur px-4 lg:px-8 py-3 transition-colors">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<!-- Left: Brand -->
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-[#1A2330] border border-[#2D3A4B] flex items-center justify-center text-[#00FF9D] shadow-[0_0_12px_rgba(0,255,157,0.15)]">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-extrabold tracking-wider text-sm lg:text-base text-white">CYBERNEXUS</span>
+<span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-[#1A2330] text-[#00FF9D] border border-[#2D3A4B]">COLLEGIATE</span>
+</div>
+<div class="text-[10px] text-[#94A3B8] font-mono tracking-tight uppercase">ARENA OPS // WORKSPACE</div>
+</div>
+</div>
+<!-- Desktop Navigation Routes -->
+<nav class="hidden md:flex items-center gap-1 text-xs font-medium text-[#94A3B8]">
+<a class="px-3 py-1.5 rounded hover:text-white transition-colors" href="#">Overview</a>
+<a class="px-3 py-1.5 rounded hover:text-white transition-colors" href="#">Missions</a>
+<a class="px-3 py-1.5 rounded hover:text-white transition-colors" href="#">Reports</a>
+<a class="px-3 py-1.5 rounded hover:text-white transition-colors" href="#">Files</a>
+<a class="px-3 py-1.5 rounded hover:text-white transition-colors" href="#">Workspace</a>
+<a class="px-3 py-1.5 rounded text-[#00FF9D] bg-[#1A2330] border border-[#2D3A4B] font-semibold flex items-center gap-1.5" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-[#00FF9D] animate-pulse"></span>
+            Projects
+          </a>
+<a class="px-3 py-1.5 rounded hover:text-white transition-colors" href="#">Settings</a>
+</nav>
+</div>
+<!-- Right Header Status & Profile -->
+<div class="flex items-center gap-3">
+<div class="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#1A2330] border border-[#2D3A4B] text-xs">
+<span class="w-2 h-2 rounded-full bg-[#00FF9D] shadow-[0_0_8px_#00FF9D]"></span>
+<span class="text-[#00FF9D] font-mono font-medium text-[11px]">LIVE ARENA</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-[#1A2330] border border-[#2D3A4B] flex items-center justify-center text-white/80 hover:text-white cursor-pointer hover:border-[#00FF9D]/40 transition-colors" title="Operative Profile">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Breadcrumb & Cluster Meta -->
+<div class="flex items-center justify-between text-[11px] font-mono text-[#94A3B8] mb-6">
+<div class="flex items-center gap-2">
+<span class="text-[#00FF9D]">CYBERNEXUS</span>
+<span class="">//</span>
+<span class="">ARENA OPS</span>
+<span class="">//</span>
+<span class="text-white">PROJECTS</span>
+</div>
+<div class="hidden sm:flex items-center gap-2 text-[#94A3B8]">
+<svg class="w-3.5 h-3.5 text-[#00FF9D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">MAX CAPACITY: 5 SLOTS STRICT</span>
+</div>
+</div>
+<!-- Page Header & Action Bar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#2D3A4B]">
+<div>
+<div class="flex items-center gap-2.5">
+<span class="text-xs font-mono text-[#00FF9D] uppercase tracking-wider font-semibold">PROJECTS // REPOSITORY</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono bg-[#1A2330] text-[#94A3B8] border border-[#2D3A4B]" id="counterBadge">
+<span class="text-white font-bold" id="activeCount">3</span>
+<span class="mx-1">/</span>
+<span class="text-[#94A3B8]">5 Active Slots</span>
+</span>
+</div>
+<h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">Projects</h1>
+<p class="text-sm text-[#94A3B8] mt-1">Create and manage your workspace projects. Right-click any active project for actions.</p>
+</div>
+<!-- Action Button & Limit State -->
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-[#00FF9D] hover:bg-[#00e08a] text-[#090E16] font-semibold text-sm transition-all shadow-[0_0_15px_rgba(0,255,157,0.2)] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none" id="createProjectBtn" onclick="openCreateModal()">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
+          </svg>
+          <span class="">+ Create Project</span>
+        </button>
+</div>
+</div>
+<!-- Active / Archived Filter Tabs -->
+<div class="mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="inline-flex p-1 rounded-lg bg-[#0F141C] border border-[#2D3A4B] self-start">
+<button class="flex items-center gap-2 px-3.5 py-1.5 rounded text-xs font-mono font-medium transition-all bg-[#1A2330] text-[#00FF9D] border border-[#2D3A4B] shadow-sm" id="tabActiveBtn" onclick="switchTab('active')">
+<span class="w-2 h-2 rounded-full bg-[#00FF9D]"></span>
+<span class="">Active Projects</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] bg-[#090E16] text-[#00FF9D] border border-[#2D3A4B]" id="tabActiveCountPill">3/5</span>
+</button>
+<button class="flex items-center gap-2 px-3.5 py-1.5 rounded text-xs font-mono font-medium transition-all text-[#94A3B8] hover:text-white border border-transparent" id="tabArchivedBtn" onclick="switchTab('archived')">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Archived</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] bg-[#1A2330] text-[#94A3B8] border border-[#2D3A4B]" id="tabArchivedCountPill">0</span>
+</button>
+</div>
+<div class="flex items-center gap-2 text-[11px] font-mono text-[#94A3B8]">
+<span class="px-2 py-1 rounded bg-[#0F141C] border border-[#2D3A4B]">5 MAX SLOTS</span>
+<span class="px-2 py-1 rounded bg-[#0F141C] border border-[#2D3A4B] text-[#00FF9D]" id="limitIndicator">2 SLOTS AVAILABLE</span>
+</div>
+</div>
+<!-- Instructional Hint Pill -->
+<div class="my-5 p-3 rounded-lg bg-[#0F141C] border border-[#2D3A4B] flex items-center justify-between gap-3 text-xs text-[#94A3B8]" id="instructionHintPill">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#00FF9D]"></span>
+<span id="instructionHintText" class=""><strong class="text-white font-medium">Tactical Interface:</strong> Right-click on desktop or tap <span class="text-white font-mono">⋯</span> on mobile to edit, duplicate, archive, or delete projects.</span>
+</div>
+<div class="hidden md:flex items-center gap-2 text-[11px] font-mono text-[#94A3B8]">
+<span class="">ACTIVE WORKSPACE ENFORCEMENT</span>
+</div>
+</div>
+<!-- Project Grid Container -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="projectGrid"><div id="card-proj-1" class="group relative bg-[#1A2330] border border-[#2D3A4B] hover:border-[#00FF9D]/60 rounded-xl p-5 transition-all duration-150 flex flex-col justify-between shadow-lg hover:shadow-[0_4px_20px_rgba(0,0,0,0.4)] cursor-pointer select-none">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-md bg-[#212B3A] border border-[#2D3A4B] flex items-center justify-center">
+                    
+        <svg class="w-4 h-4 text-[#00FF9D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+        </svg>
+      
+                  </div>
+                  <span class="text-[11px] font-mono text-[#94A3B8]">PROJECT 01</span>
+                </div>
+                
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border bg-[#00FF9D]/10 text-[#00FF9D] border-[#00FF9D]/30 font-semibold flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#00FF9D] animate-pulse"></span>
+                    Active
+                  </span>
+
+                  <!-- ⋯ Context button -->
+                  <button onclick="triggerContextFromButton(event, 'proj-1', false)" class="p-1 rounded text-[#94A3B8] hover:text-white hover:bg-[#212B3A] transition-colors" title="Project Actions">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
+                  </button>
+                </div>
+              </div>
+
+              <h3 class="text-base font-bold text-white group-hover:text-[#00FF9D] transition-colors leading-snug">Cyber Defense Challenge</h3>
+              <p class="text-xs text-[#94A3B8] mt-1.5 line-clamp-2 leading-relaxed">Inter-college defensive security challenge and active simulated red-team operations.</p>
+            </div>
+
+            <div class="pt-4 mt-4 border-t border-[#2D3A4B]/70 flex items-center justify-between text-[11px] font-mono text-[#94A3B8]">
+              <div class="flex items-center gap-1.5">
+                <svg class="w-3 h-3 text-[#94A3B8]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span class="">Sep 12, 2026</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="event.stopPropagation(); openArchiveModalById('proj-1')" class="px-2 py-0.5 rounded text-[10px] font-mono text-[#94A3B8] hover:text-[#F59E0B] hover:bg-[#212B3A] transition-colors border border-transparent hover:border-[#F59E0B]/30" title="Archive to Vault">
+                  Archive
+                </button>
+                <div class="flex items-center gap-1 text-[#00FF9D] text-[10px] font-mono group-hover:translate-x-0.5 transition-transform">
+                  <span class="">MANAGE</span>
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+              </div>
+            </div>
+          </div><div id="card-proj-2" class="group relative bg-[#1A2330] border border-[#2D3A4B] hover:border-[#00FF9D]/60 rounded-xl p-5 transition-all duration-150 flex flex-col justify-between shadow-lg hover:shadow-[0_4px_20px_rgba(0,0,0,0.4)] cursor-pointer select-none">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-md bg-[#212B3A] border border-[#2D3A4B] flex items-center justify-center">
+                    
+          <svg class="w-4 h-4 text-[#00FF9D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+          </svg>
+        
+                  </div>
+                  <span class="text-[11px] font-mono text-[#94A3B8]">PROJECT 02</span>
+                </div>
+                
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border bg-[#00FF9D]/10 text-[#00FF9D] border-[#00FF9D]/30 font-semibold flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#00FF9D] animate-pulse"></span>
+                    Active
+                  </span>
+
+                  <!-- ⋯ Context button -->
+                  <button onclick="triggerContextFromButton(event, 'proj-2', false)" class="p-1 rounded text-[#94A3B8] hover:text-white hover:bg-[#212B3A] transition-colors" title="Project Actions">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
+                  </button>
+                </div>
+              </div>
+
+              <h3 class="text-base font-bold text-white group-hover:text-[#00FF9D] transition-colors leading-snug">Network Security Audit</h3>
+              <p class="text-xs text-[#94A3B8] mt-1.5 line-clamp-2 leading-relaxed">Collegiate sub-tier vulnerability scanning, telemetry sync, and perimeter verification.</p>
+            </div>
+
+            <div class="pt-4 mt-4 border-t border-[#2D3A4B]/70 flex items-center justify-between text-[11px] font-mono text-[#94A3B8]">
+              <div class="flex items-center gap-1.5">
+                <svg class="w-3 h-3 text-[#94A3B8]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span class="">Sep 10, 2026</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="event.stopPropagation(); openArchiveModalById('proj-2')" class="px-2 py-0.5 rounded text-[10px] font-mono text-[#94A3B8] hover:text-[#F59E0B] hover:bg-[#212B3A] transition-colors border border-transparent hover:border-[#F59E0B]/30" title="Archive to Vault">
+                  Archive
+                </button>
+                <div class="flex items-center gap-1 text-[#00FF9D] text-[10px] font-mono group-hover:translate-x-0.5 transition-transform">
+                  <span class="">MANAGE</span>
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+              </div>
+            </div>
+          </div><div id="card-proj-3" class="group relative bg-[#1A2330] border border-[#2D3A4B] hover:border-[#00FF9D]/60 rounded-xl p-5 transition-all duration-150 flex flex-col justify-between shadow-lg hover:shadow-[0_4px_20px_rgba(0,0,0,0.4)] cursor-pointer select-none">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-md bg-[#212B3A] border border-[#2D3A4B] flex items-center justify-center">
+                    
+          <svg class="w-4 h-4 text-[#00FF9D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+          </svg>
+        
+                  </div>
+                  <span class="text-[11px] font-mono text-[#94A3B8]">PROJECT 03</span>
+                </div>
+                
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border bg-[#94A3B8]/10 text-[#94A3B8] border-[#94A3B8]/30 font-semibold flex items-center gap-1">
+                    
+                    Draft
+                  </span>
+
+                  <!-- ⋯ Context button -->
+                  <button onclick="triggerContextFromButton(event, 'proj-3', false)" class="p-1 rounded text-[#94A3B8] hover:text-white hover:bg-[#212B3A] transition-colors" title="Project Actions">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
+                  </button>
+                </div>
+              </div>
+
+              <h3 class="text-base font-bold text-white group-hover:text-[#00FF9D] transition-colors leading-snug">Threat Intelligence Lab</h3>
+              <p class="text-xs text-[#94A3B8] mt-1.5 line-clamp-2 leading-relaxed">Forensics correlation engine for adversary IoC indicators and memory extraction analysis.</p>
+            </div>
+
+            <div class="pt-4 mt-4 border-t border-[#2D3A4B]/70 flex items-center justify-between text-[11px] font-mono text-[#94A3B8]">
+              <div class="flex items-center gap-1.5">
+                <svg class="w-3 h-3 text-[#94A3B8]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span class="">Sep 08, 2026</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="event.stopPropagation(); openArchiveModalById('proj-3')" class="px-2 py-0.5 rounded text-[10px] font-mono text-[#94A3B8] hover:text-[#F59E0B] hover:bg-[#212B3A] transition-colors border border-transparent hover:border-[#F59E0B]/30" title="Archive to Vault">
+                  Archive
+                </button>
+                <div class="flex items-center gap-1 text-[#00FF9D] text-[10px] font-mono group-hover:translate-x-0.5 transition-transform">
+                  <span class="">MANAGE</span>
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+              </div>
+            </div>
+          </div><div class="relative bg-[#0F141C]/80 border-2 border-dashed border-[#2D3A4B] hover:border-[#00FF9D]/60 rounded-xl p-5 flex flex-col items-center justify-center text-center group transition-all duration-150 min-h-[170px]">
+            <div class="w-10 h-10 rounded-full bg-[#1A2330] border border-[#2D3A4B] group-hover:border-[#00FF9D]/50 flex items-center justify-center text-[#94A3B8] group-hover:text-[#00FF9D] transition-colors mb-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+            </div>
+            <span class="text-[11px] font-mono text-[#94A3B8] uppercase tracking-wider">SLOT 04 // AVAILABLE</span>
+            <h4 class="text-sm font-semibold text-white mt-1 group-hover:text-[#00FF9D] transition-colors">Available Project Slot</h4>
+            <p class="text-xs text-[#94A3B8] mt-0.5 mb-3.5">Create a new project</p>
+            <button onclick="openCreateModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#212B3A] hover:bg-[#00FF9D] text-[#94A3B8] hover:text-[#090E16] text-xs font-semibold border border-[#2D3A4B] hover:border-[#00FF9D] transition-all">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              <span class="">+ Add Project</span>
+            </button>
+          </div><div class="relative bg-[#0F141C]/80 border-2 border-dashed border-[#2D3A4B] hover:border-[#00FF9D]/60 rounded-xl p-5 flex flex-col items-center justify-center text-center group transition-all duration-150 min-h-[170px]">
+            <div class="w-10 h-10 rounded-full bg-[#1A2330] border border-[#2D3A4B] group-hover:border-[#00FF9D]/50 flex items-center justify-center text-[#94A3B8] group-hover:text-[#00FF9D] transition-colors mb-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+            </div>
+            <span class="text-[11px] font-mono text-[#94A3B8] uppercase tracking-wider">SLOT 05 // AVAILABLE</span>
+            <h4 class="text-sm font-semibold text-white mt-1 group-hover:text-[#00FF9D] transition-colors">Available Project Slot</h4>
+            <p class="text-xs text-[#94A3B8] mt-0.5 mb-3.5">Create a new project</p>
+            <button onclick="openCreateModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#212B3A] hover:bg-[#00FF9D] text-[#94A3B8] hover:text-[#090E16] text-xs font-semibold border border-[#2D3A4B] hover:border-[#00FF9D] transition-all">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              <span class="">+ Add Project</span>
+            </button>
+          </div></div>
+<!-- Empty Archived State (hidden by default) -->
+<div class="hidden my-8 p-12 text-center rounded-xl bg-[#0F141C]/80 border-2 border-dashed border-[#2D3A4B] flex flex-col items-center justify-center" id="archivedEmptyState">
+<div class="w-12 h-12 rounded-full bg-[#1A2330] border border-[#2D3A4B] flex items-center justify-center text-[#94A3B8] mb-3">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-base font-bold text-white mb-1">No archived projects</h3>
+<p class="text-xs text-[#94A3B8] max-w-sm">Projects you archive from your active workspace will be safely preserved here without consuming active capacity slots.</p>
+<button class="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#212B3A] hover:bg-[#2d3a4e] text-xs font-mono text-[#00FF9D] border border-[#2D3A4B] transition-colors" onclick="switchTab('active')">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Return to Active Projects</span>
+</button>
+</div>
+</main>
+<!-- Global Footer Bar -->
+<footer class="mt-auto border-t border-[#2D3A4B] bg-[#0F141C] text-[11px] font-mono text-[#94A3B8] px-4 lg:px-8 py-3">
+<div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="">CyberNexus Defense Grid v4.12.0</span>
+<span class="">•</span>
+<span class="text-white/60">Collegiate Arena Tier-1 Encrypted</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="">SLOT CONTROL: <span class="text-[#00FF9D]" id="footerSlotControl">ENFORCED (3/5)</span></span>
+<span class="">VAULT ARCHIVE: <span class="text-[#F59E0B]" id="footerArchiveControl">0 STORED</span></span>
+<span class="">STATUS: <span class="text-[#00FF9D]">OPTIMAL</span></span>
+</div>
+</div>
+</footer>
+<!-- Mobile Bottom Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-[#0F141C]/95 border-t border-[#2D3A4B] px-3 py-2 backdrop-blur flex justify-around text-[10px] font-mono text-[#94A3B8]">
+<a class="flex flex-col items-center gap-1" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Overview</span>
+</a>
+<a class="flex flex-col items-center gap-1" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Missions</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-[#00FF9D] font-bold" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Projects</span>
+</a>
+<a class="flex flex-col items-center gap-1" href="#">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="">Settings</span>
+</a>
+</nav>
+<!-- ============================================================ -->
+<!-- Context Menu (Right Click & Mobile Three-Dot Trigger) -->
+<!-- ============================================================ -->
+<div class="fixed z-50 hidden min-w-[190px] bg-[#1A2330] border border-[#2D3A4B] rounded-lg shadow-2xl py-1 text-xs backdrop-blur font-sans" id="contextMenu">
+<div id="activeContextItems">
+<button class="w-full text-left px-3.5 py-2 text-white hover:bg-[#212B3A] hover:text-[#00FF9D] flex items-center gap-2.5 transition-colors" onclick="handleContextAction('edit')">
+<svg class="w-3.5 h-3.5 text-[#94A3B8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Edit Project</span>
+</button>
+<button class="w-full text-left px-3.5 py-2 text-white hover:bg-[#212B3A] hover:text-[#00FF9D] flex items-center gap-2.5 transition-colors border-t border-[#2D3A4B]/60" onclick="handleContextAction('duplicate')">
+<svg class="w-3.5 h-3.5 text-[#94A3B8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Duplicate Project</span>
+</button>
+<button class="w-full text-left px-3.5 py-2 text-white hover:bg-[#212B3A] hover:text-[#F59E0B] flex items-center gap-2.5 transition-colors border-t border-[#2D3A4B]/60" onclick="handleContextAction('archive')">
+<svg class="w-3.5 h-3.5 text-[#F59E0B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Archive Project</span>
+</button>
+</div>
+<div class="hidden" id="archivedContextItems">
+<button class="w-full text-left px-3.5 py-2 text-white hover:bg-[#212B3A] hover:text-[#00FF9D] flex items-center gap-2.5 transition-colors" onclick="handleContextAction('unarchive')">
+<svg class="w-3.5 h-3.5 text-[#00FF9D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Unarchive Project</span>
+</button>
+</div>
+<button class="w-full text-left px-3.5 py-2 text-[#EF4444] hover:bg-[#EF4444]/10 flex items-center gap-2.5 transition-colors border-t border-[#2D3A4B]/60" onclick="handleContextAction('delete')">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Delete Project</span>
+</button>
+</div>
+<!-- ============================================================ -->
+<!-- Create Project Modal -->
+<!-- ============================================================ -->
+<div class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4" id="createModal">
+<div class="w-full max-w-md bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-6 shadow-2xl animate-in fade-in zoom-in duration-150">
+<div class="flex items-center justify-between pb-4 border-b border-[#2D3A4B]">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] flex items-center justify-center text-[#00FF9D]">
+
+</div>
+<div>
+<h3 class="text-base font-bold text-white">Create Project</h3>
+<p class="text-[11px] text-[#94A3B8] font-mono">WORKSPACE ALLOCATION SLOT</p>
+</div>
+</div>
+<button class="text-[#94A3B8] hover:text-white p-1 rounded hover:bg-[#212B3A]" onclick="closeCreateModal()">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<form class="mt-5 space-y-4" onsubmit="submitCreateProject(event)">
+<div>
+<label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Project Name <span class="text-[#00FF9D]">*</span></label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-[#0F141C] border border-[#2D3A4B] text-white placeholder-[#94A3B8]/50 text-sm focus:outline-none focus:border-[#00FF9D] transition-colors" id="createName" placeholder="Enter project name" required="" type="text">
+</div>
+<div>
+<label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Description <span class="text-[#00FF9D]">*</span></label>
+<textarea class="w-full px-3.5 py-2.5 rounded-lg bg-[#0F141C] border border-[#2D3A4B] text-white placeholder-[#94A3B8]/50 text-sm focus:outline-none focus:border-[#00FF9D] transition-colors" id="createDesc" placeholder="Enter project description" required="" rows="3"></textarea>
+</div>
+<div>
+<label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Status</label>
+<select class="w-full px-3.5 py-2.5 rounded-lg bg-[#0F141C] border border-[#2D3A4B] text-white text-sm focus:outline-none focus:border-[#00FF9D] transition-colors" id="createStatus">
+<option value="Active">Active</option>
+<option value="Draft">Draft</option>
+</select>
+</div>
+<div class="flex items-center justify-end gap-3 pt-4 border-t border-[#2D3A4B]">
+<button class="px-4 py-2 rounded-lg bg-[#212B3A] hover:bg-[#2d3a4e] text-[#94A3B8] hover:text-white text-xs font-semibold transition-colors" onclick="closeCreateModal()" type="button">
+            Cancel
+          </button>
+<button class="px-4 py-2 rounded-lg bg-[#00FF9D] hover:bg-[#00e08a] text-[#090E16] text-xs font-bold transition-all shadow-[0_0_10px_rgba(0,255,157,0.2)]" type="submit">
+            Create Project
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- ============================================================ -->
+<!-- Edit Project Modal -->
+<!-- ============================================================ -->
+<div class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4" id="editModal">
+<div class="w-full max-w-md bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-6 shadow-2xl animate-in fade-in zoom-in duration-150">
+<div class="flex items-center justify-between pb-4 border-b border-[#2D3A4B]">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] flex items-center justify-center text-[#00FF9D]">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<h3 class="text-base font-bold text-white">Edit Project</h3>
+<p class="text-[11px] text-[#94A3B8] font-mono">MODIFY ATTRIBUTES</p>
+</div>
+</div>
+<button class="text-[#94A3B8] hover:text-white p-1 rounded hover:bg-[#212B3A]" onclick="closeEditModal()">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<form class="mt-5 space-y-4" onsubmit="submitEditProject(event)">
+<input id="editProjectId" type="hidden">
+<div>
+<label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Project Name <span class="text-[#00FF9D]">*</span></label>
+<input class="w-full px-3.5 py-2.5 rounded-lg bg-[#0F141C] border border-[#2D3A4B] text-white text-sm focus:outline-none focus:border-[#00FF9D] transition-colors" id="editName" required="" type="text">
+</div>
+<div>
+<label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Description <span class="text-[#00FF9D]">*</span></label>
+<textarea class="w-full px-3.5 py-2.5 rounded-lg bg-[#0F141C] border border-[#2D3A4B] text-white text-sm focus:outline-none focus:border-[#00FF9D] transition-colors" id="editDesc" required="" rows="3"></textarea>
+</div>
+<div>
+<label class="block text-xs font-medium text-[#94A3B8] mb-1.5">Status</label>
+<select class="w-full px-3.5 py-2.5 rounded-lg bg-[#0F141C] border border-[#2D3A4B] text-white text-sm focus:outline-none focus:border-[#00FF9D] transition-colors" id="editStatus">
+<option value="Active">Active</option>
+<option value="Draft">Draft</option>
+</select>
+</div>
+<div class="flex items-center justify-end gap-3 pt-4 border-t border-[#2D3A4B]">
+<button class="px-4 py-2 rounded-lg bg-[#212B3A] hover:bg-[#2d3a4e] text-[#94A3B8] hover:text-white text-xs font-semibold transition-colors" onclick="closeEditModal()" type="button">
+            Cancel
+          </button>
+<button class="px-4 py-2 rounded-lg bg-[#00FF9D] hover:bg-[#00e08a] text-[#090E16] text-xs font-bold transition-all shadow-[0_0_10px_rgba(0,255,157,0.2)]" type="submit">
+            Save Changes
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- ============================================================ -->
+<!-- Archive Project Confirmation Modal -->
+<!-- ============================================================ -->
+<div class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4" id="archiveModal">
+<div class="w-full max-w-sm bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-6 shadow-2xl animate-in fade-in zoom-in duration-150">
+<div class="w-10 h-10 rounded-full bg-[#F59E0B]/15 border border-[#F59E0B]/30 flex items-center justify-center text-[#F59E0B] mb-3">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-base font-bold text-white">Archive Project?</h3>
+<p class="text-xs text-[#94A3B8] mt-1.5 leading-relaxed">
+        This project will be moved to the archive vault and free up an active project slot. You can unarchive it anytime active slots are open.
+      </p>
+<div class="p-2.5 mt-3 rounded bg-[#0F141C] border border-[#2D3A4B] text-[11px] font-mono text-white flex items-center gap-2">
+<span class="text-[#F59E0B]">TARGET:</span>
+<span class="font-bold truncate" id="archiveProjectNameDisplay">Project Name</span>
+</div>
+<div class="flex items-center justify-end gap-3 mt-6">
+<button class="px-4 py-2 rounded-lg bg-[#212B3A] hover:bg-[#2d3a4e] text-[#94A3B8] hover:text-white text-xs font-semibold transition-colors" onclick="closeArchiveModal()" type="button">
+          Cancel
+        </button>
+<button class="px-4 py-2 rounded-lg bg-[#F59E0B] hover:bg-amber-500 text-[#090E16] text-xs font-bold transition-all shadow-[0_0_10px_rgba(245,158,11,0.25)]" onclick="confirmArchiveProject()" type="button">
+          Archive Project
+        </button>
+</div>
+</div>
+</div>
+<!-- ============================================================ -->
+<!-- Delete Project Confirmation Modal -->
+<!-- ============================================================ -->
+<div class="fixed inset-0 z-50 hidden bg-black/75 backdrop-blur-sm flex items-center justify-center p-4" id="deleteModal">
+<div class="w-full max-w-sm bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-6 shadow-2xl animate-in fade-in zoom-in duration-150">
+<div class="w-10 h-10 rounded-full bg-[#EF4444]/15 border border-[#EF4444]/30 flex items-center justify-center text-[#EF4444] mb-3">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-base font-bold text-white">Delete Project?</h3>
+<p class="text-xs text-[#94A3B8] mt-1.5 leading-relaxed">
+        This project will be permanently removed. This action cannot be undone.
+      </p>
+<div class="p-2.5 mt-3 rounded bg-[#0F141C] border border-[#2D3A4B] text-[11px] font-mono text-white flex items-center gap-2">
+<span class="text-[#EF4444]">TARGET:</span>
+<span class="font-bold truncate" id="deleteProjectNameDisplay">Project Name</span>
+</div>
+<div class="flex items-center justify-end gap-3 mt-6">
+<button class="px-4 py-2 rounded-lg bg-[#212B3A] hover:bg-[#2d3a4e] text-[#94A3B8] hover:text-white text-xs font-semibold transition-colors" onclick="closeDeleteModal()" type="button">
+          Cancel
+        </button>
+<button class="px-4 py-2 rounded-lg bg-[#EF4444] hover:bg-red-600 text-white text-xs font-bold transition-all shadow-[0_0_10px_rgba(239,68,68,0.25)]" onclick="confirmDeleteProject()" type="button">
+          Delete Project
+        </button>
+</div>
+</div>
+</div>
+<!-- ============================================================ -->
+<!-- Floating Toast Notifications -->
+<!-- ============================================================ -->
+<div class="fixed bottom-6 right-6 z-50 hidden transition-all duration-200 transform translate-y-2 opacity-0" id="toast">
+<div class="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#1A2330] border border-[#2D3A4B] text-xs shadow-2xl text-white" id="toastContent">
+<span class="font-medium" id="toastMsg">Notification message</span>
+</div>
+</div>
+<!-- ============================================================ -->
+<!-- Interactive Frontend Script -->
+<!-- ============================================================ -->
+<script>
+    // State management: exactly 5 active slots strictly enforced
+    const MAX_PROJECTS = 5;
+    let currentTab = 'active'; // 'active' | 'archived'
+
+    let projects = [
+      {
+        id: "proj-1",
+        name: "Cyber Defense Challenge",
+        desc: "Inter-college defensive security challenge and active simulated red-team operations.",
+        status: "Active",
+        date: "Sep 12, 2026",
+        icon: "shield"
+      },
+      {
+        id: "proj-2",
+        name: "Network Security Audit",
+        desc: "Collegiate sub-tier vulnerability scanning, telemetry sync, and perimeter verification.",
+        status: "Active",
+        date: "Sep 10, 2026",
+        icon: "network"
+      },
+      {
+        id: "proj-3",
+        name: "Threat Intelligence Lab",
+        desc: "Forensics correlation engine for adversary IoC indicators and memory extraction analysis.",
+        status: "Draft",
+        date: "Sep 08, 2026",
+        icon: "terminal"
+      }
+    ];
+
+    let archivedProjects = [];
+
+    let contextTargetId = null;
+    let contextTargetIsArchived = false;
+
+    // Switch between Active and Archived Tabs
+    function switchTab(tab) {
+      currentTab = tab;
+      const tabActiveBtn = document.getElementById('tabActiveBtn');
+      const tabArchivedBtn = document.getElementById('tabArchivedBtn');
+      const instructionHintPill = document.getElementById('instructionHintPill');
+      const instructionHintText = document.getElementById('instructionHintText');
+
+      if (tab === 'active') {
+        tabActiveBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded text-xs font-mono font-medium transition-all bg-[#1A2330] text-[#00FF9D] border border-[#2D3A4B] shadow-sm";
+        tabArchivedBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded text-xs font-mono font-medium transition-all text-[#94A3B8] hover:text-white border border-transparent";
+        instructionHintText.innerHTML = `<strong class="text-white font-medium">Tactical Interface:</strong> Right-click on desktop or tap <span class="text-white font-mono">⋯</span> on mobile to edit, duplicate, archive, or delete projects.`;
+      } else {
+        tabArchivedBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded text-xs font-mono font-medium transition-all bg-[#1A2330] text-[#F59E0B] border border-[#2D3A4B] shadow-sm";
+        tabActiveBtn.className = "flex items-center gap-2 px-3.5 py-1.5 rounded text-xs font-mono font-medium transition-all text-[#94A3B8] hover:text-white border border-transparent";
+        instructionHintText.innerHTML = `<strong class="text-white font-medium">Archived Vault:</strong> Unarchive projects when active slots are free, or permanently delete unused archives.`;
+      }
+      renderGrid();
+    }
+
+    // Render projects grid
+    function renderGrid() {
+      const grid = document.getElementById('projectGrid');
+      const emptyState = document.getElementById('archivedEmptyState');
+      grid.innerHTML = '';
+
+      const count = projects.length;
+      const archivedCount = archivedProjects.length;
+
+      // Update counters & tabs
+      document.getElementById('activeCount').textContent = count;
+      document.getElementById('tabActiveCountPill').textContent = `${count}/5`;
+      document.getElementById('tabArchivedCountPill').textContent = archivedCount;
+      document.getElementById('footerArchiveControl').textContent = `${archivedCount} STORED`;
+
+      const counterBadge = document.getElementById('counterBadge');
+      const createBtn = document.getElementById('createProjectBtn');
+      const limitInd = document.getElementById('limitIndicator');
+      const footerSlot = document.getElementById('footerSlotControl');
+
+      // Slot logic checks
+      if (count >= MAX_PROJECTS) {
+        counterBadge.className = "inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono bg-red-950/40 text-[#EF4444] border border-[#EF4444]/40";
+        createBtn.disabled = true;
+        createBtn.innerHTML = `
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span>Project limit reached</span>
+        `;
+        createBtn.classList.replace('bg-[#00FF9D]', 'bg-[#212B3A]');
+        createBtn.classList.replace('text-[#090E16]', 'text-[#94A3B8]');
+        limitInd.textContent = "0 SLOTS (MAX LIMIT)";
+        limitInd.className = "px-2 py-1 rounded bg-[#0F141C] border border-[#2D3A4B] text-[#EF4444] font-bold";
+        footerSlot.textContent = "MAX REACHED (5/5)";
+        footerSlot.className = "text-[#EF4444]";
+      } else {
+        counterBadge.className = "inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono bg-[#1A2330] text-[#94A3B8] border border-[#2D3A4B]";
+        createBtn.disabled = false;
+        createBtn.innerHTML = `
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+          </svg>
+          <span>+ Create Project</span>
+        `;
+        createBtn.classList.replace('bg-[#212B3A]', 'bg-[#00FF9D]');
+        createBtn.classList.replace('text-[#94A3B8]', 'text-[#090E16]');
+        const remaining = MAX_PROJECTS - count;
+        limitInd.textContent = `${remaining} SLOT${remaining > 1 ? 'S' : ''} AVAILABLE`;
+        limitInd.className = "px-2 py-1 rounded bg-[#0F141C] border border-[#2D3A4B] text-[#00FF9D]";
+        footerSlot.textContent = `ENFORCED (${count}/5)`;
+        footerSlot.className = "text-[#00FF9D]";
+      }
+
+      // Render based on current selected tab
+      if (currentTab === 'active') {
+        emptyState.classList.add('hidden');
+        grid.classList.remove('hidden');
+
+        // Render Active Cards
+        projects.forEach((proj, idx) => {
+          const card = document.createElement('div');
+          card.id = `card-${proj.id}`;
+          card.className = "group relative bg-[#1A2330] border border-[#2D3A4B] hover:border-[#00FF9D]/60 rounded-xl p-5 transition-all duration-150 flex flex-col justify-between shadow-lg hover:shadow-[0_4px_20px_rgba(0,0,0,0.4)] cursor-pointer select-none";
+          
+          card.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showContextMenu(e.clientX, e.clientY, proj.id, false);
+          });
+
+          let iconSvg = getIconSvg(proj.icon, 'text-[#00FF9D]');
+          const isStatusActive = proj.status === 'Active';
+          const badgeColor = isStatusActive 
+            ? 'bg-[#00FF9D]/10 text-[#00FF9D] border-[#00FF9D]/30' 
+            : 'bg-[#94A3B8]/10 text-[#94A3B8] border-[#94A3B8]/30';
+
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-md bg-[#212B3A] border border-[#2D3A4B] flex items-center justify-center">
+                    ${iconSvg}
+                  </div>
+                  <span class="text-[11px] font-mono text-[#94A3B8]">PROJECT 0${idx + 1}</span>
+                </div>
+                
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border ${badgeColor} font-semibold flex items-center gap-1">
+                    ${isStatusActive ? '<span class="w-1.5 h-1.5 rounded-full bg-[#00FF9D] animate-pulse"></span>' : ''}
+                    ${proj.status}
+                  </span>
+
+                  <!-- ⋯ Context button -->
+                  <button onclick="triggerContextFromButton(event, '${proj.id}', false)" class="p-1 rounded text-[#94A3B8] hover:text-white hover:bg-[#212B3A] transition-colors" title="Project Actions">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                  </button>
+                </div>
+              </div>
+
+              <h3 class="text-base font-bold text-white group-hover:text-[#00FF9D] transition-colors leading-snug">${proj.name}</h3>
+              <p class="text-xs text-[#94A3B8] mt-1.5 line-clamp-2 leading-relaxed">${proj.desc}</p>
+            </div>
+
+            <div class="pt-4 mt-4 border-t border-[#2D3A4B]/70 flex items-center justify-between text-[11px] font-mono text-[#94A3B8]">
+              <div class="flex items-center gap-1.5">
+                <svg class="w-3 h-3 text-[#94A3B8]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                <span>${proj.date}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="event.stopPropagation(); openArchiveModalById('${proj.id}')" class="px-2 py-0.5 rounded text-[10px] font-mono text-[#94A3B8] hover:text-[#F59E0B] hover:bg-[#212B3A] transition-colors border border-transparent hover:border-[#F59E0B]/30" title="Archive to Vault">
+                  Archive
+                </button>
+                <div class="flex items-center gap-1 text-[#00FF9D] text-[10px] font-mono group-hover:translate-x-0.5 transition-transform">
+                  <span>MANAGE</span>
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                </div>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        // Render Empty / Available Slots up to MAX_PROJECTS (5 total slots)
+        const emptySlotsCount = MAX_PROJECTS - count;
+        for (let i = 0; i < emptySlotsCount; i++) {
+          const slotNum = count + i + 1;
+          const emptyCard = document.createElement('div');
+          emptyCard.className = "relative bg-[#0F141C]/80 border-2 border-dashed border-[#2D3A4B] hover:border-[#00FF9D]/60 rounded-xl p-5 flex flex-col items-center justify-center text-center group transition-all duration-150 min-h-[170px]";
+          emptyCard.innerHTML = `
+            <div class="w-10 h-10 rounded-full bg-[#1A2330] border border-[#2D3A4B] group-hover:border-[#00FF9D]/50 flex items-center justify-center text-[#94A3B8] group-hover:text-[#00FF9D] transition-colors mb-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+            </div>
+            <span class="text-[11px] font-mono text-[#94A3B8] uppercase tracking-wider">SLOT 0${slotNum} // AVAILABLE</span>
+            <h4 class="text-sm font-semibold text-white mt-1 group-hover:text-[#00FF9D] transition-colors">Available Project Slot</h4>
+            <p class="text-xs text-[#94A3B8] mt-0.5 mb-3.5">Create a new project</p>
+            <button onclick="openCreateModal()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#212B3A] hover:bg-[#00FF9D] text-[#94A3B8] hover:text-[#090E16] text-xs font-semibold border border-[#2D3A4B] hover:border-[#00FF9D] transition-all">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+              <span>+ Add Project</span>
+            </button>
+          `;
+          grid.appendChild(emptyCard);
+        }
+      } else {
+        // Render Archived Tab
+        if (archivedProjects.length === 0) {
+          grid.classList.add('hidden');
+          emptyState.classList.remove('hidden');
+        } else {
+          emptyState.classList.add('hidden');
+          grid.classList.remove('hidden');
+
+          archivedProjects.forEach((proj, idx) => {
+            const card = document.createElement('div');
+            card.id = `card-archived-${proj.id}`;
+            card.className = "group relative bg-[#151D28] border border-[#2D3A4B] hover:border-[#F59E0B]/60 rounded-xl p-5 transition-all duration-150 flex flex-col justify-between shadow-lg hover:shadow-[0_4px_20px_rgba(0,0,0,0.4)] select-none";
+            
+            card.addEventListener('contextmenu', (e) => {
+              e.preventDefault();
+              showContextMenu(e.clientX, e.clientY, proj.id, true);
+            });
+
+            let iconSvg = getIconSvg(proj.icon, 'text-[#F59E0B]');
+
+            card.innerHTML = `
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-3">
+                  <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-md bg-[#212B3A] border border-[#2D3A4B] flex items-center justify-center">
+                      ${iconSvg}
+                    </div>
+                    <span class="text-[11px] font-mono text-[#94A3B8]">ARCHIVED 0${idx + 1}</span>
+                  </div>
+                  
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full border bg-amber-950/30 text-[#F59E0B] border-[#F59E0B]/40 font-semibold flex items-center gap-1">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#F59E0B]"></span>
+                      ARCHIVED
+                    </span>
+
+                    <!-- ⋯ Context button -->
+                    <button onclick="triggerContextFromButton(event, '${proj.id}', true)" class="p-1 rounded text-[#94A3B8] hover:text-white hover:bg-[#212B3A] transition-colors" title="Archived Actions">
+                      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <h3 class="text-base font-bold text-white group-hover:text-[#F59E0B] transition-colors leading-snug">${proj.name}</h3>
+                <p class="text-xs text-[#94A3B8] mt-1.5 line-clamp-2 leading-relaxed">${proj.desc}</p>
+              </div>
+
+              <div class="pt-4 mt-4 border-t border-[#2D3A4B]/70 flex items-center justify-between text-[11px] font-mono text-[#94A3B8]">
+                <div class="flex items-center gap-1.5">
+                  <svg class="w-3 h-3 text-[#94A3B8]/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                  <span>Archived ${proj.archivedDate || 'Recently'}</span>
+                </div>
+                <button onclick="unarchiveProject('${proj.id}')" class="inline-flex items-center gap-1 px-3 py-1 rounded bg-[#212B3A] hover:bg-[#00FF9D] text-[#00FF9D] hover:text-[#090E16] text-[11px] font-semibold border border-[#2D3A4B] hover:border-[#00FF9D] transition-all">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                  <span>Unarchive</span>
+                </button>
+              </div>
+            `;
+            grid.appendChild(card);
+          });
+        }
+      }
+    }
+
+    function getIconSvg(type, colorClass) {
+      if (type === 'network') {
+        return `
+          <svg class="w-4 h-4 ${colorClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+          </svg>
+        `;
+      } else if (type === 'terminal') {
+        return `
+          <svg class="w-4 h-4 ${colorClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        `;
+      }
+      return `
+        <svg class="w-4 h-4 ${colorClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      `;
+    }
+
+    // Context Menu Handling
+    const contextMenu = document.getElementById('contextMenu');
+
+    function showContextMenu(x, y, projId, isArchived = false) {
+      contextTargetId = projId;
+      contextTargetIsArchived = isArchived;
+
+      const activeContextItems = document.getElementById('activeContextItems');
+      const archivedContextItems = document.getElementById('archivedContextItems');
+
+      if (isArchived) {
+        activeContextItems.classList.add('hidden');
+        archivedContextItems.classList.remove('hidden');
+      } else {
+        activeContextItems.classList.remove('hidden');
+        archivedContextItems.classList.add('hidden');
+      }
+
+      contextMenu.style.left = `${Math.min(x, window.innerWidth - 200)}px`;
+      contextMenu.style.top = `${Math.min(y, window.innerHeight - 200)}px`;
+      contextMenu.classList.remove('hidden');
+    }
+
+    function triggerContextFromButton(e, projId, isArchived = false) {
+      e.stopPropagation();
+      const rect = e.currentTarget.getBoundingClientRect();
+      showContextMenu(rect.left - 130, rect.bottom + 6, projId, isArchived);
+    }
+
+    function hideContextMenu() {
+      contextMenu.classList.add('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!contextMenu.contains(e.target)) {
+        hideContextMenu();
+      }
+    });
+
+    function handleContextAction(action) {
+      hideContextMenu();
+      if (!contextTargetId) return;
+
+      const projList = contextTargetIsArchived ? archivedProjects : projects;
+      const proj = projList.find(p => p.id === contextTargetId);
+      if (!proj) return;
+
+      if (action === 'edit') {
+        openEditModal(proj);
+      } else if (action === 'duplicate') {
+        duplicateProject(proj);
+      } else if (action === 'archive') {
+        openArchiveModal(proj);
+      } else if (action === 'unarchive') {
+        unarchiveProject(proj.id);
+      } else if (action === 'delete') {
+        openDeleteModal(proj);
+      }
+    }
+
+    // Create Project Operations
+    function openCreateModal() {
+      if (projects.length >= MAX_PROJECTS) {
+        showToast("Project limit reached (5 / 5)", "error");
+        return;
+      }
+      document.getElementById('createName').value = '';
+      document.getElementById('createDesc').value = '';
+      document.getElementById('createStatus').value = 'Active';
+      document.getElementById('createModal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('createName').focus(), 50);
+    }
+
+    function closeCreateModal() {
+      document.getElementById('createModal').classList.add('hidden');
+    }
+
+    function submitCreateProject(e) {
+      e.preventDefault();
+      if (projects.length >= MAX_PROJECTS) {
+        showToast("Project limit reached. Maximum 5 projects allowed.", "error");
+        closeCreateModal();
+        return;
+      }
+
+      const name = document.getElementById('createName').value.trim();
+      const desc = document.getElementById('createDesc').value.trim();
+      const status = document.getElementById('createStatus').value;
+
+      const newProj = {
+        id: "proj-" + Date.now(),
+        name: name,
+        desc: desc,
+        status: status,
+        date: "Today, Just now",
+        icon: "shield"
+      };
+
+      projects.push(newProj);
+      renderGrid();
+      closeCreateModal();
+      showToast(`Project "${name}" created successfully.`);
+    }
+
+    // Edit Project Operations
+    function openEditModal(proj) {
+      document.getElementById('editProjectId').value = proj.id;
+      document.getElementById('editName').value = proj.name;
+      document.getElementById('editDesc').value = proj.desc;
+      document.getElementById('editStatus').value = proj.status;
+      document.getElementById('editModal').classList.remove('hidden');
+      setTimeout(() => document.getElementById('editName').focus(), 50);
+    }
+
+    function closeEditModal() {
+      document.getElementById('editModal').classList.add('hidden');
+    }
+
+    function submitEditProject(e) {
+      e.preventDefault();
+      const id = document.getElementById('editProjectId').value;
+      const name = document.getElementById('editName').value.trim();
+      const desc = document.getElementById('editDesc').value.trim();
+      const status = document.getElementById('editStatus').value;
+
+      const proj = projects.find(p => p.id === id);
+      if (proj) {
+        proj.name = name;
+        proj.desc = desc;
+        proj.status = status;
+        renderGrid();
+        closeEditModal();
+        showToast(`Project "${name}" updated.`);
+      }
+    }
+
+    // Duplicate Project Operations
+    function duplicateProject(proj) {
+      if (projects.length >= MAX_PROJECTS) {
+        showToast("Project limit reached. Cannot duplicate.", "error");
+        return;
+      }
+
+      const duplicate = {
+        id: "proj-" + Date.now(),
+        name: `${proj.name} Copy`,
+        desc: proj.desc,
+        status: proj.status,
+        date: "Today, Duplicated",
+        icon: proj.icon
+      };
+
+      projects.push(duplicate);
+      renderGrid();
+      showToast(`Duplicated as "${duplicate.name}".`);
+    }
+
+    // Archive Project Operations
+    let projectToArchiveId = null;
+
+    function openArchiveModalById(id) {
+      const proj = projects.find(p => p.id === id);
+      if (proj) openArchiveModal(proj);
+    }
+
+    function openArchiveModal(proj) {
+      projectToArchiveId = proj.id;
+      document.getElementById('archiveProjectNameDisplay').textContent = proj.name;
+      document.getElementById('archiveModal').classList.remove('hidden');
+    }
+
+    function closeArchiveModal() {
+      document.getElementById('archiveModal').classList.add('hidden');
+      projectToArchiveId = null;
+    }
+
+    function confirmArchiveProject() {
+      if (!projectToArchiveId) return;
+      const idx = projects.findIndex(p => p.id === projectToArchiveId);
+      if (idx !== -1) {
+        const [proj] = projects.splice(idx, 1);
+        proj.archivedDate = "Sep 14, 2026";
+        archivedProjects.push(proj);
+        renderGrid();
+        closeArchiveModal();
+        showToast("Project archived successfully");
+      }
+    }
+
+    // Unarchive Operation
+    function unarchiveProject(projId) {
+      if (projects.length >= MAX_PROJECTS) {
+        showToast("Active slots full (5/5). Free up a slot to unarchive.", "warning");
+        return;
+      }
+
+      const idx = archivedProjects.findIndex(p => p.id === projId);
+      if (idx !== -1) {
+        const [proj] = archivedProjects.splice(idx, 1);
+        delete proj.archivedDate;
+        projects.push(proj);
+        renderGrid();
+        showToast("Project unarchived to active workspace");
+      }
+    }
+
+    // Delete Project Operations
+    let projectToDeleteId = null;
+    let projectToDeleteIsArchived = false;
+
+    function openDeleteModal(proj) {
+      projectToDeleteId = proj.id;
+      projectToDeleteIsArchived = contextTargetIsArchived;
+      document.getElementById('deleteProjectNameDisplay').textContent = proj.name;
+      document.getElementById('deleteModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.add('hidden');
+      projectToDeleteId = null;
+    }
+
+    function confirmDeleteProject() {
+      if (!projectToDeleteId) return;
+      let deletedName = '';
+      if (projectToDeleteIsArchived) {
+        const p = archivedProjects.find(x => x.id === projectToDeleteId);
+        if (p) deletedName = p.name;
+        archivedProjects = archivedProjects.filter(x => x.id !== projectToDeleteId);
+      } else {
+        const p = projects.find(x => x.id === projectToDeleteId);
+        if (p) deletedName = p.name;
+        projects = projects.filter(x => x.id !== projectToDeleteId);
+      }
+      renderGrid();
+      closeDeleteModal();
+      showToast(`Removed project "${deletedName || 'Project'}". Slot updated.`);
+    }
+
+    // Toast Notification helper
+    let toastTimeout = null;
+    function showToast(message, type = "success") {
+      const toast = document.getElementById('toast');
+      const toastContent = document.getElementById('toastContent');
+
+      if (type === "error") {
+        toastContent.className = "flex items-center gap-3 px-4 py-3 rounded-lg bg-[#1A2330] border border-[#EF4444]/60 text-xs shadow-2xl text-white";
+        toastContent.innerHTML = `
+          <div class="w-5 h-5 rounded-full bg-[#EF4444]/20 flex items-center justify-center text-[#EF4444]">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
+          </div>
+          <span class="font-medium">${message}</span>
+        `;
+      } else if (type === "warning") {
+        toastContent.className = "flex items-center gap-3 px-4 py-3 rounded-lg bg-[#1A2330] border border-[#F59E0B]/60 text-xs shadow-2xl text-white";
+        toastContent.innerHTML = `
+          <div class="w-5 h-5 rounded-full bg-[#F59E0B]/20 flex items-center justify-center text-[#F59E0B]">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          </div>
+          <span class="font-medium">${message}</span>
+        `;
+      } else {
+        toastContent.className = "flex items-center gap-3 px-4 py-3 rounded-lg bg-[#1A2330] border border-[#00FF9D]/60 text-xs shadow-2xl text-white";
+        toastContent.innerHTML = `
+          <div class="w-5 h-5 rounded-full bg-[#00FF9D]/20 flex items-center justify-center text-[#00FF9D]">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+          </div>
+          <span class="font-medium">${message}</span>
+        `;
+      }
+
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.remove('opacity-0', 'translate-y-2');
+      }, 10);
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.classList.add('hidden'), 200);
+      }, 3200);
+    }
+
+    // Keyboard accessibility
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        hideContextMenu();
+        closeCreateModal();
+        closeEditModal();
+        closeArchiveModal();
+        closeDeleteModal();
+      }
+    });
+
+    // Initial render
+    renderGrid();
+  </script>
+
+
+</body></html>

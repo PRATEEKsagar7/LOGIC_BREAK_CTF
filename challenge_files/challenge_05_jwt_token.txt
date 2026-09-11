@@ -1,0 +1,9 @@
+﻿JWT HEADER:
+{"alg":"HS256","typ":"JWT"}
+
+JWT PAYLOAD:
+{"sub":"operative_09","role":"guest","team":"Collegiate","iat":1773240000}
+
+WEAK SECRET USED: "secret123"
+FORGED OBJECTIVE: Change "role" to "admin" and sign with HMAC-SHA256.
+VALID ADMIN FLAG: logicCTF{jwt_s3cr3t_brut3f0rc3_2026}
