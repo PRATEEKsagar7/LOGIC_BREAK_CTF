@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" style=""><head>
+﻿<!DOCTYPE html><html lang="en" style=""><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CyberNexus - Reports Management</title>
@@ -1074,7 +1074,7 @@
 
       <!-- Pagination -->
       <div class="px-4 py-3 border-t border-[#2D3A4B] bg-[#161D27] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#94A3B8]">
-        <div id="pagination-info" class="font-mono">Showing 1–8 of 24 reports</div>
+        <div id="pagination-info" class="font-mono">Showing 1â€“8 of 24 reports</div>
         <div class="flex items-center gap-1">
           <button id="prevPageBtn" onclick="changePage(-1)" class="px-2.5 py-1 rounded bg-[#1A2330] border border-[#2D3A4B] hover:border-[#3B4A5D] text-white disabled:opacity-30 disabled:cursor-not-allowed transition" disabled="">
             Previous
@@ -2053,7 +2053,7 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
       const start = total === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
       const end = Math.min(currentPage * itemsPerPage, total);
 
-      document.getElementById('pagination-info').textContent = `Showing ${start}–${end} of ${total} reports`;
+      document.getElementById('pagination-info').textContent = `Showing ${start}â€“${end} of ${total} reports`;
 
       document.getElementById('prevPageBtn').disabled = currentPage <= 1;
       document.getElementById('nextPageBtn').disabled = currentPage >= totalPages;
@@ -2383,4 +2383,4 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
 
 
 
-</body></html>
+<script src="shared_nav.js"></script></body></html>
