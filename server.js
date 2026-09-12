@@ -60,18 +60,18 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch3',
     number: 3,
-    title: 'Under the Fold',
+    title: 'Read Between the Lines.',
     category: 'Business Logic',
     difficulty: 'Beginner',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'The workspace profile description appears short, but system metrics reveal unusual text volume. Expand your view to locate what was left behind.',
+    description: 'The workspace description seems brief, but not everything recorded is immediately visible. Find a way to read the complete entry.',
     hints: [
-      "The word count doesn't match what is visible on screen. Use the corner adjust button or drag handle to stretch the box downward."
+      "The counter beneath the field tells a different story than what you see. Some containers aren't meant to stay small."
     ],
     file: 'workspace.html',
-    codeSnippet: '// Textarea appears to contain only 1 line\n// Telemetry metrics reveal 37 words and 430 characters\n// Adjust box or drag corner handle down to inspect the hidden buffer',
+    codeSnippet: '// The briefing looks short at first glance.\n// Look closely at the details and find what is tucked away.',
     flag: 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}'
   },
   {

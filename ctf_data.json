@@ -4,12 +4,9 @@
       "id": "t1",
       "name": "Null Vector",
       "college": "Technova University",
-      "score": 85,
-      "solved": [
-        "ch1",
-        "ch2"
-      ],
-      "penalties": 1,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
       "lastSolve": 1789219155896
     },
     {
@@ -52,11 +49,8 @@
       "id": "t6",
       "name": "Bit Shifters",
       "college": "Vanguard Tech Institute",
-      "score": 100,
-      "solved": [
-        "ch2",
-        "ch1"
-      ],
+      "score": 0,
+      "solved": [],
       "penalties": 0,
       "lastSolve": 1789219210767
     },
@@ -73,12 +67,9 @@
       "id": "t8",
       "name": "Logic Breakers",
       "college": "Host College Collective",
-      "score": 50,
-      "solved": [
-        "ch2",
-        "ch3"
-      ],
-      "penalties": 7,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
       "lastSolve": 1789220217230
     },
     {
