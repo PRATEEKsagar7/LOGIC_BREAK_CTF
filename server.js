@@ -26,16 +26,15 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch1',
     number: 1,
-    title: 'Project Quota Bypass',
+    title: 'Limit Break',
     category: 'Business Logic',
     difficulty: 'Beginner',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'The Project Management console enforces a strict 3-project quota on standard creation. Exploit a business logic flaw in the project duplication action to bypass the capacity limit and capture the flag.',
+    description: 'Create a new project after reaching the maximum project limit.',
     hints: [
-      'Open the Projects page. The system enforces a strict 3-project maximum capacity.',
-      'Notice that duplicating an existing project fails to validate active slot limits. Duplicating beyond the limit unlocks the flag pop-up!'
+      'The Create button is not the only way to create a project.'
     ],
     file: 'projects.html',
     codeSnippet: '// Standard creation enforces limit:\nif (projects.length >= MAX_PROJECTS) showToast("Project limit reached");\n\n// Duplication flaw: missing quota check!',
