@@ -8,8 +8,8 @@
       "solved": [
         "ch1"
       ],
-      "penalties": 2,
-      "lastSolve": 1789214132245
+      "penalties": 0,
+      "lastSolve": 1789216428916
     },
     {
       "id": "t2",
@@ -69,10 +69,8 @@
       "id": "t8",
       "name": "Logic Breakers",
       "college": "Host College Collective",
-      "score": 50,
-      "solved": [
-        "ch1"
-      ],
+      "score": 0,
+      "solved": [],
       "penalties": 0,
       "lastSolve": 1789138687580
     },
@@ -96,6 +94,15 @@
     }
   ],
   "submissions": [
+    {
+      "id": "sub-1789216428916",
+      "team": "Null Vector",
+      "challengeId": "ch1",
+      "challengeTitle": "Limit Break",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789216428916
+    },
     {
       "id": "sub-1789214132245",
       "team": "Null Vector",

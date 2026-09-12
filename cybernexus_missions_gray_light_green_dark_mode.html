@@ -226,14 +226,16 @@
 
       container.innerHTML = filtered.map(ch => `
         <article class="relative flex flex-col justify-between gap-3 p-5 rounded-2xl bg-[#161d19] border ${ch.isSolved ? 'border-emerald-500/50 shadow-[0_0_20px_rgba(91,220,174,0.12)]' : 'border-[#2d3a43]'} hover:border-emerald-500/50 transition-all duration-200 group">
-          <!-- Top Row: Metadata on left, Points / Solved on right -->
+          <!-- Top Row: Challenge Name & Metadata on left, Points / Solved on right -->
           <div class="flex items-center justify-between gap-4">
-            <div class="flex items-center gap-2.5 text-xs font-mono">
-              <span class="text-slate-500 font-bold">#${ch.number < 10 ? '0' + ch.number : ch.number}</span>
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <span class="text-xs font-mono text-slate-500 font-bold">#${ch.number < 10 ? '0' + ch.number : ch.number}</span>
               <span class="text-slate-600">•</span>
-              <span class="text-slate-300 font-semibold">${ch.category}</span>
+              <h3 class="text-base sm:text-lg font-bold text-white tracking-tight group-hover:text-emerald-300 transition-colors font-mono">
+                ${ch.title}
+              </h3>
               <span class="text-slate-600">•</span>
-              <span class="${ch.tier === 1 ? 'text-emerald-400' : 'text-amber-400'} font-semibold">Tier ${ch.tier}</span>
+              <span class="text-xs font-mono ${ch.tier === 1 ? 'text-emerald-400' : 'text-amber-400'} font-semibold">Tier ${ch.tier}</span>
             </div>
 
             <!-- Points / Solved Status -->
@@ -251,13 +253,9 @@
             </div>
           </div>
 
-          <!-- Middle: Title & Objective / Description -->
-          <div class="space-y-1">
-            <h3 class="text-lg font-bold text-white tracking-tight group-hover:text-emerald-300 transition-colors">
-              ${ch.title}
-            </h3>
-
-            <p class="text-xs text-slate-400 leading-relaxed max-w-4xl">
+          <!-- Middle: Objective / Description (Enlarged for high clarity) -->
+          <div class="py-1">
+            <p class="text-sm sm:text-base font-medium text-slate-200 leading-relaxed max-w-4xl">
               ${ch.description}
             </p>
           </div>
