@@ -1,0 +1,2386 @@
+﻿<!DOCTYPE html><html lang="en" style=""><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyberNexus - Reports Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#090E16',
+              surface: '#0F141C',
+              card: '#1A2330',
+              elevated: '#212B3A',
+              border: '#2D3A4B',
+              borderLight: '#3B4A5D',
+              green: '#00FF9D',
+              emerald: '#10B981',
+              textMuted: '#94A3B8',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #090E16;
+      color: #FFFFFF;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .mono-code {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+    }
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090E16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2D3A4B;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3B4A5D;
+    }
+    .custom-ring:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(0, 255, 157, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-[#090E16] text-white min-h-screen pb-24 md:pb-12 selection:bg-[#00FF9D]/30 selection:text-[#00FF9D]">
+
+  <!-- Top Sticky Header -->
+  <header class="sticky top-0 z-40 w-full bg-[#0F141C]/90 backdrop-blur-md border-b border-[#2D3A4B] px-4 sm:px-6 lg:px-8 py-3 transition-colors">
+    
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-12">
+    
+    <!-- Title & Primary CTA Banner -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#2D3A4B]">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          
+          
+          
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
+          REPORTS
+          
+        </h1>
+        
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        
+
+        <button onclick="openCreateModal()" class="px-4 py-2 rounded-lg bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-bold text-xs sm:text-sm tracking-wide flex items-center gap-2 transition shadow-[0_0_15px_rgba(0,255,157,0.2)] active:scale-95">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span class="">CREATE REPORT</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Section 5: Telemetry / Operational Metrics -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 my-6">
+      <!-- Total Reports -->
+      <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 sm:p-4 hover:border-[#3B4A5D] transition relative overflow-hidden">
+        <div class="flex items-center justify-between text-[#94A3B8] text-[11px] font-bold uppercase tracking-wider mb-1">
+          <span class="">Total Reports</span>
+          <span class="w-2 h-2 rounded-full bg-[#00FF9D]"></span>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span id="stat-total" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">24</span>
+          <span class="text-[11px] font-mono text-[#00FF9D] font-medium">+4 this week</span>
+        </div>
+        <div class="text-[11px] text-[#94A3B8] mt-1 flex items-center gap-1">
+          <span class="">Active database</span>
+        </div>
+      </div>
+
+      <!-- Open -->
+      <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 sm:p-4 hover:border-[#3B4A5D] transition relative overflow-hidden">
+        <div class="flex items-center justify-between text-[#94A3B8] text-[11px] font-bold uppercase tracking-wider mb-1">
+          <span class="">Open</span>
+          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span id="stat-open" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">07</span>
+          <span class="text-[11px] font-mono text-amber-400 font-medium">Needs attention</span>
+        </div>
+        <div class="text-[11px] text-[#94A3B8] mt-1 flex items-center gap-1">
+          <span class="">Unassigned triage</span>
+        </div>
+      </div>
+
+      <!-- In Review -->
+      <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 sm:p-4 hover:border-[#3B4A5D] transition relative overflow-hidden">
+        <div class="flex items-center justify-between text-[#94A3B8] text-[11px] font-bold uppercase tracking-wider mb-1">
+          <span class="">In Review</span>
+          <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span id="stat-review" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">06</span>
+          <span class="text-[11px] font-mono text-cyan-400 font-medium">Under review</span>
+        </div>
+        <div class="text-[11px] text-[#94A3B8] mt-1 flex items-center gap-1">
+          <span class="">Proctor verification</span>
+        </div>
+      </div>
+
+      <!-- Resolved -->
+      <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 sm:p-4 hover:border-[#3B4A5D] transition relative overflow-hidden">
+        <div class="flex items-center justify-between text-[#94A3B8] text-[11px] font-bold uppercase tracking-wider mb-1">
+          <span class="">Resolved</span>
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span id="stat-resolved" class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">11</span>
+          <span class="text-[11px] font-mono text-emerald-400 font-medium">Completed</span>
+        </div>
+        <div class="text-[11px] text-[#94A3B8] mt-1 flex items-center gap-1">
+          <span class="">Flags validated</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Search + Filter Toolbar -->
+    <section class="bg-[#0F141C] border border-[#2D3A4B] rounded-xl p-3 sm:p-4 mb-6">
+      <div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
+        
+        <!-- Search Input -->
+        <div class="relative flex-1">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#94A3B8]">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search reports by title, ID or author..." class="w-full pl-9 pr-8 py-2 bg-[#1A2330] border border-[#2D3A4B] rounded-lg text-xs sm:text-sm text-white placeholder-[#94A3B8]/60 focus:border-[#00FF9D] custom-ring transition">
+          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-[#94A3B8] hover:text-white">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex flex-wrap sm:flex-nowrap items-center gap-2">
+          
+          <!-- Status dropdown -->
+          <div class="w-1/2 sm:w-auto flex-1 sm:flex-none">
+            <select id="statusFilter" onchange="handleFilterChange()" class="w-full bg-[#1A2330] border border-[#2D3A4B] text-xs font-medium text-white rounded-lg px-2.5 py-2 hover:border-[#3B4A5D] focus:border-[#00FF9D] custom-ring cursor-pointer">
+              <option value="ALL">All Statuses</option>
+              <option value="Open">Status: Open</option>
+              <option value="In Review">Status: In Review</option>
+              <option value="Resolved">Status: Resolved</option>
+            </select>
+          </div>
+
+          <!-- Category dropdown -->
+          <div class="w-1/2 sm:w-auto flex-1 sm:flex-none">
+            <select id="categoryFilter" onchange="handleFilterChange()" class="w-full bg-[#1A2330] border border-[#2D3A4B] text-xs font-medium text-white rounded-lg px-2.5 py-2 hover:border-[#3B4A5D] focus:border-[#00FF9D] custom-ring cursor-pointer">
+              <option value="ALL">All Categories</option>
+              <option value="Web Security">Web Security</option>
+              <option value="Network Security">Network Security</option>
+              <option value="Cryptography">Cryptography</option>
+              <option value="Digital Forensics">Digital Forensics</option>
+              <option value="OSINT">OSINT</option>
+              <option value="Reverse Engineering">Reverse Engineering</option>
+            </select>
+          </div>
+
+          <!-- Sort dropdown -->
+          <div class="w-full sm:w-auto">
+            <select id="sortFilter" onchange="handleFilterChange()" class="w-full bg-[#1A2330] border border-[#2D3A4B] text-xs font-medium text-white rounded-lg px-2.5 py-2 hover:border-[#3B4A5D] focus:border-[#00FF9D] custom-ring cursor-pointer">
+              <option value="updated_desc">Sort: Recently Updated</option>
+              <option value="id_desc">Sort: Newest (ID)</option>
+              <option value="id_asc">Sort: Oldest (ID)</option>
+              <option value="priority">Sort: Priority High-Low</option>
+            </select>
+          </div>
+
+          <!-- Clear Filters pill button -->
+          <button id="clearAllFiltersBtn" onclick="resetFilters()" class="hidden px-2.5 py-2 rounded-lg bg-[#212B3A] hover:bg-[#2D3A4B] border border-[#2D3A4B] text-xs font-semibold text-[#00FF9D] items-center gap-1 transition whitespace-nowrap">
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            Clear Filters
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Section 7 & 8: Main Report List / Table -->
+    <section class="bg-[#0F141C] border border-[#2D3A4B] rounded-xl overflow-hidden shadow-lg">
+      
+      <!-- List Header Bar -->
+      <div class="px-4 py-3 border-b border-[#2D3A4B] bg-[#161D27] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-sm bg-[#00FF9D]"></span>
+          <h2 class="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white">ALL REPORTS</h2>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="record-count-badge" class="mono-code text-xs px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B] text-[#94A3B8]">24 RECORDS</span>
+        </div>
+      </div>
+
+      <!-- Desktop Table View (hidden on small screens) -->
+      <div class="hidden md:block overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-[#2D3A4B] bg-[#1A2330]/60 text-[11px] uppercase tracking-wider font-semibold text-[#94A3B8]">
+              <th class="py-3 px-4 font-mono">Report</th>
+              <th class="py-3 px-4">Category</th>
+              <th class="py-3 px-4">Author</th>
+              <th class="py-3 px-4">Status</th>
+              <th class="py-3 px-4">Updated</th>
+              <th class="py-3 px-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="reportsTableBody" class="divide-y divide-[#2D3A4B]/60 text-sm">
+        <tr class="hover:bg-[#1A2330]/40 transition group">
+          <td class="py-3 px-4">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide">REPORT-024</span>
+                <span class="font-bold text-white group-hover:text-[#00FF9D] transition-colors">Ghost Protocol Incident Analysis</span>
+              </div>
+              <p class="text-xs text-[#94A3B8] line-clamp-1 mt-0.5 max-w-md">Analysis of suspicious authentication activity detected during Wave 03 telemetry sweep.</p>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Web Security
+      </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <div class="flex items-center gap-1.5 text-xs text-white">
+              <div class="w-5 h-5 rounded-full bg-[#212B3A] border border-[#2D3A4B] text-[10px] text-[#94A3B8] flex items-center justify-center font-bold">
+                A
+              </div>
+              <span class="font-medium">Aarav Mehta</span>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> IN REVIEW
+        </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap font-mono text-xs text-[#94A3B8]">
+            Today, 10:42 AM
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick="viewReport('REPORT-024')" title="View Report" aria-label="View report details" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] hover:text-[#00FF9D] text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <button onclick="openEditModal('REPORT-024')" title="Edit Report" aria-label="Edit report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 hover:text-emerald-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </button>
+              <button onclick="openDeleteModal('REPORT-024')" title="Delete Report" aria-label="Delete report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 hover:text-red-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      
+        <tr class="hover:bg-[#1A2330]/40 transition group">
+          <td class="py-3 px-4">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide">REPORT-023</span>
+                <span class="font-bold text-white group-hover:text-[#00FF9D] transition-colors">PacketZero Network Findings</span>
+              </div>
+              <p class="text-xs text-[#94A3B8] line-clamp-1 mt-0.5 max-w-md">Asynchronous packet tunneling and honeypot bypass telemetry verification.</p>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Network Security
+      </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <div class="flex items-center gap-1.5 text-xs text-white">
+              <div class="w-5 h-5 rounded-full bg-[#212B3A] border border-[#2D3A4B] text-[10px] text-[#94A3B8] flex items-center justify-center font-bold">
+                R
+              </div>
+              <span class="font-medium">Riya Sharma</span>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-amber-500/10 text-amber-400 border border-amber-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> OPEN
+        </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap font-mono text-xs text-[#94A3B8]">
+            Today, 09:18 AM
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick="viewReport('REPORT-023')" title="View Report" aria-label="View report details" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] hover:text-[#00FF9D] text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <button onclick="openEditModal('REPORT-023')" title="Edit Report" aria-label="Edit report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 hover:text-emerald-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </button>
+              <button onclick="openDeleteModal('REPORT-023')" title="Delete Report" aria-label="Delete report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 hover:text-red-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      
+        <tr class="hover:bg-[#1A2330]/40 transition group">
+          <td class="py-3 px-4">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide">REPORT-022</span>
+                <span class="font-bold text-white group-hover:text-[#00FF9D] transition-colors">Broken Cipher Assessment</span>
+              </div>
+              <p class="text-xs text-[#94A3B8] line-clamp-1 mt-0.5 max-w-md">PRNG seed recovery validation for linear feedback shift registers.</p>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Cryptography
+      </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <div class="flex items-center gap-1.5 text-xs text-white">
+              <div class="w-5 h-5 rounded-full bg-[#212B3A] border border-[#2D3A4B] text-[10px] text-[#94A3B8] flex items-center justify-center font-bold">
+                K
+              </div>
+              <span class="font-medium">Kabir Singh</span>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RESOLVED
+        </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap font-mono text-xs text-[#94A3B8]">
+            Yesterday, 06:32 PM
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick="viewReport('REPORT-022')" title="View Report" aria-label="View report details" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] hover:text-[#00FF9D] text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <button onclick="openEditModal('REPORT-022')" title="Edit Report" aria-label="Edit report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 hover:text-emerald-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </button>
+              <button onclick="openDeleteModal('REPORT-022')" title="Delete Report" aria-label="Delete report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 hover:text-red-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      
+        <tr class="hover:bg-[#1A2330]/40 transition group">
+          <td class="py-3 px-4">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide">REPORT-021</span>
+                <span class="font-bold text-white group-hover:text-[#00FF9D] transition-colors">Silent Trace Investigation</span>
+              </div>
+              <p class="text-xs text-[#94A3B8] line-clamp-1 mt-0.5 max-w-md">Rootkit memory dump volatility review on ephemeral kernel container.</p>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Digital Forensics
+      </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <div class="flex items-center gap-1.5 text-xs text-white">
+              <div class="w-5 h-5 rounded-full bg-[#212B3A] border border-[#2D3A4B] text-[10px] text-[#94A3B8] flex items-center justify-center font-bold">
+                A
+              </div>
+              <span class="font-medium">Ananya Verma</span>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> IN REVIEW
+        </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap font-mono text-xs text-[#94A3B8]">
+            Yesterday, 03:14 PM
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick="viewReport('REPORT-021')" title="View Report" aria-label="View report details" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] hover:text-[#00FF9D] text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <button onclick="openEditModal('REPORT-021')" title="Edit Report" aria-label="Edit report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 hover:text-emerald-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </button>
+              <button onclick="openDeleteModal('REPORT-021')" title="Delete Report" aria-label="Delete report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 hover:text-red-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      
+        <tr class="hover:bg-[#1A2330]/40 transition group">
+          <td class="py-3 px-4">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide">REPORT-020</span>
+                <span class="font-bold text-white group-hover:text-[#00FF9D] transition-colors">Hidden Layer Security Review</span>
+              </div>
+              <p class="text-xs text-[#94A3B8] line-clamp-1 mt-0.5 max-w-md">Public repository reconnaissance and leaked token discovery.</p>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        OSINT
+      </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <div class="flex items-center gap-1.5 text-xs text-white">
+              <div class="w-5 h-5 rounded-full bg-[#212B3A] border border-[#2D3A4B] text-[10px] text-[#94A3B8] flex items-center justify-center font-bold">
+                D
+              </div>
+              <span class="font-medium">Dev Malhotra</span>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RESOLVED
+        </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap font-mono text-xs text-[#94A3B8]">
+            Sep 08, 2026
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick="viewReport('REPORT-020')" title="View Report" aria-label="View report details" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] hover:text-[#00FF9D] text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <button onclick="openEditModal('REPORT-020')" title="Edit Report" aria-label="Edit report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 hover:text-emerald-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </button>
+              <button onclick="openDeleteModal('REPORT-020')" title="Delete Report" aria-label="Delete report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 hover:text-red-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      
+        <tr class="hover:bg-[#1A2330]/40 transition group">
+          <td class="py-3 px-4">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide">REPORT-019</span>
+                <span class="font-bold text-white group-hover:text-[#00FF9D] transition-colors">ARM64 Firmware Disassembly Bug</span>
+              </div>
+              <p class="text-xs text-[#94A3B8] line-clamp-1 mt-0.5 max-w-md">Static analysis decompilation verification of IoT smart controller binary.</p>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Reverse Engineering
+      </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <div class="flex items-center gap-1.5 text-xs text-white">
+              <div class="w-5 h-5 rounded-full bg-[#212B3A] border border-[#2D3A4B] text-[10px] text-[#94A3B8] flex items-center justify-center font-bold">
+                S
+              </div>
+              <span class="font-medium">Siddharth Rao</span>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-amber-500/10 text-amber-400 border border-amber-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> OPEN
+        </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap font-mono text-xs text-[#94A3B8]">
+            Sep 08, 2026
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick="viewReport('REPORT-019')" title="View Report" aria-label="View report details" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] hover:text-[#00FF9D] text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <button onclick="openEditModal('REPORT-019')" title="Edit Report" aria-label="Edit report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 hover:text-emerald-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </button>
+              <button onclick="openDeleteModal('REPORT-019')" title="Delete Report" aria-label="Delete report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 hover:text-red-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      
+        <tr class="hover:bg-[#1A2330]/40 transition group">
+          <td class="py-3 px-4">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide">REPORT-018</span>
+                <span class="font-bold text-white group-hover:text-[#00FF9D] transition-colors">OAuth Flow Spoofing Vector</span>
+              </div>
+              <p class="text-xs text-[#94A3B8] line-clamp-1 mt-0.5 max-w-md">Redirect URI validation bypass in mock collegiate identity portal.</p>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Web Security
+      </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <div class="flex items-center gap-1.5 text-xs text-white">
+              <div class="w-5 h-5 rounded-full bg-[#212B3A] border border-[#2D3A4B] text-[10px] text-[#94A3B8] flex items-center justify-center font-bold">
+                P
+              </div>
+              <span class="font-medium">Pooja Hegde</span>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RESOLVED
+        </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap font-mono text-xs text-[#94A3B8]">
+            Sep 07, 2026
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick="viewReport('REPORT-018')" title="View Report" aria-label="View report details" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] hover:text-[#00FF9D] text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <button onclick="openEditModal('REPORT-018')" title="Edit Report" aria-label="Edit report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 hover:text-emerald-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </button>
+              <button onclick="openDeleteModal('REPORT-018')" title="Delete Report" aria-label="Delete report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 hover:text-red-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      
+        <tr class="hover:bg-[#1A2330]/40 transition group">
+          <td class="py-3 px-4">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide">REPORT-017</span>
+                <span class="font-bold text-white group-hover:text-[#00FF9D] transition-colors">Subnet Zero Drift Anomaly</span>
+              </div>
+              <p class="text-xs text-[#94A3B8] line-clamp-1 mt-0.5 max-w-md">Telemetry synchronization discrepancy across regional mesh nodes.</p>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Network Security
+      </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <div class="flex items-center gap-1.5 text-xs text-white">
+              <div class="w-5 h-5 rounded-full bg-[#212B3A] border border-[#2D3A4B] text-[10px] text-[#94A3B8] flex items-center justify-center font-bold">
+                A
+              </div>
+              <span class="font-medium">Aarav Mehta</span>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RESOLVED
+        </span>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap font-mono text-xs text-[#94A3B8]">
+            Sep 06, 2026
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button onclick="viewReport('REPORT-017')" title="View Report" aria-label="View report details" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] hover:text-[#00FF9D] text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <button onclick="openEditModal('REPORT-017')" title="Edit Report" aria-label="Edit report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 hover:text-emerald-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </button>
+              <button onclick="openDeleteModal('REPORT-017')" title="Delete Report" aria-label="Delete report" class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 hover:text-red-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Card View (shown only on small screens) -->
+      <div id="reportsMobileList" class="md:hidden divide-y divide-[#2D3A4B]/80 p-2 space-y-2">
+        <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 space-y-2 hover:border-[#3B4A5D] transition">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide block">REPORT-024</span>
+              <h3 class="text-sm font-bold text-white mt-0.5">Ghost Protocol Incident Analysis</h3>
+            </div>
+            <div class="shrink-0">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> IN REVIEW
+        </span>
+            </div>
+          </div>
+
+          <p class="text-xs text-[#94A3B8] line-clamp-2 leading-relaxed">Analysis of suspicious authentication activity detected during Wave 03 telemetry sweep.</p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]/60 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Web Security
+      </span>
+              <span class="text-[#94A3B8] text-[11px] flex items-center gap-1">
+                <span class="text-white font-medium">Aarav Mehta</span>
+              </span>
+            </div>
+            <span class="font-mono text-[11px] text-[#94A3B8]">Today, 10:42 AM</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <button onclick="viewReport('REPORT-024')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-[#00FF9D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <button onclick="openEditModal('REPORT-024')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Edit
+            </button>
+            <button onclick="openDeleteModal('REPORT-024')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 text-xs font-semibold text-red-400 flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      
+        <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 space-y-2 hover:border-[#3B4A5D] transition">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide block">REPORT-023</span>
+              <h3 class="text-sm font-bold text-white mt-0.5">PacketZero Network Findings</h3>
+            </div>
+            <div class="shrink-0">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-amber-500/10 text-amber-400 border border-amber-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> OPEN
+        </span>
+            </div>
+          </div>
+
+          <p class="text-xs text-[#94A3B8] line-clamp-2 leading-relaxed">Asynchronous packet tunneling and honeypot bypass telemetry verification.</p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]/60 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Network Security
+      </span>
+              <span class="text-[#94A3B8] text-[11px] flex items-center gap-1">
+                <span class="text-white font-medium">Riya Sharma</span>
+              </span>
+            </div>
+            <span class="font-mono text-[11px] text-[#94A3B8]">Today, 09:18 AM</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <button onclick="viewReport('REPORT-023')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-[#00FF9D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <button onclick="openEditModal('REPORT-023')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Edit
+            </button>
+            <button onclick="openDeleteModal('REPORT-023')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 text-xs font-semibold text-red-400 flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      
+        <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 space-y-2 hover:border-[#3B4A5D] transition">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide block">REPORT-022</span>
+              <h3 class="text-sm font-bold text-white mt-0.5">Broken Cipher Assessment</h3>
+            </div>
+            <div class="shrink-0">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RESOLVED
+        </span>
+            </div>
+          </div>
+
+          <p class="text-xs text-[#94A3B8] line-clamp-2 leading-relaxed">PRNG seed recovery validation for linear feedback shift registers.</p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]/60 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Cryptography
+      </span>
+              <span class="text-[#94A3B8] text-[11px] flex items-center gap-1">
+                <span class="text-white font-medium">Kabir Singh</span>
+              </span>
+            </div>
+            <span class="font-mono text-[11px] text-[#94A3B8]">Yesterday, 06:32 PM</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <button onclick="viewReport('REPORT-022')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-[#00FF9D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <button onclick="openEditModal('REPORT-022')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Edit
+            </button>
+            <button onclick="openDeleteModal('REPORT-022')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 text-xs font-semibold text-red-400 flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      
+        <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 space-y-2 hover:border-[#3B4A5D] transition">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide block">REPORT-021</span>
+              <h3 class="text-sm font-bold text-white mt-0.5">Silent Trace Investigation</h3>
+            </div>
+            <div class="shrink-0">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> IN REVIEW
+        </span>
+            </div>
+          </div>
+
+          <p class="text-xs text-[#94A3B8] line-clamp-2 leading-relaxed">Rootkit memory dump volatility review on ephemeral kernel container.</p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]/60 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Digital Forensics
+      </span>
+              <span class="text-[#94A3B8] text-[11px] flex items-center gap-1">
+                <span class="text-white font-medium">Ananya Verma</span>
+              </span>
+            </div>
+            <span class="font-mono text-[11px] text-[#94A3B8]">Yesterday, 03:14 PM</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <button onclick="viewReport('REPORT-021')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-[#00FF9D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <button onclick="openEditModal('REPORT-021')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Edit
+            </button>
+            <button onclick="openDeleteModal('REPORT-021')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 text-xs font-semibold text-red-400 flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      
+        <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 space-y-2 hover:border-[#3B4A5D] transition">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide block">REPORT-020</span>
+              <h3 class="text-sm font-bold text-white mt-0.5">Hidden Layer Security Review</h3>
+            </div>
+            <div class="shrink-0">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RESOLVED
+        </span>
+            </div>
+          </div>
+
+          <p class="text-xs text-[#94A3B8] line-clamp-2 leading-relaxed">Public repository reconnaissance and leaked token discovery.</p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]/60 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        OSINT
+      </span>
+              <span class="text-[#94A3B8] text-[11px] flex items-center gap-1">
+                <span class="text-white font-medium">Dev Malhotra</span>
+              </span>
+            </div>
+            <span class="font-mono text-[11px] text-[#94A3B8]">Sep 08, 2026</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <button onclick="viewReport('REPORT-020')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-[#00FF9D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <button onclick="openEditModal('REPORT-020')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Edit
+            </button>
+            <button onclick="openDeleteModal('REPORT-020')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 text-xs font-semibold text-red-400 flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      
+        <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 space-y-2 hover:border-[#3B4A5D] transition">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide block">REPORT-019</span>
+              <h3 class="text-sm font-bold text-white mt-0.5">ARM64 Firmware Disassembly Bug</h3>
+            </div>
+            <div class="shrink-0">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-amber-500/10 text-amber-400 border border-amber-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> OPEN
+        </span>
+            </div>
+          </div>
+
+          <p class="text-xs text-[#94A3B8] line-clamp-2 leading-relaxed">Static analysis decompilation verification of IoT smart controller binary.</p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]/60 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Reverse Engineering
+      </span>
+              <span class="text-[#94A3B8] text-[11px] flex items-center gap-1">
+                <span class="text-white font-medium">Siddharth Rao</span>
+              </span>
+            </div>
+            <span class="font-mono text-[11px] text-[#94A3B8]">Sep 08, 2026</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <button onclick="viewReport('REPORT-019')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-[#00FF9D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <button onclick="openEditModal('REPORT-019')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Edit
+            </button>
+            <button onclick="openDeleteModal('REPORT-019')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 text-xs font-semibold text-red-400 flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      
+        <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 space-y-2 hover:border-[#3B4A5D] transition">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide block">REPORT-018</span>
+              <h3 class="text-sm font-bold text-white mt-0.5">OAuth Flow Spoofing Vector</h3>
+            </div>
+            <div class="shrink-0">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RESOLVED
+        </span>
+            </div>
+          </div>
+
+          <p class="text-xs text-[#94A3B8] line-clamp-2 leading-relaxed">Redirect URI validation bypass in mock collegiate identity portal.</p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]/60 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Web Security
+      </span>
+              <span class="text-[#94A3B8] text-[11px] flex items-center gap-1">
+                <span class="text-white font-medium">Pooja Hegde</span>
+              </span>
+            </div>
+            <span class="font-mono text-[11px] text-[#94A3B8]">Sep 07, 2026</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <button onclick="viewReport('REPORT-018')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-[#00FF9D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <button onclick="openEditModal('REPORT-018')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Edit
+            </button>
+            <button onclick="openDeleteModal('REPORT-018')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 text-xs font-semibold text-red-400 flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      
+        <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 space-y-2 hover:border-[#3B4A5D] transition">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide block">REPORT-017</span>
+              <h3 class="text-sm font-bold text-white mt-0.5">Subnet Zero Drift Anomaly</h3>
+            </div>
+            <div class="shrink-0">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RESOLVED
+        </span>
+            </div>
+          </div>
+
+          <p class="text-xs text-[#94A3B8] line-clamp-2 leading-relaxed">Telemetry synchronization discrepancy across regional mesh nodes.</p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]/60 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        Network Security
+      </span>
+              <span class="text-[#94A3B8] text-[11px] flex items-center gap-1">
+                <span class="text-white font-medium">Aarav Mehta</span>
+              </span>
+            </div>
+            <span class="font-mono text-[11px] text-[#94A3B8]">Sep 06, 2026</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <button onclick="viewReport('REPORT-017')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-[#00FF9D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <button onclick="openEditModal('REPORT-017')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Edit
+            </button>
+            <button onclick="openDeleteModal('REPORT-017')" class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 text-xs font-semibold text-red-400 flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden py-16 px-4 text-center">
+        <div class="w-12 h-12 rounded-full bg-[#1A2330] border border-[#2D3A4B] text-[#94A3B8] mx-auto flex items-center justify-center mb-3">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </div>
+        <h3 class="text-base font-bold text-white mb-1">No Reports Found</h3>
+        <p class="text-xs text-[#94A3B8] max-w-sm mx-auto mb-4">No competition reports match your search terms or active status filters.</p>
+        <button onclick="resetFilters()" class="px-3.5 py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] text-xs font-semibold text-[#00FF9D] inline-flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+          Clear Filters
+        </button>
+      </div>
+
+      <!-- Pagination -->
+      <div class="px-4 py-3 border-t border-[#2D3A4B] bg-[#161D27] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#94A3B8]">
+        <div id="pagination-info" class="font-mono">Showing 1â€“8 of 24 reports</div>
+        <div class="flex items-center gap-1">
+          <button id="prevPageBtn" onclick="changePage(-1)" class="px-2.5 py-1 rounded bg-[#1A2330] border border-[#2D3A4B] hover:border-[#3B4A5D] text-white disabled:opacity-30 disabled:cursor-not-allowed transition" disabled="">
+            Previous
+          </button>
+          <div id="pagination-pages" class="flex items-center gap-1">
+          <button onclick="goToPage(1)" class="w-7 h-7 rounded text-xs font-mono font-bold transition bg-[#00FF9D] text-[#090E16] shadow-sm">
+            1
+          </button>
+        
+          <button onclick="goToPage(2)" class="w-7 h-7 rounded text-xs font-mono font-bold transition bg-[#1A2330] border border-[#2D3A4B] text-[#94A3B8] hover:text-white hover:border-[#3B4A5D]">
+            2
+          </button>
+        
+          <button onclick="goToPage(3)" class="w-7 h-7 rounded text-xs font-mono font-bold transition bg-[#1A2330] border border-[#2D3A4B] text-[#94A3B8] hover:text-white hover:border-[#3B4A5D]">
+            3
+          </button>
+        </div>
+          <button id="nextPageBtn" onclick="changePage(1)" class="px-2.5 py-1 rounded bg-[#1A2330] border border-[#2D3A4B] hover:border-[#3B4A5D] text-white disabled:opacity-30 disabled:cursor-not-allowed transition">
+            Next
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Mobile Bottom Sticky Navigation (Identical to Overview, Missions & Leaderboard) -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0F141C]/95 backdrop-blur-md border-t border-[#2D3A4B] px-6 py-2">
+    <div class="flex items-center justify-around">
+      <a href="#" class="flex flex-col items-center gap-1 text-[#94A3B8] hover:text-white transition">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span class="text-[10px] font-semibold">Overview</span>
+      </a>
+
+      <a href="#" class="flex flex-col items-center gap-1 text-[#94A3B8] hover:text-white transition">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+        </svg>
+        <span class="text-[10px] font-semibold">Missions</span>
+      </a>
+
+      <a href="#" class="flex flex-col items-center gap-1 text-[#94A3B8] hover:text-white transition">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+          <path d="M4 22h16"></path>
+          <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+          <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+          <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+        </svg>
+        <span class="text-[10px] font-semibold">Standings</span>
+      </a>
+
+      <!-- Active Reports Tab -->
+      <a href="#" class="flex flex-col items-center gap-1 text-[#00FF9D]">
+        <div class="relative">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span class="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-[#00FF9D]"></span>
+        </div>
+        <span class="text-[10px] font-bold">Reports</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- VIEW REPORT DRAWER / MODAL -->
+  <div id="viewDrawerOverlay" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex justify-end transition-opacity">
+    <div id="viewDrawerContent" class="w-full max-w-xl h-full bg-[#0F141C] border-l border-[#2D3A4B] shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300">
+      
+      <!-- Drawer Header -->
+      <div class="p-5 border-b border-[#2D3A4B] bg-[#161D27] flex items-center justify-between">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span id="viewReportId" class="font-mono text-xs text-[#00FF9D] font-bold px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">REPORT-024</span>
+            <span id="viewStatusBadge"></span>
+            <span id="viewPriorityBadge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#212B3A] text-white border border-[#2D3A4B]"></span>
+          </div>
+          <h2 id="viewReportTitle" class="text-lg font-extrabold text-white tracking-tight"></h2>
+        </div>
+        <button onclick="closeViewDrawer()" class="w-8 h-8 rounded-lg bg-[#1A2330] border border-[#2D3A4B] hover:border-[#3B4A5D] text-[#94A3B8] hover:text-white flex items-center justify-center transition">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Drawer Body -->
+      <div class="flex-1 overflow-y-auto p-5 space-y-5 text-sm">
+        
+        <!-- Metadata Grid -->
+        <div class="grid grid-cols-2 gap-3 p-3.5 bg-[#1A2330] rounded-xl border border-[#2D3A4B] text-xs">
+          <div>
+            <span class="text-[10px] font-semibold text-[#94A3B8] uppercase block tracking-wider">CATEGORY</span>
+            <span id="viewCategory" class="font-bold text-white text-xs mt-0.5 block"></span>
+          </div>
+          <div>
+            <span class="text-[10px] font-semibold text-[#94A3B8] uppercase block tracking-wider">AUTHOR</span>
+            <span id="viewAuthor" class="font-bold text-white text-xs mt-0.5 block"></span>
+          </div>
+          <div>
+            <span class="text-[10px] font-semibold text-[#94A3B8] uppercase block tracking-wider">CREATED</span>
+            <span id="viewCreated" class="font-mono text-[#94A3B8] text-xs mt-0.5 block"></span>
+          </div>
+          <div>
+            <span class="text-[10px] font-semibold text-[#94A3B8] uppercase block tracking-wider">LAST UPDATED</span>
+            <span id="viewUpdated" class="font-mono text-[#00FF9D] text-xs mt-0.5 block"></span>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-[#00FF9D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+            SUMMARY
+          </h3>
+          <p id="viewSummary" class="text-xs leading-relaxed text-gray-200 bg-[#161D27] p-3 rounded-lg border border-[#2D3A4B]"></p>
+        </div>
+
+        <!-- Findings -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            FINDINGS &amp; VECTORS
+          </h3>
+          <ul id="viewFindings" class="space-y-2 text-xs">
+            <!-- Dynamic Findings list -->
+          </ul>
+        </div>
+
+        <!-- Notes -->
+        <div>
+          <h3 class="text-xs font-bold uppercase tracking-wider text-[#94A3B8] mb-1.5 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            INTERNAL REVIEW NOTES
+          </h3>
+          <p id="viewNotes" class="text-xs italic text-gray-300 bg-[#161D27] p-3 rounded-lg border border-[#2D3A4B]"></p>
+        </div>
+
+      </div>
+
+      <!-- Drawer Footer -->
+      <div class="p-4 border-t border-[#2D3A4B] bg-[#161D27] flex items-center justify-between">
+        <button onclick="closeViewDrawer()" class="px-4 py-2 rounded-lg bg-[#1A2330] border border-[#2D3A4B] hover:border-[#3B4A5D] text-xs font-semibold text-[#94A3B8] hover:text-white transition">
+          CLOSE
+        </button>
+        <button id="viewDrawerEditBtn" class="px-4 py-2 rounded-lg bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-bold text-xs flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+          EDIT REPORT
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- EDIT / CREATE MODAL -->
+  <div id="formModalOverlay" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
+    <div id="formModalContainer" class="w-full max-w-2xl bg-[#0F141C] border border-[#2D3A4B] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      
+      <!-- Modal Header -->
+      <div class="p-4 sm:p-5 border-b border-[#2D3A4B] bg-[#161D27] flex items-center justify-between">
+        <div>
+          <span id="formEyebrow" class="font-mono text-[10px] text-[#00FF9D] font-bold tracking-widest uppercase">CYBERNEXUS / FORM</span>
+          <h2 id="formModalTitle" class="text-lg font-extrabold text-white tracking-tight">EDIT REPORT</h2>
+        </div>
+        <button onclick="closeFormModal()" class="w-8 h-8 rounded-lg bg-[#1A2330] border border-[#2D3A4B] hover:border-[#3B4A5D] text-[#94A3B8] hover:text-white flex items-center justify-center transition">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Form Body -->
+      <form id="reportForm" onsubmit="handleFormSubmit(event)" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 text-xs">
+        <input type="hidden" id="formReportId">
+
+        <!-- Title -->
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1">Report Title *</label>
+          <input type="text" id="formTitle" required="" placeholder="e.g. Ghost Protocol Incident Analysis" class="w-full bg-[#1A2330] border border-[#2D3A4B] rounded-lg px-3 py-2 text-white placeholder-gray-500 focus:border-[#00FF9D] custom-ring text-xs sm:text-sm">
+        </div>
+
+        <!-- 2-col Category & Author -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1">Category *</label>
+            <select id="formCategory" required="" class="w-full bg-[#1A2330] border border-[#2D3A4B] rounded-lg px-3 py-2 text-white focus:border-[#00FF9D] custom-ring text-xs">
+              <option value="Web Security">Web Security</option>
+              <option value="Network Security">Network Security</option>
+              <option value="Cryptography">Cryptography</option>
+              <option value="Digital Forensics">Digital Forensics</option>
+              <option value="OSINT">OSINT</option>
+              <option value="Reverse Engineering">Reverse Engineering</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1">Author Name *</label>
+            <input type="text" id="formAuthor" required="" placeholder="e.g. Aarav Mehta" class="w-full bg-[#1A2330] border border-[#2D3A4B] rounded-lg px-3 py-2 text-white placeholder-gray-500 focus:border-[#00FF9D] custom-ring text-xs">
+          </div>
+        </div>
+
+        <!-- 2-col Status & Priority -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1">Status *</label>
+            <select id="formStatus" required="" class="w-full bg-[#1A2330] border border-[#2D3A4B] rounded-lg px-3 py-2 text-white focus:border-[#00FF9D] custom-ring text-xs">
+              <option value="Open">Open</option>
+              <option value="In Review">In Review</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1">Priority *</label>
+            <select id="formPriority" required="" class="w-full bg-[#1A2330] border border-[#2D3A4B] rounded-lg px-3 py-2 text-white focus:border-[#00FF9D] custom-ring text-xs">
+              <option value="HIGH">High Priority</option>
+              <option value="MEDIUM">Medium Priority</option>
+              <option value="LOW">Low Priority</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1">Summary *</label>
+          <textarea id="formSummary" rows="2" required="" placeholder="Brief description of the vulnerability or finding..." class="w-full bg-[#1A2330] border border-[#2D3A4B] rounded-lg px-3 py-2 text-white placeholder-gray-500 focus:border-[#00FF9D] custom-ring text-xs"></textarea>
+        </div>
+
+        <!-- Findings -->
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1">Key Findings (1 per line) *</label>
+          <textarea id="formFindings" rows="3" required="" placeholder="Authentication anomaly
+Unexpected token behavior
+Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2D3A4B] rounded-lg px-3 py-2 text-white placeholder-gray-500 focus:border-[#00FF9D] custom-ring text-xs"></textarea>
+        </div>
+
+        <!-- Notes -->
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-[#94A3B8] mb-1">Internal Review Notes</label>
+          <textarea id="formNotes" rows="2" placeholder="Internal triage details, proctor notes or scoring flags..." class="w-full bg-[#1A2330] border border-[#2D3A4B] rounded-lg px-3 py-2 text-white placeholder-gray-500 focus:border-[#00FF9D] custom-ring text-xs"></textarea>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="pt-3 border-t border-[#2D3A4B] flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeFormModal()" class="px-4 py-2 rounded-lg bg-[#1A2330] border border-[#2D3A4B] hover:border-[#3B4A5D] text-xs font-semibold text-[#94A3B8] hover:text-white transition">
+            CANCEL
+          </button>
+          <button type="submit" id="formSubmitBtn" class="px-5 py-2 rounded-lg bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-bold text-xs transition shadow-md">
+            SAVE CHANGES
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRMATION MODAL -->
+  <div id="deleteModalOverlay" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
+    <div class="w-full max-w-md bg-[#0F141C] border border-[#2D3A4B] rounded-2xl shadow-2xl p-5 sm:p-6 text-center">
+      <div class="w-12 h-12 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 mx-auto flex items-center justify-center mb-3">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 6h18"></path>
+          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+          <line x1="10" y1="11" x2="10" y2="17"></line>
+          <line x1="14" y1="11" x2="14" y2="17"></line>
+        </svg>
+      </div>
+
+      <h3 class="text-base sm:text-lg font-extrabold text-white mb-1">DELETE REPORT?</h3>
+      <p class="text-xs text-[#94A3B8] leading-relaxed mb-1">
+        Are you sure you want to remove <span id="deleteReportTargetId" class="text-white font-mono font-semibold"></span>?
+      </p>
+      <p class="text-[11px] text-red-400/80 mb-5">
+        This report will be removed from the current report list. This action cannot be undone.
+      </p>
+
+      <div class="flex items-center justify-center gap-3">
+        <button onclick="closeDeleteModal()" class="px-4 py-2 rounded-lg bg-[#1A2330] border border-[#2D3A4B] hover:border-[#3B4A5D] text-xs font-semibold text-[#94A3B8] hover:text-white transition">
+          CANCEL
+        </button>
+        <button onclick="confirmDelete()" class="px-4 py-2 rounded-lg bg-red-600/90 hover:bg-red-600 text-white font-bold text-xs transition border border-red-500/50 shadow-md">
+          DELETE REPORT
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toastNotification" class="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 transform transition-all duration-300 pointer-events-none translate-y-24 opacity-0">
+    <div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#1A2330] border border-[#2D3A4B] shadow-2xl text-white">
+      <div id="toastIconContainer" class="w-6 h-6 rounded-full bg-[#00FF9D]/20 border border-[#00FF9D]/40 text-[#00FF9D] flex items-center justify-center">
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <div>
+        <h4 id="toastTitle" class="text-xs font-bold uppercase tracking-wider text-white">TELEMETRY SYNCED</h4>
+        <p id="toastMessage" class="text-[11px] text-[#94A3B8]">Reports synchronized with live arena database.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLICATION LOGIC & STATE -->
+  <script>
+    // Initial Realistic Competition Mock Dataset (24 items)
+    const initialReports = [
+      {
+        id: "REPORT-024",
+        title: "Ghost Protocol Incident Analysis",
+        description: "Analysis of suspicious authentication activity detected during Wave 03 telemetry sweep.",
+        category: "Web Security",
+        author: "Aarav Mehta",
+        status: "In Review",
+        priority: "HIGH",
+        created: "Sep 09, 2026",
+        updated: "Today, 10:42 AM",
+        summary: "During Wave 03 live traffic analysis on node-introspect.nexus, proctors captured an out-of-band JWT claim payload. Findings suggest potential token reuse vulnerability across decoupled microservices.",
+        findings: [
+          "Finding 01: Authentication anomaly on GraphQL introspection endpoint.",
+          "Finding 02: Unexpected token persistence without session invalidation.",
+          "Finding 03: Distributed replay attempt matched to Collegiate Vector #4."
+        ],
+        notes: "Assigned to Senior Proctor for scoring verification before team point disbursement."
+      },
+      {
+        id: "REPORT-023",
+        title: "PacketZero Network Findings",
+        description: "Asynchronous packet tunneling and honeypot bypass telemetry verification.",
+        category: "Network Security",
+        author: "Riya Sharma",
+        status: "Open",
+        priority: "HIGH",
+        created: "Sep 09, 2026",
+        updated: "Today, 09:18 AM",
+        summary: "Telemetry captured 84.92 KB capture file during the second wave containing unusual ICMP payload encapsulation intended to probe egress filters.",
+        findings: [
+          "Finding 01: Egress filter evasion attempt via crafted ICMP echo payloads.",
+          "Finding 02: Honey-token ping triggered at 08:55 UTC.",
+          "Finding 03: Origin IP masked behind internal collegiate VPN subnet."
+        ],
+        notes: "Requires immediate triage by Arena Operations."
+      },
+      {
+        id: "REPORT-022",
+        title: "Broken Cipher Assessment",
+        description: "PRNG seed recovery validation for linear feedback shift registers.",
+        category: "Cryptography",
+        author: "Kabir Singh",
+        status: "Resolved",
+        priority: "MEDIUM",
+        created: "Sep 08, 2026",
+        updated: "Yesterday, 06:32 PM",
+        summary: "A solver submitted a successful seed reconstruction for LFSR-80-mod within 18 minutes of challenge deployment.",
+        findings: [
+          "Finding 01: Keystream sample proved sufficiently deterministic after 128 bytes.",
+          "Finding 02: Flag validated and awarded to team Null Vector (+150 pts).",
+          "Finding 03: Challenge difficulty marked as accurately calibrated."
+        ],
+        notes: "Flag confirmed. Points awarded to Technova University."
+      },
+      {
+        id: "REPORT-021",
+        title: "Silent Trace Investigation",
+        description: "Rootkit memory dump volatility review on ephemeral kernel container.",
+        category: "Digital Forensics",
+        author: "Ananya Verma",
+        status: "In Review",
+        priority: "HIGH",
+        created: "Sep 08, 2026",
+        updated: "Yesterday, 03:14 PM",
+        summary: "Forensics analysis of kernel sandbox instance 04-alpha revealed hidden module insertion via modified insmod call.",
+        findings: [
+          "Finding 01: Kernel ring buffer suppressed write events.",
+          "Finding 02: Volatility profile required custom symbol table.",
+          "Finding 03: Sandbox integrity remained intact."
+        ],
+        notes: "Awaiting secondary confirmation from forensics lead."
+      },
+      {
+        id: "REPORT-020",
+        title: "Hidden Layer Security Review",
+        description: "Public repository reconnaissance and leaked token discovery.",
+        category: "OSINT",
+        author: "Dev Malhotra",
+        status: "Resolved",
+        priority: "LOW",
+        created: "Sep 07, 2026",
+        updated: "Sep 08, 2026",
+        summary: "Candidate flagged exposed staging credentials in a simulated commit history.",
+        findings: [
+          "Finding 01: Simulated git commit exposed dummy deployment secret.",
+          "Finding 02: Flag captured successfully by 14 collegiate teams."
+        ],
+        notes: "Clean solve vector. No anomaly detected."
+      },
+      {
+        id: "REPORT-019",
+        title: "ARM64 Firmware Disassembly Bug",
+        description: "Static analysis decompilation verification of IoT smart controller binary.",
+        category: "Reverse Engineering",
+        author: "Siddharth Rao",
+        status: "Open",
+        priority: "MEDIUM",
+        created: "Sep 07, 2026",
+        updated: "Sep 08, 2026",
+        summary: "Binary disassembler experienced stack pointer desync on obfuscated jump tables.",
+        findings: [
+          "Finding 01: Heavy control flow flattening caused sandbox lag.",
+          "Finding 02: Solver teams requested clarification on binary architecture."
+        ],
+        notes: "Binary updated to v1.2 with cleaner symbol definitions."
+      },
+      {
+        id: "REPORT-018",
+        title: "OAuth Flow Spoofing Vector",
+        description: "Redirect URI validation bypass in mock collegiate identity portal.",
+        category: "Web Security",
+        author: "Pooja Hegde",
+        status: "Resolved",
+        priority: "HIGH",
+        created: "Sep 06, 2026",
+        updated: "Sep 07, 2026",
+        summary: "Flaw permitted wildcard subdomain callback redirect under certain state encoding parameters.",
+        findings: [
+          "Finding 01: Regex flaw in callback validation.",
+          "Finding 02: Exploit reproduced and verified against official arena sandbox."
+        ],
+        notes: "Points accredited to Byte Raiders (Nexus Institute)."
+      },
+      {
+        id: "REPORT-017",
+        title: "Subnet Zero Drift Anomaly",
+        description: "Telemetry synchronization discrepancy across regional mesh nodes.",
+        category: "Network Security",
+        author: "Aarav Mehta",
+        status: "Resolved",
+        priority: "LOW",
+        created: "Sep 06, 2026",
+        updated: "Sep 06, 2026",
+        summary: "Minor 0.02% latency drift recorded between North and Central arena cluster nodes.",
+        findings: [
+          "Finding 01: NTP sync jitter on edge container #12.",
+          "Finding 02: Re-synchronized automatically at 14:00."
+        ],
+        notes: "Telemetry stable. Telemetry core reporting 99.98% OK."
+      },
+      {
+        id: "REPORT-016",
+        title: "Side-Channel Power Trace Leak",
+        description: "Differential power analysis against simulated hardware security module.",
+        category: "Cryptography",
+        author: "Dev Malhotra",
+        status: "In Review",
+        priority: "MEDIUM",
+        created: "Sep 05, 2026",
+        updated: "Sep 06, 2026",
+        summary: "Trace data from simulated AES core shows correlation with Hamming weight analysis.",
+        findings: [
+          "Finding 01: Clear power spike on round 10 S-box substitution.",
+          "Finding 02: Submitted flag matches intended math vector."
+        ],
+        notes: "Proctors reviewing submitted Jupyter notebook."
+      },
+      {
+        id: "REPORT-015",
+        title: "Docker Socket Permission Escalation",
+        description: "Container breakout vector detected in isolated microvm environment.",
+        category: "Digital Forensics",
+        author: "Riya Sharma",
+        status: "Open",
+        priority: "HIGH",
+        created: "Sep 05, 2026",
+        updated: "Sep 05, 2026",
+        summary: "Participant attempted host privilege escalation via misconfigured socket file mount.",
+        findings: [
+          "Finding 01: Host namespace isolation held properly.",
+          "Finding 02: Audit trail logged container attempt."
+        ],
+        notes: "Participant acted within competition rules."
+      },
+      {
+        id: "REPORT-014",
+        title: "DNS Exfiltration Tunnel Log",
+        description: "Low-frequency DNS TXT request beaconing from sandbox perimeter.",
+        category: "Network Security",
+        author: "Kabir Singh",
+        status: "Open",
+        priority: "MEDIUM",
+        created: "Sep 04, 2026",
+        updated: "Sep 05, 2026",
+        summary: "Base32-encoded chunks exfiltrated across port 53 to simulate stealth APT communication.",
+        findings: [
+          "Finding 01: 42 queries caught by perimeter Snort rule.",
+          "Finding 02: Vector awarded partial credit for stage 2."
+        ],
+        notes: "Reviewing payload decoding accuracy."
+      },
+      {
+        id: "REPORT-013",
+        title: "SQL Injection on Legacy Leaderboard API",
+        description: "Error-based injection probe reported in test staging harness.",
+        category: "Web Security",
+        author: "Ananya Verma",
+        status: "Resolved",
+        priority: "HIGH",
+        created: "Sep 04, 2026",
+        updated: "Sep 04, 2026",
+        summary: "Blind Boolean probe submitted against ranking parameter.",
+        findings: [
+          "Finding 01: Query sanitized by prepared statements.",
+          "Finding 02: Staging harness patch applied."
+        ],
+        notes: "Vulnerability safely neutralized."
+      },
+      {
+        id: "REPORT-012",
+        title: "Wasm Bytecode Memory Overflow",
+        description: "WebAssembly buffer overrun exploration in sandbox client renderer.",
+        category: "Reverse Engineering",
+        author: "Siddharth Rao",
+        status: "In Review",
+        priority: "MEDIUM",
+        created: "Sep 03, 2026",
+        updated: "Sep 04, 2026",
+        summary: "Custom allocator exhibited bounds check bypass when handling corrupted heap chunks.",
+        findings: [
+          "Finding 01: Memory dump shows predictable heap layout.",
+          "Finding 02: Exploit payload validated in emulator."
+        ],
+        notes: "Verification under review by challenge author."
+      },
+      {
+        id: "REPORT-011",
+        title: "Satellite Telemetry RF De-modulation",
+        description: "Software Defined Radio signal recovery from captured I/Q IQ data.",
+        category: "Digital Forensics",
+        author: "Dev Malhotra",
+        status: "Resolved",
+        priority: "LOW",
+        created: "Sep 03, 2026",
+        updated: "Sep 03, 2026",
+        summary: "FSK transmission successfully decoded using GNU Radio companion graph.",
+        findings: [
+          "Finding 01: Doppler shift corrected with automated script.",
+          "Finding 02: Flag extracted from telemetry beacon frame."
+        ],
+        notes: "Flag awarded to Root Squad."
+      },
+      {
+        id: "REPORT-010",
+        title: "Malicious Macro Ingestion Vector",
+        description: "VBA macro inspection extracted from simulated phishing attachment.",
+        category: "Digital Forensics",
+        author: "Aarav Mehta",
+        status: "Resolved",
+        priority: "LOW",
+        created: "Sep 02, 2026",
+        updated: "Sep 03, 2026",
+        summary: "XOR-encoded PowerShell dropper decompiled and documented.",
+        findings: [
+          "Finding 01: Obfuscation stripped using CyberChef recipe.",
+          "Finding 02: Static C2 endpoint identified."
+        ],
+        notes: "Completed report filed."
+      },
+      {
+        id: "REPORT-009",
+        title: "BGP Route Hijack Emulation",
+        description: "Autonomous system prefix announcement analysis in virtual lab.",
+        category: "Network Security",
+        author: "Riya Sharma",
+        status: "In Review",
+        priority: "HIGH",
+        created: "Sep 02, 2026",
+        updated: "Sep 02, 2026",
+        summary: "Route leak scenario triggered unexpected blackhole routing across simulated AS304.",
+        findings: [
+          "Finding 01: Prefix /24 preference accepted without RPKI ROA check.",
+          "Finding 02: Traffic successfully routed through inspection node."
+        ],
+        notes: "Under proctor review."
+      },
+      {
+        id: "REPORT-008",
+        title: "Elliptic Curve Key Recovery",
+        description: "Fault attack on ECDSA nonces leading to private key derivation.",
+        category: "Cryptography",
+        author: "Kabir Singh",
+        status: "Open",
+        priority: "HIGH",
+        created: "Sep 01, 2026",
+        updated: "Sep 02, 2026",
+        summary: "Biased nonce generator allowed lattice reduction attack using BKZ algorithm.",
+        findings: [
+          "Finding 01: 3-bit bias observed across 500 signatures.",
+          "Finding 02: Private key recovered in under 2 minutes."
+        ],
+        notes: "Pending technical peer validation."
+      },
+      {
+        id: "REPORT-007",
+        title: "Supply Chain NPM Dependency Audit",
+        description: "Typosquatted package detection in mock challenge frontend build.",
+        category: "Web Security",
+        author: "Ananya Verma",
+        status: "Resolved",
+        priority: "MEDIUM",
+        created: "Sep 01, 2026",
+        updated: "Sep 01, 2026",
+        summary: "Package contained simulated post-install telemetry exfiltration hook.",
+        findings: [
+          "Finding 01: Obfuscated eval in package.json install script.",
+          "Finding 02: Package quarantined in local npm proxy registry."
+        ],
+        notes: "Resolved cleanly."
+      },
+      {
+        id: "REPORT-006",
+        title: "Linux Kernel eBPF Privilege Probe",
+        description: "Verifier bypass investigation on custom ring buffer program.",
+        category: "Digital Forensics",
+        author: "Siddharth Rao",
+        status: "Open",
+        priority: "HIGH",
+        created: "Aug 31, 2026",
+        updated: "Sep 01, 2026",
+        summary: "Participant crafted pointer arithmetic logic that defeated branch pruning in verifier.",
+        findings: [
+          "Finding 01: Out of bounds read in map element array.",
+          "Finding 02: Exploited in staging VM environment."
+        ],
+        notes: "Ops team requested sandbox snapshot."
+      },
+      {
+        id: "REPORT-005",
+        title: "Industrial SCADA Modbus Intercept",
+        description: "PLC coil override packet validation during ICS arena simulation.",
+        category: "Network Security",
+        author: "Riya Sharma",
+        status: "Resolved",
+        priority: "MEDIUM",
+        created: "Aug 30, 2026",
+        updated: "Aug 31, 2026",
+        summary: "Unauthorized function code 0x05 delivered to water valve controller.",
+        findings: [
+          "Finding 01: Unauthenticated protocol accepted coil forced write.",
+          "Finding 02: Alert triggered within 4 seconds of injection."
+        ],
+        notes: "Standard challenge completion report."
+      },
+      {
+        id: "REPORT-004",
+        title: "Zero-Day Emulation in WebKit JS Core",
+        description: "JIT compilation type confusion simulation on mock browser target.",
+        category: "Reverse Engineering",
+        author: "Dev Malhotra",
+        status: "In Review",
+        priority: "HIGH",
+        created: "Aug 29, 2026",
+        updated: "Aug 30, 2026",
+        summary: "Array prototype transition flaw allowed fake object fabrication.",
+        findings: [
+          "Finding 01: AddrOf and FakeObj primitives achieved.",
+          "Finding 02: Arbitrary read/write achieved inside sandbox."
+        ],
+        notes: "Currently under review by technical judges."
+      },
+      {
+        id: "REPORT-003",
+        title: "Geospatial EXIF Metadata Trail",
+        description: "Reconstructed flight corridor from social media challenge assets.",
+        category: "OSINT",
+        author: "Pooja Hegde",
+        status: "Resolved",
+        priority: "LOW",
+        created: "Aug 28, 2026",
+        updated: "Aug 29, 2026",
+        summary: "Scraped image header revealed high precision GPS coordinates of simulated field station.",
+        findings: [
+          "Finding 01: Altitude and azimuth metadata unstripped in test asset.",
+          "Finding 02: Location confirmed on satellite map."
+        ],
+        notes: "Completed."
+      },
+      {
+        id: "REPORT-002",
+        title: "Zero Knowledge Proof Circuit Flaw",
+        description: "Under-constrained Circom variable detection in privacy mixer vector.",
+        category: "Cryptography",
+        author: "Kabir Singh",
+        status: "Open",
+        priority: "HIGH",
+        created: "Aug 27, 2026",
+        updated: "Aug 28, 2026",
+        summary: "Missing quadratic constraint enabled double-spend of mock arena proof vouchers.",
+        findings: [
+          "Finding 01: Signal assignment '<--' used without matching '==='.",
+          "Finding 02: Counterfeited proof accepted by on-chain contract simulator."
+        ],
+        notes: "Critical finding pending author audit."
+      },
+      {
+        id: "REPORT-001",
+        title: "Arena Kickoff Infrastructure Baseline",
+        description: "Initial platform deployment and stress-test telemetry verification.",
+        category: "Network Security",
+        author: "Aarav Mehta",
+        status: "Resolved",
+        priority: "LOW",
+        created: "Aug 25, 2026",
+        updated: "Aug 26, 2026",
+        summary: "All 128 collegiate teams provisioned with isolated VPN keys and API tokens.",
+        findings: [
+          "Finding 01: Zero packet loss during 10k request concurrent burst.",
+          "Finding 02: All gateway firewalls synchronized with automated iptables rules."
+        ],
+        notes: "Championship 2026 platform certified live."
+      }
+    ];
+
+    // Global State
+    let reports = JSON.parse(JSON.stringify(initialReports));
+    let currentPage = 1;
+    const itemsPerPage = 8;
+    let currentSearch = "";
+    let currentStatus = "ALL";
+    let currentCategory = "ALL";
+    let currentSort = "updated_desc";
+    let activeDeleteId = null;
+    let isEditing = false;
+
+    // DOM Ready
+    window.addEventListener('DOMContentLoaded', () => {
+      renderAll();
+    });
+
+    // Filtering & Sorting Core Logic
+    function getFilteredReports() {
+      return reports.filter(r => {
+        // Status filter
+        if (currentStatus !== "ALL" && r.status !== currentStatus) return false;
+        
+        // Category filter
+        if (currentCategory !== "ALL" && r.category !== currentCategory) return false;
+
+        // Search query
+        if (currentSearch.trim() !== "") {
+          const q = currentSearch.toLowerCase();
+          const matchTitle = r.title.toLowerCase().includes(q);
+          const matchId = r.id.toLowerCase().includes(q);
+          const matchAuthor = r.author.toLowerCase().includes(q);
+          const matchDesc = r.description ? r.description.toLowerCase().includes(q) : false;
+          if (!matchTitle && !matchId && !matchAuthor && !matchDesc) return false;
+        }
+
+        return true;
+      }).sort((a, b) => {
+        if (currentSort === "id_desc") return b.id.localeCompare(a.id);
+        if (currentSort === "id_asc") return a.id.localeCompare(b.id);
+        if (currentSort === "priority") {
+          const pOrder = { HIGH: 3, MEDIUM: 2, LOW: 1 };
+          return (pOrder[b.priority] || 0) - (pOrder[a.priority] || 0);
+        }
+        // default updated_desc (using index/mock ID as proxy)
+        return b.id.localeCompare(a.id);
+      });
+    }
+
+    // Render Everything
+    function renderAll() {
+      updateTelemetry();
+      renderTable();
+      renderPagination();
+      updateFilterPillVisibility();
+    }
+
+    // Telemetry Count Update
+    function updateTelemetry() {
+      const total = reports.length;
+      const open = reports.filter(r => r.status === "Open").length;
+      const review = reports.filter(r => r.status === "In Review").length;
+      const resolved = reports.filter(r => r.status === "Resolved").length;
+
+      document.getElementById('stat-total').textContent = total < 10 ? `0${total}` : total;
+      document.getElementById('stat-open').textContent = open < 10 ? `0${open}` : open;
+      document.getElementById('stat-review').textContent = review < 10 ? `0${review}` : review;
+      document.getElementById('stat-resolved').textContent = resolved < 10 ? `0${resolved}` : resolved;
+    }
+
+    // Status Badge Component
+    function getStatusBadge(status) {
+      if (status === "Open") {
+        return `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-amber-500/10 text-amber-400 border border-amber-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span> OPEN
+        </span>`;
+      } else if (status === "In Review") {
+        return `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> IN REVIEW
+        </span>`;
+      } else {
+        return `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-bold tracking-wide bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RESOLVED
+        </span>`;
+      }
+    }
+
+    // Category Badge Component
+    function getCategoryBadge(cat) {
+      return `<span class="text-[11px] font-semibold text-[#94A3B8] uppercase tracking-wider px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+        ${cat}
+      </span>`;
+    }
+
+    // Render Table & Mobile Cards
+    function renderTable() {
+      const filtered = getFilteredReports();
+      const totalRecords = filtered.length;
+      document.getElementById('record-count-badge').textContent = `${totalRecords} RECORDS`;
+
+      const tbody = document.getElementById('reportsTableBody');
+      const mobileList = document.getElementById('reportsMobileList');
+      const emptyState = document.getElementById('emptyState');
+
+      if (totalRecords === 0) {
+        tbody.innerHTML = '';
+        mobileList.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      } else {
+        emptyState.classList.add('hidden');
+      }
+
+      // Slice for pagination
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const paginatedItems = filtered.slice(startIndex, startIndex + itemsPerPage);
+
+      // Desktop Table Render
+      tbody.innerHTML = paginatedItems.map(item => `
+        <tr class="hover:bg-[#1A2330]/40 transition group">
+          <td class="py-3 px-4">
+            <div class="flex flex-col">
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide">${item.id}</span>
+                <span class="font-bold text-white group-hover:text-[#00FF9D] transition-colors">${item.title}</span>
+              </div>
+              <p class="text-xs text-[#94A3B8] line-clamp-1 mt-0.5 max-w-md">${item.description}</p>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            ${getCategoryBadge(item.category)}
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            <div class="flex items-center gap-1.5 text-xs text-white">
+              <div class="w-5 h-5 rounded-full bg-[#212B3A] border border-[#2D3A4B] text-[10px] text-[#94A3B8] flex items-center justify-center font-bold">
+                ${item.author.charAt(0)}
+              </div>
+              <span class="font-medium">${item.author}</span>
+            </div>
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap">
+            ${getStatusBadge(item.status)}
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap font-mono text-xs text-[#94A3B8]">
+            ${item.updated}
+          </td>
+          <td class="py-3 px-4 whitespace-nowrap text-right">
+            <div class="flex items-center justify-end gap-1.5">
+              <button 
+                onclick="viewReport('${item.id}')" 
+                title="View Report"
+                aria-label="View report details" 
+                class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] hover:text-[#00FF9D] text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+              <button 
+                onclick="openEditModal('${item.id}')" 
+                title="Edit Report"
+                aria-label="Edit report" 
+                class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 hover:text-emerald-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 20h9"></path>
+                  <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                </svg>
+              </button>
+              <button 
+                onclick="openDeleteModal('${item.id}')" 
+                title="Delete Report"
+                aria-label="Delete report" 
+                class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 hover:text-red-400 text-[#94A3B8] flex items-center justify-center transition">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+
+      // Mobile Cards Render
+      mobileList.innerHTML = paginatedItems.map(item => `
+        <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl p-3.5 space-y-2 hover:border-[#3B4A5D] transition">
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <span class="font-mono text-xs font-bold text-[#00FF9D] tracking-wide block">${item.id}</span>
+              <h3 class="text-sm font-bold text-white mt-0.5">${item.title}</h3>
+            </div>
+            <div class="shrink-0">
+              ${getStatusBadge(item.status)}
+            </div>
+          </div>
+
+          <p class="text-xs text-[#94A3B8] line-clamp-2 leading-relaxed">${item.description}</p>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]/60 text-xs">
+            <div class="flex items-center gap-2">
+              ${getCategoryBadge(item.category)}
+              <span class="text-[#94A3B8] text-[11px] flex items-center gap-1">
+                <span class="text-white font-medium">${item.author}</span>
+              </span>
+            </div>
+            <span class="font-mono text-[11px] text-[#94A3B8]">${item.updated}</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2 pt-1">
+            <button 
+              onclick="viewReport('${item.id}')"
+              class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-[#00FF9D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              View
+            </button>
+            <button 
+              onclick="openEditModal('${item.id}')"
+              class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              Edit
+            </button>
+            <button 
+              onclick="openDeleteModal('${item.id}')"
+              class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-red-500 text-xs font-semibold text-red-400 flex items-center justify-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render Pagination Controls
+    function renderPagination() {
+      const filtered = getFilteredReports();
+      const total = filtered.length;
+      const totalPages = Math.ceil(total / itemsPerPage) || 1;
+
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const start = total === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
+      const end = Math.min(currentPage * itemsPerPage, total);
+
+      document.getElementById('pagination-info').textContent = `Showing ${start}â€“${end} of ${total} reports`;
+
+      document.getElementById('prevPageBtn').disabled = currentPage <= 1;
+      document.getElementById('nextPageBtn').disabled = currentPage >= totalPages;
+
+      const pagesContainer = document.getElementById('pagination-pages');
+      let pagesHtml = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const isActive = i === currentPage;
+        pagesHtml += `
+          <button onclick="goToPage(${i})" class="w-7 h-7 rounded text-xs font-mono font-bold transition ${
+            isActive 
+              ? 'bg-[#00FF9D] text-[#090E16] shadow-sm' 
+              : 'bg-[#1A2330] border border-[#2D3A4B] text-[#94A3B8] hover:text-white hover:border-[#3B4A5D]'
+          }">
+            ${i}
+          </button>
+        `;
+      }
+      pagesContainer.innerHTML = pagesHtml;
+    }
+
+    function changePage(delta) {
+      currentPage += delta;
+      renderTable();
+      renderPagination();
+    }
+
+    function goToPage(p) {
+      currentPage = p;
+      renderTable();
+      renderPagination();
+    }
+
+    // Filters and Search Handlers
+    function handleSearch(val) {
+      currentSearch = val;
+      currentPage = 1;
+      const clearBtn = document.getElementById('clearSearchBtn');
+      if (val.length > 0) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+      renderAll();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('searchInput');
+      input.value = "";
+      handleSearch("");
+      input.focus();
+    }
+
+    function handleFilterChange() {
+      currentStatus = document.getElementById('statusFilter').value;
+      currentCategory = document.getElementById('categoryFilter').value;
+      currentSort = document.getElementById('sortFilter').value;
+      currentPage = 1;
+      renderAll();
+    }
+
+    function resetFilters() {
+      currentSearch = "";
+      currentStatus = "ALL";
+      currentCategory = "ALL";
+      currentSort = "updated_desc";
+      document.getElementById('searchInput').value = "";
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      document.getElementById('statusFilter').value = "ALL";
+      document.getElementById('categoryFilter').value = "ALL";
+      document.getElementById('sortFilter').value = "updated_desc";
+      currentPage = 1;
+      renderAll();
+    }
+
+    function updateFilterPillVisibility() {
+      const isFiltered = currentSearch !== "" || currentStatus !== "ALL" || currentCategory !== "ALL" || currentSort !== "updated_desc";
+      const btn = document.getElementById('clearAllFiltersBtn');
+      if (isFiltered) {
+        btn.classList.remove('hidden');
+        btn.classList.add('inline-flex');
+      } else {
+        btn.classList.add('hidden');
+        btn.classList.remove('inline-flex');
+      }
+    }
+
+    // VIEW DRAWER MODAL
+    function viewReport(id) {
+      const report = reports.find(r => r.id === id);
+      if (!report) return;
+
+      document.getElementById('viewReportId').textContent = report.id;
+      document.getElementById('viewReportTitle').textContent = report.title;
+      document.getElementById('viewCategory').textContent = report.category;
+      document.getElementById('viewAuthor').textContent = report.author;
+      document.getElementById('viewCreated').textContent = report.created || "Sep 08, 2026";
+      document.getElementById('viewUpdated').textContent = report.updated;
+      document.getElementById('viewSummary').textContent = report.summary || report.description;
+      document.getElementById('viewNotes').textContent = report.notes || "No internal notes submitted.";
+      
+      // Status & Priority Badges
+      document.getElementById('viewStatusBadge').innerHTML = getStatusBadge(report.status);
+      document.getElementById('viewPriorityBadge').textContent = `${report.priority || 'MEDIUM'} PRIORITY`;
+
+      // Findings List
+      const findingsList = document.getElementById('viewFindings');
+      if (report.findings && report.findings.length > 0) {
+        findingsList.innerHTML = report.findings.map(f => `
+          <li class="flex items-start gap-2 p-2 rounded bg-[#1A2330] border border-[#2D3A4B]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#00FF9D] mt-1.5 shrink-0"></span>
+            <span class="text-gray-200">${f}</span>
+          </li>
+        `).join('');
+      } else {
+        findingsList.innerHTML = `<li class="text-xs text-[#94A3B8] italic">No detailed finding statements attached.</li>`;
+      }
+
+      // Drawer Edit CTA Hookup
+      const editBtn = document.getElementById('viewDrawerEditBtn');
+      editBtn.onclick = () => {
+        closeViewDrawer();
+        openEditModal(report.id);
+      };
+
+      // Open Drawer Animation
+      const overlay = document.getElementById('viewDrawerOverlay');
+      const drawer = document.getElementById('viewDrawerContent');
+      overlay.classList.remove('hidden');
+      setTimeout(() => {
+        drawer.classList.remove('translate-x-full');
+      }, 10);
+    }
+
+    function closeViewDrawer() {
+      const overlay = document.getElementById('viewDrawerOverlay');
+      const drawer = document.getElementById('viewDrawerContent');
+      drawer.classList.add('translate-x-full');
+      setTimeout(() => {
+        overlay.classList.add('hidden');
+      }, 250);
+    }
+
+    // FORM MODAL (CREATE / EDIT)
+    function openCreateModal() {
+      isEditing = false;
+      document.getElementById('formModalTitle').textContent = "CREATE REPORT";
+      document.getElementById('formEyebrow').textContent = "CYBERNEXUS / NEW REPORT";
+      document.getElementById('formSubmitBtn').textContent = "CREATE REPORT";
+      document.getElementById('formReportId').value = "";
+      document.getElementById('reportForm').reset();
+      
+      // Default sample values for seamless prototype testing
+      document.getElementById('formCategory').value = "Web Security";
+      document.getElementById('formStatus').value = "Open";
+      document.getElementById('formPriority').value = "HIGH";
+      document.getElementById('formAuthor').value = "Security Operator";
+
+      document.getElementById('formModalOverlay').classList.remove('hidden');
+    }
+
+    function openEditModal(id) {
+      isEditing = true;
+      const report = reports.find(r => r.id === id);
+      if (!report) return;
+
+      document.getElementById('formModalTitle').textContent = `EDIT ${report.id}`;
+      document.getElementById('formEyebrow').textContent = "CYBERNEXUS / EDIT";
+      document.getElementById('formSubmitBtn').textContent = "SAVE CHANGES";
+      document.getElementById('formReportId').value = report.id;
+
+      document.getElementById('formTitle').value = report.title;
+      document.getElementById('formCategory').value = report.category;
+      document.getElementById('formAuthor').value = report.author;
+      document.getElementById('formStatus').value = report.status;
+      document.getElementById('formPriority').value = report.priority || "MEDIUM";
+      document.getElementById('formSummary').value = report.summary || report.description;
+      document.getElementById('formFindings').value = (report.findings || []).join('\n');
+      document.getElementById('formNotes').value = report.notes || "";
+
+      document.getElementById('formModalOverlay').classList.remove('hidden');
+    }
+
+    function closeFormModal() {
+      document.getElementById('formModalOverlay').classList.add('hidden');
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('formReportId').value;
+      const title = document.getElementById('formTitle').value.trim();
+      const category = document.getElementById('formCategory').value;
+      const author = document.getElementById('formAuthor').value.trim();
+      const status = document.getElementById('formStatus').value;
+      const priority = document.getElementById('formPriority').value;
+      const summary = document.getElementById('formSummary').value.trim();
+      const rawFindings = document.getElementById('formFindings').value.trim();
+      const notes = document.getElementById('formNotes').value.trim();
+
+      const findings = rawFindings.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+      if (isEditing && id) {
+        // Edit existing
+        const index = reports.findIndex(r => r.id === id);
+        if (index !== -1) {
+          reports[index] = {
+            ...reports[index],
+            title,
+            category,
+            author,
+            status,
+            priority,
+            summary,
+            description: summary,
+            findings,
+            notes,
+            updated: "Just now"
+          };
+          closeFormModal();
+          renderAll();
+          showToast("REPORT UPDATED", "Changes saved successfully.");
+        }
+      } else {
+        // Create new
+        const highestNum = reports.reduce((max, r) => {
+          const num = parseInt(r.id.replace('REPORT-', '')) || 0;
+          return num > max ? num : max;
+        }, 0);
+        const nextId = `REPORT-${String(highestNum + 1).padStart(3, '0')}`;
+
+        const newReport = {
+          id: nextId,
+          title,
+          description: summary,
+          category,
+          author,
+          status,
+          priority,
+          created: "Today",
+          updated: "Just now",
+          summary,
+          findings: findings.length > 0 ? findings : ["Finding 01: Initial telemetry vector registered."],
+          notes: notes || "Triage pending."
+        };
+
+        // Add to top of list
+        reports.unshift(newReport);
+        closeFormModal();
+        renderAll();
+        showToast("REPORT CREATED", `New report ${nextId} added successfully.`);
+      }
+    }
+
+    // DELETE CONFIRMATION MODAL
+    function openDeleteModal(id) {
+      activeDeleteId = id;
+      document.getElementById('deleteReportTargetId').textContent = id;
+      document.getElementById('deleteModalOverlay').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+      activeDeleteId = null;
+      document.getElementById('deleteModalOverlay').classList.add('hidden');
+    }
+
+    function confirmDelete() {
+      if (!activeDeleteId) return;
+      const targetId = activeDeleteId;
+      reports = reports.filter(r => r.id !== targetId);
+      closeDeleteModal();
+      renderAll();
+      showToast("REPORT DELETED", `Report ${targetId} was removed successfully.`, true);
+    }
+
+    // TOAST SYSTEM
+    let toastTimeout = null;
+    function showToast(title, message, isDanger = false) {
+      const toast = document.getElementById('toastNotification');
+      const toastTitle = document.getElementById('toastTitle');
+      const toastMessage = document.getElementById('toastMessage');
+      const iconBox = document.getElementById('toastIconContainer');
+
+      toastTitle.textContent = title;
+      toastMessage.textContent = message;
+
+      if (isDanger) {
+        iconBox.className = "w-6 h-6 rounded-full bg-red-500/20 border border-red-500/40 text-red-400 flex items-center justify-center";
+      } else {
+        iconBox.className = "w-6 h-6 rounded-full bg-[#00FF9D]/20 border border-[#00FF9D]/40 text-[#00FF9D] flex items-center justify-center";
+      }
+
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3500);
+    }
+
+    // SYNC / REFRESH SIMULATION
+    function refreshData() {
+      const icon = document.getElementById('refresh-icon');
+      const text = document.getElementById('refresh-text');
+      icon.classList.add('animate-spin');
+      text.textContent = "Syncing...";
+
+      setTimeout(() => {
+        icon.classList.remove('animate-spin');
+        text.textContent = "Sync";
+        showToast("TELEMETRY SYNCED", "Reports synchronized with live arena database.");
+      }, 700);
+    }
+
+    // Close overlays on backdrop click
+    document.getElementById('viewDrawerOverlay').addEventListener('click', (e) => {
+      if (e.target.id === 'viewDrawerOverlay') closeViewDrawer();
+    });
+    document.getElementById('formModalOverlay').addEventListener('click', (e) => {
+      if (e.target.id === 'formModalOverlay') closeFormModal();
+    });
+    document.getElementById('deleteModalOverlay').addEventListener('click', (e) => {
+      if (e.target.id === 'deleteModalOverlay') closeDeleteModal();
+    });
+  </script>
+
+
+
+<script src="shared_nav.js"></script></body></html>

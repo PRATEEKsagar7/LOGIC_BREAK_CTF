@@ -1,0 +1,107 @@
+{
+  "teams": [
+    {
+      "id": "t1",
+      "name": "Null Vector",
+      "college": "Technova University",
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "t2",
+      "name": "Byte Raiders",
+      "college": "Nexus Institute",
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "t3",
+      "name": "Root Squad",
+      "college": "National Cyber Academy",
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "t4",
+      "name": "Cyber Phantoms",
+      "college": "Apex Polytechnic",
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "t5",
+      "name": "Kernel Panic",
+      "college": "Metro Cyber College",
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "t6",
+      "name": "Bit Shifters",
+      "college": "Vanguard Tech Institute",
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "t7",
+      "name": "Zero Day Cell",
+      "college": "Pacific State University",
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "t8",
+      "name": "Logic Breakers",
+      "college": "Host College Collective",
+      "score": 50,
+      "solved": [
+        "ch1"
+      ],
+      "penalties": 0,
+      "lastSolve": 1789138687580
+    },
+    {
+      "id": "t-1789138395060",
+      "name": "AlphaSquad",
+      "college": "Collegiate Collective",
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "t-1789138395068",
+      "name": "BetaSquad",
+      "college": "Collegiate Collective",
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    }
+  ],
+  "submissions": [
+    {
+      "id": "sub-1789138687580",
+      "team": "Logic Breakers",
+      "challengeId": "ch1",
+      "challengeTitle": "Ghost Protocol",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789138687580
+    }
+  ]
+}

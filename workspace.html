@@ -1,0 +1,427 @@
+﻿<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@100..900&family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-lowest": "#09100c", "background": "#0e1511", "primary-fixed": "#7af9c9", "on-tertiary": "#3c2f00", "on-error": "#690005", "surface-bright": "#343b37", "secondary-fixed": "#bdedd6", "tertiary": "#dfc573", "secondary-container": "#224f3e", "surface-dim": "#0e1511", "surface-tint": "#5bdcae", "on-error-container": "#ffdad6", "tertiary-container": "#c2a95b", "outline-variant": "#3d4a43", "surface-container": "#1a211d", "on-primary-fixed": "#002116", "on-background": "#dde4de", "on-primary-fixed-variant": "#00513b", "error": "#ffb4ab", "on-secondary": "#053828", "inverse-on-surface": "#2b322e", "primary-fixed-dim": "#5bdcae", "surface-container-low": "#161d19", "on-secondary-container": "#90bfaa", "on-surface": "#dde4de", "tertiary-fixed": "#fce18c", "surface-container-high": "#252b28", "on-surface-variant": "#bccac1", "on-secondary-fixed-variant": "#224f3e", "surface": "#0e1511", "on-primary-container": "#003324", "tertiary-fixed-dim": "#dfc573", "error-container": "#93000a", "primary-container": "#03a77c", "surface-container-highest": "#303632", "outline": "#86948c", "on-primary": "#003827", "surface-variant": "#303632", "secondary": "#a1d1bb", "on-secondary-fixed": "#002116", "on-tertiary-container": "#4d3e00", "secondary-fixed-dim": "#a1d1bb", "primary": "#5bdcae", "on-tertiary-fixed-variant": "#564500", "inverse-primary": "#006c4f", "on-tertiary-fixed": "#231b00", "inverse-surface": "#dde4de" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.75rem", "space-3xl": "4rem", "gutter-mobile": "0.75rem", "margin-tablet": "1.5rem", "space-md": "1rem", "gutter-tablet": "1rem", "margin-mobile": "1rem", "space-xs": "0.5rem", "space-2xs": "0.25rem", "space-xl": "2rem", "space-lg": "1.5rem", "gutter-desktop": "1.5rem", "space-2xl": "3rem", "margin-desktop": "2rem" }, "fontFamily": { "body-lg": ["Geist"], "label-lg": ["JetBrains Mono"], "display-lg": ["Bodoni Moda"] }, "fontSize": { "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }], "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-surface font-body-lg text-body-lg text-on-surface min-h-screen selection:bg-primary selection:text-on-primary"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-low/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.25)]"><div class="h-16 w-full px-gutter-desktop flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-xl"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[24px]">terminal</span><div class="flex items-center gap-space-xs"><span class="font-display-lg text-body-lg font-bold tracking-tight text-on-surface">CYBER<span class="text-primary">NEXUS</span></span><span class="font-label-lg text-label-lg px-space-xs py-space-2xs rounded bg-surface-container text-outline text-[10px] uppercase tracking-wider">Collegiate</span></div></div><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium rounded-lg"><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="overview" href="#">Overview</a><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="missions" href="#">Missions</a><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="reports" href="#">Reports</a><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="files" href="#">Files</a><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="workspace" href="#">Workspace</a><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-secondary-container text-on-secondary-container font-medium rounded-lg" data-path="settings-workspace-overview" href="#">Settings</a></nav></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs px-space-sm py-space-xs bg-surface-container rounded-full"><span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span></span><span class="font-label-lg text-label-lg text-primary uppercase text-[11px] tracking-wider">Live Arena</span></div><div class="flex items-center gap-space-md"><button class="w-9 h-9 flex items-center justify-center rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-16 bg-surface min-h-[calc(100vh-4rem)] flex flex-col"><section class="w-full bg-surface-container-low"><div class="w-full px-gutter-desktop pt-space-lg pb-space-md"><div class="flex flex-col gap-space-md"><div class="flex items-center justify-between"><div class="flex items-center gap-space-xs text-outline text-label-lg font-label-lg text-[12px]"><span>CYBERNEXUS</span><span>/</span><span>ARENA OPS</span><span>/</span><span class="text-primary">SETTINGS</span></div><div class="flex items-center gap-space-xs text-outline font-label-lg text-[12px]"><span class="material-symbols-outlined text-tertiary text-[16px]">security</span><span>SECURE CLUSTER: US-EAST-COLLEGIATE-09</span></div></div><div class="flex items-center justify-between"><nav class="flex items-center gap-space-xs" data-active-classes="bg-surface-container-high text-primary font-bold rounded-lg"><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-surface-container-high text-primary font-bold rounded-lg" data-path="settings-workspace-overview" href="#">Workspace Overview</a><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-lg text-label-lg rounded-lg" data-path="settings-members-and-admin" href="#">Members & Admin</a></nav></div></div></div></section><div class="w-full px-gutter-desktop py-space-lg flex-1"><div class="flex flex-col w-full max-w-6xl mx-auto pb-space-3xl">
+<!-- Subtle Ambient Glow -->
+<div class="relative w-full">
+<div class="absolute -top-12 -left-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-40 -right-24 w-80 h-80 bg-tertiary/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+</div>
+<!-- Page Header Hierarchy -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-2xl">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg text-primary text-[11px] uppercase tracking-widest px-space-xs py-space-2xs bg-surface-container-high rounded">
+          SETTINGS // GENERAL CONFIG
+        </span>
+<span class="font-label-lg text-label-lg text-outline text-[12px]">â€¢ ARENA ID: CNX-9021</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">
+        Workspace Overview
+      </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+        Manage your workspace profile, mission directives, and public arena telemetry identifiers.
+      </p>
+</div>
+<!-- Cluster Status Indicator Card -->
+<div class="flex items-center gap-space-md p-space-md bg-surface-container rounded-xl shadow-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">verified_user</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface text-[12px] font-bold">NODE: VERIFIED TIER-1</span>
+<span class="font-label-lg text-label-lg text-outline text-[11px]">Synced: 12.04ms via SHA-256</span>
+</div>
+</div>
+</div>
+<!-- Main Settings Panel (Bento Architecture) -->
+<div class="w-full bg-surface-container rounded-xl shadow-xl overflow-hidden">
+<!-- Header Banner of the Panel -->
+<div class="p-space-lg bg-surface-container-high flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+<span class="font-label-lg text-label-lg text-on-surface font-semibold uppercase tracking-wider text-[13px]">
+          Identity & Telemetry Settings
+        </span>
+</div>
+<span class="font-label-lg text-label-lg text-outline text-[11px] uppercase">All records secured via Ed25519</span>
+</div>
+<form class="p-space-lg sm:p-space-xl flex flex-col gap-space-2xl" id="workspace-form" onsubmit="event.preventDefault(); triggerSaveToast();">
+<!-- Field 1: Workspace Logo -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<div class="lg:col-span-4 flex flex-col gap-space-2xs">
+<label class="font-label-lg text-label-lg font-bold text-on-surface flex items-center gap-space-xs">
+<span>Workspace Logo</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+</label>
+<p class="font-body-lg text-body-lg text-on-surface-variant text-[14px]">
+            An authoritative emblem to represent your collegiate collective across active leaderboards and encrypted mission briefs. Max 5MB (PNG, JPG, SVG).
+          </p>
+</div>
+<div class="lg:col-span-8 flex flex-col sm:flex-row items-start sm:items-center gap-space-lg p-space-md bg-surface-container-low rounded-xl">
+<!-- Logo Display Wrapper -->
+<div class="relative group">
+<div class="w-24 h-24 rounded-lg bg-surface-container-high flex items-center justify-center overflow-hidden shadow-inner p-space-2xs transition-all duration-300" id="logo-preview-box">
+<img class="w-full h-full object-contain filter contrast-125 transition-transform duration-300" data-alt="A futuristic minimalist glowing emerald green vector shield emblem for a cybersecurity collegiate elite hacking arena team with sharp geometric lines on pure dark carbon background" id="current-logo-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4uyZGDYBbC51vXMa66iUdbxWz-bZtZEUgInG-Lmivm4nMp8TqTu0szqD4C8hwdqoGta0E1WZF0QDx3ez0OgBbzIe6zZe952jcxnUPVD7KuHihlG35tgNSV1YegtcbOE-lBYzmGkgrAnHqZPhKsj5-_uLSVwky4ZFnpAd1p_Tu1SqpOFDlKlXBB29cqoglNEaEGFqXBA75gE9iiFaOLX6Uj0ys8Tri6skZvPZqTzbD2XkFOBtDi2fuKg" style="transform: scale(1);"/>
+</div>
+<div class="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded bg-surface-container-lowest text-primary font-label-lg text-[9px] tracking-wider uppercase font-bold shadow">
+              ACTIVE
+            </div>
+</div>
+<!-- Controls -->
+<div class="flex flex-col gap-space-xs flex-1">
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="px-space-md py-space-xs rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-lg text-label-lg flex items-center gap-space-xs shadow transition-all hover:text-primary" onclick="openChangeLogoModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+<span>Change Logo</span>
+</button>
+<button class="px-space-md py-space-xs rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-lg text-label-lg flex items-center gap-space-xs shadow transition-all hover:text-primary" onclick="openEditLogoModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">crop</span>
+<span>Edit Framing</span>
+</button>
+</div>
+<p class="font-label-lg text-label-lg text-outline text-[12px]">
+              Recommended dimensions: 512x512px transparent PNG. Aspect ratio locked 1:1.
+            </p>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-surface-container-highest"></div>
+<!-- Field 2: Workspace Name -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<div class="lg:col-span-4 flex flex-col gap-space-2xs">
+<label class="font-label-lg text-label-lg font-bold text-on-surface flex items-center gap-space-xs" for="ws-name">
+<span>Workspace Name</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+</label>
+<p class="font-body-lg text-body-lg text-on-surface-variant text-[14px]">
+            Choose a distinct designation for your workspace. Used on tournament flags and certificate signatures.
+          </p>
+</div>
+<div class="lg:col-span-8 flex flex-col gap-space-xs">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-space-md text-outline pointer-events-none text-[20px]">badge</span>
+<input class="w-full bg-surface-container-low text-on-surface font-body-lg text-body-lg pl-12 pr-space-md py-space-sm rounded-lg focus:outline-none focus:bg-surface-container-highest transition-colors font-medium shadow-inner" id="ws-name" placeholder="e.g. CYBERNEXUS" required="" type="text" value="CYBERNEXUS"/>
+</div>
+<div class="flex items-center justify-between text-outline font-label-lg text-label-lg text-[11px]">
+<span>Must be between 3 and 32 alphanumeric characters</span>
+<span id="name-count">11 / 32</span>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-surface-container-highest"></div>
+<!-- Field 3: Workspace Description -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<div class="lg:col-span-4 flex flex-col gap-space-2xs">
+<label class="font-label-lg text-label-lg font-bold text-on-surface flex items-center gap-space-xs" for="ws-desc">
+<span>Workspace Description</span>
+</label>
+<p class="font-body-lg text-body-lg text-on-surface-variant text-[14px]">
+            A concise mission briefing or summary displayed in inter-collegiate arena registries and team invites.
+          </p>
+</div>
+<div class="lg:col-span-8 flex flex-col gap-space-xs">
+<textarea class="w-full bg-surface-container-low text-on-surface font-body-lg text-body-lg p-space-md rounded-lg focus:outline-none focus:bg-surface-container-highest transition-colors resize-y shadow-inner" id="ws-desc" placeholder="Provide tactical context..." rows="3">Collegiate cybersecurity competition workspace</textarea>
+<div class="flex items-center justify-between text-outline font-label-lg text-label-lg text-[11px]">
+<span>Briefing text rendered on public threat index</span>
+<span>49 / 240</span>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-surface-container-highest"></div>
+<!-- Field 4: Workspace URL -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<div class="lg:col-span-4 flex flex-col gap-space-2xs">
+<label class="font-label-lg text-label-lg font-bold text-on-surface flex items-center gap-space-xs" for="ws-slug">
+<span>Workspace URL</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+</label>
+<p class="font-body-lg text-body-lg text-on-surface-variant text-[14px]">
+            Custom domain endpoint slug for arena team participants and direct telemetry access.
+          </p>
+</div>
+<div class="lg:col-span-8 flex flex-col gap-space-xs">
+<div class="flex items-center rounded-lg bg-surface-container-low overflow-hidden shadow-inner">
+<span class="px-space-md py-space-sm bg-surface-container-highest text-on-surface-variant font-label-lg text-label-lg select-none">
+              arena.cybernexus.edu/
+            </span>
+<input class="flex-1 bg-transparent text-primary font-label-lg text-label-lg px-space-md py-space-sm focus:outline-none" id="ws-slug" placeholder="workspace-slug" required="" type="text" value="cybernexus"/>
+<button class="px-space-md text-outline hover:text-primary transition-colors flex items-center gap-1 font-label-lg text-label-lg text-[12px]" onclick="copyArenaUrl()" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span id="copy-label">Copy</span>
+</button>
+</div>
+<p class="font-label-lg text-label-lg text-outline text-[11px]">
+            Changes to slug take effect immediately. Existing mission links will auto-redirect for 48 hours.
+          </p>
+</div>
+</div>
+<!-- Form Submission Row -->
+<div class="pt-space-lg mt-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-xs text-outline font-label-lg text-label-lg text-[12px]">
+<span class="material-symbols-outlined text-[16px] text-tertiary">lock_reset</span>
+<span>Changes require Arena Admin Level 4 clearance</span>
+</div>
+<div class="flex items-center gap-space-md">
+<button class="px-space-lg py-space-sm rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-lg text-label-lg transition-colors" onclick="resetForm()" type="button">
+            Discard
+          </button>
+<button class="px-space-xl py-space-sm rounded-lg bg-primary hover:bg-primary-fixed-dim text-on-primary font-label-lg text-label-lg font-bold tracking-wide shadow-lg shadow-primary/10 transition-all flex items-center gap-space-xs" type="submit">
+<span class="material-symbols-outlined text-[18px]">save</span>
+<span>Save Changes</span>
+</button>
+</div>
+</div>
+</form>
+</div>
+<!-- CHANGE LOGO MODAL -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-surface-container-lowest/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-200" id="modal-change-logo">
+<div class="w-full max-w-lg bg-surface-container rounded-xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-200" id="modal-change-card">
+<div class="p-space-lg bg-surface-container-high flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">cloud_upload</span>
+<h3 class="font-display-lg text-[22px] leading-tight text-on-surface">Change Workspace Logo</h3>
+</div>
+<button class="text-outline hover:text-on-surface" onclick="closeChangeLogoModal()" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-space-xl flex flex-col gap-space-lg">
+<div class="flex items-center gap-space-lg">
+<div class="w-20 h-20 rounded-lg bg-surface-container-low flex items-center justify-center overflow-hidden p-2">
+<img class="w-full h-full object-contain" data-alt="A tactical cyber intelligence insignia in crisp emerald lines representing collegiate offensive security operations" id="modal-current-logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-_S_DYr4RZRJL04TDdlfYQoITrUFZFXgAc8WTOxeM7mZvu29brev296KTeueffeZYjgqeSeL0tW3QGNKOvb_auXSwBsH7YuwZijvT_oeONdIiEXocBbNxBGpGNPYlK-IWjz70aKMJ7bzDXjJ1y_SkEtWpRJA4Omb2rfSA7F86zTSqyFj3EMGKrRrUU7jU178GPBULEnZskSPDY2EpYOWWF46ncb507KB6hiwNWJV8ZIff5GZt6pzT0w"/>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface font-bold text-[13px]">CURRENT EMBLEM</span>
+<span class="font-label-lg text-label-lg text-outline text-[12px]">cybernexus_shield_v3.svg</span>
+<span class="font-label-lg text-label-lg text-primary text-[11px] mt-1">Status: Active on Defense Grid</span>
+</div>
+</div>
+<label class="flex flex-col items-center justify-center p-space-xl rounded-xl bg-surface-container-low hover:bg-surface-container-highest cursor-pointer transition-colors group">
+<input accept="image/png, image/jpeg, image/svg+xml" class="hidden" id="logo-file-input" onchange="handleFileSelect(event)" type="file"/>
+<span class="material-symbols-outlined text-outline group-hover:text-primary text-[40px] mb-space-xs transition-colors">upload_file</span>
+<span class="font-label-lg text-label-lg text-on-surface font-medium text-[13px]">Drop emblem asset here or click to browse</span>
+<span class="font-label-lg text-label-lg text-outline text-[11px] mt-1">PNG, JPG or SVG (Max 5MB)</span>
+</label>
+<div class="hidden p-space-sm bg-secondary-container text-on-secondary-container rounded font-label-lg text-label-lg text-[12px] flex items-center justify-between" id="file-selection-indicator">
+<span id="selected-filename">custom_tactical_logo.png</span>
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+</div>
+</div>
+<div class="p-space-lg bg-surface-container-low flex items-center justify-end gap-space-sm">
+<button class="px-space-md py-space-xs rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-lg text-label-lg transition-colors" onclick="closeChangeLogoModal()" type="button">
+          Cancel
+        </button>
+<button class="px-space-lg py-space-xs rounded-lg bg-primary hover:bg-primary-fixed-dim text-on-primary font-label-lg text-label-lg font-bold transition-all" onclick="confirmReplaceLogo()" type="button">
+          Replace Logo
+        </button>
+</div>
+</div>
+</div>
+<!-- EDIT LOGO FRAMING MODAL -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-space-md bg-surface-container-lowest/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-200" id="modal-edit-logo">
+<div class="w-full max-w-lg bg-surface-container rounded-xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-200" id="modal-edit-card">
+<div class="p-space-lg bg-surface-container-high flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">aspect_ratio</span>
+<h3 class="font-display-lg text-[22px] leading-tight text-on-surface">Edit Logo Framing</h3>
+</div>
+<button class="text-outline hover:text-on-surface" onclick="closeEditLogoModal()" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-space-xl flex flex-col gap-space-xl">
+<!-- Interactive Preview Box with Framing Grid -->
+<div class="relative w-48 h-48 mx-auto rounded-xl bg-surface-container-lowest flex items-center justify-center overflow-hidden shadow-inner p-space-md">
+<!-- Tactical reticle overlay -->
+<div class="absolute inset-2 pointer-events-none opacity-20 flex flex-col justify-between">
+<div class="flex justify-between">
+<div class="w-2 h-2 border-t-2 border-l-2 border-primary"></div>
+<div class="w-2 h-2 border-t-2 border-r-2 border-primary"></div>
+</div>
+<div class="flex justify-between">
+<div class="w-2 h-2 border-b-2 border-l-2 border-primary"></div>
+<div class="w-2 h-2 border-b-2 border-r-2 border-primary"></div>
+</div>
+</div>
+<img class="w-full h-full object-contain transition-transform duration-100" data-alt="A tactical cyber intelligence insignia in crisp emerald lines representing collegiate offensive security operations" id="modal-crop-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArORIOknN7_SJu80zU0ZQ4nPiZ4Hu5Rpcu5VHIkH4rXf__tuvEA-50kNWkZzKJghqVsAn6jwz4gM718SUjiS5LkwIH6WRQBsop7_1YQton21pizFX2_wMo_I9cmlCFntN-2fnIeIX6u2Ko6Fc5UF9q0U64PZQgI-p7t00RvTSuYC54Gtq32LRo897kyksUG1D3UqNKX2msJBrHMFjhR7kBAfk-p7HHL61HeHZ_lQojQ81jTuGPZ0Xu6g" style="transform: scale(1);"/>
+</div>
+<!-- Scale slider -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex justify-between font-label-lg text-label-lg text-[12px]">
+<span class="text-on-surface">OPTICAL ZOOM / SCALE</span>
+<span class="text-primary font-bold" id="zoom-readout">100%</span>
+</div>
+<input class="w-full accent-primary bg-surface-container-highest rounded-lg h-2 cursor-pointer" id="scale-slider" max="1.8" min="0.6" oninput="handleZoomChange(this.value)" step="0.05" type="range" value="1"/>
+<div class="flex justify-between font-label-lg text-label-lg text-[10px] text-outline">
+<span>60% (Compact)</span>
+<span>100% (Default)</span>
+<span>180% (Bleed)</span>
+</div>
+</div>
+</div>
+<div class="p-space-lg bg-surface-container-low flex items-center justify-between">
+<button class="px-space-md py-space-xs rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-lg text-label-lg transition-colors flex items-center gap-1" onclick="resetZoom()" type="button">
+<span class="material-symbols-outlined text-[16px]">restart_alt</span>
+<span>Reset</span>
+</button>
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-space-xs rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-label-lg text-label-lg transition-colors" onclick="closeEditLogoModal()" type="button">
+            Cancel
+          </button>
+<button class="px-space-lg py-space-xs rounded-lg bg-primary hover:bg-primary-fixed-dim text-on-primary font-label-lg text-label-lg font-bold transition-all" onclick="saveFraming()" type="button">
+            Apply Framing
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none" id="toast-container"></div>
+</div>
+<script>
+  // State
+  let currentZoom = 1;
+  let stagedZoom = 1;
+
+  // Modals Logic
+  function openChangeLogoModal() {
+    const modal = document.getElementById('modal-change-logo');
+    const card = document.getElementById('modal-change-card');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      card.classList.remove('scale-95');
+      card.classList.add('scale-100');
+    }, 10);
+  }
+
+  function closeChangeLogoModal() {
+    const modal = document.getElementById('modal-change-logo');
+    const card = document.getElementById('modal-change-card');
+    modal.classList.add('opacity-0');
+    card.classList.remove('scale-100');
+    card.classList.add('scale-95');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      document.getElementById('file-selection-indicator').classList.add('hidden');
+    }, 200);
+  }
+
+  function openEditLogoModal() {
+    stagedZoom = currentZoom;
+    document.getElementById('scale-slider').value = stagedZoom;
+    handleZoomChange(stagedZoom);
+    const modal = document.getElementById('modal-edit-logo');
+    const card = document.getElementById('modal-edit-card');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.classList.remove('opacity-0');
+      card.classList.remove('scale-95');
+      card.classList.add('scale-100');
+    }, 10);
+  }
+
+  function closeEditLogoModal() {
+    const modal = document.getElementById('modal-edit-logo');
+    const card = document.getElementById('modal-edit-card');
+    modal.classList.add('opacity-0');
+    card.classList.remove('scale-100');
+    card.classList.add('scale-95');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 200);
+  }
+
+  function handleZoomChange(val) {
+    stagedZoom = parseFloat(val);
+    const pct = Math.round(stagedZoom * 100);
+    document.getElementById('zoom-readout').innerText = pct + '%';
+    document.getElementById('modal-crop-img').style.transform = `scale(${stagedZoom})`;
+  }
+
+  function resetZoom() {
+    handleZoomChange(1);
+    document.getElementById('scale-slider').value = 1;
+  }
+
+  function saveFraming() {
+    currentZoom = stagedZoom;
+    document.getElementById('current-logo-img').style.transform = `scale(${currentZoom})`;
+    closeEditLogoModal();
+    showToast('FRAMING UPDATED', 'Logo scale applied to workspace assets.');
+  }
+
+  function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (file) {
+      document.getElementById('selected-filename').innerText = file.name;
+      document.getElementById('file-selection-indicator').classList.remove('hidden');
+    }
+  }
+
+  function confirmReplaceLogo() {
+    closeChangeLogoModal();
+    showToast('LOGO REPLACED', 'New workspace vector insignia deployed across cluster.');
+  }
+
+  function copyArenaUrl() {
+    const slug = document.getElementById('ws-slug').value;
+    const full = `arena.cybernexus.edu/${slug}`;
+    navigator.clipboard.writeText(full).then(() => {
+      const label = document.getElementById('copy-label');
+      label.innerText = 'Copied!';
+      setTimeout(() => {
+        label.innerText = 'Copy';
+      }, 2000);
+      showToast('URL COPIED', full + ' copied to clipboard.');
+    });
+  }
+
+  function resetForm() {
+    document.getElementById('ws-name').value = 'CYBERNEXUS';
+    document.getElementById('ws-desc').value = 'Collegiate cybersecurity competition workspace';
+    document.getElementById('ws-slug').value = 'cybernexus';
+    currentZoom = 1;
+    document.getElementById('current-logo-img').style.transform = 'scale(1)';
+    showToast('RESET COMPLETE', 'Form values returned to previously saved state.');
+  }
+
+  function triggerSaveToast() {
+    showToast('WORKSPACE SAVED', 'Workspace settings updated successfully.');
+  }
+
+  function showToast(headline, msg) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = 'pointer-events-auto flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-highest text-on-surface shadow-2xl transition-all duration-300 transform translate-y-4 opacity-0 max-w-sm';
+    toast.innerHTML = `
+      <div class="w-8 h-8 rounded-lg bg-primary/20 text-primary flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-[20px]">check</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="font-label-lg text-label-lg font-bold text-primary text-[12px] tracking-wide uppercase">${headline}</span>
+        <span class="font-body-lg text-body-lg text-[13px] text-on-surface leading-tight mt-0.5">${msg}</span>
+      </div>
+    `;
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.classList.remove('translate-y-4', 'opacity-0');
+    });
+
+    setTimeout(() => {
+      toast.classList.add('opacity-0', 'translate-y-2');
+      setTimeout(() => toast.remove(), 300);
+    }, 4000);
+  }
+
+  // Realtime Char Counter
+  const nameInput = document.getElementById('ws-name');
+  if (nameInput) {
+    nameInput.addEventListener('input', (e) => {
+      document.getElementById('name-count').innerText = `${e.target.value.length} / 32`;
+    });
+  }
+</script></div></main><footer class="w-full bg-surface-container-lowest py-space-lg"><div class="w-full px-gutter-desktop flex flex-col md:flex-row items-center justify-between gap-space-md font-label-lg text-label-lg text-outline text-[12px]"><div class="flex items-center gap-space-md"><span class="text-on-surface-variant">CyberNexus Defense Grid v4.12.0</span><span>â€¢</span><span>Collegiate Arena Tier-1 Encrypted</span></div><div class="flex items-center gap-space-lg"><span>TELEMETRY: SYNCHRONIZED</span><span>LATENCY: 12ms</span><span>SYSTEM STATUS: OPTIMAL</span></div></div></footer><script src="shared_nav.js"></script></body></html>

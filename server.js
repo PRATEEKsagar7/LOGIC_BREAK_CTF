@@ -363,7 +363,7 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  const parsedUrl = url.parse(req.url, true);
+  const parsedUrl = new URL(req.url, `http://${req.headers.host || 'localhost:3000'}`);
   const pathname = parsedUrl.pathname;
 
   // ==========================================
@@ -388,7 +388,7 @@ const server = http.createServer(async (req, res) => {
   // API: GET CHALLENGES
   // ==========================================
   if (pathname === '/api/challenges' && req.method === 'GET') {
-    const teamName = parsedUrl.query.team || '';
+    const teamName = parsedUrl.searchParams.get('team') || '';
     const team = ctfState.teams.find(t => t.name.toLowerCase() === teamName.toLowerCase());
     const solvedSet = new Set(team ? team.solved : []);
 
@@ -656,7 +656,7 @@ const server = http.createServer(async (req, res) => {
   // API: ADMIN SUBMISSION AUDIT LOG
   // ==========================================
   if (pathname === '/api/admin/submissions' && req.method === 'GET') {
-    const authHeader = req.headers['x-admin-token'] || parsedUrl.query.token;
+    const authHeader = req.headers['x-admin-token'] || parsedUrl.searchParams.get('token');
     if (authHeader !== ADMIN_TOKEN) {
       res.writeHead(403, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ success: false, message: 'Forbidden: Admin clearance required.' }));
@@ -741,16 +741,28 @@ const server = http.createServer(async (req, res) => {
   let reqPath = pathname === '/' ? '/cybernexus_overview_gray_light_green_dark_mode.html' : pathname;
 
   // Convenient Route Aliases
-  if (reqPath === '/overview' || reqPath === '/overview.html' || reqPath === '/index.html') {
-    reqPath = '/cybernexus_overview_gray_light_green_dark_mode.html';
+  if (reqPath === '/overview' || reqPath === '/overview.html' || reqPath === '/index.html' || reqPath === '/') {
+    reqPath = '/overview.html';
   } else if (reqPath === '/missions' || reqPath === '/missions.html' || reqPath === '/challenges') {
-    reqPath = '/cybernexus_missions_gray_light_green_dark_mode.html';
+    reqPath = '/missions.html';
   } else if (reqPath === '/leaderboard' || reqPath === '/leaderboard.html' || reqPath === '/standings') {
-    reqPath = '/cybernexus_leaderboard_gray_light_green_dark_mode.html';
+    reqPath = '/leaderboard.html';
   } else if (reqPath === '/admin' || reqPath === '/admin.html' || reqPath === '/members') {
-    reqPath = '/cybernexus_members_admin.html';
+    reqPath = '/admin.html';
   } else if (reqPath === '/files' || reqPath === '/files.html' || reqPath === '/resources') {
-    reqPath = '/cybernexus_files_folder_manager.html';
+    reqPath = '/files.html';
+  } else if (reqPath === '/schedule' || reqPath === '/schedule.html') {
+    reqPath = '/schedule.html';
+  } else if (reqPath === '/reports' || reqPath === '/reports.html') {
+    reqPath = '/reports.html';
+  } else if (reqPath === '/workspace' || reqPath === '/workspace.html') {
+    reqPath = '/workspace.html';
+  } else if (reqPath === '/projects' || reqPath === '/projects.html') {
+    reqPath = '/projects.html';
+  } else if (reqPath === '/billing' || reqPath === '/billing.html') {
+    reqPath = '/billing.html';
+  } else if (reqPath === '/recycle_bin' || reqPath === '/recycle_bin.html') {
+    reqPath = '/recycle_bin.html';
   }
 
   const filePath = path.join(__dirname, reqPath);

@@ -18,13 +18,13 @@
     return names.some(n => currentPath.includes(n.toLowerCase()));
   }
 
-  // Create Header HTML
+  // Create Header HTML with full collegiate CTF navigation flow
   const navHtml = `
     <header class="sticky top-0 z-50 w-full bg-[#0e1511]/95 backdrop-blur-xl border-b border-[#2d3a4b] shadow-lg">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <div class="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         <!-- Logo & Title -->
         <div class="flex items-center gap-3 shrink-0">
-          <a href="cybernexus_overview_gray_light_green_dark_mode.html" class="flex items-center gap-2.5 group">
+          <a href="overview.html" class="flex items-center gap-2.5 group">
             <div class="w-9 h-9 rounded-xl bg-[#1a211d] border border-emerald-500/40 flex items-center justify-center text-[#5bdcae] shadow-[0_0_15px_rgba(91,220,174,0.25)] group-hover:scale-105 transition-transform">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -37,36 +37,60 @@
                 <span class="text-sm font-black tracking-wider text-white uppercase font-mono">LOGIC BREAK</span>
                 <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-950/80 text-[#5bdcae] border border-emerald-500/30">CTF '26</span>
               </div>
-              <p class="text-[11px] font-medium text-slate-400 leading-none">Collegiate Security Arena</p>
+              <p class="text-[10px] font-mono text-slate-400 leading-none">Collegiate Security Arena</p>
             </div>
           </a>
         </div>
 
-        <!-- Center Navigation Links -->
-        <nav class="hidden md:flex items-center gap-1">
-          <a href="cybernexus_overview_gray_light_green_dark_mode.html" class="nav-link px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 ${isPage(['overview', 'index']) || currentPath === '/' ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- Center Navigation Links (Linewise Collegiate Flow) -->
+        <nav class="hidden xl:flex items-center gap-1 text-xs font-semibold uppercase tracking-wider">
+          <a href="overview.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['overview', 'index']) || currentPath === '/' ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
             <span>Overview</span>
           </a>
 
-          <a href="cybernexus_missions_gray_light_green_dark_mode.html" class="nav-link px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 ${isPage(['missions', 'challenges']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="missions.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['missions', 'challenges']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
             <span>Missions (12)</span>
           </a>
 
-          <a href="cybernexus_leaderboard_gray_light_green_dark_mode.html" class="nav-link px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 ${isPage(['leaderboard', 'standings']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="leaderboard.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['leaderboard', 'standings']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
             <span>Leaderboard</span>
           </a>
 
-          <a href="cybernexus_files_folder_manager.html" class="nav-link px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 ${isPage(['files', 'folder']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="files.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['files', 'folder']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
             <span>Files & Docs</span>
           </a>
 
-          <a href="cybernexus_members_admin.html" class="nav-link px-3.5 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all flex items-center gap-1.5 ${isPage(['members', 'admin']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
-            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Admin Panel</span>
+          <a href="schedule.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['schedule', 'task']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
+            <span>Schedule</span>
+          </a>
+
+          <a href="reports.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['reports']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
+            <span>Reports</span>
+          </a>
+
+          <a href="workspace.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['workspace']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
+            <span>Workspace</span>
+          </a>
+
+          <!-- More Dropdown -->
+          <div class="relative group">
+            <button class="px-3 py-1.5 rounded-lg transition-all flex items-center gap-1 text-slate-300 hover:text-white hover:bg-[#1a211d]">
+              <span>More</span>
+              <svg class="w-3 h-3 text-slate-400 group-hover:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="absolute left-0 top-full pt-1.5 hidden group-hover:block z-50">
+              <div class="w-48 bg-[#161d19] border border-[#2d3a4b] rounded-xl shadow-2xl p-1.5 flex flex-col gap-0.5">
+                <a href="projects.html" class="px-3 py-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-[#224f3e] transition">Projects Archive</a>
+                <a href="billing.html" class="px-3 py-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-[#224f3e] transition">Billing Plans</a>
+                <a href="recycle_bin.html" class="px-3 py-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-[#224f3e] transition">Purged Artifacts</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Admin Link -->
+          <a href="admin.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['members', 'admin']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
+            <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Admin</span>
           </a>
         </nav>
 
@@ -91,7 +115,7 @@
           </div>
 
           ${isAdmin ? `
-            <a href="cybernexus_members_admin.html" class="px-2 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-mono font-bold uppercase">ADMIN</a>
+            <a href="admin.html" class="px-2 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-mono font-bold uppercase">ADMIN</a>
           ` : ''}
         </div>
       </div>
@@ -173,7 +197,6 @@
           if (activeDisplay) activeDisplay.textContent = selected;
           document.getElementById('modal-switch-team').classList.add('hidden');
           window.showLogicToast && window.showLogicToast(`Team switched to "${selected}"`, 'info');
-          // Reload page or re-fetch challenges
           if (window.onTeamChanged) {
             window.onTeamChanged(selected);
           } else {
@@ -183,7 +206,6 @@
       });
     }
 
-    // Setup Global SSE Auto-Sync Listener
     setupGlobalSync();
   });
 
@@ -233,7 +255,6 @@
             window.showLogicToast(`⚠️ ${data.team} failed attempt on "${data.challengeTitle}" (-${data.penalty} pts penalty)`, 'error');
           }
 
-          // Trigger custom listener if registered on page
           if (window.onLeaderboardEvent) {
             window.onLeaderboardEvent(data);
           }
@@ -249,7 +270,7 @@
         }
       };
     } catch (e) {
-      console.log('SSE not active on file:// protocol, falling back to REST poll.');
+      console.log('SSE running in fallback mode');
     }
   }
 })();
