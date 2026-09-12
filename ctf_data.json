@@ -4,12 +4,13 @@
       "id": "t1",
       "name": "Null Vector",
       "college": "Technova University",
-      "score": 50,
+      "score": 85,
       "solved": [
-        "ch1"
+        "ch1",
+        "ch2"
       ],
-      "penalties": 0,
-      "lastSolve": 1789216428916
+      "penalties": 1,
+      "lastSolve": 1789219155896
     },
     {
       "id": "t2",
@@ -51,10 +52,13 @@
       "id": "t6",
       "name": "Bit Shifters",
       "college": "Vanguard Tech Institute",
-      "score": 0,
-      "solved": [],
+      "score": 100,
+      "solved": [
+        "ch2",
+        "ch1"
+      ],
       "penalties": 0,
-      "lastSolve": 0
+      "lastSolve": 1789219210767
     },
     {
       "id": "t7",
@@ -96,6 +100,51 @@
     }
   ],
   "submissions": [
+    {
+      "id": "sub-1789219246404",
+      "team": "Null Vector",
+      "challengeId": "ch3",
+      "challengeTitle": "Packet Sniffer",
+      "status": "INCORRECT",
+      "delta": "-15",
+      "timestamp": 1789219246404
+    },
+    {
+      "id": "sub-1789219210767",
+      "team": "Bit Shifters",
+      "challengeId": "ch1",
+      "challengeTitle": "Limit Break",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789219210767
+    },
+    {
+      "id": "sub-1789219190594",
+      "team": "Bit Shifters",
+      "challengeId": "ch2",
+      "challengeTitle": "Purged Artifact Leak",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789219190594
+    },
+    {
+      "id": "sub-1789219155896",
+      "team": "Null Vector",
+      "challengeId": "ch2",
+      "challengeTitle": "Purged Artifact Leak",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789219155896
+    },
+    {
+      "id": "sub-1789219014126",
+      "team": "Null Vector",
+      "challengeId": "ch1",
+      "challengeTitle": "Limit Break",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789219014126
+    },
     {
       "id": "sub-1789218823927",
       "team": "Logic Breakers",

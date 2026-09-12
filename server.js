@@ -43,18 +43,18 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch2',
     number: 2,
-    title: 'Purged Artifact Leak',
+    title: 'Export a report.',
     category: 'Business Logic',
     difficulty: 'Beginner',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'Reports strictly disables data exports to prevent data leaks. Locate an alternate path in the Purged Artifacts vault to export the ledger and capture the flag.',
+    description: "The Reports page doesn't provide the export option you need. Find another place where the report can be handled.",
     hints: [
-      'The Reports interface has no export button, but what about the items sent to the recycling vault? Check their export formats.'
+      'The same information can sometimes be available through another section.'
     ],
-    file: 'recycle_bin.html',
-    codeSnippet: '// Reports console has no export function.\n// Check Recycle Bin -> Export -> CSV format!',
+    file: 'reports.html',
+    codeSnippet: '// The Reports page does not provide the export option you need.\n// Find another place where the report can be handled.',
     flag: 'logicCTF{purg3d_r3cycl3_b1n_csv_3xp0rt}'
   },
   {
