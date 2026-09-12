@@ -73,12 +73,13 @@
       "id": "t8",
       "name": "Logic Breakers",
       "college": "Host College Collective",
-      "score": 0,
+      "score": 50,
       "solved": [
-        "ch2"
+        "ch2",
+        "ch3"
       ],
       "penalties": 7,
-      "lastSolve": 1789218651945
+      "lastSolve": 1789220217230
     },
     {
       "id": "t-1789138395060",
@@ -100,6 +101,15 @@
     }
   ],
   "submissions": [
+    {
+      "id": "sub-1789220217230",
+      "team": "Logic Breakers",
+      "challengeId": "ch3",
+      "challengeTitle": "Under the Fold",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789220217230
+    },
     {
       "id": "sub-1789219246404",
       "team": "Null Vector",

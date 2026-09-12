@@ -60,20 +60,19 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch3',
     number: 3,
-    title: 'Packet Sniffer',
-    category: 'Network Security',
-    difficulty: 'Intermediate',
+    title: 'Under the Fold',
+    category: 'Business Logic',
+    difficulty: 'Beginner',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'An unencrypted internal management session was intercepted. Locate the administrator credentials in the stream.',
+    description: 'The workspace profile description appears short, but system metrics reveal unusual text volume. Expand your view to locate what was left behind.',
     hints: [
-      'Search for HTTP Basic Authentication header "Authorization: Basic ..."',
-      'Base64 decode the authentication credentials to extract the password flag.'
+      "The word count doesn't match what is visible on screen. Use the corner adjust button or drag handle to stretch the box downward."
     ],
-    file: 'challenge_03_network.pcap.txt',
-    codeSnippet: 'GET /admin/auth.php HTTP/1.1\nAuthorization: Basic YWRtaW46cDRjazN0X3NuMWZmM3JfY3IzZHNfbDM0aw==',
-    flag: 'logicCTF{p4ck3t_sn1ff3r_cr3ds_l34k}'
+    file: 'workspace.html',
+    codeSnippet: '// Textarea appears to contain only 1 line\n// Telemetry metrics reveal 37 words and 430 characters\n// Adjust box or drag corner handle down to inspect the hidden buffer',
+    flag: 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}'
   },
   {
     id: 'ch4',
@@ -488,10 +487,11 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      // Check Flag (supports ch1 & ch2 custom flags + legacy flags)
+      // Check Flag (supports ch1 & ch2 & ch3 custom flags + legacy flags)
       const isCorrect = submittedFlag === challenge.flag ||
         (challenge.id === 'ch1' && (submittedFlag === 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}' || submittedFlag === 'logicCTF{gr4phql_1ntr0sp3ct10n_byp4ss}')) ||
-        (challenge.id === 'ch2' && (submittedFlag === 'logicCTF{purg3d_r3cycl3_b1n_csv_3xp0rt}' || submittedFlag === 'logicCTF{x0r_c1ph3r_b4s364_cr4ck3d}'));
+        (challenge.id === 'ch2' && (submittedFlag === 'logicCTF{purg3d_r3cycl3_b1n_csv_3xp0rt}' || submittedFlag === 'logicCTF{x0r_c1ph3r_b4s364_cr4ck3d}')) ||
+        (challenge.id === 'ch3' && (submittedFlag === 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}' || submittedFlag === 'logicCTF{p4ck3t_sn1ff3r_cr3ds_l34k}'));
 
       if (isCorrect) {
         // TIER 1: +50 PTS | TIER 2: +100 PTS
