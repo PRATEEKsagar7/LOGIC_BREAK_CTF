@@ -43,20 +43,19 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch2',
     number: 2,
-    title: 'Cipher Nexus',
-    category: 'Cryptography',
+    title: 'Purged Artifact Leak',
+    category: 'Business Logic',
     difficulty: 'Beginner',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'A critical command message was captured over radio telemetry. It was scrambled with a repeating multi-byte XOR cipher.',
+    description: 'Reports strictly disables data exports to prevent data leaks. Locate an alternate path in the Purged Artifacts vault to export the ledger and capture the flag.',
     hints: [
-      'The repeating key is 4 bytes ASCII: "~lnc" (0x7E 0x6C 0x6E 0x63).',
-      'Use CyberChef or Python to XOR the hex bytes with the key and decode the flag.'
+      'The Reports interface has no export button, but what about the items sent to the recycling vault? Check their export formats.'
     ],
-    file: 'challenge_02_cipher.txt',
-    codeSnippet: 'key = b"~lnc"\nwith open("challenge_02_cipher.txt") as f: ...\ndecrypted = bytes([b ^ key[i % len(key)] for i, b in enumerate(ciphertext)])',
-    flag: 'logicCTF{x0r_c1ph3r_b4s364_cr4ck3d}'
+    file: 'recycle_bin.html',
+    codeSnippet: '// Reports console has no export function.\n// Check Recycle Bin -> Export -> CSV format!',
+    flag: 'logicCTF{purg3d_r3cycl3_b1n_csv_3xp0rt}'
   },
   {
     id: 'ch3',
@@ -489,9 +488,10 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      // Check Flag (supports both new project bypass flag and legacy flag for ch1)
+      // Check Flag (supports ch1 & ch2 custom flags + legacy flags)
       const isCorrect = submittedFlag === challenge.flag ||
-        (challenge.id === 'ch1' && (submittedFlag === 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}' || submittedFlag === 'logicCTF{gr4phql_1ntr0sp3ct10n_byp4ss}'));
+        (challenge.id === 'ch1' && (submittedFlag === 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}' || submittedFlag === 'logicCTF{gr4phql_1ntr0sp3ct10n_byp4ss}')) ||
+        (challenge.id === 'ch2' && (submittedFlag === 'logicCTF{purg3d_r3cycl3_b1n_csv_3xp0rt}' || submittedFlag === 'logicCTF{x0r_c1ph3r_b4s364_cr4ck3d}'));
 
       if (isCorrect) {
         // TIER 1: +50 PTS | TIER 2: +100 PTS
@@ -562,13 +562,18 @@ const server = http.createServer(async (req, res) => {
           leaderboard: getSortedLeaderboard()
         });
 
+        const isFakeFlag = submittedFlag.toUpperCase().includes('FAKE_FLAG');
+        const penaltyMsg = isFakeFlag
+          ? `🚨 FAKE FLAG TRIGGERED! You fell for the Billing Plans decoy trap. -${challenge.penalty} PTS Penalty applied!`
+          : `❌ INCORRECT FLAG! -${challenge.penalty} Points penalty applied for failed attempt on "${challenge.title}".`;
+
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
           success: false,
           status: 'incorrect',
           penalty: challenge.penalty,
           newScore: team.score,
-          message: `❌ INCORRECT FLAG! -${challenge.penalty} Points penalty applied for failed attempt on "${challenge.title}".`
+          message: penaltyMsg
         }));
       }
       return;

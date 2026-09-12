@@ -70,9 +70,11 @@
       "name": "Logic Breakers",
       "college": "Host College Collective",
       "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 1789138687580
+      "solved": [
+        "ch2"
+      ],
+      "penalties": 7,
+      "lastSolve": 1789218651945
     },
     {
       "id": "t-1789138395060",
@@ -94,6 +96,78 @@
     }
   ],
   "submissions": [
+    {
+      "id": "sub-1789218823927",
+      "team": "Logic Breakers",
+      "challengeId": "ch3",
+      "challengeTitle": "Packet Sniffer",
+      "status": "INCORRECT",
+      "delta": "-15",
+      "timestamp": 1789218823927
+    },
+    {
+      "id": "sub-1789218823698",
+      "team": "Logic Breakers",
+      "challengeId": "ch3",
+      "challengeTitle": "Packet Sniffer",
+      "status": "INCORRECT",
+      "delta": "-15",
+      "timestamp": 1789218823698
+    },
+    {
+      "id": "sub-1789218823484",
+      "team": "Logic Breakers",
+      "challengeId": "ch3",
+      "challengeTitle": "Packet Sniffer",
+      "status": "INCORRECT",
+      "delta": "-15",
+      "timestamp": 1789218823484
+    },
+    {
+      "id": "sub-1789218822791",
+      "team": "Logic Breakers",
+      "challengeId": "ch3",
+      "challengeTitle": "Packet Sniffer",
+      "status": "INCORRECT",
+      "delta": "-15",
+      "timestamp": 1789218822791
+    },
+    {
+      "id": "sub-1789218821139",
+      "team": "Logic Breakers",
+      "challengeId": "ch3",
+      "challengeTitle": "Packet Sniffer",
+      "status": "INCORRECT",
+      "delta": "-15",
+      "timestamp": 1789218821139
+    },
+    {
+      "id": "sub-1789218819754",
+      "team": "Logic Breakers",
+      "challengeId": "ch3",
+      "challengeTitle": "Packet Sniffer",
+      "status": "INCORRECT",
+      "delta": "-15",
+      "timestamp": 1789218819754
+    },
+    {
+      "id": "sub-1789218785701",
+      "team": "Logic Breakers",
+      "challengeId": "ch3",
+      "challengeTitle": "Packet Sniffer",
+      "status": "INCORRECT",
+      "delta": "-15",
+      "timestamp": 1789218785701
+    },
+    {
+      "id": "sub-1789218651945",
+      "team": "Logic Breakers",
+      "challengeId": "ch2",
+      "challengeTitle": "Purged Artifact Leak",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789218651945
+    },
     {
       "id": "sub-1789216428916",
       "team": "Null Vector",
