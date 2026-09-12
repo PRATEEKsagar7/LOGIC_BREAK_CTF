@@ -4,10 +4,12 @@
       "id": "t1",
       "name": "Null Vector",
       "college": "Technova University",
-      "score": 0,
-      "solved": [],
-      "penalties": 1,
-      "lastSolve": 0
+      "score": 50,
+      "solved": [
+        "ch1"
+      ],
+      "penalties": 2,
+      "lastSolve": 1789214132245
     },
     {
       "id": "t2",
@@ -94,6 +96,24 @@
     }
   ],
   "submissions": [
+    {
+      "id": "sub-1789214132245",
+      "team": "Null Vector",
+      "challengeId": "ch1",
+      "challengeTitle": "Ghost Protocol",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789214132245
+    },
+    {
+      "id": "sub-1789214125942",
+      "team": "Null Vector",
+      "challengeId": "ch1",
+      "challengeTitle": "Ghost Protocol",
+      "status": "INCORRECT",
+      "delta": "-15",
+      "timestamp": 1789214125942
+    },
     {
       "id": "sub-1789206809447",
       "team": "Null Vector",
