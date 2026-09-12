@@ -805,11 +805,29 @@ function getSortedLeaderboard() {
   });
 }
 
-server.listen(PORT, () => {
-  console.log(`=======================================================`);
-  console.log(`  LOGIC BREAK CTF // CYBERNEXUS COMMAND ARENA RUNNING  `);
-  console.log(`  Local Gateway: http://localhost:${PORT}              `);
-  console.log(`  Real-time SSE: http://localhost:${PORT}/api/events   `);
-  console.log(`  Hardcoded Admin: admin / logicbreak_admin_2026        `);
-  console.log(`=======================================================`);
+let currentPort = Number(PORT);
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.log(`[CTF Server] Port ${currentPort} is busy. Automatically switching to port ${currentPort + 1}...`);
+    currentPort++;
+    setTimeout(() => {
+      server.listen(currentPort);
+    }, 200);
+  } else {
+    console.error('[CTF Server] Fatal server error:', err);
+  }
 });
+
+function startServer(port) {
+  server.listen(port, () => {
+    console.log(`=======================================================`);
+    console.log(`  LOGIC BREAK CTF // CYBERNEXUS COMMAND ARENA RUNNING  `);
+    console.log(`  Local Gateway: http://localhost:${port}              `);
+    console.log(`  Real-time SSE: http://localhost:${port}/api/events   `);
+    console.log(`  Hardcoded Admin: admin / logicbreak_admin_2026        `);
+    console.log(`=======================================================`);
+  });
+}
+
+startServer(currentPort);
