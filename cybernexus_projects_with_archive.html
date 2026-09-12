@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html><html class="dark" lang="en"><head>
+<!DOCTYPE html><html class="dark" lang="en"><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>CyberNexus - Projects</title>
@@ -116,7 +116,7 @@
 <svg class="w-3.5 h-3.5 text-[#00FF9D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
 </svg>
-<span class="">MAX CAPACITY: 5 SLOTS STRICT</span>
+<span class="">MAX CAPACITY: 3 SLOTS STRICT</span>
 </div>
 </div>
 <!-- Page Header & Action Bar -->
@@ -125,13 +125,13 @@
 <div class="flex items-center gap-2.5">
 <span class="text-xs font-mono text-[#00FF9D] uppercase tracking-wider font-semibold">PROJECTS // REPOSITORY</span>
 <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono bg-[#1A2330] text-[#94A3B8] border border-[#2D3A4B]" id="counterBadge">
-<span class="text-white font-bold" id="activeCount">3</span>
+<span class="text-white font-bold" id="activeCount">2</span>
 <span class="mx-1">/</span>
-<span class="text-[#94A3B8]">5 Active Slots</span>
+<span class="text-[#94A3B8]">3 Active Slots</span>
 </span>
 </div>
 <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white mt-1">Projects</h1>
-<p class="text-sm text-[#94A3B8] mt-1">Create and manage your workspace projects. Right-click any active project for actions.</p>
+<p class="text-sm text-[#94A3B8] mt-1">Create and manage your workspace projects. Maximum 3 projects allowed on free cadet tier.</p>
 </div>
 <!-- Action Button & Limit State -->
 <div class="flex items-center gap-3">
@@ -149,7 +149,7 @@
 <button class="flex items-center gap-2 px-3.5 py-1.5 rounded text-xs font-mono font-medium transition-all bg-[#1A2330] text-[#00FF9D] border border-[#2D3A4B] shadow-sm" id="tabActiveBtn" onclick="switchTab('active')">
 <span class="w-2 h-2 rounded-full bg-[#00FF9D]"></span>
 <span class="">Active Projects</span>
-<span class="px-1.5 py-0.2 rounded text-[10px] bg-[#090E16] text-[#00FF9D] border border-[#2D3A4B]" id="tabActiveCountPill">3/5</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] bg-[#090E16] text-[#00FF9D] border border-[#2D3A4B]" id="tabActiveCountPill">2/3</span>
 </button>
 <button class="flex items-center gap-2 px-3.5 py-1.5 rounded text-xs font-mono font-medium transition-all text-[#94A3B8] hover:text-white border border-transparent" id="tabArchivedBtn" onclick="switchTab('archived')">
 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -160,8 +160,8 @@
 </button>
 </div>
 <div class="flex items-center gap-2 text-[11px] font-mono text-[#94A3B8]">
-<span class="px-2 py-1 rounded bg-[#0F141C] border border-[#2D3A4B]">5 MAX SLOTS</span>
-<span class="px-2 py-1 rounded bg-[#0F141C] border border-[#2D3A4B] text-[#00FF9D]" id="limitIndicator">2 SLOTS AVAILABLE</span>
+<span class="px-2 py-1 rounded bg-[#0F141C] border border-[#2D3A4B]">3 MAX SLOTS</span>
+<span class="px-2 py-1 rounded bg-[#0F141C] border border-[#2D3A4B] text-[#00FF9D]" id="limitIndicator">1 SLOT AVAILABLE</span>
 </div>
 </div>
 <!-- Instructional Hint Pill -->
@@ -579,6 +579,63 @@
 </div>
 </div>
 </div>
+
+<!-- ============================================================ -->
+<!-- FLAG EXPLOIT POPUP MODAL (CHALLENGE 01) -->
+<!-- ============================================================ -->
+<div id="flagExploitModal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+  <div class="w-full max-w-lg bg-[#0F141C] border-2 border-[#00FF9D] rounded-2xl p-6 shadow-[0_0_50px_rgba(0,255,157,0.3)] space-y-5 animate-scale-up">
+    <!-- Header -->
+    <div class="flex items-start justify-between border-b border-[#2D3A4B] pb-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-xl bg-[#00FF9D]/10 border border-[#00FF9D]/40 flex items-center justify-center text-2xl shadow-[0_0_20px_rgba(0,255,157,0.3)]">
+          🚩
+        </div>
+        <div>
+          <div class="text-[10px] font-mono text-[#00FF9D] font-bold uppercase tracking-wider animate-pulse">
+            SECURITY EXPLOIT UNLOCKED
+          </div>
+          <h3 class="text-xl font-bold text-white tracking-tight font-mono">
+            Project Limit Bypass
+          </h3>
+        </div>
+      </div>
+      <button onclick="closeFlagExploitModal()" class="text-slate-400 hover:text-white p-1">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <!-- Exploit Brief -->
+    <p class="text-xs text-slate-300 leading-relaxed font-sans">
+      You discovered a business logic vulnerability! While standard project creation strictly enforces the <strong>3 project quota</strong>, the duplication action failed to validate capacity limits, allowing you to spawn extra active projects and trigger an unauthorized quota overflow.
+    </p>
+
+    <!-- Flag Container -->
+    <div class="p-4 rounded-xl bg-[#1A2330] border border-[#00FF9D]/40 space-y-2">
+      <div class="flex items-center justify-between text-[11px] font-mono">
+        <span class="text-[#00FF9D] font-bold">CHALLENGE #01 CAPTURED FLAG:</span>
+        <span class="text-amber-400 font-bold">+50 POINTS</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <input id="flagSecretInput" readonly value="logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}" class="flex-1 bg-[#090E16] px-3.5 py-2.5 rounded-lg font-mono text-xs text-[#00FF9D] font-bold border border-[#2D3A4B] select-all focus:outline-none focus:border-[#00FF9D]" />
+        <button id="btnCopyExploitFlag" onclick="copyExploitFlag()" class="px-4 py-2.5 rounded-lg bg-[#00FF9D] hover:bg-[#00e08a] text-slate-950 font-bold text-xs font-mono transition flex items-center gap-1.5 shrink-0 shadow-[0_0_15px_rgba(0,255,157,0.3)] active:scale-95">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="copyExploitBtnText">Copy Flag</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]">
+      <span class="text-[11px] font-mono text-slate-400">Copy the flag string and submit in Missions!</span>
+      <a href="missions.html" class="px-5 py-2 rounded-xl bg-[#00FF9D] hover:bg-[#00e08a] text-slate-950 font-bold text-xs font-mono transition flex items-center gap-1.5 shadow-lg active:scale-95">
+        <span>Go to Missions</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
 <!-- ============================================================ -->
 <!-- Floating Toast Notifications -->
 <!-- ============================================================ -->
@@ -591,8 +648,8 @@
 <!-- Interactive Frontend Script -->
 <!-- ============================================================ -->
 <script>
-    // State management: exactly 5 active slots strictly enforced
-    const MAX_PROJECTS = 5;
+    // State management: maximum 3 active slots strictly enforced for creation
+    const MAX_PROJECTS = 3;
     let currentTab = 'active'; // 'active' | 'archived'
 
     let projects = [
@@ -611,14 +668,6 @@
         status: "Active",
         date: "Sep 10, 2026",
         icon: "network"
-      },
-      {
-        id: "proj-3",
-        name: "Threat Intelligence Lab",
-        desc: "Forensics correlation engine for adversary IoC indicators and memory extraction analysis.",
-        status: "Draft",
-        date: "Sep 08, 2026",
-        icon: "terminal"
       }
     ];
 
@@ -658,7 +707,7 @@
 
       // Update counters & tabs
       document.getElementById('activeCount').textContent = count;
-      document.getElementById('tabActiveCountPill').textContent = `${count}/5`;
+      document.getElementById('tabActiveCountPill').textContent = `${count}/${MAX_PROJECTS}`;
       document.getElementById('tabArchivedCountPill').textContent = archivedCount;
       document.getElementById('footerArchiveControl').textContent = `${archivedCount} STORED`;
 
@@ -681,7 +730,7 @@
         createBtn.classList.replace('text-[#090E16]', 'text-[#94A3B8]');
         limitInd.textContent = "0 SLOTS (MAX LIMIT)";
         limitInd.className = "px-2 py-1 rounded bg-[#0F141C] border border-[#2D3A4B] text-[#EF4444] font-bold";
-        footerSlot.textContent = "MAX REACHED (5/5)";
+        footerSlot.textContent = "MAX REACHED (3/3)";
         footerSlot.className = "text-[#EF4444]";
       } else {
         counterBadge.className = "inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono bg-[#1A2330] text-[#94A3B8] border border-[#2D3A4B]";
@@ -697,7 +746,7 @@
         const remaining = MAX_PROJECTS - count;
         limitInd.textContent = `${remaining} SLOT${remaining > 1 ? 'S' : ''} AVAILABLE`;
         limitInd.className = "px-2 py-1 rounded bg-[#0F141C] border border-[#2D3A4B] text-[#00FF9D]";
-        footerSlot.textContent = `ENFORCED (${count}/5)`;
+        footerSlot.textContent = `ENFORCED (${count}/3)`;
         footerSlot.className = "text-[#00FF9D]";
       }
 
@@ -739,7 +788,7 @@
                     ${proj.status}
                   </span>
 
-                  <!-- â‹¯ Context button -->
+                  <!-- ⋯ Context button -->
                   <button onclick="triggerContextFromButton(event, '${proj.id}', false)" class="p-1 rounded text-[#94A3B8] hover:text-white hover:bg-[#212B3A] transition-colors" title="Project Actions">
                     <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                   </button>
@@ -756,20 +805,21 @@
                 <span>${proj.date}</span>
               </div>
               <div class="flex items-center gap-2">
-                <button onclick="event.stopPropagation(); openArchiveModalById('${proj.id}')" class="px-2 py-0.5 rounded text-[10px] font-mono text-[#94A3B8] hover:text-[#F59E0B] hover:bg-[#212B3A] transition-colors border border-transparent hover:border-[#F59E0B]/30" title="Archive to Vault">
+                <!-- Duplicate Action Button -->
+                <button onclick="event.stopPropagation(); duplicateProjectById('${proj.id}')" class="px-2.5 py-1 rounded text-[11px] font-mono font-semibold bg-[#00FF9D]/10 hover:bg-[#00FF9D]/20 text-[#00FF9D] border border-[#00FF9D]/30 transition-all flex items-center gap-1 shadow-sm hover:shadow-[0_0_10px_rgba(0,255,157,0.2)] active:scale-95" title="Duplicate Project">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                  <span>Duplicate</span>
+                </button>
+                <button onclick="event.stopPropagation(); openArchiveModalById('${proj.id}')" class="px-2 py-1 rounded text-[10px] font-mono text-[#94A3B8] hover:text-[#F59E0B] hover:bg-[#212B3A] transition-colors border border-transparent hover:border-[#F59E0B]/30" title="Archive to Vault">
                   Archive
                 </button>
-                <div class="flex items-center gap-1 text-[#00FF9D] text-[10px] font-mono group-hover:translate-x-0.5 transition-transform">
-                  <span>MANAGE</span>
-                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                </div>
               </div>
             </div>
           `;
           grid.appendChild(card);
         });
 
-        // Render Empty / Available Slots up to MAX_PROJECTS (5 total slots)
+        // Render Empty / Available Slots up to MAX_PROJECTS (3 total slots)
         const emptySlotsCount = MAX_PROJECTS - count;
         for (let i = 0; i < emptySlotsCount; i++) {
           const slotNum = count + i + 1;
@@ -940,7 +990,7 @@
     // Create Project Operations
     function openCreateModal() {
       if (projects.length >= MAX_PROJECTS) {
-        showToast("Project limit reached (5 / 5)", "error");
+        showToast("Project limit reached. Maximum 3 projects allowed.", "error");
         return;
       }
       document.getElementById('createName').value = '';
@@ -957,7 +1007,7 @@
     function submitCreateProject(e) {
       e.preventDefault();
       if (projects.length >= MAX_PROJECTS) {
-        showToast("Project limit reached. Maximum 5 projects allowed.", "error");
+        showToast("Project limit reached. Maximum 3 projects allowed.", "error");
         closeCreateModal();
         return;
       }
@@ -1013,16 +1063,16 @@
       }
     }
 
-    // Duplicate Project Operations
-    function duplicateProject(proj) {
-      if (projects.length >= MAX_PROJECTS) {
-        showToast("Project limit reached. Cannot duplicate.", "error");
-        return;
-      }
+    // Duplicate Project Operations - Flawed logic: does not enforce project quota!
+    function duplicateProjectById(id) {
+      const proj = projects.find(p => p.id === id);
+      if (proj) duplicateProject(proj);
+    }
 
+    function duplicateProject(proj) {
       const duplicate = {
         id: "proj-" + Date.now(),
-        name: `${proj.name} Copy`,
+        name: `${proj.name} (Copy)`,
         desc: proj.desc,
         status: proj.status,
         date: "Today, Duplicated",
@@ -1032,6 +1082,59 @@
       projects.push(duplicate);
       renderGrid();
       showToast(`Duplicated as "${duplicate.name}".`);
+
+      // Exploit condition: Duplicating when quota is reached/exceeded unlocks the flag!
+      if (projects.length > MAX_PROJECTS) {
+        setTimeout(() => {
+          openFlagExploitModal();
+        }, 300);
+      }
+    }
+
+    // Flag Exploit Modal Actions
+    function openFlagExploitModal() {
+      const modal = document.getElementById('flagExploitModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+      }
+    }
+
+    function closeFlagExploitModal() {
+      const modal = document.getElementById('flagExploitModal');
+      if (modal) {
+        modal.classList.add('hidden');
+      }
+    }
+
+    function copyExploitFlag() {
+      const input = document.getElementById('flagSecretInput');
+      if (!input) return;
+      
+      const copyText = input.value;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(copyText).then(() => {
+          updateCopyButtonFeedback();
+        }).catch(() => {
+          fallbackCopyText(input);
+        });
+      } else {
+        fallbackCopyText(input);
+      }
+    }
+
+    function fallbackCopyText(input) {
+      input.select();
+      document.execCommand('copy');
+      updateCopyButtonFeedback();
+    }
+
+    function updateCopyButtonFeedback() {
+      const btnText = document.getElementById('copyExploitBtnText');
+      if (btnText) btnText.textContent = "COPIED!";
+      showToast("Flag copied to clipboard! Submit it in Missions.");
+      setTimeout(() => {
+        if (btnText) btnText.textContent = "Copy Flag";
+      }, 2500);
     }
 
     // Archive Project Operations
@@ -1069,7 +1172,7 @@
     // Unarchive Operation
     function unarchiveProject(projId) {
       if (projects.length >= MAX_PROJECTS) {
-        showToast("Active slots full (5/5). Free up a slot to unarchive.", "warning");
+        showToast("Active slots full (3/3). Free up a slot to unarchive.", "warning");
         return;
       }
 

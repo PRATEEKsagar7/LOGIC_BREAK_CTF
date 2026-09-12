@@ -26,20 +26,20 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch1',
     number: 1,
-    title: 'Ghost Protocol',
-    category: 'Web Security',
+    title: 'Project Quota Bypass',
+    category: 'Business Logic',
     difficulty: 'Beginner',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'Explore GraphQL schema introspection across an isolated internal microservice to uncover hidden administrative endpoints.',
+    description: 'The Project Management console enforces a strict 3-project quota on standard creation. Exploit a business logic flaw in the project duplication action to bypass the capacity limit and capture the flag.',
     hints: [
-      'Send a query to /api/graphql requesting __schema { queryType { fields { name } } } to uncover the hidden claim mutation.',
-      'Inspect the returned claimSystemAccess payload to locate the access token.'
+      'Open the Projects page. The system enforces a strict 3-project maximum capacity.',
+      'Notice that duplicating an existing project fails to validate active slot limits. Duplicating beyond the limit unlocks the flag pop-up!'
     ],
-    file: 'challenge_01_graphql.json',
-    codeSnippet: 'POST /api/graphql\nContent-Type: application/json\n\n{"query": "query { __schema { queryType { name fields { name } } } }"}',
-    flag: 'logicCTF{gr4phql_1ntr0sp3ct10n_byp4ss}'
+    file: 'projects.html',
+    codeSnippet: '// Standard creation enforces limit:\nif (projects.length >= MAX_PROJECTS) showToast("Project limit reached");\n\n// Duplication flaw: missing quota check!',
+    flag: 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}'
   },
   {
     id: 'ch2',
@@ -490,8 +490,9 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      // Check Flag
-      const isCorrect = submittedFlag === challenge.flag;
+      // Check Flag (supports both new project bypass flag and legacy flag for ch1)
+      const isCorrect = submittedFlag === challenge.flag ||
+        (challenge.id === 'ch1' && (submittedFlag === 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}' || submittedFlag === 'logicCTF{gr4phql_1ntr0sp3ct10n_byp4ss}'));
 
       if (isCorrect) {
         // TIER 1: +50 PTS | TIER 2: +100 PTS
