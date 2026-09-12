@@ -61,10 +61,6 @@
     <!-- Hero / Title & Point System Briefing Banner -->
     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 p-6 rounded-2xl bg-gradient-to-r from-[#161d19] via-[#131d17] to-[#0e1713] border border-[#2d3a43] shadow-xl">
       <div class="space-y-2">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-[11px] font-mono font-bold text-[#5bdcae]">
-          <span class="w-2 h-2 rounded-full bg-[#5bdcae] animate-pulse"></span>
-          <span>ARENA CHALLENGES // WAVE 01 - 02 ACTIVE</span>
-        </div>
         <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white uppercase font-sans">
           Missions & Exploit Vectors
         </h1>
@@ -152,9 +148,10 @@
       <!-- Modal Header -->
       <div class="flex items-start justify-between border-b border-[#2d3a43] pb-4">
         <div>
-          <div class="flex items-center gap-2 mb-1">
-            <span id="modal-flag-tier-badge" class="px-2 py-0.5 text-[10px] font-mono font-bold rounded bg-emerald-950 text-emerald-300 border border-emerald-500/40">TIER 1</span>
-            <span id="modal-flag-cat-badge" class="px-2 py-0.5 text-[10px] font-mono text-slate-300 rounded bg-[#1a211d] border border-[#2d3a43]">Web Security</span>
+          <div class="flex items-center gap-2 mb-1 text-xs font-mono">
+            <span id="modal-flag-cat-badge" class="text-slate-300 font-semibold">Web Security</span>
+            <span class="text-slate-600">•</span>
+            <span id="modal-flag-tier-badge" class="text-emerald-400 font-semibold">Tier 1</span>
           </div>
           <h3 id="modal-flag-title" class="text-xl font-black text-white tracking-tight">Ghost Protocol</h3>
         </div>
@@ -305,33 +302,30 @@
           <!-- Top Row: Badges & Points -->
           <div>
             <div class="flex items-center justify-between gap-2 mb-3">
-              <div class="flex items-center gap-1.5">
-                <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#0e1511] text-slate-300 border border-[#2d3a43]">
-                  ${ch.category}
-                </span>
-                <span class="text-[10px] font-mono px-2 py-0.5 rounded ${ch.tier === 1 ? 'bg-emerald-950/60 text-emerald-300 border border-emerald-500/30' : 'bg-amber-950/60 text-amber-300 border border-amber-500/30'}">
-                  Tier ${ch.tier}
-                </span>
+              <div class="flex items-center gap-2 text-xs font-mono">
+                <span class="text-slate-300 font-semibold">${ch.category}</span>
+                <span class="text-slate-600">•</span>
+                <span class="${ch.tier === 1 ? 'text-emerald-400' : 'text-amber-400'} font-semibold">Tier ${ch.tier}</span>
               </div>
 
               <!-- Points / Solve Pill -->
               <div class="flex items-center gap-1.5 font-mono">
                 ${ch.isSolved ? `
-                  <span class="text-xs font-bold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded border border-emerald-500/60 flex items-center gap-1">
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span class="text-xs font-bold text-emerald-400 flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     <span>SOLVED</span>
                   </span>
                 ` : `
-                  <span class="text-xs font-black ${ch.tier === 1 ? 'text-emerald-400 bg-emerald-950/70 border-emerald-500/40' : 'text-amber-400 bg-amber-950/70 border-amber-500/40'} px-2 py-0.5 rounded border shadow-sm">
+                  <span class="text-xs font-black ${ch.tier === 1 ? 'text-emerald-400' : 'text-amber-400'}">
                     +${ch.points} PTS
                   </span>
                 `}
               </div>
             </div>
 
-            <!-- Title & Vector Info -->
+            <!-- Title & Challenge Info -->
             <div class="mb-2">
-              <div class="text-[10px] font-mono text-slate-400">OP_VECTOR // #0${ch.number}</div>
+              <div class="text-[11px] font-mono text-slate-500 font-medium">Challenge #${ch.number < 10 ? '0' + ch.number : ch.number}</div>
               <h3 class="text-lg font-bold text-white tracking-tight group-hover:text-emerald-300 transition-colors">
                 ${ch.title}
               </h3>
@@ -375,7 +369,7 @@
 
       const activeTeam = localStorage.getItem('logic_ctf_team') || 'Logic Breakers';
       document.getElementById('modal-flag-title').textContent = ch.title;
-      document.getElementById('modal-flag-tier-badge').textContent = `TIER ${ch.tier} (${ch.difficulty.toUpperCase()})`;
+      document.getElementById('modal-flag-tier-badge').textContent = `Tier ${ch.tier} (${ch.difficulty})`;
       document.getElementById('modal-flag-cat-badge').textContent = ch.category;
       document.getElementById('modal-flag-points').textContent = `+${ch.points} PTS`;
       document.getElementById('modal-flag-penalty').textContent = `-${ch.penalty} PTS PENALTY`;

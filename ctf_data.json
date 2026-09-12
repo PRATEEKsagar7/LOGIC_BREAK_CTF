@@ -6,7 +6,7 @@
       "college": "Technova University",
       "score": 0,
       "solved": [],
-      "penalties": 0,
+      "penalties": 1,
       "lastSolve": 0
     },
     {
@@ -94,6 +94,15 @@
     }
   ],
   "submissions": [
+    {
+      "id": "sub-1789206809447",
+      "team": "Null Vector",
+      "challengeId": "ch1",
+      "challengeTitle": "Ghost Protocol",
+      "status": "INCORRECT",
+      "delta": "-15",
+      "timestamp": 1789206809447
+    },
     {
       "id": "sub-1789138687580",
       "team": "Logic Breakers",

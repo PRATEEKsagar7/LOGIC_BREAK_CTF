@@ -34,8 +34,7 @@
             </div>
             <div>
               <div class="flex items-center gap-1.5">
-                <span class="text-sm font-black tracking-wider text-white uppercase font-mono">LOGIC BREAK</span>
-                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-950/80 text-[#5bdcae] border border-emerald-500/30">CTF '26</span>
+                <span class="text-sm font-black tracking-wider text-white uppercase font-mono">LOGIC BREAK CTF</span>
               </div>
               <p class="text-[10px] font-mono text-slate-400 leading-none">Collegiate Security Arena</p>
             </div>
@@ -89,22 +88,12 @@
 
           <!-- Admin Link -->
           <a href="admin.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['members', 'admin']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
-            <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span>Admin</span>
           </a>
         </nav>
 
-        <!-- Right Side: Sync status + Team Selector -->
+        <!-- Right Side: Team Selector -->
         <div class="flex items-center gap-3">
-          <!-- Live Auto-Sync Indicator -->
-          <div id="sync-status-indicator" class="flex items-center gap-1.5 px-2.5 py-1 bg-emerald-950/70 border border-emerald-500/40 rounded-full shadow-[0_0_10px_rgba(91,220,174,0.15)] text-xs font-mono text-[#5bdcae]">
-            <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-            </span>
-            <span class="hidden sm:inline">LIVE SYNC</span>
-          </div>
-
           <!-- Active Team Switcher Badge -->
           <div class="relative">
             <button id="btnTeamModalTrigger" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#1a211d] border border-[#2d3a4b] hover:border-emerald-500/50 text-xs font-semibold text-white transition">
@@ -113,10 +102,6 @@
               <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
-
-          ${isAdmin ? `
-            <a href="admin.html" class="px-2 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-mono font-bold uppercase">ADMIN</a>
-          ` : ''}
         </div>
       </div>
     </header>
