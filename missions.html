@@ -58,78 +58,12 @@
   <!-- Main Content Container (Full-Width Desktop) -->
   <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-8">
 
-    <!-- Hero / Title & Point System Briefing Banner -->
-    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 p-6 rounded-2xl bg-gradient-to-r from-[#161d19] via-[#131d17] to-[#0e1713] border border-[#2d3a43] shadow-xl">
-      <div class="space-y-2">
-        <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white uppercase font-sans">
-          Missions & Exploit Vectors
-        </h1>
-        <p class="text-sm text-slate-400 max-w-2xl">
-          Deploy live attacks, capture secret flags, and submit telemetry strings. Read challenge briefs carefully, inspect code, and reveal hints when stuck.
-        </p>
-      </div>
-
-      <!-- Point System Protocol Box -->
-      <div class="flex flex-wrap sm:flex-nowrap items-center gap-4 p-4 rounded-xl bg-[#0e1511] border border-[#2d3a43] shadow-inner font-mono text-xs">
-        <div class="flex flex-col gap-1 border-r border-[#2d3a43] pr-4">
-          <span class="text-[10px] text-slate-400 uppercase tracking-wider">Tier 1: Standard (Ch 1 - 7)</span>
-          <div class="flex items-center gap-2 font-bold">
-            <span class="text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">+50 PTS</span>
-            <span class="text-red-400 bg-red-950/60 px-2 py-0.5 rounded border border-red-500/30">-15 PENALTY</span>
-          </div>
-        </div>
-        <div class="flex flex-col gap-1 pl-2">
-          <span class="text-[10px] text-amber-300 uppercase tracking-wider">Tier 2: Elite (Ch 8 - 12)</span>
-          <div class="flex items-center gap-2 font-bold">
-            <span class="text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-500/30">+100 PTS</span>
-            <span class="text-red-400 bg-red-950/60 px-2 py-0.5 rounded border border-red-500/30">-25 PENALTY</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filter & Search Controls Bar -->
-    <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 p-4 rounded-2xl bg-[#161d19] border border-[#2d3a43] shadow-md">
-      <!-- Category Filter Tabs -->
-      <div class="flex items-center gap-1.5 overflow-x-auto custom-scrollbar pb-1 md:pb-0" id="categoryFilterContainer">
-        <button data-cat="all" class="cat-filter-btn active px-3.5 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs shadow-md transition-colors shrink-0">
-          All Vectors (12)
-        </button>
-        <button data-cat="Web Security" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
-          Web (3)
-        </button>
-        <button data-cat="Cryptography" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
-          Crypto (2)
-        </button>
-        <button data-cat="Reverse Engineering" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
-          Reverse (1)
-        </button>
-        <button data-cat="Forensics" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
-          Forensics (2)
-        </button>
-        <button data-cat="Binary Exploitation" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
-          Pwn (1)
-        </button>
-        <button data-cat="Cloud Security" class="cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0">
-          Cloud / SSRF (1)
-        </button>
-      </div>
-
-      <!-- Search & Tier Filter -->
-      <div class="flex items-center gap-3">
-        <!-- Search Input -->
-        <div class="relative w-full sm:w-64">
-          <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <input type="text" id="challengeSearchInput" placeholder="Search mission name..." class="w-full pl-9 pr-4 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
-        </div>
-
-        <!-- Tier Selector -->
-        <select id="tierSelector" class="bg-[#0e1511] border border-[#2d3a43] rounded-xl px-3 py-1.5 text-xs text-white font-mono focus:outline-none focus:border-emerald-400">
-          <option value="all">All Tiers</option>
-          <option value="1">Tier 1 (+50 pts)</option>
-          <option value="2">Tier 2 (+100 pts)</option>
-        </select>
-      </div>
+    <!-- Clean Header -->
+    <div class="flex items-center justify-between pb-3 border-b border-[#2d3a43]">
+      <h1 class="text-2xl font-bold tracking-tight text-white uppercase font-sans">
+        Missions
+      </h1>
+      <span class="text-xs font-mono text-slate-400">12 Challenges Available</span>
     </div>
 
     <!-- Challenges Grid (Desktop 3-Columns) -->
@@ -277,25 +211,18 @@
 
     function renderChallenges() {
       const container = document.getElementById('challengesGrid');
-      const activeCat = document.querySelector('.cat-filter-btn.active')?.getAttribute('data-cat') || 'all';
-      const searchTerm = document.getElementById('challengeSearchInput').value.toLowerCase();
-      const selectedTier = document.getElementById('tierSelector').value;
+      if (!container) return;
 
-      const filtered = challengesData.filter(ch => {
-        const matchCat = activeCat === 'all' || ch.category.toLowerCase().includes(activeCat.toLowerCase());
-        const matchSearch = ch.title.toLowerCase().includes(searchTerm) || ch.description.toLowerCase().includes(searchTerm);
-        const matchTier = selectedTier === 'all' || ch.tier.toString() === selectedTier;
-        return matchCat && matchSearch && matchTier;
-      });
-
-      if (filtered.length === 0) {
+      if (!challengesData || challengesData.length === 0) {
         container.innerHTML = `
           <div class="col-span-full py-12 text-center text-slate-400 font-mono text-xs">
-            No missions match your current filter parameters.
+            No missions available.
           </div>
         `;
         return;
       }
+
+      const filtered = challengesData;
 
       container.innerHTML = filtered.map(ch => `
         <article class="relative flex flex-col justify-between p-5 rounded-2xl bg-[#161d19] border ${ch.isSolved ? 'border-emerald-500/50 shadow-[0_0_20px_rgba(91,220,174,0.12)]' : 'border-[#2d3a43]'} hover:border-emerald-500/50 transition-all duration-200 group">
@@ -485,20 +412,6 @@
 
       document.getElementById('modal-code-preview').classList.remove('hidden');
     }
-
-    // Category Filter Listeners
-    document.querySelectorAll('.cat-filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.cat-filter-btn').forEach(b => {
-          b.className = 'cat-filter-btn px-3 py-1.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-500/40 text-slate-300 text-xs font-semibold hover:text-white transition-colors shrink-0';
-        });
-        btn.className = 'cat-filter-btn active px-3.5 py-1.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs shadow-md transition-colors shrink-0';
-        renderChallenges();
-      });
-    });
-
-    document.getElementById('challengeSearchInput').addEventListener('input', renderChallenges);
-    document.getElementById('tierSelector').addEventListener('change', renderChallenges);
 
     // Re-fetch challenges when team changes
     window.onTeamChanged = () => {
