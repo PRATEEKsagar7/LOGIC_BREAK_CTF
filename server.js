@@ -738,7 +738,11 @@ const server = http.createServer(async (req, res) => {
   // ==========================================
   // STATIC FILE SERVING & CLEAN ROUTING
   // ==========================================
-  let reqPath = pathname === '/' ? '/cybernexus_overview_gray_light_green_dark_mode.html' : pathname;
+  let reqPath = pathname;
+  if (reqPath.toLowerCase().startsWith('/logic_ctf')) {
+    reqPath = reqPath.slice('/logic_ctf'.length) || '/';
+  }
+  if (!reqPath || reqPath === '') reqPath = '/';
 
   // Convenient Route Aliases
   if (reqPath === '/overview' || reqPath === '/overview.html' || reqPath === '/index.html' || reqPath === '/') {
