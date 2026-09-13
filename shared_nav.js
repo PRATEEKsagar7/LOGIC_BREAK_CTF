@@ -144,6 +144,107 @@
     window.location.href = 'login.html';
   };
 
+  // Get active authenticated operative or team key
+  window.getLogicCTFUserKey = function() {
+    try {
+      const u = JSON.parse(localStorage.getItem('logic_ctf_user') || 'null');
+      if (u && (u.userId || u.id || u.name)) {
+        return (u.userId || u.id || u.name).toUpperCase().trim();
+      }
+    } catch (e) {}
+    const team = localStorage.getItem('logic_ctf_team');
+    if (team) return team.toUpperCase().trim();
+    return 'GUEST_OPERATIVE';
+  };
+
+  // Global Purged Artifacts Storage System
+  window.getPurgedArtifacts = function() {
+    try {
+      return JSON.parse(localStorage.getItem('logic_ctf_purged_items') || '[]');
+    } catch (e) {
+      return [];
+    }
+  };
+
+  window.savePurgedArtifacts = function(items) {
+    try {
+      localStorage.setItem('logic_ctf_purged_items', JSON.stringify(items));
+    } catch (e) {
+      console.error('Failed to save purged artifacts', e);
+    }
+  };
+
+  window.addToPurgedArtifacts = function(item) {
+    const items = window.getPurgedArtifacts();
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const dateStr = now.toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' });
+    
+    // Auto-detect iconType if not provided
+    let iconType = item.iconType || 'doc';
+    const ext = (item.ext || (item.name ? item.name.split('.').pop() : '')).toLowerCase();
+    if (['pdf'].includes(ext) || (item.type && item.type.toLowerCase().includes('pdf'))) iconType = 'pdf';
+    else if (['json', 'js', 'sh', 'sql', 'c', 'py'].includes(ext) || (item.type && item.type.toLowerCase().includes('code'))) iconType = 'code';
+    else if (['xlsx', 'csv', 'sheet'].includes(ext) || (item.type && item.type.toLowerCase().includes('sheet'))) iconType = 'sheet';
+    else if (['png', 'jpg', 'jpeg', 'svg', 'gif'].includes(ext) || (item.type && item.type.toLowerCase().includes('image'))) iconType = 'img';
+    else if (['txt', 'log'].includes(ext)) iconType = 'txt';
+    else if (item.section === 'Schedule' || item.type === 'Schedule Task') iconType = 'code';
+
+    const newItem = {
+      id: item.id || ('purge_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5)),
+      name: item.name || 'Untitled Artifact',
+      type: item.type || 'Deleted Artifact',
+      section: item.section || 'General',
+      ext: ext || 'dat',
+      size: item.size || '18 KB',
+      iconType: iconType,
+      deleted: `Today, ${timeStr}`,
+      timestamp: Date.now(),
+      raw: item.raw || null
+    };
+
+    // Prevent duplicates with the same id
+    const existingIndex = items.findIndex(i => i.id === newItem.id);
+    if (existingIndex >= 0) {
+      items[existingIndex] = newItem;
+    } else {
+      items.unshift(newItem);
+    }
+
+    window.savePurgedArtifacts(items);
+
+    if (window.showLogicToast) {
+      window.showLogicToast(`Moved "${newItem.name}" to Purged Artifacts`, 'info');
+    }
+
+    // Sync with backend API silently if available
+    try {
+      fetch('/api/recycle-bin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newItem)
+      }).catch(() => {});
+    } catch(err) {}
+
+    return newItem;
+  };
+
+  window.removePurgedArtifact = function(id) {
+    const items = window.getPurgedArtifacts().filter(i => i.id !== id);
+    window.savePurgedArtifacts(items);
+    try {
+      fetch(`/api/recycle-bin/${encodeURIComponent(id)}`, { method: 'DELETE' }).catch(() => {});
+    } catch(err) {}
+    return items;
+  };
+
+  window.clearPurgedArtifacts = function() {
+    window.savePurgedArtifacts([]);
+    try {
+      fetch('/api/recycle-bin', { method: 'DELETE' }).catch(() => {});
+    } catch(err) {}
+  };
+
   // Global Toast Function
   window.showLogicToast = function(message, type = 'info') {
     const shelf = document.getElementById('logic-toast-shelf');

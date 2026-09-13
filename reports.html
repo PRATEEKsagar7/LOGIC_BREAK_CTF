@@ -1170,6 +1170,10 @@
             <span id="viewPriorityBadge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#212B3A] text-white border border-[#2D3A4B]"></span>
           </div>
           <h2 id="viewReportTitle" class="text-lg font-extrabold text-white tracking-tight"></h2>
+          <div id="viewCountdownTimer" class="mt-2 inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-950/70 border border-emerald-500/40 text-[11px] font-mono text-emerald-300">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>RESTORED SESSION: <strong>20:00</strong> REMAINING</span>
+          </div>
         </div>
         <button onclick="closeViewDrawer()" class="w-8 h-8 rounded-lg bg-[#1A2330] border border-[#2D3A4B] hover:border-[#3B4A5D] text-[#94A3B8] hover:text-white flex items-center justify-center transition">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1229,6 +1233,41 @@
             INTERNAL REVIEW NOTES
           </h3>
           <p id="viewNotes" class="text-xs italic text-gray-300 bg-[#161D27] p-3 rounded-lg border border-[#2D3A4B]"></p>
+        </div>
+
+        <!-- Challenge 04 Flag Container (Revealed upon Restoring Purged Report) -->
+        <div id="viewChallenge4FlagBox" class="hidden p-4 rounded-xl bg-[#090E16] border-2 border-[#00FF9D] space-y-3 mt-4 shadow-[0_0_25px_rgba(0,255,157,0.25)]">
+          <div class="flex items-center justify-between text-[11px] font-mono">
+            <span class="text-[#00FF9D] font-bold flex items-center gap-1.5">
+              <span>🚩</span>
+              <span>CHALLENGE #04 CAPTURED FLAG:</span>
+            </span>
+            <span class="text-amber-400 font-bold">+50 POINTS</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <input id="flag4SecretInput" readonly value="logicCTF{r3st0r3_purg3d_r3p0rt_int3gr1ty_unl0ck}" class="flex-1 bg-[#161D27] px-3 py-2 rounded-lg font-mono text-xs text-[#00FF9D] font-bold border border-[#2D3A4B] select-all focus:outline-none focus:border-[#00FF9D]" />
+            <button onclick="copyFlag4()" class="px-3.5 py-2 rounded-lg bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-bold text-xs font-mono transition flex items-center gap-1 shrink-0 shadow-md active:scale-95">
+              <span id="copyFlag4BtnText">Copy Flag</span>
+            </button>
+          </div>
+          <div class="flex items-center justify-between text-[10px] font-mono text-[#94A3B8] pt-1 border-t border-[#2D3A4B]/60">
+            <span>Archival integrity restored! Submit flag in Missions.</span>
+            <a href="missions.html" class="text-[#00FF9D] hover:underline font-bold inline-flex items-center gap-1">
+              <span>Go to Missions</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Archival Verified but No Flag Payload (for reports deleted after the first one) -->
+        <div id="viewNoFlagPayloadNotice" class="hidden p-3.5 rounded-xl bg-[#161D27] border border-[#2D3A4B] space-y-2 mt-4">
+          <div class="flex items-center gap-2 text-gray-300 font-mono text-xs font-bold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span>ARCHIVE INTEGRITY RESTORED</span>
+          </div>
+          <p class="text-[11px] font-mono text-[#94A3B8] leading-relaxed">
+            Record verification unlocked. No hidden security payload or flag was embedded within this secondary report artifact.
+          </p>
         </div>
 
       </div>
@@ -1827,8 +1866,32 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
     let activeDeleteId = null;
     let isEditing = false;
 
+    function syncPurgedReports() {
+      try {
+        const userKey = (typeof getCurrentUserKey === 'function' ? getCurrentUserKey() : 'GUEST_OPERATIVE');
+        let purged = [];
+        if (typeof window.getPurgedArtifacts === 'function') {
+          purged = window.getPurgedArtifacts();
+        } else {
+          purged = JSON.parse(localStorage.getItem('logic_ctf_purged_items') || '[]');
+        }
+        const purgedReportIds = new Set(
+          purged.filter(p => (!p.userKey || p.userKey === userKey) && (p.section === 'Reports' || (p.id && p.id.startsWith('report_'))))
+                .map(p => p.id.replace('report_', ''))
+        );
+        const delKey = 'logic_ctf_deleted_report_ids_' + userKey;
+        const savedDeleted = JSON.parse(localStorage.getItem(delKey) || '[]');
+        savedDeleted.forEach(id => {
+          if (purgedReportIds.has(id)) {
+            reports = reports.filter(r => r.id !== id);
+          }
+        });
+      } catch (e) {}
+    }
+
     // DOM Ready
     window.addEventListener('DOMContentLoaded', () => {
+      syncPurgedReports();
       renderAll();
     });
 
@@ -1963,16 +2026,28 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
           </td>
           <td class="py-3 px-4 whitespace-nowrap text-right">
             <div class="flex items-center justify-end gap-1.5">
-              <button 
-                onclick="viewReport('${item.id}')" 
-                title="View Report"
-                aria-label="View report details" 
-                class="w-7 h-7 rounded bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] hover:text-[#00FF9D] text-[#94A3B8] flex items-center justify-center transition">
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
-                </svg>
-              </button>
+              ${isReportUnlocked(item.id) ? `
+                <button 
+                  onclick="viewReport('${item.id}')" 
+                  title="Integrity Restored // View Report"
+                  aria-label="View report details" 
+                  class="w-7 h-7 rounded bg-[#00FF9D]/20 border border-[#00FF9D] hover:bg-[#00FF9D] text-[#00FF9D] hover:text-[#090E16] flex items-center justify-center transition shadow-[0_0_10px_rgba(0,255,157,0.3)] cursor-pointer">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                </button>
+              ` : `
+                <button 
+                  onclick="viewReport('${item.id}')" 
+                  title="Access Locked: Purged artifact restore required"
+                  aria-label="Locked report details" 
+                  class="w-7 h-7 rounded bg-[#161D27] border border-amber-500/40 hover:border-amber-400 text-amber-400/90 hover:text-amber-300 flex items-center justify-center transition cursor-pointer">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                  </svg>
+                </button>
+              `}
               <button 
                 onclick="openEditModal('${item.id}')" 
                 title="Edit Report"
@@ -2024,12 +2099,21 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
           </div>
 
           <div class="grid grid-cols-3 gap-2 pt-1">
-            <button 
-              onclick="viewReport('${item.id}')"
-              class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-[#00FF9D] text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
-              <svg class="w-3.5 h-3.5 text-[#00FF9D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-              View
-            </button>
+            ${isReportUnlocked(item.id) ? `
+              <button 
+                onclick="viewReport('${item.id}')"
+                class="py-1.5 rounded-lg bg-[#00FF9D]/20 border border-[#00FF9D] hover:bg-[#00FF9D] text-xs font-bold text-[#00FF9D] hover:text-[#090E16] flex items-center justify-center gap-1.5 transition shadow-sm">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                View
+              </button>
+            ` : `
+              <button 
+                onclick="viewReport('${item.id}')"
+                class="py-1.5 rounded-lg bg-[#161D27] border border-amber-500/40 hover:border-amber-400 text-xs font-semibold text-amber-400 flex items-center justify-center gap-1.5 transition">
+                <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                Locked
+              </button>
+            `}
             <button 
               onclick="openEditModal('${item.id}')"
               class="py-1.5 rounded-lg bg-[#212B3A] border border-[#2D3A4B] hover:border-emerald-400 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition">
@@ -2146,8 +2230,121 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
       }
     }
 
+    let viewCountdownInterval = null;
+
+    function getCurrentUserKey() {
+      if (typeof window.getLogicCTFUserKey === 'function') {
+        return window.getLogicCTFUserKey();
+      }
+      try {
+        const u = JSON.parse(localStorage.getItem('logic_ctf_user') || 'null');
+        if (u && (u.userId || u.id || u.name)) return (u.userId || u.id || u.name).toUpperCase().trim();
+      } catch (e) {}
+      const team = localStorage.getItem('logic_ctf_team');
+      if (team) return team.toUpperCase().trim();
+      return 'GUEST_OPERATIVE';
+    }
+
+    // Access Lock & Restoration Check (Scoped to current authenticated operative & 20-min session)
+    function isReportUnlocked(id) {
+      try {
+        const userKey = getCurrentUserKey();
+        const key = 'logic_ctf_restored_' + userKey;
+        let raw = localStorage.getItem(key);
+        
+        // Backward-compatibility fallback for already tested reports
+        if (!raw) {
+          const legacy = JSON.parse(localStorage.getItem('logic_ctf_restored_reports') || '[]');
+          if (legacy.includes(id) || legacy.includes('report_' + id)) {
+            const now = Date.now();
+            const migrated = [{ id, unlockedAt: now, expiresAt: now + (20 * 60 * 1000) }];
+            localStorage.setItem(key, JSON.stringify(migrated));
+            return true;
+          }
+          return false;
+        }
+
+        let restored = JSON.parse(raw);
+        if (!Array.isArray(restored)) return false;
+
+        const now = Date.now();
+        const match = restored.find(item => {
+          const itemId = (typeof item === 'string') ? item : item.id;
+          return itemId === id || itemId === ('report_' + id);
+        });
+
+        if (!match) return false;
+
+        // Check 20-minute expiration
+        if (typeof match === 'object' && match.expiresAt) {
+          if (now > match.expiresAt) {
+            // Expired! Clean up from active session
+            restored = restored.filter(i => (typeof i === 'string' ? i : i.id) !== id);
+            localStorage.setItem(key, JSON.stringify(restored));
+            return false;
+          }
+        }
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function getReportRemainingMs(id) {
+      try {
+        const userKey = getCurrentUserKey();
+        const key = 'logic_ctf_restored_' + userKey;
+        const restored = JSON.parse(localStorage.getItem(key) || '[]');
+        const match = restored.find(item => (typeof item === 'string' ? item : item.id) === id);
+        if (match && typeof match === 'object' && match.expiresAt) {
+          return Math.max(0, match.expiresAt - Date.now());
+        }
+      } catch (e) {}
+      return 0;
+    }
+
+    function startViewCountdown(id) {
+      if (viewCountdownInterval) clearInterval(viewCountdownInterval);
+
+      const timerPill = document.getElementById('viewCountdownTimer');
+      const updateTimer = () => {
+        const remMs = getReportRemainingMs(id);
+        if (remMs <= 0) {
+          clearInterval(viewCountdownInterval);
+          if (timerPill) {
+            timerPill.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-400"></span><span class="text-red-300 font-bold font-mono">SESSION EXPIRED</span>`;
+          }
+          showToast("ACCESS EXPIRED", "The 20-minute inspection window has lapsed. Purge and restore this artifact again.", true);
+          setTimeout(() => {
+            closeViewDrawer();
+            renderAll();
+          }, 1200);
+          return;
+        }
+
+        const totalSecs = Math.floor(remMs / 1000);
+        const mins = Math.floor(totalSecs / 60);
+        const secs = totalSecs % 60;
+        const formatted = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        if (timerPill) {
+          timerPill.innerHTML = `
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>RESTORED SESSION: <strong class="text-white font-mono">${formatted}</strong> REMAINING</span>
+          `;
+        }
+      };
+
+      updateTimer();
+      viewCountdownInterval = setInterval(updateTimer, 1000);
+    }
+
     // VIEW DRAWER MODAL
     function viewReport(id) {
+      if (!isReportUnlocked(id)) {
+        showToast("ACCESS DENIED", "Direct inspection locked by archival restrictions. Purge and restore this artifact from Purged Artifacts.", true);
+        return;
+      }
+
       const report = reports.find(r => r.id === id);
       if (!report) return;
 
@@ -2177,6 +2374,29 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
         findingsList.innerHTML = `<li class="text-xs text-[#94A3B8] italic">No detailed finding statements attached.</li>`;
       }
 
+      // Start live 20-min countdown timer
+      startViewCountdown(id);
+
+      // Display flag container ONLY for the first report deleted by THIS authenticated user
+      const userKey = getCurrentUserKey();
+      const firstDelKey = 'logic_ctf_first_deleted_' + userKey;
+      let firstDeletedId = localStorage.getItem(firstDelKey);
+      if (!firstDeletedId) {
+        firstDeletedId = localStorage.getItem('logic_ctf_first_deleted_report_id');
+        if (firstDeletedId) localStorage.setItem(firstDelKey, firstDeletedId);
+      }
+
+      const flagBox = document.getElementById('viewChallenge4FlagBox');
+      const noPayloadNotice = document.getElementById('viewNoFlagPayloadNotice');
+
+      if (firstDeletedId && id === firstDeletedId) {
+        if (flagBox) flagBox.classList.remove('hidden');
+        if (noPayloadNotice) noPayloadNotice.classList.add('hidden');
+      } else {
+        if (flagBox) flagBox.classList.add('hidden');
+        if (noPayloadNotice) noPayloadNotice.classList.remove('hidden');
+      }
+
       // Drawer Edit CTA Hookup
       const editBtn = document.getElementById('viewDrawerEditBtn');
       editBtn.onclick = () => {
@@ -2193,7 +2413,33 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
       }, 10);
     }
 
+    function copyFlag4() {
+      const input = document.getElementById('flag4SecretInput');
+      if (!input) return;
+      input.select();
+      navigator.clipboard.writeText(input.value).then(() => {
+        const btnText = document.getElementById('copyFlag4BtnText');
+        if (btnText) btnText.textContent = "COPIED!";
+        showToast("FLAG COPIED", "Challenge 4 flag copied! Submit it in Missions.");
+        setTimeout(() => {
+          if (btnText) btnText.textContent = "Copy Flag";
+        }, 2500);
+      }).catch(() => {
+        document.execCommand('copy');
+        const btnText = document.getElementById('copyFlag4BtnText');
+        if (btnText) btnText.textContent = "COPIED!";
+        showToast("FLAG COPIED", "Challenge 4 flag copied! Submit it in Missions.");
+        setTimeout(() => {
+          if (btnText) btnText.textContent = "Copy Flag";
+        }, 2500);
+      });
+    }
+
     function closeViewDrawer() {
+      if (viewCountdownInterval) {
+        clearInterval(viewCountdownInterval);
+        viewCountdownInterval = null;
+      }
       const overlay = document.getElementById('viewDrawerOverlay');
       const drawer = document.getElementById('viewDrawerContent');
       drawer.classList.add('translate-x-full');
@@ -2327,10 +2573,46 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
     function confirmDelete() {
       if (!activeDeleteId) return;
       const targetId = activeDeleteId;
+      const reportToDelete = reports.find(r => r.id === targetId);
+
+      const userKey = getCurrentUserKey();
+      const firstDelKey = 'logic_ctf_first_deleted_' + userKey;
+      let firstDeletedId = localStorage.getItem(firstDelKey);
+      if (!firstDeletedId) {
+        firstDeletedId = targetId;
+        localStorage.setItem(firstDelKey, targetId);
+      }
+      const isFirstDeleted = (firstDeletedId === targetId);
+
+      if (reportToDelete && typeof window.addToPurgedArtifacts === 'function') {
+        window.addToPurgedArtifacts({
+          id: 'report_' + targetId,
+          name: `${targetId}: ${reportToDelete.title}`,
+          type: `${reportToDelete.category || 'Incident Report'} (Reports)`,
+          section: 'Reports',
+          ext: 'pdf',
+          size: '1.4 MB',
+          iconType: 'pdf',
+          hasFlag: isFirstDeleted,
+          userKey: userKey,
+          raw: reportToDelete
+        });
+      }
+
       reports = reports.filter(r => r.id !== targetId);
+
+      try {
+        const delKey = 'logic_ctf_deleted_report_ids_' + userKey;
+        const deletedIds = JSON.parse(localStorage.getItem(delKey) || '[]');
+        if (!deletedIds.includes(targetId)) {
+          deletedIds.push(targetId);
+          localStorage.setItem(delKey, JSON.stringify(deletedIds));
+        }
+      } catch (e) {}
+
       closeDeleteModal();
       renderAll();
-      showToast("REPORT DELETED", `Report ${targetId} was removed successfully.`, true);
+      showToast("REPORT PURGED", `Report ${targetId} moved to Purged Artifacts.`, true);
     }
 
     // TOAST SYSTEM

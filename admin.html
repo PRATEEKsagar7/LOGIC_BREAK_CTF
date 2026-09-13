@@ -272,19 +272,62 @@
           <span class="material-symbols-outlined text-[20px]">close</span>
         </button>
       </div>
-      <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-xs font-mono text-emerald-300 leading-relaxed">
-        ⚡ A random User ID (e.g. USER-XXXX) and secure password (e.g. Nexus#XXXX) will be generated automatically upon confirmation.
+
+      <!-- Registration Type Toggle -->
+      <div>
+        <label class="font-label-lg text-xs text-on-surface-variant block mb-1.5 font-bold">Registration Structure</label>
+        <div class="grid grid-cols-2 gap-2 p-1 bg-surface-container rounded-xl border border-outline-variant">
+          <button type="button" id="toggle-type-duo" onclick="setRegistrationType('DUO')" class="py-2 rounded-lg text-xs font-mono font-bold transition flex items-center justify-center gap-1.5 bg-primary text-on-primary cursor-pointer">
+            <span class="material-symbols-outlined text-[16px]">groups</span>
+            <span>Duo Squad (2 Partners)</span>
+          </button>
+          <button type="button" id="toggle-type-solo" onclick="setRegistrationType('SOLO')" class="py-2 rounded-lg text-xs font-mono font-bold transition flex items-center justify-center gap-1.5 text-outline hover:text-white cursor-pointer">
+            <span class="material-symbols-outlined text-[16px]">person</span>
+            <span>Solo Operative (1 Person)</span>
+          </button>
+        </div>
       </div>
+
+      <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-xs font-mono text-emerald-300 leading-relaxed">
+        ⚡ User IDs (<span id="preview-id-prefix" class="font-bold">DUO-XXXX</span>) and passwords will be auto-generated and flagged for Gmail dispatch 5 minutes prior to match.
+      </div>
+
       <div class="flex flex-col gap-3">
         <div>
-          <label class="font-label-lg text-xs text-on-surface-variant block mb-1">Participant / Squad Name *</label>
-          <input class="w-full px-3 py-2 bg-surface-container rounded-lg font-label-lg text-xs text-white border border-outline-variant focus:outline-none focus:border-primary" id="add-member-name" placeholder="e.g. Cyber Knights" type="text"/>
+          <label id="label-participant-name" class="font-label-lg text-xs text-on-surface-variant block mb-1">Squad / Team Name *</label>
+          <input class="w-full px-3 py-2 bg-surface-container rounded-lg font-label-lg text-xs text-white border border-outline-variant focus:outline-none focus:border-primary" id="add-member-name" placeholder="e.g. Apex Guardians" type="text"/>
         </div>
+
+        <!-- Partner 1 Fields -->
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="font-label-lg text-[11px] text-on-surface-variant block mb-1">Partner 1 Full Name *</label>
+            <input class="w-full px-3 py-2 bg-surface-container rounded-lg font-label-lg text-xs text-white border border-outline-variant focus:outline-none focus:border-primary" id="add-member-p1-name" placeholder="e.g. Alex Chen" type="text"/>
+          </div>
+          <div>
+            <label class="font-label-lg text-[11px] text-on-surface-variant block mb-1">Partner 1 Gmail / Email</label>
+            <input class="w-full px-3 py-2 bg-surface-container rounded-lg font-label-lg text-xs text-white border border-outline-variant focus:outline-none focus:border-primary" id="add-member-p1-email" placeholder="alex@gmail.com" type="email"/>
+          </div>
+        </div>
+
+        <!-- Partner 2 Fields (Hidden in Solo mode) -->
+        <div id="partner-2-container" class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="font-label-lg text-[11px] text-on-surface-variant block mb-1">Partner 2 Full Name *</label>
+            <input class="w-full px-3 py-2 bg-surface-container rounded-lg font-label-lg text-xs text-white border border-outline-variant focus:outline-none focus:border-primary" id="add-member-p2-name" placeholder="e.g. Maya Patel" type="text"/>
+          </div>
+          <div>
+            <label class="font-label-lg text-[11px] text-on-surface-variant block mb-1">Partner 2 Gmail / Email</label>
+            <input class="w-full px-3 py-2 bg-surface-container rounded-lg font-label-lg text-xs text-white border border-outline-variant focus:outline-none focus:border-primary" id="add-member-p2-email" placeholder="maya@gmail.com" type="email"/>
+          </div>
+        </div>
+
         <div>
           <label class="font-label-lg text-xs text-on-surface-variant block mb-1">Affiliation / College</label>
           <input class="w-full px-3 py-2 bg-surface-container rounded-lg font-label-lg text-xs text-white border border-outline-variant focus:outline-none focus:border-primary" id="add-member-college" placeholder="e.g. Technova University" type="text"/>
         </div>
       </div>
+
       <div class="flex items-center justify-end gap-2 pt-3 border-t border-outline-variant">
         <button class="modal-close-trigger px-4 py-2 rounded-lg font-label-lg text-xs text-outline hover:text-white cursor-pointer">Cancel</button>
         <button class="px-4 py-2 bg-primary text-on-primary font-label-lg text-xs font-bold rounded-lg hover:bg-primary-fixed cursor-pointer transition" id="btn-submit-add-member">Confirm & Generate Credentials</button>
@@ -319,7 +362,7 @@
       { num: 1, title: 'Limit Break', pts: '+50 / -15', flag: 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}' },
       { num: 2, title: 'Export a report.', pts: '+50 / -15', flag: 'logicCTF{purg3d_r3cycl3_b1n_csv_3xp0rt}' },
       { num: 3, title: 'Read Between the Lines.', pts: '+50 / -15', flag: 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}' },
-      { num: 4, title: 'Logic Gate Bypass', pts: '+50 / -15', flag: 'logicCTF{cl13nt_s1d3_auth_1s_n0t_s4f3}' },
+      { num: 4, title: 'Restore a report.', pts: '+50 / -15', flag: 'logicCTF{r3st0r3_purg3d_r3p0rt_int3gr1ty_unl0ck}' },
       { num: 5, title: 'Cookie Monster', pts: '+50 / -15', flag: 'logicCTF{jwt_s3cr3t_brut3f0rc3_2026}' },
       { num: 6, title: 'SQL Infiltration', pts: '+50 / -15', flag: 'logicCTF{sql1_un10n_s3l3ct_4dm1n_fl4g}' },
       { num: 7, title: 'Hidden in Plain Byte', pts: '+50 / -15', flag: 'logicCTF{st3g0_m3t4d4t4_h1dd3n_fl4g}' },
@@ -479,6 +522,30 @@
       `).join('');
     }
 
+    let currentRegType = 'DUO';
+    function setRegistrationType(type) {
+      currentRegType = type;
+      const btnDuo = document.getElementById('toggle-type-duo');
+      const btnSolo = document.getElementById('toggle-type-solo');
+      const p2Box = document.getElementById('partner-2-container');
+      const previewPrefix = document.getElementById('preview-id-prefix');
+      const nameLabel = document.getElementById('label-participant-name');
+
+      if (type === 'DUO') {
+        btnDuo.className = 'py-2 rounded-lg text-xs font-mono font-bold transition flex items-center justify-center gap-1.5 bg-primary text-on-primary cursor-pointer';
+        btnSolo.className = 'py-2 rounded-lg text-xs font-mono font-bold transition flex items-center justify-center gap-1.5 text-outline hover:text-white cursor-pointer';
+        p2Box.classList.remove('hidden');
+        previewPrefix.textContent = 'DUO-XXXX';
+        nameLabel.textContent = 'Squad / Team Name *';
+      } else {
+        btnSolo.className = 'py-2 rounded-lg text-xs font-mono font-bold transition flex items-center justify-center gap-1.5 bg-primary text-on-primary cursor-pointer';
+        btnDuo.className = 'py-2 rounded-lg text-xs font-mono font-bold transition flex items-center justify-center gap-1.5 text-outline hover:text-white cursor-pointer';
+        p2Box.classList.add('hidden');
+        previewPrefix.textContent = 'SOLO-XXXX';
+        nameLabel.textContent = 'Operative Handle / Name *';
+      }
+    }
+
     function renderParticipants() {
       const container = document.getElementById('members-list-container');
       if (!confirmedParticipants || confirmedParticipants.length === 0) {
@@ -490,42 +557,61 @@
         return;
       }
 
-      container.innerHTML = confirmedParticipants.map(p => `
-        <div class="grid grid-cols-12 gap-4 px-6 py-3.5 border-t border-outline-variant/30 items-center font-label-lg text-xs hover:bg-surface-container-high/40 transition">
-          <div class="col-span-3 font-bold text-white flex items-center gap-2">
-            <span class="material-symbols-outlined text-[18px] text-primary">verified_user</span>
-            <div>
-              <span class="block">${p.name}</span>
-              <span class="text-[10px] text-outline font-normal">${p.college || 'Collegiate Squad'}</span>
+      container.innerHTML = confirmedParticipants.map(p => {
+        const isDuo = (p.type === 'DUO' || (p.partner2 && p.partner2.name));
+        const typeBadge = isDuo 
+          ? `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/30">DUO SQUAD</span>`
+          : `<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-950 text-cyan-300 border border-cyan-500/30">SOLO</span>`;
+
+        const partnerDetails = isDuo && p.partner1 && p.partner2
+          ? `<div class="text-[10px] text-slate-400 font-mono mt-0.5 space-y-0.5">
+               <div><span class="text-emerald-400 font-bold">${p.partner1.name}</span> (${p.partner1UserId || p.userId + '-A'})</div>
+               <div><span class="text-emerald-400 font-bold">${p.partner2.name}</span> (${p.partner2UserId || p.userId + '-B'})</div>
+             </div>`
+          : `<div class="text-[10px] text-slate-400 font-mono mt-0.5">${p.college || 'Collegiate Arena'}</div>`;
+
+        return `
+          <div class="grid grid-cols-12 gap-4 px-6 py-3.5 border-t border-outline-variant/30 items-center font-label-lg text-xs hover:bg-surface-container-high/40 transition">
+            <div class="col-span-3 font-bold text-white flex items-start gap-2">
+              <span class="material-symbols-outlined text-[18px] text-primary mt-0.5">verified_user</span>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="block">${p.name}</span>
+                  ${typeBadge}
+                </div>
+                ${partnerDetails}
+              </div>
+            </div>
+            <div class="col-span-2">
+              <span class="font-mono font-bold text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30 select-all">${p.userId}</span>
+              <span class="block text-[10px] text-outline mt-0.5">📧 Gmail T-5m</span>
+            </div>
+            <div class="col-span-3">
+              <span class="font-mono text-cyan-300 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/30 select-all">${p.password}</span>
+            </div>
+            <div class="col-span-2 font-mono">
+              <span class="text-white font-bold">${p.score} pts</span>
+              <span class="text-outline text-[11px] ml-1">(${p.solvedCount} flags)</span>
+            </div>
+            <div class="col-span-2 flex items-center justify-end gap-2">
+              <button onclick="copySingleCredentials('${p.name}', '${p.userId}', '${p.password}', '${isDuo ? 'DUO' : 'SOLO'}')" class="px-2.5 py-1 rounded bg-surface-container-high hover:bg-surface-bright text-slate-300 hover:text-white border border-outline-variant text-[11px] font-mono flex items-center gap-1 transition cursor-pointer" title="Copy Credentials">
+                <span class="material-symbols-outlined text-[14px] text-primary">content_copy</span>
+                <span>Copy</span>
+              </button>
+              <button onclick="removeParticipant('${p.id}', '${p.name}')" class="p-1 rounded text-red-400 hover:text-red-300 hover:bg-red-950/40 transition cursor-pointer" title="Delete Participant">
+                <span class="material-symbols-outlined text-[16px]">delete</span>
+              </button>
             </div>
           </div>
-          <div class="col-span-2">
-            <span class="font-mono font-bold text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30 select-all">${p.userId}</span>
-          </div>
-          <div class="col-span-3">
-            <span class="font-mono text-cyan-300 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/30 select-all">${p.password}</span>
-          </div>
-          <div class="col-span-2 font-mono">
-            <span class="text-white font-bold">${p.score} pts</span>
-            <span class="text-outline text-[11px] ml-1">(${p.solvedCount} flags)</span>
-          </div>
-          <div class="col-span-2 flex items-center justify-end gap-2">
-            <button onclick="copySingleCredentials('${p.name}', '${p.userId}', '${p.password}')" class="px-2.5 py-1 rounded bg-surface-container-high hover:bg-surface-bright text-slate-300 hover:text-white border border-outline-variant text-[11px] font-mono flex items-center gap-1 transition" title="Copy User ID & Password">
-              <span class="material-symbols-outlined text-[14px] text-primary">content_copy</span>
-              <span>Copy</span>
-            </button>
-            <button onclick="removeParticipant('${p.id}', '${p.name}')" class="p-1 rounded text-red-400 hover:text-red-300 hover:bg-red-950/40 transition" title="Delete Participant">
-              <span class="material-symbols-outlined text-[16px]">delete</span>
-            </button>
-          </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
-    function copySingleCredentials(name, uid, pass) {
-      const text = `Logic Break CTF Credentials\nTeam: ${name}\nUser ID: ${uid}\nPassword: ${pass}\nArena Gateway: http://localhost:3000/login.html`;
+    function copySingleCredentials(name, uid, pass, type = 'DUO') {
+      const isDuo = type === 'DUO';
+      const text = `LOGIC BREAK CTF // ${isDuo ? 'DUO SQUAD' : 'SOLO OPERATIVE'} CREDENTIALS\nTeam: ${name}\nUser ID: ${uid}${isDuo ? ` (Partner 1: ${uid}-A | Partner 2: ${uid}-B)` : ''}\nPassword: ${pass}\nDispatch Status: Sent to registered Gmail 5 minutes prior to match\nArena Gateway: http://localhost:3000/login.html`;
       navigator.clipboard.writeText(text).then(() => {
-        window.showLogicToast && window.showLogicToast(`Credentials for ${name} copied to clipboard!`, 'success');
+        window.showLogicToast && window.showLogicToast(`Credentials for ${name} copied!`, 'success');
       });
     }
 
@@ -534,9 +620,14 @@
         alert('No participants to export.');
         return;
       }
-      let report = `LOGIC BREAK CTF // CONFIRMED PARTICIPANTS CREDENTIALS\nGenerated: ${new Date().toLocaleString()}\n=======================================================\n\n`;
+      let report = `LOGIC BREAK CTF // CONFIRMED PARTICIPANTS CREDENTIALS\nGenerated: ${new Date().toLocaleString()}\nDispatch Protocol: Gmail T-5min Scheduled Automated Delivery\n=======================================================\n\n`;
       confirmedParticipants.forEach((p, i) => {
-        report += `#${i + 1} SQUAD: ${p.name}\n   USER ID:  ${p.userId}\n   PASSWORD: ${p.password}\n   COLLEGE:  ${p.college || 'Collegiate Arena'}\n-------------------------------------------------------\n`;
+        const isDuo = (p.type === 'DUO' || (p.partner2 && p.partner2.name));
+        report += `#${i + 1} ${isDuo ? 'DUO SQUAD' : 'SOLO OPERATIVE'}: ${p.name}\n   TEAM USER ID: ${p.userId}\n   PASSWORD:     ${p.password}\n   COLLEGE:      ${p.college || 'Collegiate Arena'}\n`;
+        if (isDuo && p.partner1 && p.partner2) {
+          report += `   PARTNER 1:    ${p.partner1.name} [${p.partner1UserId || p.userId + '-A'}] (${p.partner1.email || 'N/A'})\n   PARTNER 2:    ${p.partner2.name} [${p.partner2UserId || p.userId + '-B'}] (${p.partner2.email || 'N/A'})\n`;
+        }
+        report += `-------------------------------------------------------\n`;
       });
       navigator.clipboard.writeText(report).then(() => {
         window.showLogicToast && window.showLogicToast('All participant credentials copied to clipboard!', 'success');
@@ -615,7 +706,15 @@
     document.getElementById('btn-submit-add-member').addEventListener('click', async () => {
       const name = document.getElementById('add-member-name').value.trim();
       const college = document.getElementById('add-member-college').value.trim();
+      const partner1Name = document.getElementById('add-member-p1-name').value.trim();
+      const partner1Email = document.getElementById('add-member-p1-email').value.trim();
+      const partner2Name = document.getElementById('add-member-p2-name').value.trim();
+      const partner2Email = document.getElementById('add-member-p2-email').value.trim();
+
       if (!name) return alert('Participant or squad name is required');
+      if (currentRegType === 'DUO' && (!partner1Name || !partner2Name)) {
+        return alert('Please enter both Partner 1 and Partner 2 names for a Duo Squad');
+      }
 
       try {
         const res = await fetch('/api/admin/confirm-participant', {
@@ -624,14 +723,26 @@
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${VALID_TOKEN}`
           },
-          body: JSON.stringify({ name, college })
+          body: JSON.stringify({
+            type: currentRegType,
+            name,
+            college,
+            partner1Name,
+            partner1Email,
+            partner2Name,
+            partner2Email
+          })
         });
         const data = await res.json();
         if (data.success) {
           document.getElementById('add-member-name').value = '';
           document.getElementById('add-member-college').value = '';
+          document.getElementById('add-member-p1-name').value = '';
+          document.getElementById('add-member-p1-email').value = '';
+          document.getElementById('add-member-p2-name').value = '';
+          document.getElementById('add-member-p2-email').value = '';
           document.getElementById('modal-add-member').classList.add('hidden');
-          window.showLogicToast && window.showLogicToast(`Confirmed ${name}! User ID: ${data.participant.userId}`, 'success');
+          window.showLogicToast && window.showLogicToast(data.message, 'success');
           loadAdminData();
         } else {
           alert(data.message || 'Error confirming participant');

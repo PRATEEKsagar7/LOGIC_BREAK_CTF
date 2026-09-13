@@ -505,21 +505,44 @@
 
   <!-- JAVASCRIPT STATE & INTERACTIONS -->
   <script>
-    // Initial 8 deleted sample files as per requirements
-    let deletedFiles = [
-      { id: 'f1', name: 'Security_Report.pdf', type: 'PDF Document', ext: 'pdf', deleted: 'Yesterday, 04:30 PM', size: '2.4 MB', iconType: 'pdf' },
-      { id: 'f2', name: 'Network_Analysis.docx', type: 'Word Document', ext: 'docx', deleted: 'Sep 10, 2026', size: '1.1 MB', iconType: 'doc' },
-      { id: 'f3', name: 'CTF_Notes.txt', type: 'Text Document', ext: 'txt', deleted: 'Sep 09, 2026', size: '18 KB', iconType: 'txt' },
-      { id: 'f4', name: 'Evidence_Log.xlsx', type: 'Spreadsheet', ext: 'xlsx', deleted: 'Sep 08, 2026', size: '840 KB', iconType: 'sheet' },
-      { id: 'f5', name: 'Firewall_Config.json', type: 'JSON Config', ext: 'json', deleted: 'Sep 08, 2026', size: '42 KB', iconType: 'code' },
-      { id: 'f6', name: 'Incident_Report.pdf', type: 'PDF Document', ext: 'pdf', deleted: 'Sep 06, 2026', size: '3.8 MB', iconType: 'pdf' },
-      { id: 'f7', name: 'Team_Document.docx', type: 'Word Document', ext: 'docx', deleted: 'Sep 05, 2026', size: '920 KB', iconType: 'doc' },
-      { id: 'f8', name: 'Security_Screenshot.png', type: 'PNG Image', ext: 'png', deleted: 'Sep 03, 2026', size: '1.5 MB', iconType: 'img' }
-    ];
-
+    // Dynamic Purged Artifacts State loaded from shared storage
+    let deletedFiles = [];
     let selectedFileIds = new Set();
     let currentActiveMenuFileId = null;
     let toastTimeout = null;
+
+    function loadPurgedItems() {
+      if (typeof window.getPurgedArtifacts === 'function') {
+        deletedFiles = window.getPurgedArtifacts();
+      } else {
+        try {
+          deletedFiles = JSON.parse(localStorage.getItem('logic_ctf_purged_items') || '[]');
+        } catch (e) {
+          deletedFiles = [];
+        }
+      }
+      renderList();
+
+      // Background check to sync with server vault
+      fetch('/api/recycle-bin')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.success && Array.isArray(data.items)) {
+            const currentIds = new Set(deletedFiles.map(f => f.id));
+            let hasNew = false;
+            data.items.forEach(item => {
+              if (!currentIds.has(item.id)) {
+                deletedFiles.push(item);
+                hasNew = true;
+              }
+            });
+            if (hasNew) {
+              if (window.savePurgedArtifacts) window.savePurgedArtifacts(deletedFiles);
+              renderList();
+            }
+          }
+        }).catch(() => {});
+    }
 
     // Helper: Generate File SVG Icon based on type
     function getFileIcon(type) {
@@ -570,6 +593,7 @@
       let desktopHtml = '';
       deletedFiles.forEach(file => {
         const isChecked = selectedFileIds.has(file.id);
+        const sectionBadge = file.section ? `<span class="px-2 py-0.5 rounded bg-[#162232] text-emerald-400 border border-emerald-500/20 text-[10px] font-mono mr-1.5">${file.section}</span>` : '';
         desktopHtml += `
           <tr class="hover:bg-[#151E2A]/70 transition-colors group ${isChecked ? 'bg-[#162232]/80' : ''}">
             <td class="py-3.5 px-4 text-center">
@@ -585,9 +609,9 @@
                 </div>
               </div>
             </td>
-            <td class="py-3.5 px-4 font-mono text-text-secondary text-[11px]">${file.type}</td>
-            <td class="py-3.5 px-4 font-mono text-text-secondary text-[11px]">${file.deleted}</td>
-            <td class="py-3.5 px-4 font-mono text-text-secondary text-[11px]">${file.size}</td>
+            <td class="py-3.5 px-4 font-mono text-text-secondary text-[11px]">${sectionBadge}${file.type}</td>
+            <td class="py-3.5 px-4 font-mono text-text-secondary text-[11px]">${file.deleted || 'Recently'}</td>
+            <td class="py-3.5 px-4 font-mono text-text-secondary text-[11px]">${file.size || '18 KB'}</td>
             <td class="py-3.5 px-4 text-right">
               <button onclick="openThreeDotMenu(event, '${file.id}')" aria-label="Item Actions" class="p-1.5 rounded hover:bg-surface-elevated text-text-secondary hover:text-white transition-colors">
                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -604,6 +628,7 @@
       let mobileHtml = '';
       deletedFiles.forEach(file => {
         const isChecked = selectedFileIds.has(file.id);
+        const sectionBadge = file.section ? `<span class="px-1.5 py-0.5 rounded bg-[#162232] text-emerald-400 border border-emerald-500/20 text-[9px] font-mono mr-1">${file.section}</span>` : '';
         mobileHtml += `
           <div class="p-3.5 flex items-start justify-between gap-3 ${isChecked ? 'bg-[#162232]/80' : 'hover:bg-[#151E2A]/60'} transition-colors">
             <div class="flex items-start space-x-3 min-w-0">
@@ -614,12 +639,12 @@
               <div class="min-w-0">
                 <div class="text-xs font-semibold text-white truncate max-w-[200px] sm:max-w-xs">${file.name}</div>
                 <div class="text-[11px] font-mono text-text-secondary mt-0.5 flex flex-wrap items-center gap-x-2">
-                  <span>${file.type}</span>
-                  <span>â€¢</span>
-                  <span>${file.size}</span>
+                  <span>${sectionBadge}${file.type}</span>
+                  <span>•</span>
+                  <span>${file.size || '18 KB'}</span>
                 </div>
                 <div class="text-[10px] font-mono text-text-secondary/80 mt-1">
-                  Deleted: ${file.deleted}
+                  Deleted: ${file.deleted || 'Recently'}
                 </div>
               </div>
             </div>
@@ -637,7 +662,7 @@
       updateSelectionIndicator();
     }
 
-    // Toggle single file selection
+    // Toggle single file selectione selection
     function toggleFileSelection(id, checkbox) {
       if (checkbox.checked) {
         selectedFileIds.add(id);
@@ -732,19 +757,66 @@
     // Confirmation Handlers
     function confirmRestoreSingleItem() {
       if (!currentActiveMenuFileId) return;
-      const file = deletedFiles.find(f => f.id === currentActiveMenuFileId);
-      deletedFiles = deletedFiles.filter(f => f.id !== currentActiveMenuFileId);
-      selectedFileIds.delete(currentActiveMenuFileId);
+      const targetId = currentActiveMenuFileId;
+      const file = deletedFiles.find(f => f.id === targetId);
+
+      // Track restored report to unlock view option in Reports for this user (20 min window)
+      if (file && (file.section === 'Reports' || (file.id && file.id.startsWith('report_')))) {
+        const cleanReportId = file.id.replace('report_', '');
+        try {
+          const userKey = (typeof window.getLogicCTFUserKey === 'function' ? window.getLogicCTFUserKey() : 'GUEST_OPERATIVE');
+          const restoreKey = 'logic_ctf_restored_' + userKey;
+          let restored = JSON.parse(localStorage.getItem(restoreKey) || '[]');
+          
+          const now = Date.now();
+          const TWENTY_MIN_MS = 20 * 60 * 1000;
+          restored = restored.filter(r => (typeof r === 'string' ? r : r.id) !== cleanReportId && (!r.expiresAt || r.expiresAt > now));
+          restored.push({
+            id: cleanReportId,
+            unlockedAt: now,
+            expiresAt: now + TWENTY_MIN_MS
+          });
+          localStorage.setItem(restoreKey, JSON.stringify(restored));
+
+          const firstDelKey = 'logic_ctf_first_deleted_' + userKey;
+          if (file.hasFlag && !localStorage.getItem(firstDelKey)) {
+            localStorage.setItem(firstDelKey, cleanReportId);
+          }
+
+          const delKey = 'logic_ctf_deleted_report_ids_' + userKey;
+          let deletedIds = JSON.parse(localStorage.getItem(delKey) || '[]');
+          deletedIds = deletedIds.filter(d => d !== cleanReportId);
+          localStorage.setItem(delKey, JSON.stringify(deletedIds));
+        } catch (e) {}
+      }
+
+      deletedFiles = deletedFiles.filter(f => f.id !== targetId);
+      selectedFileIds.delete(targetId);
+
+      if (typeof window.removePurgedArtifact === 'function') {
+        window.removePurgedArtifact(targetId);
+      } else {
+        localStorage.setItem('logic_ctf_purged_items', JSON.stringify(deletedFiles));
+      }
+
       closeModal('modalRestoreItem');
       renderList();
-      showToast('Item restored successfully');
+      showToast('Item restored successfully. Access unlocked in origin section.');
       currentActiveMenuFileId = null;
     }
 
     function confirmDeletePermanentlySingle() {
       if (!currentActiveMenuFileId) return;
-      deletedFiles = deletedFiles.filter(f => f.id !== currentActiveMenuFileId);
-      selectedFileIds.delete(currentActiveMenuFileId);
+      const targetId = currentActiveMenuFileId;
+      deletedFiles = deletedFiles.filter(f => f.id !== targetId);
+      selectedFileIds.delete(targetId);
+
+      if (typeof window.removePurgedArtifact === 'function') {
+        window.removePurgedArtifact(targetId);
+      } else {
+        localStorage.setItem('logic_ctf_purged_items', JSON.stringify(deletedFiles));
+      }
+
       closeModal('modalDeletePermanently');
       renderList();
       showToast('Item permanently deleted', true);
@@ -760,11 +832,50 @@
     }
 
     function confirmRestoreAllItems() {
+      // Mark all restored reports as unlocked for this user (20 min window)
+      const userKey = (typeof window.getLogicCTFUserKey === 'function' ? window.getLogicCTFUserKey() : 'GUEST_OPERATIVE');
+      const restoreKey = 'logic_ctf_restored_' + userKey;
+      let restored = JSON.parse(localStorage.getItem(restoreKey) || '[]');
+      const now = Date.now();
+      const TWENTY_MIN_MS = 20 * 60 * 1000;
+
+      deletedFiles.forEach(file => {
+        if (file && (file.section === 'Reports' || (file.id && file.id.startsWith('report_')))) {
+          const cleanReportId = file.id.replace('report_', '');
+          try {
+            restored = restored.filter(r => (typeof r === 'string' ? r : r.id) !== cleanReportId && (!r.expiresAt || r.expiresAt > now));
+            restored.push({
+              id: cleanReportId,
+              unlockedAt: now,
+              expiresAt: now + TWENTY_MIN_MS
+            });
+
+            const firstDelKey = 'logic_ctf_first_deleted_' + userKey;
+            if (file.hasFlag && !localStorage.getItem(firstDelKey)) {
+              localStorage.setItem(firstDelKey, cleanReportId);
+            }
+
+            const delKey = 'logic_ctf_deleted_report_ids_' + userKey;
+            let deletedIds = JSON.parse(localStorage.getItem(delKey) || '[]');
+            deletedIds = deletedIds.filter(d => d !== cleanReportId);
+            localStorage.setItem(delKey, JSON.stringify(deletedIds));
+          } catch (e) {}
+        }
+      });
+      localStorage.setItem(restoreKey, JSON.stringify(restored));
+
       deletedFiles = [];
       selectedFileIds.clear();
+
+      if (typeof window.clearPurgedArtifacts === 'function') {
+        window.clearPurgedArtifacts();
+      } else {
+        localStorage.setItem('logic_ctf_purged_items', JSON.stringify([]));
+      }
+
       closeModal('modalRestoreAll');
       renderList();
-      showToast('All items restored successfully');
+      showToast('All items restored successfully. Access unlocked in origin sections.');
     }
 
     function openEmptyBinModal() {
@@ -778,6 +889,13 @@
     function confirmEmptyRecycleBin() {
       deletedFiles = [];
       selectedFileIds.clear();
+
+      if (typeof window.clearPurgedArtifacts === 'function') {
+        window.clearPurgedArtifacts();
+      } else {
+        localStorage.setItem('logic_ctf_purged_items', JSON.stringify([]));
+      }
+
       closeModal('modalEmptyBin');
       renderList();
       showToast('Recycle Bin emptied', true);
@@ -931,7 +1049,7 @@
 
     // Initial render
     document.addEventListener('DOMContentLoaded', () => {
-      renderList();
+      loadPurgedItems();
     });
   </script>
 <script src="shared_nav.js"></script></body>

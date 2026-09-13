@@ -110,7 +110,7 @@
           </thead>
           <tbody class="divide-y divide-[#2d3a43]/50" id="files-table-body">
             <!-- Row 1 -->
-            <tr class="hover:bg-[#1f2823] transition">
+            <tr id="file-row-01" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">01</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-amber-400">{}</span>
@@ -120,14 +120,19 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">JSON Schema</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_01_graphql.json" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_01_graphql.json" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-01', 'challenge_01_graphql.json', 'JSON Schema', '42 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
 
             <!-- Row 2 -->
-            <tr class="hover:bg-[#1f2823] transition">
+            <tr id="file-row-02" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">02</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-cyan-400">📄</span>
@@ -137,14 +142,19 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">Hex Text</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_02_cipher.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_02_cipher.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-02', 'challenge_02_cipher.txt', 'Hex Text', '18 KB', 'txt')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
 
             <!-- Row 3 -->
-            <tr class="hover:bg-[#1f2823] transition">
+            <tr id="file-row-03" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">03</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-indigo-400">📡</span>
@@ -154,14 +164,19 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">PCAP Trace</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_03_network.pcap.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_03_network.pcap.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-03', 'challenge_03_network.pcap.txt', 'PCAP Trace', '156 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
 
             <!-- Row 4 -->
-            <tr class="hover:bg-[#1f2823] transition">
+            <tr id="file-row-04" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">04</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-amber-300">JS</span>
@@ -171,14 +186,19 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">JavaScript</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_04_vault.js" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_04_vault.js" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-04', 'challenge_04_vault.js', 'JavaScript', '28 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
 
             <!-- Row 5 -->
-            <tr class="hover:bg-[#1f2823] transition">
+            <tr id="file-row-05" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">05</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-rose-400">🍪</span>
@@ -188,14 +208,19 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">JWT Token</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_05_jwt_token.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_05_jwt_token.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-05', 'challenge_05_jwt_token.txt', 'JWT Token', '12 KB', 'txt')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
 
             <!-- Row 6 -->
-            <tr class="hover:bg-[#1f2823] transition">
+            <tr id="file-row-06" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">06</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-blue-400">SQL</span>
@@ -205,14 +230,19 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">SQL Schema</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_06_sqli_dump.sql" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_06_sqli_dump.sql" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-06', 'challenge_06_sqli_dump.sql', 'SQL Schema', '85 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
 
             <!-- Row 7 -->
-            <tr class="hover:bg-[#1f2823] transition">
+            <tr id="file-row-07" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">07</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-purple-400">🖼️</span>
@@ -222,14 +252,19 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">EXIF Metadata</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_07_stego_secret.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_07_stego_secret.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-07', 'challenge_07_stego_secret.txt', 'EXIF Metadata', '34 KB', 'img')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
 
             <!-- Row 8 (Tier 2) -->
-            <tr class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+            <tr id="file-row-08" class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
               <td class="py-3 px-4 text-amber-400">08</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-red-400">C</span>
@@ -239,14 +274,19 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">C Source</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_08_buffer_overflow.c" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_08_buffer_overflow.c" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-08', 'challenge_08_buffer_overflow.c', 'C Source', '22 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
 
             <!-- Row 9 -->
-            <tr class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+            <tr id="file-row-09" class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
               <td class="py-3 px-4 text-amber-400">09</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-amber-400">🔑</span>
@@ -256,14 +296,19 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">PEM Key</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_09_rsa_keys.pem" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_09_rsa_keys.pem" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-09', 'challenge_09_rsa_keys.pem', 'PEM Key', '16 KB', 'txt')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
 
             <!-- Row 10 -->
-            <tr class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+            <tr id="file-row-10" class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
               <td class="py-3 px-4 text-amber-400">10</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-cyan-400">💾</span>
@@ -273,14 +318,19 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">Memory Raw</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_10_memory_dump.raw.txt" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_10_memory_dump.raw.txt" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-10', 'challenge_10_memory_dump.raw.txt', 'Memory Raw', '340 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
 
             <!-- Row 11 -->
-            <tr class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+            <tr id="file-row-11" class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
               <td class="py-3 px-4 text-amber-400">11</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-amber-400">☁️</span>
@@ -290,14 +340,19 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">JSON Meta</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_11_shadow_api.json" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_11_shadow_api.json" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-11', 'challenge_11_shadow_api.json', 'JSON Meta', '52 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
 
             <!-- Row 12 -->
-            <tr class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+            <tr id="file-row-12" class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
               <td class="py-3 px-4 text-amber-400">12</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
                 <span class="text-emerald-400">🐚</span>
@@ -307,9 +362,14 @@
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
               <td class="py-3 px-4 text-center text-slate-400">Bash Script</td>
               <td class="py-3 px-4 text-right">
-                <a href="/challenge_files/challenge_12_privesc_suid.sh" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                  <span>Download</span> &darr;
-                </a>
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_12_privesc_suid.sh" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-12', 'challenge_12_privesc_suid.sh', 'Bash Script', '19 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -318,6 +378,78 @@
     </div>
 
   </main>
+
+  <!-- Purge & Deletion Client Logic -->
+  <script>
+    function getDeletedFileIds() {
+      try {
+        return JSON.parse(localStorage.getItem('logic_ctf_deleted_file_ids') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveDeletedFileIds(ids) {
+      localStorage.setItem('logic_ctf_deleted_file_ids', JSON.stringify(ids));
+    }
+
+    function purgeFileRow(rowId, name, type, size, iconType) {
+      if (typeof window.addToPurgedArtifacts === 'function') {
+        window.addToPurgedArtifacts({
+          id: rowId,
+          name: name,
+          type: `${type} (Challenge Artifact)`,
+          section: 'Files & Docs',
+          ext: name.split('.').pop(),
+          size: size,
+          iconType: iconType
+        });
+      }
+
+      const rowEl = document.getElementById(rowId);
+      if (rowEl) {
+        rowEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        rowEl.style.opacity = '0';
+        rowEl.style.transform = 'translateX(20px)';
+        setTimeout(() => rowEl.remove(), 300);
+      }
+
+      const deletedIds = getDeletedFileIds();
+      if (!deletedIds.includes(rowId)) {
+        deletedIds.push(rowId);
+        saveDeletedFileIds(deletedIds);
+      }
+
+      setTimeout(updateFileCount, 350);
+    }
+
+    function updateFileCount() {
+      const rows = document.querySelectorAll('#files-table-body tr');
+      const countLabel = document.getElementById('files-verified-count');
+      if (countLabel) {
+        countLabel.textContent = `${rows.length} Files Available (SHA-256 Verified)`;
+      }
+    }
+
+    // Sync on page load: hide files that are in purged artifacts
+    document.addEventListener('DOMContentLoaded', () => {
+      let purged = [];
+      try {
+        purged = window.getPurgedArtifacts ? window.getPurgedArtifacts() : JSON.parse(localStorage.getItem('logic_ctf_purged_items') || '[]');
+      } catch (e) {}
+      const purgedIds = new Set(purged.map(p => p.id));
+
+      const deletedIds = getDeletedFileIds();
+      deletedIds.forEach(id => {
+        // If it's currently in purged storage, hide it from files view
+        if (purgedIds.has(id)) {
+          const el = document.getElementById(id);
+          if (el) el.remove();
+        }
+      });
+      updateFileCount();
+    });
+  </script>
 
   <!-- Shared Nav Script -->
   <script src="shared_nav.js"></script>

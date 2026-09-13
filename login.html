@@ -79,6 +79,29 @@
         </p>
       </div>
 
+      <!-- Automated Email Dispatch Notification Banner -->
+      <div class="p-3.5 rounded-2xl bg-[#0e1511]/90 border border-emerald-500/30 shadow-[0_0_15px_rgba(91,220,174,0.08)] space-y-2">
+        <div class="flex items-center justify-between">
+          <span class="flex items-center gap-1.5 text-xs font-mono font-bold text-emerald-400">
+            <span class="material-symbols-outlined text-[16px]">mark_email_read</span>
+            <span>CREDENTIAL DISPATCH VIA GMAIL</span>
+          </span>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-500/30">T-5 MIN DISPATCH</span>
+        </div>
+        <p class="text-[11.5px] text-slate-300 leading-relaxed font-sans">
+          Individual credentials (<span class="font-mono text-cyan-300 font-bold">SOLO-XXXX</span> or partner <span class="font-mono text-emerald-300 font-bold">DUO-XXXX</span>) and one-time passwords are dispatched to your team's registered Gmail accounts <strong>5 minutes prior</strong> to arena start.
+        </p>
+        <div class="flex items-center justify-between text-[10.5px] font-mono text-slate-400 pt-1.5 border-t border-[#2d3a43]/70">
+          <span class="flex items-center gap-1 text-slate-400">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Check Inbox & Spam Folder</span>
+          </span>
+          <button type="button" onclick="openEmailHelpModal()" class="text-emerald-400 hover:text-emerald-300 underline cursor-pointer">
+            Didn't receive email?
+          </button>
+        </div>
+      </div>
+
       <!-- Error / Notice Box -->
       <div id="login-alert-box" class="hidden p-3.5 rounded-xl border text-xs font-mono flex items-start gap-2.5">
         <span id="login-alert-icon" class="text-base leading-none">⚠️</span>
@@ -243,8 +266,45 @@
         alertMsg.textContent = 'Network or server error communicating with login gateway.';
         btnSubmit.disabled = false;
         btnSubmit.innerHTML = `<span>Enter CTF Arena</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-      }
     });
+
+    function openEmailHelpModal() {
+      document.getElementById('email-help-modal').classList.remove('hidden');
+    }
+
+    function closeEmailHelpModal() {
+      document.getElementById('email-help-modal').classList.add('hidden');
+    }
   </script>
+
+  <!-- Email Help Modal -->
+  <div id="email-help-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-[#161d19] border border-emerald-500/40 rounded-2xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-[#2d3a43] pb-3">
+        <div class="flex items-center gap-2 text-white font-bold font-mono text-sm">
+          <span class="material-symbols-outlined text-emerald-400">help</span>
+          <span>CREDENTIAL DISPATCH PROTOCOL</span>
+        </div>
+        <button onclick="closeEmailHelpModal()" class="text-slate-400 hover:text-white text-lg">&times;</button>
+      </div>
+      <div class="space-y-3 text-xs text-slate-300 leading-relaxed font-sans">
+        <div class="p-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] space-y-1">
+          <span class="text-emerald-400 font-mono font-bold block">1. 5-Minute Pre-Match Dispatch</span>
+          <p class="text-slate-400">To prevent credential sharing and unauthorized access, the automated arena mailer dispatches access keys exactly 5 minutes before scheduled match time.</p>
+        </div>
+        <div class="p-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] space-y-1">
+          <span class="text-emerald-400 font-mono font-bold block">2. Duo Squad Partner Access</span>
+          <p class="text-slate-400">If registered with a partner, both teammates receive credentials linked to the same squad (e.g. DUO-XXXX-A and DUO-XXXX-B). Both logins share the team scoreboard.</p>
+        </div>
+        <div class="p-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] space-y-1">
+          <span class="text-amber-400 font-mono font-bold block">3. Still Haven't Received Credentials?</span>
+          <p class="text-slate-400">Search for sender <code>arena@logicbreak-ctf.org</code> in Spam / Promotions. Or contact the Arena Coordinator desk.</p>
+        </div>
+      </div>
+      <button onclick="closeEmailHelpModal()" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs uppercase cursor-pointer">
+        Understood & Close
+      </button>
+    </div>
+  </div>
 </body>
 </html>

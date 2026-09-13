@@ -47,7 +47,66 @@
       "solved": [],
       "penalties": 0,
       "lastSolve": 0
+    },
+    {
+      "id": "usr_1789301285414",
+      "userId": "USER-9463",
+      "name": "Apex Titans",
+      "password": "Nexus#8n9J26",
+      "confirmed": true,
+      "college": "Apex Polytechnic",
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "usr_1789307293132",
+      "type": "DUO",
+      "userId": "DUO-4190",
+      "partner1UserId": "DUO-4190-A",
+      "partner2UserId": "DUO-4190-B",
+      "name": "Solaris Sentinels",
+      "password": "Nexus#MPDA55",
+      "confirmed": true,
+      "college": "Apex Institute of Technology",
+      "partner1": {
+        "name": "Rohan Sharma",
+        "email": "rohan.sharma@gmail.com",
+        "userId": "DUO-4190-A"
+      },
+      "partner2": {
+        "name": "Ananya Sen",
+        "email": "ananya.sen@gmail.com",
+        "userId": "DUO-4190-B"
+      },
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "usr_1789307293138",
+      "type": "SOLO",
+      "userId": "SOLO-3097",
+      "partner1UserId": "SOLO-3097",
+      "partner2UserId": null,
+      "name": "GhostOperative",
+      "password": "Nexus#suaP70",
+      "confirmed": true,
+      "college": "Cyber Defense Academy",
+      "partner1": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@gmail.com",
+        "userId": "SOLO-3097"
+      },
+      "partner2": null,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
     }
   ],
-  "submissions": []
+  "submissions": [],
+  "purgedArtifacts": []
 }

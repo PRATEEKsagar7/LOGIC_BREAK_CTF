@@ -77,20 +77,19 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch4',
     number: 4,
-    title: 'Logic Gate Bypass',
-    category: 'Reverse Engineering',
-    difficulty: 'Intermediate',
+    title: 'Restore a report.',
+    category: 'Business Logic',
+    difficulty: 'Beginner',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'A client-side JavaScript vault validates activation license keys. Reverse the verification algorithm.',
+    description: 'Direct access to the incident report is blocked by security controls. Find another way to inspect its verified details.',
     hints: [
-      'Open the challenge script in browser DevTools or node.js.',
-      'Convert the charCode array enc into ASCII characters via String.fromCharCode(...).'
+      "Access to view the document is locked in the Reports ledger. Certain system rules reset when an artifact is purged and recovered from the archive vault."
     ],
-    file: 'challenge_04_vault.js',
-    codeSnippet: 'function verifyKey(input) {\n  const enc = [108, 111, 103, 105, 99, 67, 84, 70, 123, ...];\n  // Convert enc to string to reveal the secret key!\n}',
-    flag: 'logicCTF{cl13nt_s1d3_auth_1s_n0t_s4f3}'
+    file: 'reports.html',
+    codeSnippet: '// Direct inspection: Integrity check locked.\n// Archive recovery resets verification state and unlocks inspection.',
+    flag: 'logicCTF{r3st0r3_purg3d_r3p0rt_int3gr1ty_unl0ck}'
   },
   {
     id: 'ch5',
@@ -240,8 +239,10 @@ const INITIAL_CHALLENGES = [
 ];
 
 // Random Credential Generators
-function generateRandomUserId() {
+function generateRandomUserId(type = 'DUO') {
   const num = Math.floor(1000 + Math.random() * 9000);
+  if (type === 'SOLO') return `SOLO-${num}`;
+  if (type === 'DUO') return `DUO-${num}`;
   return `USER-${num}`;
 }
 
@@ -298,7 +299,8 @@ const INITIAL_PARTICIPANTS = [
 // Persistent state
 let ctfState = {
   teams: INITIAL_PARTICIPANTS,
-  submissions: []
+  submissions: [],
+  purgedArtifacts: []
 };
 
 // Load saved state if exists
@@ -307,7 +309,8 @@ if (fs.existsSync(DATA_FILE)) {
     const saved = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
     if (saved.teams && saved.submissions) {
       ctfState = saved;
-      console.log(`[CTF Server] Loaded persisted state with ${ctfState.teams.length} teams.`);
+      ctfState.purgedArtifacts = ctfState.purgedArtifacts || [];
+      console.log(`[CTF Server] Loaded persisted state with ${ctfState.teams.length} teams and ${ctfState.purgedArtifacts.length} purged artifacts.`);
     }
   } catch (err) {
     console.error('[CTF Server] Error reading persisted state, using defaults.', err.message);
@@ -531,7 +534,8 @@ const server = http.createServer(async (req, res) => {
       const isCorrect = submittedFlag === challenge.flag ||
         (challenge.id === 'ch1' && (submittedFlag === 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}' || submittedFlag === 'logicCTF{gr4phql_1ntr0sp3ct10n_byp4ss}')) ||
         (challenge.id === 'ch2' && (submittedFlag === 'logicCTF{purg3d_r3cycl3_b1n_csv_3xp0rt}' || submittedFlag === 'logicCTF{x0r_c1ph3r_b4s364_cr4ck3d}')) ||
-        (challenge.id === 'ch3' && (submittedFlag === 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}' || submittedFlag === 'logicCTF{p4ck3t_sn1ff3r_cr3ds_l34k}'));
+        (challenge.id === 'ch3' && (submittedFlag === 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}' || submittedFlag === 'logicCTF{p4ck3t_sn1ff3r_cr3ds_l34k}')) ||
+        (challenge.id === 'ch4' && (submittedFlag === 'logicCTF{r3st0r3_purg3d_r3p0rt_int3gr1ty_unl0ck}' || submittedFlag === 'logicCTF{cl13nt_s1d3_auth_1s_n0t_s4f3}'));
 
       if (isCorrect) {
         // TIER 1: +50 PTS | TIER 2: +100 PTS
@@ -692,9 +696,11 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      // Check Confirmed Participant Credentials
+      // Check Confirmed Participant Credentials (supports squad ID, partner aliases -A/-B, or team name)
       const participant = ctfState.teams.find(t =>
         (t.userId && t.userId.toUpperCase() === usernameInput.toUpperCase()) ||
+        (t.partner1UserId && t.partner1UserId.toUpperCase() === usernameInput.toUpperCase()) ||
+        (t.partner2UserId && t.partner2UserId.toUpperCase() === usernameInput.toUpperCase()) ||
         (t.name && t.name.toLowerCase() === usernameInput.toLowerCase())
       );
 
@@ -707,6 +713,13 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
+      // Check if logged in with a partner-specific ID
+      const isPartner2 = participant.partner2UserId && participant.partner2UserId.toUpperCase() === usernameInput.toUpperCase();
+      const isPartner1 = participant.partner1UserId && participant.partner1UserId.toUpperCase() === usernameInput.toUpperCase();
+      const activePartnerName = isPartner2 
+        ? (participant.partner2 && participant.partner2.name ? participant.partner2.name : 'Partner 2')
+        : (isPartner1 && participant.partner1 && participant.partner1.name ? participant.partner1.name : participant.name);
+
       const token = `token_${participant.id}_${Date.now()}`;
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({
@@ -715,14 +728,17 @@ const server = http.createServer(async (req, res) => {
         token: token,
         user: {
           id: participant.id,
-          userId: participant.userId,
+          userId: isPartner2 ? participant.partner2UserId : (isPartner1 ? participant.partner1UserId : participant.userId),
+          teamUserId: participant.userId,
           name: participant.name,
+          activeOperative: activePartnerName,
+          type: participant.type || 'DUO',
           college: participant.college,
           score: participant.score,
           solved: participant.solved || []
         },
         redirect: 'missions.html',
-        message: `Welcome, ${participant.name} (${participant.userId})!`
+        message: `Welcome, ${activePartnerName} [${participant.name}]!`
       }));
       return;
     } catch (err) {
@@ -730,6 +746,64 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify({ success: false, message: 'Login processing error: ' + err.message }));
       return;
     }
+  }
+
+  // ==========================================
+  // API: PURGED ARTIFACTS / RECYCLE BIN VAULT
+  // ==========================================
+  if (pathname === '/api/recycle-bin' && req.method === 'GET') {
+    ctfState.purgedArtifacts = ctfState.purgedArtifacts || [];
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      success: true,
+      items: ctfState.purgedArtifacts
+    }));
+    return;
+  }
+
+  if (pathname === '/api/recycle-bin' && req.method === 'POST') {
+    try {
+      const item = await parseJsonBody(req);
+      if (!item || !item.name) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, message: 'Artifact metadata required.' }));
+        return;
+      }
+      ctfState.purgedArtifacts = ctfState.purgedArtifacts || [];
+      const existingIdx = ctfState.purgedArtifacts.findIndex(i => i.id === item.id);
+      if (existingIdx >= 0) {
+        ctfState.purgedArtifacts[existingIdx] = item;
+      } else {
+        ctfState.purgedArtifacts.unshift(item);
+      }
+      saveState();
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, item }));
+      return;
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, message: 'Error adding to recycle bin: ' + err.message }));
+      return;
+    }
+  }
+
+  if ((pathname === '/api/recycle-bin' || pathname.startsWith('/api/recycle-bin/')) && req.method === 'DELETE') {
+    ctfState.purgedArtifacts = ctfState.purgedArtifacts || [];
+    const urlObj = new URL(req.url, `http://${req.headers.host}`);
+    let idToDelete = urlObj.searchParams.get('id');
+    if (!idToDelete && pathname.startsWith('/api/recycle-bin/')) {
+      idToDelete = decodeURIComponent(pathname.replace('/api/recycle-bin/', ''));
+    }
+
+    if (idToDelete) {
+      ctfState.purgedArtifacts = ctfState.purgedArtifacts.filter(i => i.id !== idToDelete);
+    } else {
+      ctfState.purgedArtifacts = [];
+    }
+    saveState();
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ success: true, items: ctfState.purgedArtifacts }));
+    return;
   }
 
   // ==========================================
@@ -784,10 +858,15 @@ const server = http.createServer(async (req, res) => {
       success: true,
       participants: ctfState.teams.map(t => ({
         id: t.id,
+        type: t.type || (t.partner2 ? 'DUO' : 'SOLO'),
         userId: t.userId || 'USER-UNASSIGNED',
+        partner1UserId: t.partner1UserId || t.userId,
+        partner2UserId: t.partner2UserId || null,
         name: t.name,
         password: t.password || 'Nexus#P4ss',
         college: t.college || 'Collegiate Arena',
+        partner1: t.partner1 || { name: t.name, email: `${t.name.toLowerCase().replace(/\s+/g, '')}@gmail.com`, userId: t.userId },
+        partner2: t.partner2 || null,
         confirmed: true,
         score: t.score,
         solvedCount: t.solved ? t.solved.length : 0,
@@ -799,6 +878,7 @@ const server = http.createServer(async (req, res) => {
 
   // ==========================================
   // API: ADMIN CONFIRM NEW PARTICIPANT (AUTO-GENERATES USER ID & PASSWORD)
+  // Supports Solo Operative or Duo Team with Partners
   // ==========================================
   if (pathname === '/api/admin/confirm-participant' && req.method === 'POST') {
     try {
@@ -811,28 +891,46 @@ const server = http.createServer(async (req, res) => {
       }
 
       const body = await parseJsonBody(req);
+      const type = (body.type || (body.partner2Name ? 'DUO' : 'SOLO')).toUpperCase();
       const name = (body.name || '').trim();
       const college = (body.college || 'Collegiate Arena').trim();
+      const partner1Name = (body.partner1Name || body.partner1 || '').trim();
+      const partner1Email = (body.partner1Email || '').trim();
+      const partner2Name = (body.partner2Name || body.partner2 || '').trim();
+      const partner2Email = (body.partner2Email || '').trim();
 
       if (!name) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: false, message: 'Participant or Team Name is required.' }));
+        res.end(JSON.stringify({ success: false, message: 'Participant or Squad Name is required.' }));
         return;
       }
 
-      let userId = generateRandomUserId();
+      let userId = generateRandomUserId(type);
       while (ctfState.teams.some(t => t.userId === userId)) {
-        userId = generateRandomUserId();
+        userId = generateRandomUserId(type);
       }
       const password = generateRandomPassword();
 
       const newParticipant = {
         id: 'usr_' + Date.now(),
+        type, // 'SOLO' or 'DUO'
         userId,
+        partner1UserId: type === 'DUO' ? `${userId}-A` : userId,
+        partner2UserId: type === 'DUO' ? `${userId}-B` : null,
         name,
         password,
         confirmed: true,
         college,
+        partner1: {
+          name: partner1Name || name,
+          email: partner1Email || `${name.toLowerCase().replace(/\s+/g, '')}@gmail.com`,
+          userId: type === 'DUO' ? `${userId}-A` : userId
+        },
+        partner2: type === 'DUO' ? {
+          name: partner2Name || 'Partner 2',
+          email: partner2Email || `${name.toLowerCase().replace(/\s+/g, '')}_p2@gmail.com`,
+          userId: `${userId}-B`
+        } : null,
         score: 0,
         solved: [],
         penalties: 0,
@@ -851,7 +949,7 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(201, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({
         success: true,
-        message: `Participant "${name}" confirmed. Credentials generated.`,
+        message: `${type === 'DUO' ? 'Duo Squad' : 'Solo Operative'} "${name}" confirmed. Credentials dispatched to Gmail.`,
         participant: newParticipant
       }));
       return;

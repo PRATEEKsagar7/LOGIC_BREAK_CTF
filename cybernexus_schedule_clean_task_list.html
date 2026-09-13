@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html><html lang="en" style=""><head>
+<!DOCTYPE html><html lang="en" style=""><head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <title>CyberNexus - Scheduling</title>
@@ -1073,10 +1073,34 @@
     // Confirm Delete Action
     document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
       const targetId = document.getElementById('deleteTargetId').value;
+      const targetItem = scheduleItems.find(item => item.id === targetId);
+
+      if (targetItem && typeof window.addToPurgedArtifacts === 'function') {
+        window.addToPurgedArtifacts({
+          id: 'schedule_' + targetId,
+          name: `${targetItem.title} (${targetItem.startTime} - ${targetItem.endTime})`,
+          type: `${targetItem.type === 'break' ? 'Break Interval' : 'Arena Task'} (Schedule)`,
+          section: 'Schedule',
+          ext: 'task',
+          size: '12 KB',
+          iconType: 'code',
+          raw: targetItem
+        });
+      }
+
       scheduleItems = scheduleItems.filter(item => item.id !== targetId);
+
+      try {
+        const deletedIds = JSON.parse(localStorage.getItem('logic_ctf_deleted_schedule_ids') || '[]');
+        if (!deletedIds.includes(targetId)) {
+          deletedIds.push(targetId);
+          localStorage.setItem('logic_ctf_deleted_schedule_ids', JSON.stringify(deletedIds));
+        }
+      } catch (e) {}
+
       closeModal('deleteTaskModal');
       renderTimeline();
-      showToast('Task Deleted', 'red');
+      showToast('Task Purged to Recycle Bin', 'amber');
     });
 
     // Add Task Form Submission
@@ -1219,7 +1243,30 @@
     document.getElementById('openBreakModalBtn').addEventListener('click', () => openModal('breakModal'));
     document.getElementById('openShareModalBtn').addEventListener('click', () => openModal('shareModal'));
 
+    // Sync previously purged tasks from shared vault
+    function syncPurgedScheduleItems() {
+      try {
+        let purged = [];
+        if (typeof window.getPurgedArtifacts === 'function') {
+          purged = window.getPurgedArtifacts();
+        } else {
+          purged = JSON.parse(localStorage.getItem('logic_ctf_purged_items') || '[]');
+        }
+        const purgedScheduleIds = new Set(
+          purged.filter(p => p.section === 'Schedule' || (p.id && p.id.startsWith('schedule_')))
+                .map(p => p.id.replace('schedule_', ''))
+        );
+        const savedDeleted = JSON.parse(localStorage.getItem('logic_ctf_deleted_schedule_ids') || '[]');
+        savedDeleted.forEach(id => {
+          if (purgedScheduleIds.has(id)) {
+            scheduleItems = scheduleItems.filter(item => item.id !== id);
+          }
+        });
+      } catch (e) {}
+    }
+
     // Initial Initializer
+    syncPurgedScheduleItems();
     renderTimeline();
 
     // Trigger Initial Simulated In-App Task Reminder
