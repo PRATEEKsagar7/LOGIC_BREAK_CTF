@@ -105,6 +105,56 @@
       "solved": [],
       "penalties": 0,
       "lastSolve": 0
+    },
+    {
+      "id": "usr_1789309471547",
+      "type": "DUO",
+      "userId": "DUO-4466",
+      "partner1UserId": "DUO-4466-A",
+      "partner2UserId": "DUO-4466-B",
+      "name": "Titan Cyber Duo",
+      "password": "Nexus#7tAE78",
+      "confirmed": true,
+      "college": "Apex University",
+      "partner1": {
+        "name": "Karan Sharma",
+        "email": "karan@gmail.com",
+        "userId": "DUO-4466-A"
+      },
+      "partner2": {
+        "name": "Rohan Gupta",
+        "email": "rohan@gmail.com",
+        "userId": "DUO-4466-B"
+      },
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "usr_1789309772957",
+      "type": "DUO",
+      "userId": "DUO-7532",
+      "partner1UserId": "DUO-7532-A",
+      "partner2UserId": "DUO-7532-B",
+      "name": "cvbdfg",
+      "password": "Nexus#55wW11",
+      "confirmed": true,
+      "college": "dpg",
+      "partner1": {
+        "name": "Prateek",
+        "email": "prateeksagar640@gmail.com",
+        "userId": "DUO-7532-A"
+      },
+      "partner2": {
+        "name": "tanish",
+        "email": "prateeksagar640@gmail.com",
+        "userId": "DUO-7532-B"
+      },
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
     }
   ],
   "submissions": [],
