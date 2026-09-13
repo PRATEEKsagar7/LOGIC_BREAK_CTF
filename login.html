@@ -166,15 +166,19 @@
         </div>
         <div class="space-y-1.5">
           <button type="button" onclick="fillCredentials('USER-8319', 'Nexus#4921')" class="w-full px-3 py-1.5 rounded-lg bg-[#0e1511] hover:bg-[#1a211d] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group">
-            <span class="text-emerald-400 font-bold">USER-8319 <span class="text-slate-500 font-normal">(Cyber Strike)</span></span>
+            <span class="text-emerald-400 font-bold">USER-8319 <span class="text-slate-500 font-normal">(Cyber Strike &bull; Standard)</span></span>
             <span class="text-slate-400 group-hover:text-white text-[11px]">Click to fill &rarr;</span>
           </button>
           <button type="button" onclick="fillCredentials('USER-5172', 'Nexus#8834')" class="w-full px-3 py-1.5 rounded-lg bg-[#0e1511] hover:bg-[#1a211d] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group">
-            <span class="text-emerald-400 font-bold">USER-5172 <span class="text-slate-500 font-normal">(Vanguard Unit)</span></span>
+            <span class="text-emerald-400 font-bold">USER-5172 <span class="text-slate-500 font-normal">(Vanguard Unit &bull; Standard)</span></span>
             <span class="text-slate-400 group-hover:text-white text-[11px]">Click to fill &rarr;</span>
           </button>
-          <button type="button" onclick="fillCredentials('USER-9043', 'Nexus#1290')" class="w-full px-3 py-1.5 rounded-lg bg-[#0e1511] hover:bg-[#1a211d] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group">
-            <span class="text-emerald-400 font-bold">USER-9043 <span class="text-slate-500 font-normal">(Shadow Protocol)</span></span>
+          <button type="button" onclick="fillCredentials('DUO-4190-A', 'Nexus#MPDA55')" class="w-full px-3 py-1.5 rounded-lg bg-[#0e1511] hover:bg-[#1a211d] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group">
+            <span class="text-cyan-400 font-bold">DUO-4190-A <span class="text-slate-500 font-normal">(Solaris &bull; Duo Partner)</span></span>
+            <span class="text-slate-400 group-hover:text-white text-[11px]">Click to fill &rarr;</span>
+          </button>
+          <button type="button" onclick="fillCredentials('SOLO-3097', 'Nexus#suaP70')" class="w-full px-3 py-1.5 rounded-lg bg-[#0e1511] hover:bg-[#1a211d] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group">
+            <span class="text-amber-400 font-bold">SOLO-3097 <span class="text-slate-500 font-normal">(GhostOperative &bull; Solo)</span></span>
             <span class="text-slate-400 group-hover:text-white text-[11px]">Click to fill &rarr;</span>
           </button>
         </div>
@@ -266,6 +270,7 @@
         alertMsg.textContent = 'Network or server error communicating with login gateway.';
         btnSubmit.disabled = false;
         btnSubmit.innerHTML = `<span>Enter CTF Arena</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      }
     });
 
     function openEmailHelpModal() {
