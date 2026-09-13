@@ -123,17 +123,7 @@
 </div>
 <div class="lg:col-span-8 flex flex-col gap-space-xs">
 <div class="relative w-full">
-<textarea class="w-full bg-surface-container-low text-on-surface font-mono text-[13px] leading-relaxed p-space-md rounded-lg focus:outline-none focus:bg-surface-container-highest transition-colors resize-y shadow-inner border border-surface-container-highest/70" id="ws-desc" placeholder="Provide tactical context..." rows="3" style="height: 74px; min-height: 70px; resize: vertical;">Collegiate cybersecurity competition workspace briefing and active operative node.
-
-
-
-
-
-
-
-
-
-
+<textarea class="w-full bg-surface-container-low text-on-surface font-mono text-[13px] leading-relaxed p-space-md rounded-lg focus:outline-none focus:bg-surface-container-highest transition-colors resize-y shadow-inner border border-surface-container-highest/70" id="ws-desc" placeholder="Provide tactical context..." rows="3" style="height: 74px; min-height: 70px; resize: vertical; overflow-y: hidden;">Collegiate cybersecurity competition workspace briefing and active operative node.
 
 
 
@@ -153,6 +143,12 @@ This is the official flag for Challenge 03:
 
 logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}
 ========================================================================</textarea>
+<!-- Draggable Corner Grip Handle -->
+<div id="desc-resize-handle" class="absolute bottom-2 right-2 flex items-center justify-center w-5 h-5 rounded cursor-ns-resize text-outline hover:text-primary active:text-primary transition-colors select-none z-10 bg-surface-container-highest/70 hover:bg-surface-container-highest border border-outline-variant/30 shadow-sm" title="Drag down to expand box">
+  <svg class="w-3.5 h-3.5 pointer-events-none text-current" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M22 22H20V20H22V22ZM22 17H17V19H22V17ZM17 22H15V24H17V22ZM22 12H12V14H22V12ZM12 22H10V24H12V22Z" />
+  </svg>
+</div>
 </div>
 <div class="flex items-center justify-between text-outline font-label-lg text-label-lg text-[11px]">
 <span>Briefing text rendered on public threat index</span>
@@ -423,16 +419,6 @@ logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}
 
 
 
-
-
-
-
-
-
-
-
-
-
 ========================================================================
 🚩 CHALLENGE 03 SECRET BUFFER
 ========================================================================
@@ -507,4 +493,68 @@ logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}
   }
   document.addEventListener('DOMContentLoaded', updateDescMetrics);
   updateDescMetrics();
+
+  // Draggable Corner Resize Handle
+  const resizeHandle = document.getElementById('desc-resize-handle');
+  const descTextarea = document.getElementById('ws-desc');
+  if (resizeHandle && descTextarea) {
+    let isDraggingHandle = false;
+    let startY = 0;
+    let startH = 0;
+
+    resizeHandle.addEventListener('pointerdown', (e) => {
+      isDraggingHandle = true;
+      startY = e.clientY;
+      startH = descTextarea.offsetHeight;
+      resizeHandle.setPointerCapture(e.pointerId);
+      document.body.style.userSelect = 'none';
+      document.body.style.cursor = 'ns-resize';
+      e.preventDefault();
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!isDraggingHandle) return;
+      const dy = e.clientY - startY;
+      const newHeight = Math.max(74, Math.min(500, startH + dy));
+      descTextarea.style.height = `${newHeight}px`;
+      if (newHeight > 180) {
+        descTextarea.style.overflowY = 'auto';
+      } else {
+        descTextarea.style.overflowY = 'hidden';
+        descTextarea.scrollTop = 0;
+      }
+    });
+
+    const stopDragging = (e) => {
+      if (isDraggingHandle) {
+        isDraggingHandle = false;
+        document.body.style.userSelect = '';
+        document.body.style.cursor = '';
+        try { resizeHandle.releasePointerCapture(e.pointerId); } catch (_) {}
+      }
+    };
+    window.addEventListener('pointerup', stopDragging);
+    window.addEventListener('pointercancel', stopDragging);
+
+    // Native resize observer if dragged from textarea native corner
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const h = entry.target.offsetHeight;
+        if (h > 180) {
+          descTextarea.style.overflowY = 'auto';
+        } else {
+          descTextarea.style.overflowY = 'hidden';
+          descTextarea.scrollTop = 0;
+        }
+      }
+    });
+    ro.observe(descTextarea);
+
+    // Lock scroll when small
+    descTextarea.addEventListener('scroll', () => {
+      if (descTextarea.offsetHeight <= 180) {
+        descTextarea.scrollTop = 0;
+      }
+    });
+  }
 </script></div></main><footer class="w-full bg-surface-container-lowest py-space-lg"><div class="w-full px-gutter-desktop flex flex-col md:flex-row items-center justify-between gap-space-md font-label-lg text-label-lg text-outline text-[12px]"><div class="flex items-center gap-space-md"><span class="text-on-surface-variant">CyberNexus Defense Grid v4.12.0</span><span>â€¢</span><span>Collegiate Arena Tier-1 Encrypted</span></div><div class="flex items-center gap-space-lg"><span>TELEMETRY: SYNCHRONIZED</span><span>LATENCY: 12ms</span><span>SYSTEM STATUS: OPTIMAL</span></div></div></footer><script src="shared_nav.js"></script></body></html>
