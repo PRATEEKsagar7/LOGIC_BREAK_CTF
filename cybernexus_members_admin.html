@@ -335,6 +335,74 @@
     </div>
   </div>
 
+  <!-- MODAL: INSTANT CREDENTIALS DISPLAY -->
+  <div class="fixed inset-0 z-50 hidden bg-surface-container-lowest/80 backdrop-blur-sm flex items-center justify-center p-4" id="modal-credentials-display">
+    <div class="w-full max-w-lg bg-surface-container-high border border-emerald-500/50 rounded-2xl p-6 shadow-2xl flex flex-col gap-4">
+      <div class="flex items-center justify-between border-b border-outline-variant pb-3">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-emerald-400 text-[22px]">check_circle</span>
+          <span class="font-label-lg font-bold text-white text-sm uppercase tracking-wider">Operative Credentials Dispatched</span>
+        </div>
+        <button onclick="closeCredentialsModal()" class="text-outline hover:text-white cursor-pointer">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-mono uppercase text-emerald-400 font-bold block" id="cred-display-type">DUO SQUAD CONFIRMED</span>
+          <h3 class="text-base font-bold text-white" id="cred-display-name">Team Name</h3>
+          <span class="text-xs text-slate-400 font-mono" id="cred-display-college">College</span>
+        </div>
+        <span class="px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-[11px] font-mono text-slate-300">📧 Gmail T-5m Active</span>
+      </div>
+
+      <!-- Credentials Cards -->
+      <div class="space-y-2.5 font-mono text-xs">
+        <div class="p-3 rounded-xl bg-surface-container border border-outline-variant">
+          <div class="flex items-center justify-between text-slate-400 text-[11px] mb-1">
+            <span class="font-bold text-slate-300 uppercase">Assigned User ID(s):</span>
+            <span class="text-[10px] text-emerald-400">Unique Login Key</span>
+          </div>
+          <div id="cred-display-ids" class="space-y-1 mt-1.5 text-white">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-surface-container border border-outline-variant flex items-center justify-between">
+          <div>
+            <span class="text-slate-400 text-[11px] font-bold block uppercase">Shared Access Password:</span>
+            <span id="cred-display-password" class="text-cyan-300 font-bold text-sm tracking-wider select-all mt-0.5 block">Nexus#XXXXXX</span>
+          </div>
+          <button onclick="copyGeneratedPassword()" class="px-2.5 py-1 rounded bg-surface-container-high hover:bg-surface-bright text-slate-300 hover:text-white border border-outline-variant text-[11px] transition cursor-pointer">
+            Copy Pass
+          </button>
+        </div>
+      </div>
+
+      <!-- Explanation on Duo Shared Points -->
+      <div class="p-3 rounded-xl bg-[#0e1511] border border-emerald-500/20 text-xs font-mono text-slate-300 space-y-1">
+        <div class="flex items-center gap-1.5 text-emerald-400 font-bold text-[11px]">
+          <span class="material-symbols-outlined text-[14px]">sync_saved_locally</span>
+          <span>HOW DUO SCORING WORKS</span>
+        </div>
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+          Both partners log in using their own User ID and the shared password. All flags submitted by either partner immediately add points to the <strong>squad's single shared score</strong> on the live leaderboard.
+        </p>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-outline-variant">
+        <button onclick="copyGeneratedFull()" class="px-4 py-2 bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-bold rounded-lg text-xs font-mono flex items-center gap-1.5 transition cursor-pointer shadow-md">
+          <span class="material-symbols-outlined text-[16px]">content_copy</span>
+          <span>Copy Full Credential Info</span>
+        </button>
+        <button onclick="closeCredentialsModal()" class="px-4 py-2 bg-surface-container hover:bg-surface-bright text-white rounded-lg text-xs font-mono transition cursor-pointer">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Shared Nav Script -->
   <script src="shared_nav.js"></script>
 
@@ -744,6 +812,9 @@
           document.getElementById('modal-add-member').classList.add('hidden');
           window.showLogicToast && window.showLogicToast(data.message, 'success');
           loadAdminData();
+          if (data.participant) {
+            showCreatedCredentialsModal(data.participant);
+          }
         } else {
           alert(data.message || 'Error confirming participant');
         }
@@ -751,6 +822,68 @@
         alert('Network error confirming participant: ' + err.message);
       }
     });
+
+    let latestGeneratedParticipant = null;
+
+    function showCreatedCredentialsModal(p) {
+      if (!p) return;
+      latestGeneratedParticipant = p;
+      const isDuo = p.type === 'DUO' || (p.partner2 && p.partner2.name);
+      
+      document.getElementById('cred-display-type').textContent = isDuo ? 'DUO SQUAD CONFIRMED' : 'SOLO OPERATIVE CONFIRMED';
+      document.getElementById('cred-display-name').textContent = p.name;
+      document.getElementById('cred-display-college').textContent = p.college || 'Collegiate Arena';
+      document.getElementById('cred-display-password').textContent = p.password;
+
+      const idsContainer = document.getElementById('cred-display-ids');
+      if (isDuo) {
+        idsContainer.innerHTML = `
+          <div class="flex items-center justify-between py-1 border-b border-outline-variant/40">
+            <span class="text-slate-400">Squad ID:</span>
+            <span class="font-bold text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30 select-all">${p.userId}</span>
+          </div>
+          <div class="flex items-center justify-between py-1 border-b border-outline-variant/40">
+            <span class="text-slate-400">Partner 1 (${p.partner1 ? p.partner1.name : 'P1'}):</span>
+            <span class="font-bold text-cyan-300 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/30 select-all">${p.partner1UserId || p.userId + '-A'}</span>
+          </div>
+          <div class="flex items-center justify-between py-1">
+            <span class="text-slate-400">Partner 2 (${p.partner2 ? p.partner2.name : 'P2'}):</span>
+            <span class="font-bold text-cyan-300 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-500/30 select-all">${p.partner2UserId || p.userId + '-B'}</span>
+          </div>
+        `;
+      } else {
+        idsContainer.innerHTML = `
+          <div class="flex items-center justify-between py-1">
+            <span class="text-slate-400">Solo User ID:</span>
+            <span class="font-bold text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30 select-all">${p.userId}</span>
+          </div>
+        `;
+      }
+
+      document.getElementById('modal-credentials-display').classList.remove('hidden');
+    }
+
+    function closeCredentialsModal() {
+      document.getElementById('modal-credentials-display').classList.add('hidden');
+    }
+
+    function copyGeneratedPassword() {
+      if (!latestGeneratedParticipant) return;
+      navigator.clipboard.writeText(latestGeneratedParticipant.password).then(() => {
+        window.showLogicToast && window.showLogicToast('Password copied!', 'success');
+      });
+    }
+
+    function copyGeneratedFull() {
+      if (!latestGeneratedParticipant) return;
+      const p = latestGeneratedParticipant;
+      const isDuo = p.type === 'DUO' || (p.partner2 && p.partner2.name);
+      const text = `LOGIC BREAK CTF // ${isDuo ? 'DUO SQUAD' : 'SOLO OPERATIVE'} CREDENTIALS\nTeam: ${p.name}\nCollege: ${p.college || 'Collegiate Arena'}\nUser ID: ${p.userId}\n${isDuo ? `Partner 1 (${p.partner1 ? p.partner1.name : 'P1'}): ${p.partner1UserId || p.userId + '-A'}\nPartner 2 (${p.partner2 ? p.partner2.name : 'P2'}): ${p.partner2UserId || p.userId + '-B'}\n` : ''}Password: ${p.password}\nScoring: Combined squad score on live leaderboard\nArena Gateway: http://localhost:3000/login.html`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        window.showLogicToast && window.showLogicToast('Full credentials copied to clipboard!', 'success');
+      });
+    }
 
     // Auto-Sync Hook
     window.onLeaderboardEvent = () => {
