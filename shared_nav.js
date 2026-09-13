@@ -3,22 +3,34 @@
  */
 
 (function() {
-  // Ensure default active team
-  if (!localStorage.getItem('logic_ctf_team')) {
-    localStorage.setItem('logic_ctf_team', 'Logic Breakers');
-  }
-
-  const activeTeam = localStorage.getItem('logic_ctf_team');
-  const isAdmin = localStorage.getItem('logic_ctf_admin_token') === 'logicbreak_admin_token_active_session_2026';
-
-  // Determine current page
   const currentPath = window.location.pathname.toLowerCase();
-
   function isPage(names) {
     return names.some(n => currentPath.includes(n.toLowerCase()));
   }
 
-  // Create Header HTML with full collegiate CTF navigation flow
+  const isLoginPage = isPage(['login']);
+  const isAdminPage = isPage(['admin']);
+  const token = localStorage.getItem('logic_ctf_token');
+  const adminToken = localStorage.getItem('logic_ctf_admin_token');
+  let user = null;
+  try {
+    user = JSON.parse(localStorage.getItem('logic_ctf_user') || 'null');
+  } catch (e) {
+    user = null;
+  }
+
+  // Ensure default active team name from user session
+  if (user && user.name) {
+    localStorage.setItem('logic_ctf_team', user.name);
+  }
+
+  // Auth Guard: Redirect unauthenticated users to login.html
+  if (!token && !adminToken && !isLoginPage) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  // Create Header HTML with full collegiate CTF navigation flow (LEADERBOARD REMOVED FOR PARTICIPANTS)
   const navHtml = `
     <header class="sticky top-0 z-50 w-full bg-[#0e1511]/95 backdrop-blur-xl border-b border-[#2d3a4b] shadow-lg">
       <div class="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
@@ -41,7 +53,7 @@
           </a>
         </div>
 
-        <!-- Center Navigation Links (Linewise Collegiate Flow) -->
+        <!-- Center Navigation Links (Leaderboard Hidden from Participants) -->
         <nav class="hidden xl:flex items-center gap-1 text-xs font-semibold uppercase tracking-wider">
           <a href="overview.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['overview', 'index']) || currentPath === '/' ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
             <span>Overview</span>
@@ -49,10 +61,6 @@
 
           <a href="missions.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['missions', 'challenges']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
             <span>Missions (12)</span>
-          </a>
-
-          <a href="leaderboard.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['leaderboard', 'standings']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
-            <span>Leaderboard</span>
           </a>
 
           <a href="files.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['files', 'folder']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
@@ -92,65 +100,27 @@
           </a>
         </nav>
 
-        <!-- Right Side: Team Selector -->
+        <!-- Right Side: Confirmed Participant Badge & Logout -->
         <div class="flex items-center gap-3">
-          <!-- Active Team Switcher Badge -->
-          <div class="relative">
-            <button id="btnTeamModalTrigger" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#1a211d] border border-[#2d3a4b] hover:border-emerald-500/50 text-xs font-semibold text-white transition">
-              <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              <span class="max-w-[110px] truncate" id="nav-active-team-name">${activeTeam}</span>
-              <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
+          <!-- Active Participant Credential Badge -->
+          <div class="px-3 py-1.5 rounded-xl bg-[#1a211d] border border-[#2d3a4b] text-xs font-mono text-slate-300 flex items-center gap-2 shadow-inner">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-white font-bold">${user ? user.userId : (adminToken ? 'ADMIN' : 'OPERATIVE')}</span>
+            <span class="text-slate-500">•</span>
+            <span class="text-emerald-400 font-semibold max-w-[130px] truncate" id="nav-active-team-name">${user ? user.name : (adminToken ? 'Coordinator' : 'Confirmed')}</span>
           </div>
+
+          <!-- Logout Button -->
+          <button onclick="logoutLogicCTF()" class="px-3 py-1.5 rounded-xl bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 text-red-300 hover:text-white text-xs font-bold font-mono transition flex items-center gap-1.5 cursor-pointer" title="Sign out of arena session">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="hidden sm:inline">Logout</span>
+          </button>
         </div>
       </div>
     </header>
 
     <!-- Global Toast Container -->
     <div id="logic-toast-shelf" class="fixed bottom-5 right-5 z-[9999] flex flex-col gap-2 pointer-events-none"></div>
-
-    <!-- Switch Team Modal -->
-    <div id="modal-switch-team" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div class="w-full max-w-md bg-[#121820] border border-[#2d3a4b] rounded-2xl p-6 shadow-2xl space-y-4">
-        <div class="flex items-center justify-between border-b border-[#2d3a4b] pb-3">
-          <div class="flex items-center gap-2">
-            <div class="w-7 h-7 rounded-lg bg-emerald-950 text-[#5bdcae] flex items-center justify-center border border-emerald-500/30">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3 class="text-sm font-bold text-white uppercase tracking-wider">Select or Register Team</h3>
-          </div>
-          <button onclick="document.getElementById('modal-switch-team').classList.add('hidden')" class="text-slate-400 hover:text-white">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-        </div>
-
-        <p class="text-xs text-slate-300">Choose an existing collegiate collective or register your squad name below:</p>
-
-        <div class="space-y-2">
-          <label class="text-[11px] font-bold text-slate-400 uppercase">Existing Arena Teams</label>
-          <select id="select-existing-teams" class="w-full bg-[#1a211d] border border-[#2d3a4b] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
-            <option value="Null Vector">Null Vector (Technova University)</option>
-            <option value="Byte Raiders">Byte Raiders (Nexus Institute)</option>
-            <option value="Root Squad">Root Squad (National Cyber Academy)</option>
-            <option value="Cyber Phantoms">Cyber Phantoms (Apex Polytechnic)</option>
-            <option value="Kernel Panic">Kernel Panic (Metro Cyber College)</option>
-            <option value="Bit Shifters">Bit Shifters (Vanguard Tech Institute)</option>
-            <option value="Zero Day Cell">Zero Day Cell (Pacific State University)</option>
-            <option value="Logic Breakers" selected>Logic Breakers (Host College Collective)</option>
-          </select>
-        </div>
-
-        <div class="space-y-2 pt-2 border-t border-[#2d3a4b]/60">
-          <label class="text-[11px] font-bold text-slate-400 uppercase">Or Register Custom Team Name</label>
-          <input type="text" id="input-custom-team" placeholder="e.g. CyberKnights" class="w-full bg-[#1a211d] border border-[#2d3a4b] rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 placeholder:text-slate-500">
-        </div>
-
-        <div class="flex items-center justify-end gap-2 pt-3 border-t border-[#2d3a4b]">
-          <button onclick="document.getElementById('modal-switch-team').classList.add('hidden')" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white">Cancel</button>
-          <button id="btnSaveTeamSelection" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-bold text-xs shadow-lg transition">Apply Team</button>
-        </div>
-      </div>
-    </div>
   `;
 
   // Inject or replace header
@@ -162,37 +132,17 @@
       document.body.insertAdjacentHTML('afterbegin', navHtml);
     }
 
-    // Modal Trigger
-    const btnTeamModal = document.getElementById('btnTeamModalTrigger');
-    if (btnTeamModal) {
-      btnTeamModal.addEventListener('click', () => {
-        document.getElementById('modal-switch-team').classList.remove('hidden');
-      });
-    }
-
-    // Save team selection
-    const btnSaveTeam = document.getElementById('btnSaveTeamSelection');
-    if (btnSaveTeam) {
-      btnSaveTeam.addEventListener('click', () => {
-        const customName = document.getElementById('input-custom-team').value.trim();
-        const selected = customName || document.getElementById('select-existing-teams').value;
-        if (selected) {
-          localStorage.setItem('logic_ctf_team', selected);
-          const activeDisplay = document.getElementById('nav-active-team-name');
-          if (activeDisplay) activeDisplay.textContent = selected;
-          document.getElementById('modal-switch-team').classList.add('hidden');
-          window.showLogicToast && window.showLogicToast(`Team switched to "${selected}"`, 'info');
-          if (window.onTeamChanged) {
-            window.onTeamChanged(selected);
-          } else {
-            setTimeout(() => window.location.reload(), 400);
-          }
-        }
-      });
-    }
-
     setupGlobalSync();
   });
+
+  // Global Logout Function
+  window.logoutLogicCTF = function() {
+    localStorage.removeItem('logic_ctf_token');
+    localStorage.removeItem('logic_ctf_user');
+    localStorage.removeItem('logic_ctf_team');
+    localStorage.removeItem('logic_ctf_admin_token');
+    window.location.href = 'login.html';
+  };
 
   // Global Toast Function
   window.showLogicToast = function(message, type = 'info') {
@@ -222,14 +172,6 @@
   function setupGlobalSync() {
     try {
       const eventSource = new EventSource('/api/events');
-      const indicator = document.getElementById('sync-status-indicator');
-
-      eventSource.onopen = () => {
-        if (indicator) {
-          indicator.classList.remove('border-red-500/50', 'text-red-400');
-          indicator.classList.add('border-emerald-500/40', 'text-[#5bdcae]');
-        }
-      };
 
       eventSource.onmessage = (e) => {
         try {
@@ -245,13 +187,6 @@
           }
         } catch (err) {
           // heartbeat
-        }
-      };
-
-      eventSource.onerror = () => {
-        if (indicator) {
-          indicator.classList.remove('border-emerald-500/40', 'text-[#5bdcae]');
-          indicator.classList.add('border-amber-500/40', 'text-amber-400');
         }
       };
     } catch (e) {

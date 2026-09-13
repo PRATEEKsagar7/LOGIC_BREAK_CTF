@@ -1,297 +1,53 @@
 {
   "teams": [
     {
-      "id": "t1",
-      "name": "Null Vector",
+      "id": "usr_8319",
+      "userId": "USER-8319",
+      "name": "Cyber Strike",
+      "password": "Nexus#4921",
+      "confirmed": true,
+      "college": "Apex Cyber Institute",
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0
+    },
+    {
+      "id": "usr_5172",
+      "userId": "USER-5172",
+      "name": "Vanguard Unit",
+      "password": "Nexus#8834",
+      "confirmed": true,
       "college": "Technova University",
-      "score": 100,
-      "solved": [
-        "ch1",
-        "ch2"
-      ],
-      "penalties": 0,
-      "lastSolve": 1789284887859
-    },
-    {
-      "id": "t2",
-      "name": "Byte Raiders",
-      "college": "Nexus Institute",
       "score": 0,
       "solved": [],
       "penalties": 0,
       "lastSolve": 0
     },
     {
-      "id": "t3",
-      "name": "Root Squad",
-      "college": "National Cyber Academy",
+      "id": "usr_9043",
+      "userId": "USER-9043",
+      "name": "Shadow Protocol",
+      "password": "Nexus#1290",
+      "confirmed": true,
+      "college": "National Defense Academy",
       "score": 0,
       "solved": [],
       "penalties": 0,
       "lastSolve": 0
     },
     {
-      "id": "t4",
-      "name": "Cyber Phantoms",
-      "college": "Apex Polytechnic",
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0
-    },
-    {
-      "id": "t5",
-      "name": "Kernel Panic",
-      "college": "Metro Cyber College",
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0
-    },
-    {
-      "id": "t6",
-      "name": "Bit Shifters",
-      "college": "Vanguard Tech Institute",
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 1789219210767
-    },
-    {
-      "id": "t7",
-      "name": "Zero Day Cell",
-      "college": "Pacific State University",
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0
-    },
-    {
-      "id": "t8",
-      "name": "Logic Breakers",
-      "college": "Host College Collective",
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 1789220828397
-    },
-    {
-      "id": "t-1789138395060",
-      "name": "AlphaSquad",
-      "college": "Collegiate Collective",
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0
-    },
-    {
-      "id": "t-1789138395068",
-      "name": "BetaSquad",
-      "college": "Collegiate Collective",
+      "id": "usr_1789300747294",
+      "userId": "USER-9321",
+      "name": "Apex Guardians",
+      "password": "Nexus#Cen964",
+      "confirmed": true,
+      "college": "Collegiate Arena",
       "score": 0,
       "solved": [],
       "penalties": 0,
       "lastSolve": 0
     }
   ],
-  "submissions": [
-    {
-      "id": "sub-1789284887859",
-      "team": "Null Vector",
-      "challengeId": "ch2",
-      "challengeTitle": "Export a report.",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789284887859
-    },
-    {
-      "id": "sub-1789284846147",
-      "team": "Null Vector",
-      "challengeId": "ch1",
-      "challengeTitle": "Limit Break",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789284846147
-    },
-    {
-      "id": "sub-1789220828397",
-      "team": "Logic Breakers",
-      "challengeId": "ch3",
-      "challengeTitle": "Read Between the Lines.",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789220828397
-    },
-    {
-      "id": "sub-1789220217230",
-      "team": "Logic Breakers",
-      "challengeId": "ch3",
-      "challengeTitle": "Under the Fold",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789220217230
-    },
-    {
-      "id": "sub-1789219246404",
-      "team": "Null Vector",
-      "challengeId": "ch3",
-      "challengeTitle": "Packet Sniffer",
-      "status": "INCORRECT",
-      "delta": "-15",
-      "timestamp": 1789219246404
-    },
-    {
-      "id": "sub-1789219210767",
-      "team": "Bit Shifters",
-      "challengeId": "ch1",
-      "challengeTitle": "Limit Break",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789219210767
-    },
-    {
-      "id": "sub-1789219190594",
-      "team": "Bit Shifters",
-      "challengeId": "ch2",
-      "challengeTitle": "Purged Artifact Leak",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789219190594
-    },
-    {
-      "id": "sub-1789219155896",
-      "team": "Null Vector",
-      "challengeId": "ch2",
-      "challengeTitle": "Purged Artifact Leak",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789219155896
-    },
-    {
-      "id": "sub-1789219014126",
-      "team": "Null Vector",
-      "challengeId": "ch1",
-      "challengeTitle": "Limit Break",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789219014126
-    },
-    {
-      "id": "sub-1789218823927",
-      "team": "Logic Breakers",
-      "challengeId": "ch3",
-      "challengeTitle": "Packet Sniffer",
-      "status": "INCORRECT",
-      "delta": "-15",
-      "timestamp": 1789218823927
-    },
-    {
-      "id": "sub-1789218823698",
-      "team": "Logic Breakers",
-      "challengeId": "ch3",
-      "challengeTitle": "Packet Sniffer",
-      "status": "INCORRECT",
-      "delta": "-15",
-      "timestamp": 1789218823698
-    },
-    {
-      "id": "sub-1789218823484",
-      "team": "Logic Breakers",
-      "challengeId": "ch3",
-      "challengeTitle": "Packet Sniffer",
-      "status": "INCORRECT",
-      "delta": "-15",
-      "timestamp": 1789218823484
-    },
-    {
-      "id": "sub-1789218822791",
-      "team": "Logic Breakers",
-      "challengeId": "ch3",
-      "challengeTitle": "Packet Sniffer",
-      "status": "INCORRECT",
-      "delta": "-15",
-      "timestamp": 1789218822791
-    },
-    {
-      "id": "sub-1789218821139",
-      "team": "Logic Breakers",
-      "challengeId": "ch3",
-      "challengeTitle": "Packet Sniffer",
-      "status": "INCORRECT",
-      "delta": "-15",
-      "timestamp": 1789218821139
-    },
-    {
-      "id": "sub-1789218819754",
-      "team": "Logic Breakers",
-      "challengeId": "ch3",
-      "challengeTitle": "Packet Sniffer",
-      "status": "INCORRECT",
-      "delta": "-15",
-      "timestamp": 1789218819754
-    },
-    {
-      "id": "sub-1789218785701",
-      "team": "Logic Breakers",
-      "challengeId": "ch3",
-      "challengeTitle": "Packet Sniffer",
-      "status": "INCORRECT",
-      "delta": "-15",
-      "timestamp": 1789218785701
-    },
-    {
-      "id": "sub-1789218651945",
-      "team": "Logic Breakers",
-      "challengeId": "ch2",
-      "challengeTitle": "Purged Artifact Leak",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789218651945
-    },
-    {
-      "id": "sub-1789216428916",
-      "team": "Null Vector",
-      "challengeId": "ch1",
-      "challengeTitle": "Limit Break",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789216428916
-    },
-    {
-      "id": "sub-1789214132245",
-      "team": "Null Vector",
-      "challengeId": "ch1",
-      "challengeTitle": "Ghost Protocol",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789214132245
-    },
-    {
-      "id": "sub-1789214125942",
-      "team": "Null Vector",
-      "challengeId": "ch1",
-      "challengeTitle": "Ghost Protocol",
-      "status": "INCORRECT",
-      "delta": "-15",
-      "timestamp": 1789214125942
-    },
-    {
-      "id": "sub-1789206809447",
-      "team": "Null Vector",
-      "challengeId": "ch1",
-      "challengeTitle": "Ghost Protocol",
-      "status": "INCORRECT",
-      "delta": "-15",
-      "timestamp": 1789206809447
-    },
-    {
-      "id": "sub-1789138687580",
-      "team": "Logic Breakers",
-      "challengeId": "ch1",
-      "challengeTitle": "Ghost Protocol",
-      "status": "CORRECT",
-      "delta": "+50",
-      "timestamp": 1789138687580
-    }
-  ]
+  "submissions": []
 }

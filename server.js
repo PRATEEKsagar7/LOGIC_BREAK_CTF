@@ -239,26 +239,66 @@ const INITIAL_CHALLENGES = [
   }
 ];
 
-// Default Initial Collegiate Teams
-const INITIAL_TEAMS = [
-  { id: 't1', name: 'Null Vector', college: 'Technova University', score: 350, solved: ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7'], penalties: 0, lastSolve: Date.now() - 1200000 },
-  { id: 't2', name: 'Byte Raiders', college: 'Nexus Institute', score: 285, solved: ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6'], penalties: 1, lastSolve: Date.now() - 1500000 },
-  { id: 't3', name: 'Root Squad', college: 'National Cyber Academy', score: 250, solved: ['ch1', 'ch2', 'ch3', 'ch4', 'ch5'], penalties: 0, lastSolve: Date.now() - 1800000 },
-  { id: 't4', name: 'Cyber Phantoms', college: 'Apex Polytechnic', score: 185, solved: ['ch1', 'ch2', 'ch3', 'ch4'], penalties: 1, lastSolve: Date.now() - 2400000 },
-  { id: 't5', name: 'Kernel Panic', college: 'Metro Cyber College', score: 135, solved: ['ch1', 'ch2', 'ch3'], penalties: 1, lastSolve: Date.now() - 3000000 },
-  { id: 't6', name: 'Bit Shifters', college: 'Vanguard Tech Institute', score: 85, solved: ['ch1', 'ch2'], penalties: 1, lastSolve: Date.now() - 3600000 },
-  { id: 't7', name: 'Zero Day Cell', college: 'Pacific State University', score: 50, solved: ['ch1'], penalties: 0, lastSolve: Date.now() - 4200000 },
-  { id: 't8', name: 'Logic Breakers', college: 'Host College Collective', score: 0, solved: [], penalties: 0, lastSolve: 0 }
+// Random Credential Generators
+function generateRandomUserId() {
+  const num = Math.floor(1000 + Math.random() * 9000);
+  return `USER-${num}`;
+}
+
+function generateRandomPassword() {
+  const chars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let rand = '';
+  for (let i = 0; i < 4; i++) {
+    rand += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  const digits = Math.floor(10 + Math.random() * 90);
+  return `Nexus#${rand}${digits}`;
+}
+
+// Confirmed Participants with Random Generated Credentials (Fake teams removed)
+const INITIAL_PARTICIPANTS = [
+  {
+    id: 'usr_8319',
+    userId: 'USER-8319',
+    name: 'Cyber Strike',
+    password: 'Nexus#4921',
+    confirmed: true,
+    college: 'Apex Cyber Institute',
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0
+  },
+  {
+    id: 'usr_5172',
+    userId: 'USER-5172',
+    name: 'Vanguard Unit',
+    password: 'Nexus#8834',
+    confirmed: true,
+    college: 'Technova University',
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0
+  },
+  {
+    id: 'usr_9043',
+    userId: 'USER-9043',
+    name: 'Shadow Protocol',
+    password: 'Nexus#1290',
+    confirmed: true,
+    college: 'National Defense Academy',
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0
+  }
 ];
 
 // Persistent state
 let ctfState = {
-  teams: INITIAL_TEAMS,
-  submissions: [
-    { id: 's1', team: 'Null Vector', challengeId: 'ch1', challengeTitle: 'Ghost Protocol', status: 'CORRECT', delta: '+50', timestamp: Date.now() - 1200000 },
-    { id: 's2', team: 'Byte Raiders', challengeId: 'ch4', challengeTitle: 'Logic Gate Bypass', status: 'CORRECT', delta: '+50', timestamp: Date.now() - 1500000 },
-    { id: 's3', team: 'Kernel Panic', challengeId: 'ch4', challengeTitle: 'Logic Gate Bypass', status: 'INCORRECT', delta: '-15', timestamp: Date.now() - 1600000 }
-  ]
+  teams: INITIAL_PARTICIPANTS,
+  submissions: []
 };
 
 // Load saved state if exists
@@ -461,19 +501,19 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      // Find or dynamically register team
-      let team = ctfState.teams.find(t => t.name.toLowerCase() === teamName.toLowerCase());
+      // Find confirmed participant
+      let team = ctfState.teams.find(t =>
+        (t.userId && t.userId.toUpperCase() === teamName.toUpperCase()) ||
+        (t.name && t.name.toLowerCase() === teamName.toLowerCase()) ||
+        (t.id && t.id === teamName)
+      );
       if (!team) {
-        team = {
-          id: 't-' + Date.now(),
-          name: teamName,
-          college: data.college || 'Collegiate Collective',
-          score: 0,
-          solved: [],
-          penalties: 0,
-          lastSolve: 0
-        };
-        ctfState.teams.push(team);
+        res.writeHead(403, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          success: false,
+          message: 'Access Denied: Only confirmed registered participants may submit flags. Please log in.'
+        }));
+        return;
       }
 
       // Check if already solved
@@ -623,6 +663,76 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ==========================================
+  // API: PARTICIPANT & ADMIN UNIFIED LOGIN
+  // ==========================================
+  if (pathname === '/api/login' && req.method === 'POST') {
+    try {
+      const data = await parseJsonBody(req);
+      const usernameInput = (data.userId || data.username || '').trim();
+      const passwordInput = (data.password || '').trim();
+
+      if (!usernameInput || !passwordInput) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, message: 'User ID / Username and Password are required.' }));
+        return;
+      }
+
+      // Check Admin Credentials
+      if (usernameInput === ADMIN_CREDENTIALS.username &&
+          (passwordInput === ADMIN_CREDENTIALS.password || passwordInput === ADMIN_CREDENTIALS.backupPassword)) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          success: true,
+          isAdmin: true,
+          token: ADMIN_TOKEN,
+          user: { name: 'Admin Coordinator', userId: 'ADMIN' },
+          redirect: 'admin.html',
+          message: 'Admin authorization granted. Welcome Coordinator.'
+        }));
+        return;
+      }
+
+      // Check Confirmed Participant Credentials
+      const participant = ctfState.teams.find(t =>
+        (t.userId && t.userId.toUpperCase() === usernameInput.toUpperCase()) ||
+        (t.name && t.name.toLowerCase() === usernameInput.toLowerCase())
+      );
+
+      if (!participant || participant.password !== passwordInput) {
+        res.writeHead(401, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          success: false,
+          message: 'Invalid User ID or Password. Only confirmed participants can enter.'
+        }));
+        return;
+      }
+
+      const token = `token_${participant.id}_${Date.now()}`;
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        success: true,
+        isAdmin: false,
+        token: token,
+        user: {
+          id: participant.id,
+          userId: participant.userId,
+          name: participant.name,
+          college: participant.college,
+          score: participant.score,
+          solved: participant.solved || []
+        },
+        redirect: 'missions.html',
+        message: `Welcome, ${participant.name} (${participant.userId})!`
+      }));
+      return;
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, message: 'Login processing error: ' + err.message }));
+      return;
+    }
+  }
+
+  // ==========================================
   // API: HARDCODED ADMIN LOGIN
   // ==========================================
   if (pathname === '/api/admin/login' && req.method === 'POST') {
@@ -655,6 +765,122 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify({ success: false, message: 'Login processing error' }));
       return;
     }
+  }
+
+  // ==========================================
+  // API: ADMIN GET PARTICIPANTS
+  // ==========================================
+  if (pathname === '/api/admin/participants' && req.method === 'GET') {
+    const authHeader = req.headers['authorization'] || '';
+    const adminToken = authHeader.replace('Bearer ', '').trim();
+    if (adminToken !== ADMIN_TOKEN) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, message: 'Unauthorized. Admin token required.' }));
+      return;
+    }
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      success: true,
+      participants: ctfState.teams.map(t => ({
+        id: t.id,
+        userId: t.userId || 'USER-UNASSIGNED',
+        name: t.name,
+        password: t.password || 'Nexus#P4ss',
+        college: t.college || 'Collegiate Arena',
+        confirmed: true,
+        score: t.score,
+        solvedCount: t.solved ? t.solved.length : 0,
+        penalties: t.penalties || 0
+      }))
+    }));
+    return;
+  }
+
+  // ==========================================
+  // API: ADMIN CONFIRM NEW PARTICIPANT (AUTO-GENERATES USER ID & PASSWORD)
+  // ==========================================
+  if (pathname === '/api/admin/confirm-participant' && req.method === 'POST') {
+    try {
+      const authHeader = req.headers['authorization'] || '';
+      const adminToken = authHeader.replace('Bearer ', '').trim();
+      if (adminToken !== ADMIN_TOKEN) {
+        res.writeHead(401, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, message: 'Unauthorized. Admin token required.' }));
+        return;
+      }
+
+      const body = await parseJsonBody(req);
+      const name = (body.name || '').trim();
+      const college = (body.college || 'Collegiate Arena').trim();
+
+      if (!name) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, message: 'Participant or Team Name is required.' }));
+        return;
+      }
+
+      let userId = generateRandomUserId();
+      while (ctfState.teams.some(t => t.userId === userId)) {
+        userId = generateRandomUserId();
+      }
+      const password = generateRandomPassword();
+
+      const newParticipant = {
+        id: 'usr_' + Date.now(),
+        userId,
+        name,
+        password,
+        confirmed: true,
+        college,
+        score: 0,
+        solved: [],
+        penalties: 0,
+        lastSolve: 0
+      };
+
+      ctfState.teams.push(newParticipant);
+      saveState();
+
+      // Broadcast update
+      broadcastSSE({
+        type: 'PARTICIPANTS_UPDATED',
+        timestamp: Date.now()
+      });
+
+      res.writeHead(201, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        success: true,
+        message: `Participant "${name}" confirmed. Credentials generated.`,
+        participant: newParticipant
+      }));
+      return;
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, message: 'Error confirming participant: ' + err.message }));
+      return;
+    }
+  }
+
+  // ==========================================
+  // API: ADMIN DELETE PARTICIPANT
+  // ==========================================
+  if (pathname.startsWith('/api/admin/participant/') && req.method === 'DELETE') {
+    const authHeader = req.headers['authorization'] || '';
+    const adminToken = authHeader.replace('Bearer ', '').trim();
+    if (adminToken !== ADMIN_TOKEN) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, message: 'Unauthorized' }));
+      return;
+    }
+
+    const targetId = pathname.split('/')[4];
+    ctfState.teams = ctfState.teams.filter(t => t.id !== targetId && t.userId !== targetId);
+    saveState();
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ success: true, message: 'Participant removed successfully.' }));
+    return;
   }
 
   // ==========================================
