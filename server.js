@@ -429,7 +429,13 @@ const server = http.createServer(async (req, res) => {
   // ==========================================
   if (pathname === '/api/challenges' && req.method === 'GET') {
     const teamName = parsedUrl.searchParams.get('team') || '';
-    const team = ctfState.teams.find(t => t.name.toLowerCase() === teamName.toLowerCase());
+    const team = ctfState.teams.find(t =>
+      (t.name && t.name.toLowerCase() === teamName.toLowerCase()) ||
+      (t.userId && t.userId.toUpperCase() === teamName.toUpperCase()) ||
+      (t.partner1UserId && t.partner1UserId.toUpperCase() === teamName.toUpperCase()) ||
+      (t.partner2UserId && t.partner2UserId.toUpperCase() === teamName.toUpperCase()) ||
+      (t.id && t.id === teamName)
+    );
     const solvedSet = new Set(team ? team.solved : []);
 
     const sanitizedChallenges = INITIAL_CHALLENGES.map(ch => ({
@@ -507,6 +513,8 @@ const server = http.createServer(async (req, res) => {
       // Find confirmed participant
       let team = ctfState.teams.find(t =>
         (t.userId && t.userId.toUpperCase() === teamName.toUpperCase()) ||
+        (t.partner1UserId && t.partner1UserId.toUpperCase() === teamName.toUpperCase()) ||
+        (t.partner2UserId && t.partner2UserId.toUpperCase() === teamName.toUpperCase()) ||
         (t.name && t.name.toLowerCase() === teamName.toLowerCase()) ||
         (t.id && t.id === teamName)
       );
