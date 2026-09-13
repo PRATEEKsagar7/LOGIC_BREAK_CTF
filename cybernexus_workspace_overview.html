@@ -123,7 +123,7 @@
 </div>
 <div class="lg:col-span-8 flex flex-col gap-space-xs">
 <div class="relative w-full">
-<textarea class="w-full bg-surface-container-low text-on-surface font-mono text-[13px] leading-relaxed p-space-md rounded-lg focus:outline-none focus:bg-surface-container-highest transition-all resize-y shadow-inner border border-surface-container-highest/70" id="ws-desc" placeholder="Provide tactical context..." rows="3" style="height: 74px; min-height: 70px;">Collegiate cybersecurity competition workspace briefing and active operative node.
+<textarea class="w-full bg-surface-container-low text-on-surface font-mono text-[13px] leading-relaxed p-space-md rounded-lg focus:outline-none focus:bg-surface-container-highest transition-colors resize-y shadow-inner border border-surface-container-highest/70" id="ws-desc" placeholder="Provide tactical context..." rows="3" style="height: 74px; min-height: 70px; resize: vertical;">Collegiate cybersecurity competition workspace briefing and active operative node.
 
 
 
@@ -153,10 +153,6 @@ This is the official flag for Challenge 03:
 
 logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}
 ========================================================================</textarea>
-<button type="button" id="btn-adjust-desc" onclick="toggleDescHeight()" class="absolute top-2 right-2 px-2 py-1 rounded bg-surface-container-highest/90 hover:bg-primary/20 hover:text-primary text-outline text-[11px] font-mono flex items-center gap-1 transition-all border border-outline-variant/40 shadow-sm backdrop-blur-sm cursor-pointer z-10" title="Adjust Box Size">
-  <span class="material-symbols-outlined text-[15px]" id="adjust-desc-icon">open_in_full</span>
-  <span id="adjust-desc-label">Adjust Box</span>
-</button>
 </div>
 <div class="flex items-center justify-between text-outline font-label-lg text-label-lg text-[11px]">
 <span>Briefing text rendered on public threat index</span>
@@ -466,28 +462,6 @@ logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}
     const words = text.trim() ? text.trim().split(/\s+/).filter(Boolean).length : 0;
     const chars = text.length;
     metrics.innerText = `${words} words • ${chars} characters`;
-  }
-
-  function toggleDescHeight() {
-    const desc = document.getElementById('ws-desc');
-    const icon = document.getElementById('adjust-desc-icon');
-    const label = document.getElementById('adjust-desc-label');
-    if (!desc) return;
-    
-    // Check if currently expanded (either by inline style or computed height > 150)
-    const isExpanded = desc.style.height === '320px' || parseInt(desc.style.height || '0') >= 300;
-    if (isExpanded) {
-      desc.style.height = '74px';
-      if (icon) icon.innerText = 'open_in_full';
-      if (label) label.innerText = 'Adjust Box';
-    } else {
-      desc.style.height = '320px';
-      if (icon) icon.innerText = 'close_fullscreen';
-      if (label) label.innerText = 'Collapse Box';
-      setTimeout(() => {
-        desc.scrollTop = desc.scrollHeight;
-      }, 100);
-    }
   }
 
   function triggerSaveToast() {
