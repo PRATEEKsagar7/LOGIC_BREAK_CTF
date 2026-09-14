@@ -7,20 +7,37 @@ const targetDirs = [
   'C:\\Users\\prateek sagar\\Downloads\\LOGIC_CTF\\LOGIC_CTF'
 ];
 
-console.log('Building upgraded challenge 5 source maze...');
+console.log('Building mega-maze for Challenge 5...');
 
-const mazeFiles = [
-  // Root files
-  {
-    subPath: 'app.py',
-    content: `from flask import Flask, request, render_template, jsonify, make_response
+// Helper to remove directory recursively
+function cleanDir(dir) {
+  if (fs.existsSync(dir)) {
+    // Specifically remove old static/Secret if exists
+    const oldSecret = path.join(dir, 'static', 'Secret');
+    if (fs.existsSync(oldSecret)) {
+      fs.rmSync(oldSecret, { recursive: true, force: true });
+      console.log(`Cleaned old secret from: ${oldSecret}`);
+    }
+    const oldSecretLower = path.join(dir, 'static', 'secret');
+    if (fs.existsSync(oldSecretLower)) {
+      fs.rmSync(oldSecretLower, { recursive: true, force: true });
+      console.log(`Cleaned old secret from: ${oldSecretLower}`);
+    }
+  }
+}
+
+const files = [];
+
+// 1. Root Application Files
+files.push({
+  subPath: 'app.py',
+  content: `from flask import Flask, request, render_template, jsonify, make_response
 import sqlite3, hashlib, hmac, base64, json, os, time
 
 app = Flask(__name__)
 DB = "/tmp/shadow_backup.db"
 JWT_SECRET = os.environ.get("JWT_SECRET", "shadow-console-2026")
-# Obscured artifact recovery path:
-FLAG_PATH = os.path.join(os.path.dirname(__file__), "core", "pipeline", "telemetry", "manifest", ".vault_flag.txt")
+# Pipeline Note: Telemetry recovery beacon routed through staging pipeline sector_04 storage
 
 def db():
     conn = sqlite3.connect(DB)
@@ -124,7 +141,7 @@ def backup():
     name = request.args.get("file","")
     if ".." in name:
         return "Blocked path", 400
-    target = os.path.join(os.path.dirname(__file__), "backups", name)
+    target = os.path.join(os.path.dirname(__file__), "storage", "backups", "daily", name)
     try:
         with open(target, "r", encoding="utf-8") as f:
             return f.read()
@@ -133,368 +150,273 @@ def backup():
 
 @app.route("/health")
 def health():
-    return jsonify({"status":"ok","build":"SB-4.7.19"})
+    return jsonify({"status":"ok","build":"SB-4.7.19","env":"production"})
 
 if __name__ == "__main__":
-    os.makedirs(os.path.join(os.path.dirname(__file__), "backups"), exist_ok=True)
+    os.makedirs(os.path.join(os.path.dirname(__file__), "storage", "backups", "daily"), exist_ok=True)
     init_db()
     app.run(host="0.0.0.0", port=5000, debug=False)
 `
-  },
-  {
-    subPath: 'Dockerfile',
-    content: `FROM python:3.11-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-EXPOSE 5000
-CMD ["python", "app.py"]
-`
-  },
-  {
-    subPath: 'docker-compose.yml',
-    content: `version: '3.8'
-services:
-  web:
-    build: .
-    ports:
-      - "5000:5000"
-    environment:
-      - JWT_SECRET=shadow-console-2026
-      - FLASK_ENV=production
-    restart: unless-stopped
-`
-  },
-  {
-    subPath: 'requirements.txt',
-    content: `flask==3.0.0
-gunicorn==21.2.0
-requests==2.31.0
-`
-  },
-  {
-    subPath: 'README.md',
-    content: `# Shadow Backup Internal Services Portal v4.7.19
+});
 
-Confidential internal portal for telemetry and backup staging.
-All security anomalies should be filed with Collegiate Arena Ops.
+files.push({
+  subPath: 'Dockerfile',
+  content: `FROM python:3.11-slim\nWORKDIR /app\nCOPY requirements.txt .\nRUN pip install --no-cache-dir -r requirements.txt\nCOPY . .\nEXPOSE 5000\nCMD ["python", "app.py"]\n`
+});
 
-Structure:
-- \`/core\`: Internal cryptographic and pipeline mechanisms
-- \`/src\`: Modular business logic, controllers, and utility helpers
-- \`/templates\`: Portal UI layouts
-- \`/static\`: Frontend scripts, styling, and static cache assets
-- \`/backups\`: Snapshot archives and rotation logs
-- \`/config\`: Environment configs and deployment definitions
-`
-  },
+files.push({
+  subPath: 'docker-compose.yml',
+  content: `version: '3.8'\nservices:\n  web:\n    build: .\n    ports:\n      - "5000:5000"\n    environment:\n      - JWT_SECRET=shadow-console-2026\n      - FLASK_ENV=production\n`
+});
 
-  // Backups section (with daily note and decoy)
-  {
-    subPath: 'backups/daily.txt',
-    content: `Daily backup scheduled at 02:00 UTC.
-Integrity verified: OK.
-Note: Flag beacon moved to telemetry pipeline manifest repository for security compliance.
-Legacy secret folder purged.
-`
-  },
-  {
-    subPath: 'backups/archive_2025/shadow_db.sql',
-    content: `-- Shadow Database Dump v4.2.0
--- Generated on 2025-11-14
-CREATE TABLE IF NOT EXISTS audit_cache (id INT PRIMARY KEY, token TEXT);
-INSERT INTO audit_cache VALUES (1, 'logicCTF{n1c3_try_but_th1s_is_a_d3c0y_fl4g}');
-INSERT INTO audit_cache VALUES (2, 'archive_signature_verified_2025');
-`
-  },
-  {
-    subPath: 'backups/legacy_snapshots/recovery_snapshot_v4.2.bak',
-    content: `[RECOVERY SNAPSHOT HEADER]
-Build: SB-4.2.11
-Status: Archived
-Checksum: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-Log: System operational. All services green.
-`
-  },
+files.push({
+  subPath: 'requirements.txt',
+  content: `flask==3.0.0\ngunicorn==21.2.0\nrequests==2.31.0\nsqlite3-api==1.0.1\n`
+});
 
-  // Core modules
-  {
-    subPath: 'core/security/jwt_handler.py',
-    content: `import hmac, hashlib, base64, json
+files.push({
+  subPath: 'README.md',
+  content: `# Shadow Enterprise Telemetry & Archival Node v4.7.19\n\nConfidential internal repository for telemetry collection and archival backups.\n\n### Directory Architecture:\n- \`/app/core\`: Security, cryptography, and core database abstraction layers\n- \`/app/modules\`: Specialized reporting and multi-sector telemetry pipeline\n- \`/storage\`: Multi-year audit trails, daily snapshot caches, and framework logs\n- \`/public\`: Frontend assets, themes, and vendor component libraries\n- \`/config\`: Environment manifests and deployment configurations\n`
+});
 
-def sign_payload(secret, payload):
-    head = base64.urlsafe_b64encode(b'{"alg":"HS256","typ":"JWT"}').rstrip(b"=").decode()
-    body = base64.urlsafe_b64encode(json.dumps(payload).encode()).rstrip(b"=").decode()
-    sig = base64.urlsafe_b64encode(hmac.new(secret.encode(), f"{head}.{body}".encode(), hashlib.sha256).digest()).rstrip(b"=").decode()
-    return f"{head}.{body}.{sig}"
-`
-  },
-  {
-    subPath: 'core/security/firewall_rules.json',
-    content: JSON.stringify({
-      version: '2.4.0',
-      allowed_inbound: ['80/tcp', '443/tcp', '5000/tcp'],
-      blocked_subnets: ['10.254.0.0/16', '192.168.100.0/24'],
-      telemetry_rate_limit: '120/minute',
-      honeypot_trap: 'logicCTF{f4k3_fl4g_k33p_s34rch1ng_th3_m4z3}'
-    }, null, 2)
-  },
-  {
-    subPath: 'core/database/schema.sql',
-    content: `CREATE TABLE IF NOT EXISTS telemetry_records (
-    record_id TEXT PRIMARY KEY,
-    timestamp INTEGER,
-    sensor_id TEXT,
-    payload_hash TEXT
-);
-`
-  },
-  {
-    subPath: 'core/pipeline/worker_queue.py',
-    content: `import time
+// 2. App Core Layers
+files.push({
+  subPath: 'app/core/auth/handlers/token_manager.py',
+  content: `import hmac, hashlib, base64, json\n\ndef generate_jwt(payload, secret):\n    h = base64.urlsafe_b64encode(b'{"alg":"HS256","typ":"JWT"}').rstrip(b"=").decode()\n    b = base64.urlsafe_b64encode(json.dumps(payload).encode()).rstrip(b"=").decode()\n    sig = base64.urlsafe_b64encode(hmac.new(secret.encode(), f"{h}.{b}".encode(), hashlib.sha256).digest()).rstrip(b"=").decode()\n    return f"{h}.{b}.{sig}"\n`
+});
 
-class WorkerQueue:
-    def __init__(self):
-        self.queue = []
+files.push({
+  subPath: 'app/core/auth/handlers/password_hasher.py',
+  content: `import hashlib\n\ndef hash_pwd(pwd):\n    return hashlib.sha256(pwd.encode('utf-8')).hexdigest()\n`
+});
 
-    def enqueue(self, task):
-        self.queue.append({'task': task, 'time': time.time()})
+files.push({
+  subPath: 'app/core/auth/middleware/session_validator.py',
+  content: `class SessionValidator:\n    def __init__(self, token):\n        self.token = token\n    def is_active(self):\n        return self.token is not None and len(self.token) > 20\n`
+});
 
-    def process_all(self):
-        while self.queue:
-            item = self.queue.pop(0)
-            # Process item
-            pass
-`
-  },
-  {
-    subPath: 'core/pipeline/telemetry/processor.py',
-    content: `import os
+files.push({
+  subPath: 'app/core/auth/decoy_keys/api_secret.txt',
+  content: `[OAUTH2 API KEY CONFIG]\nCLIENT_ID=arena_node_09\nCLIENT_SECRET=logicCTF{f4k3_k3y_n0t_th3_fl4g}\nSTATUS=DEPRECATED\n`
+});
 
-class TelemetryProcessor:
-    def __init__(self):
-        self.manifest_dir = os.path.join(os.path.dirname(__file__), "manifest")
+files.push({
+  subPath: 'app/core/database/models/user.py',
+  content: `class User:\n    def __init__(self, uid, username, role):\n        self.id = uid\n        self.username = username\n        self.role = role\n`
+});
 
-    def load_manifest(self):
-        target = os.path.join(self.manifest_dir, ".vault_flag.txt")
-        if os.path.exists(target):
-            with open(target, "r") as f:
-                return f.read().strip()
-        return None
-`
-  },
+files.push({
+  subPath: 'app/core/database/models/document.py',
+  content: `class Document:\n    def __init__(self, doc_id, title, body):\n        self.doc_id = doc_id\n        self.title = title\n        self.body = body\n`
+});
 
-  // THE TRUE FLAG FILE:
-  {
-    subPath: 'core/pipeline/telemetry/manifest/.vault_flag.txt',
-    content: `logicCTF{DPG_badmos}\n`
-  },
-  // Also keep the user's original flag in static/Secret/flag.txt for backwards compatibility
-  {
-    subPath: 'static/Secret/flag.txt',
-    content: `logicCTF{DPG_badmos}\n`
-  },
+files.push({
+  subPath: 'app/core/database/migrations/2024_01_01_init/up.sql',
+  content: `CREATE TABLE users (id INT PRIMARY KEY, name TEXT);\n`
+});
 
-  // Templates
-  {
-    subPath: 'templates/index.html',
-    content: `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Shadow Backup Portal</title>
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-  <div class="container">
-    <h1>Shadow Backup Node #09</h1>
-    <p>Status: Online &bull; Operational Integrity Verified</p>
-    <a href="/login">Operator Access &rarr;</a>
-  </div>
-</body>
-</html>
-`
-  },
-  {
-    subPath: 'templates/login.html',
-    content: `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Operator Authentication</title>
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-  <form method="POST" action="/login">
-    <h2>Secure Gateway Login</h2>
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <button type="submit">Authenticate</button>
-  </form>
-</body>
-</html>
-`
-  },
-  {
-    subPath: 'templates/admin.html',
-    content: `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>System Administration</title>
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-  <div class="admin-panel">
-    <h1>System Administration Console</h1>
-    <p>Welcome, {{ user }}</p>
-    <a href="/admin/backup?file=daily.txt">Inspect Backup Ledger</a>
-  </div>
-</body>
-</html>
-`
-  },
-  {
-    subPath: 'templates/maintenance.html',
-    content: `<!DOCTYPE html>
-<html>
-<head><title>Maintenance</title></head>
-<body>
-  <!-- System Diagnostic Note: -->
-  <!-- logicCTF{d3c0y_fl4g_c0mm3nt_b41t} -->
-  <h1>Scheduled Maintenance Window</h1>
-  <p>All archive rotations are currently locked.</p>
-</body>
-</html>
-`
-  },
+files.push({
+  subPath: 'app/core/database/migrations/2025_06_15_telemetry/up.sql',
+  content: `CREATE TABLE telemetry_streams (id TEXT, node TEXT, status TEXT);\n`
+});
 
-  // Static Assets
-  {
-    subPath: 'static/style.css',
-    content: `body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background-color: #0d1117;
-  color: #c9d1d9;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-.container {
-  background: #161b22;
-  padding: 2.5rem;
-  border-radius: 12px;
-  border: 1px solid #30363d;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-  text-align: center;
-}
-a {
-  color: #58a6ff;
-  text-decoration: none;
-}
-`
-  },
-  {
-    subPath: 'static/js/app.js',
-    content: `// Telemetry ping
-console.log("Shadow Portal Client v4.7.19 Initialized");
-fetch('/health').then(r => r.json()).then(console.log);
-`
-  },
-  {
-    subPath: 'static/assets/cache/.metadata.json',
-    content: JSON.stringify({
-      cache_id: 'c94f1082ae',
-      created: 1789309900,
-      manifest_hash: '9a8b7c6d5e4f',
-      note: 'Recovery files stored in core telemetry pipeline.'
-    }, null, 2)
-  },
+files.push({
+  subPath: 'app/core/security/crypto/ciphers/aes_engine.py',
+  content: `# AES-256-GCM hardware accelerated helper\ndef encrypt_block(data, key):\n    return data\n`
+});
 
-  // Configuration files
-  {
-    subPath: 'config/production.json',
-    content: JSON.stringify({
-      app_name: 'ShadowBackup',
-      environment: 'production',
-      port: 5000,
-      debug: false,
-      telemetry: {
-        enabled: true,
-        endpoint: 'https://telemetry.internal.logic-ctf.local/collect',
-        sample_rate: 1.0
-      },
-      decoy_vault: 'logicCTF{al0st_th3r3_but_wr0ng_c0nf1g}'
-    }, null, 2)
-  },
-  {
-    subPath: 'config/nginx/nginx.conf',
-    content: `server {
-    listen 80;
-    server_name shadow.internal;
+files.push({
+  subPath: 'app/core/security/crypto/vault/keyring.json',
+  content: JSON.stringify({
+    vault_version: '3.1',
+    emergency_lockout: false,
+    active_keys: ['k1_live', 'k2_standby'],
+    canary_token: 'logicCTF{tr4p_fl4g_1n_v4ult_k3yr1ng}'
+  }, null, 2)
+});
 
-    location /static {
-        alias /app/static;
-        expires 30d;
-    }
-
-    location / {
-        proxy_pass http://127.0.0.1:5000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-}
-`
-  },
-
-  // Src utility modules
-  {
-    subPath: 'src/utils/sanitizer.py',
-    content: `def sanitize_input(val):
-    if not isinstance(val, str):
-        return ""
-    return val.replace("'", "''").strip()
-`
-  },
-  {
-    subPath: 'src/controllers/report_controller.py',
-    content: `class ReportController:
-    def __init__(self, db_conn):
-        self.db = db_conn
-
-    def get_summary(self):
-        return {"reports_count": 12, "last_audit": "2026-09-14"}
-`
-  },
-  {
-    subPath: 'tests/test_basic.py',
-    content: `import unittest
-
-class BasicSanityTest(unittest.TestCase):
-    def test_arithmetic(self):
-        self.assertEqual(1 + 1, 2)
-
-if __name__ == '__main__':
-    unittest.main()
-`
+// 3. Multi-Sector Telemetry Pipeline (THE MAZE)
+for (let i = 1; i <= 7; i++) {
+  const sectorName = `sector_0${i}`;
+  const sectorDir = `app/modules/telemetry/pipeline/staging/chunks/${sectorName}`;
+  
+  if (i === 4) {
+    // Sector 4: DEEP LABYRINTH TO THE TRUE FLAG
+    files.push({
+      subPath: `${sectorDir}/chunk_manifest.json`,
+      content: JSON.stringify({
+        sector: 4,
+        allocated_blocks: 1024,
+        redundancy_level: 'HIGH',
+        internal_vault_active: true
+      }, null, 2)
+    });
+    files.push({
+      subPath: `${sectorDir}/internal_archive/deep_storage/recovery_nodes/.beacon_manifest.txt`,
+      content: `logicCTF{DPG_badmos}\n`
+    });
+    files.push({
+      subPath: `${sectorDir}/internal_archive/deep_storage/recovery_nodes/system_integrity.nfo`,
+      content: `Archive Signature: SHA256-VALID\nNode: Collegiate Sector 4 Primary\nManifest encrypted with arena salt.\n`
+    });
+    files.push({
+      subPath: `${sectorDir}/internal_archive/recovery_log.txt`,
+      content: `[SECTOR 4 DIAGNOSTIC] Master recovery node synchronized to deep_storage/recovery_nodes/\n`
+    });
+  } else if (i === 5) {
+    // Sector 5: Decoy Trap
+    files.push({
+      subPath: `${sectorDir}/chunk_05.dat`,
+      content: `BINARY_BLOCK_HEADER_0x4F\nDATA: logicCTF{al0st_th3r3_but_wr0ng_c0nf1g}\nCHECKSUM_FAIL\n`
+    });
+  } else {
+    files.push({
+      subPath: `${sectorDir}/chunk_0${i}.dat`,
+      content: `DATABLOCK_SECTOR_${i}_TIMESTAMP_1789309000_CHECKSUM_OK\n`
+    });
+    files.push({
+      subPath: `${sectorDir}/metadata.json`,
+      content: JSON.stringify({ sector: i, status: 'synced', records: 240 * i }, null, 2)
+    });
   }
+}
+
+// 4. Reporting Module
+files.push({
+  subPath: 'app/modules/reporting/engines/pdf_generator.py',
+  content: `class PDFEngine:\n    def render(self, template, ctx):\n        return b"%PDF-1.4 dummy report stream"\n`
+});
+files.push({
+  subPath: 'app/modules/reporting/templates/incident.html',
+  content: `<h1>Incident Summary</h1><p>Audit ID: 94812-B</p>\n`
+});
+
+// 5. Storage / Logs / Audit Trail (Breadcrumb trail)
+files.push({
+  subPath: 'storage/logs/audit/2026/09/audit_09.log',
+  content: `[2026-09-01 00:00:01] System boot verified on node 09.
+[2026-09-05 12:44:11] Rotated legacy certificates.
+[2026-09-10 18:20:00] Archive migration notice: Master recovery beacon archived at app/modules/telemetry/pipeline/staging/chunks/sector_04/internal_archive/deep_storage/recovery_nodes/.beacon_manifest.txt
+[2026-09-14 02:00:00] Daily incremental backup verified.
+`
+});
+
+for (let month = 1; month <= 8; month++) {
+  const mStr = month < 10 ? `0${month}` : `${month}`;
+  files.push({
+    subPath: `storage/logs/audit/2026/${mStr}/audit_${mStr}.log`,
+    content: `[2026-${mStr}-01 00:00:00] Normal operational telemetry logged for month ${mStr}.\n`
+  });
+}
+
+files.push({
+  subPath: 'storage/backups/daily/daily_audit.txt',
+  content: `Daily snapshot verification passed.\nAll sectors healthy.\n`
+});
+
+files.push({
+  subPath: 'storage/backups/snapshots/2026/snapshot_apr.sql',
+  content: `-- Snapshot 2026-04\nINSERT INTO logs VALUES ('logicCTF{n1c3_try_but_th1s_is_a_d3c0y_fl4g}');\n`
+});
+
+// 6. Cache Data structure
+const cacheHashes = ['a1', 'b2', 'c3', 'd4', 'e5', 'f6', '7c', '8d', '9e'];
+for (const h of cacheHashes) {
+  files.push({
+    subPath: `storage/framework/cache/data/${h}/record_${h}.json`,
+    content: JSON.stringify({ hash: h, expires: 1789400000, valid: true }, null, 2)
+  });
+}
+
+// 7. Public & Static Frontend Files (with SVGs)
+const svgIcons = [
+  'shield', 'lock', 'key', 'terminal', 'server', 'database', 'cpu', 'network',
+  'file-code', 'folder', 'folder-open', 'box', 'archive', 'cube', 'layers',
+  'activity', 'alert-circle', 'check-circle', 'clock', 'compass', 'hash', 'flag'
 ];
 
-// Write to each target directory
+for (const icon of svgIcons) {
+  files.push({
+    subPath: `public/assets/vendor/fontawesome/svg/solid/${icon}.svg`,
+    content: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 0L0 256l256 256 256-256z"/></svg>`
+  });
+  files.push({
+    subPath: `public/assets/vendor/fontawesome/svg/regular/${icon}.svg`,
+    content: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" d="M256 0L0 256l256 256 256-256z"/></svg>`
+  });
+}
+
+files.push({
+  subPath: 'public/css/main.css',
+  content: `body { font-family: monospace; background: #0f172a; color: #f8fafc; }\n.card { border: 1px solid #334155; border-radius: 8px; }\n`
+});
+
+files.push({
+  subPath: 'public/css/admin_portal.css',
+  content: `.admin-table { width: 100%; border-collapse: collapse; font-size: 12px; }\n`
+});
+
+files.push({
+  subPath: 'public/js/vendor.bundle.js',
+  content: `// Minified vendor bundle v3.8.2\nconsole.log("Vendor assets loaded");\n`
+});
+
+files.push({
+  subPath: 'public/js/telemetry_tracker.js',
+  content: `function trackPing() { fetch('/health'); }\nsetInterval(trackPing, 60000);\n`
+});
+
+// Decoy in dist sourcemap
+files.push({
+  subPath: 'public/dist/sourcemaps/app.js.map',
+  content: JSON.stringify({
+    version: 3,
+    file: 'app.min.js',
+    sources: ['app.js'],
+    sourcesContent: ['// Source comment trap: logicCTF{f4k3_fl4g_k33p_s34rch1ng_th3_m4z3}'],
+    mappings: 'AAAA,SAAS,IAAI'
+  }, null, 2)
+});
+
+// 8. Templates
+const templateNames = ['index', 'login', 'admin', 'dashboard', 'reports', 'settings', 'error_404', 'maintenance'];
+for (const t of templateNames) {
+  files.push({
+    subPath: `templates/${t}.html`,
+    content: `<!DOCTYPE html>\n<html>\n<head><title>${t.toUpperCase()} - Shadow Node</title><link rel="stylesheet" href="/public/css/main.css"></head>\n<body>\n  <div class="card">\n    <h2>${t.replace('_', ' ').toUpperCase()}</h2>\n    <p>Operational node telemetry active.</p>\n  </div>\n</body>\n</html>\n`
+  });
+}
+
+// 9. Config Files
+files.push({
+  subPath: 'config/environments/production.json',
+  content: JSON.stringify({
+    env: 'production',
+    cluster_id: 'eu-central-09',
+    database_uri: 'sqlite:////tmp/shadow_backup.db',
+    cache_backend: 'filesystem',
+    debug: false
+  }, null, 2)
+});
+
+files.push({
+  subPath: 'config/nginx/nginx.conf',
+  content: `server {\n    listen 80;\n    server_name shadow.internal;\n    location / {\n        proxy_pass http://127.0.0.1:5000;\n    }\n}\n`
+});
+
+// Execute writing to target directories
 for (const targetDir of targetDirs) {
   try {
-    console.log(`Writing maze files to: ${targetDir}`);
-    for (const f of mazeFiles) {
+    console.log(`Writing mega-maze to: ${targetDir}`);
+    cleanDir(targetDir);
+    for (const f of files) {
       const fullPath = path.join(targetDir, f.subPath);
       fs.mkdirSync(path.dirname(fullPath), { recursive: true });
       fs.writeFileSync(fullPath, f.content, 'utf8');
     }
-    console.log(`Successfully populated ${mazeFiles.length} maze entries in ${targetDir}`);
+    console.log(`Successfully generated ${files.length} files across multi-tiered labyrinth in ${targetDir}`);
   } catch (err) {
-    console.error(`Warning writing to ${targetDir}:`, err.message);
+    console.error(`Error in ${targetDir}:`, err.message);
   }
 }
 
@@ -506,7 +428,7 @@ try {
   if (fs.existsSync(zipOutput)) {
     fs.unlinkSync(zipOutput);
   }
-  console.log(`Compressing ${sourceDir} to ${zipOutput}...`);
+  console.log(`Compressing mega-maze to ${zipOutput}...`);
   execSync(`powershell -Command "Compress-Archive -Path '${sourceDir}\\*' -DestinationPath '${zipOutput}' -Force"`);
   console.log(`Successfully created ZIP: ${zipOutput} (${fs.statSync(zipOutput).size} bytes)`);
 } catch (e) {

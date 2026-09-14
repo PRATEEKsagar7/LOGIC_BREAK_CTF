@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en" style=""><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CyberNexus - Reports Management</title>
+  <title>Logic CTF - Reports Management</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -1296,7 +1296,7 @@
       <!-- Modal Header -->
       <div class="p-4 sm:p-5 border-b border-[#2D3A4B] bg-[#161D27] flex items-center justify-between">
         <div>
-          <span id="formEyebrow" class="font-mono text-[10px] text-[#00FF9D] font-bold tracking-widest uppercase">CYBERNEXUS / FORM</span>
+          <span id="formEyebrow" class="font-mono text-[10px] text-[#00FF9D] font-bold tracking-widest uppercase">LOGIC CTF / FORM</span>
           <h2 id="formModalTitle" class="text-lg font-extrabold text-white tracking-tight">EDIT REPORT</h2>
         </div>
         <button onclick="closeFormModal()" class="w-8 h-8 rounded-lg bg-[#1A2330] border border-[#2D3A4B] hover:border-[#3B4A5D] text-[#94A3B8] hover:text-white flex items-center justify-center transition">
@@ -2452,7 +2452,7 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
     function openCreateModal() {
       isEditing = false;
       document.getElementById('formModalTitle').textContent = "CREATE REPORT";
-      document.getElementById('formEyebrow').textContent = "CYBERNEXUS / NEW REPORT";
+      document.getElementById('formEyebrow').textContent = "LOGIC CTF / NEW REPORT";
       document.getElementById('formSubmitBtn').textContent = "CREATE REPORT";
       document.getElementById('formReportId').value = "";
       document.getElementById('reportForm').reset();
@@ -2472,7 +2472,7 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
       if (!report) return;
 
       document.getElementById('formModalTitle').textContent = `EDIT ${report.id}`;
-      document.getElementById('formEyebrow').textContent = "CYBERNEXUS / EDIT";
+      document.getElementById('formEyebrow').textContent = "LOGIC CTF / EDIT";
       document.getElementById('formSubmitBtn').textContent = "SAVE CHANGES";
       document.getElementById('formReportId').value = report.id;
 

@@ -169,12 +169,18 @@
         </button>
       </div>
       <div class="space-y-3">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between gap-3 flex-wrap">
           <span id="modal-code-filename" class="text-xs font-mono text-emerald-400">artifact.txt</span>
-          <a id="modal-code-download-btn" href="#" download class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 font-mono text-xs font-bold transition">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Download Artifact</span>
-          </a>
+          <div class="flex items-center gap-2">
+            <a id="modal-code-open-target-btn" href="#" class="hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-mono text-xs font-bold transition shadow-md">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              <span id="modal-code-open-target-text">Launch Target Page</span>
+            </a>
+            <a id="modal-code-download-btn" href="#" download class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 font-mono text-xs font-bold transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Download Artifact</span>
+            </a>
+          </div>
         </div>
         <pre id="modal-code-body" class="bg-[#090e16] border border-[#2d3a43] rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto max-h-80 custom-scrollbar"></pre>
       </div>
@@ -401,15 +407,27 @@
 
       const isInteractivePlatform = (ch.number <= 4) || (ch.file && ch.file.endsWith('.html'));
       const dlBtn = document.getElementById('modal-code-download-btn');
+      const openTargetBtn = document.getElementById('modal-code-open-target-btn');
+      const openTargetText = document.getElementById('modal-code-open-target-text');
 
       document.getElementById('modal-code-title').textContent = `${ch.title} // Code & Vector`;
       document.getElementById('modal-code-body').textContent = ch.codeSnippet || '// No code snippet attached.';
 
       if (isInteractivePlatform) {
-        document.getElementById('modal-code-filename').textContent = `Target: ${ch.file} (Live Arena Platform Vector)`;
+        document.getElementById('modal-code-filename').textContent = `Target: ${ch.targetLocation || ch.file} (Live Arena Platform Vector)`;
         dlBtn.classList.add('hidden');
+        if (openTargetBtn) {
+          openTargetBtn.classList.remove('hidden');
+          openTargetBtn.href = ch.file;
+          if (openTargetText) {
+            openTargetText.textContent = `Launch Target Page (${ch.file})`;
+          }
+        }
       } else {
         document.getElementById('modal-code-filename').textContent = `Artifact: ${ch.file}`;
+        if (openTargetBtn) {
+          openTargetBtn.classList.add('hidden');
+        }
         dlBtn.classList.remove('hidden');
         dlBtn.href = `/api/files/${ch.file}`;
         dlBtn.setAttribute('download', ch.file);
@@ -446,7 +464,7 @@
         { id: 'ch2', number: 2, title: 'Export a report.', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Beginner', file: 'reports.html', description: "The Reports page doesn't provide the export option you need. Find another place where the report can be handled.", codeSnippet: '// The Reports page does not provide the export option you need.\n// Find another place where the report can be handled.', isSolved: false },
         { id: 'ch3', number: 3, title: 'Read Between the Lines.', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Beginner', file: 'workspace.html', description: 'The workspace description seems brief, but not everything recorded is immediately visible. Find a way to read the complete entry.', codeSnippet: '// The briefing looks short at first glance.\n// Look closely at the details and find what is tucked away.', isSolved: false },
         { id: 'ch4', number: 4, title: 'Restore a report.', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Beginner', file: 'reports.html', description: 'Direct access to the incident report is blocked by security controls. Find another way to inspect its verified details.', codeSnippet: '// Direct inspection: Integrity check locked.\n// Archive recovery resets verification state and unlocks inspection.', isSolved: false },
-        { id: 'ch5', number: 5, title: 'Cookie Monster', category: 'Web Security', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'challenge_05_jwt_token.txt', description: 'Brute-force weak dictionary secret "secret123" and forge an admin role JWT token.', codeSnippet: '{"sub":"operative_09","role":"admin"} + HS256("secret123")', isSolved: false },
+        { id: 'ch5', number: 5, title: 'The Source Code Maze', category: 'Forensics & Code Recon', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'challenge_05_source_maze.zip', description: 'Download and extract the repository ZIP using the artifact button (📄). Search through the nested source code and audit logs to find the authentic recovery flag while avoiding decoys.', codeSnippet: '// 1. Click "Download Artifact (ZIP)" in the modal to download challenge_05_source_maze.zip\n// 2. Extract the archive onto your computer and explore the folders.\n// 3. Locate the authentic recovery beacon and submit the flag:\n// Format: logicCTF{...}', isSolved: false },
         { id: 'ch6', number: 6, title: 'SQL Infiltration', category: 'Database Security', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'challenge_06_sqli_dump.sql', description: 'Perform SQL injection auth bypass using UNION SELECT to dump the secret_vault table.', codeSnippet: "SELECT * FROM users WHERE user='' OR 1=1 UNION SELECT 1, secret_value FROM secret_vault--", isSolved: false },
         { id: 'ch7', number: 7, title: 'Hidden in Plain Byte', category: 'Forensics', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'challenge_07_stego_secret.txt', description: 'Inspect PNG metadata tEXt chunk and decode hex bytes inside EXIF headers.', codeSnippet: 'strings avatar_recon.png | grep -i logicCTF', isSolved: false },
         { id: 'ch8', number: 8, title: 'Kernel Panic', category: 'Binary Exploitation', tier: 2, points: 100, penalty: 25, difficulty: 'Advanced', file: 'challenge_08_buffer_overflow.c', description: 'Smash 64-byte stack frame with unsafe gets() to overwrite RIP and jump to win().', codeSnippet: 'char buffer[64]; gets(buffer); // RIP offset = 72 bytes', isSolved: false },

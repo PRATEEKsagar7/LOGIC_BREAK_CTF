@@ -100,13 +100,14 @@ const INITIAL_CHALLENGES = [
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'A decommissioned telemetry server backup contains sensitive operational assets hidden within its nested repository tree. Sift through the maze of source files, templates, and configurations to extract the true operational flag.',
+    description: 'Download and extract the repository ZIP using the artifact button (📄). Search through the nested source code and audit logs to find the authentic recovery flag while avoiding decoys.',
     hints: [
-      'Inspect the application entrypoint in app.py to trace how recovery files are routed.',
-      'Beware of decoy flags placed in database dumps and maintenance templates.'
+      'Click the document icon (📄) on this mission card and click "Download Artifact (ZIP)" to download challenge_05_source_maze.zip.',
+      'Check app.py and inspect recent entries in storage/logs/audit/ to see where the system archived its operational beacon.',
+      'Beware of decoy flags placed in fake SQL snapshots and comments—only the authentic recovery beacon counts!'
     ],
     file: 'challenge_05_source_maze.zip',
-    codeSnippet: '// Decommissioned Telemetry Node v4.7.19\n// Sift through the repository tree to find the genuine recovery beacon.\n// Flag Format: logicCTF{...}',
+    codeSnippet: '// 1. Click "Download Artifact (ZIP)" in the modal to download challenge_05_source_maze.zip\n// 2. Extract the archive onto your computer and explore the folders.\n// 3. Locate the authentic recovery beacon and submit the flag:\n// Format: logicCTF{...}',
     flag: 'logicCTF{DPG_badmos}'
   },
   {
@@ -1168,7 +1169,7 @@ server.on('error', (err) => {
 function startServer(port) {
   server.listen(port, () => {
     console.log(`=======================================================`);
-    console.log(`  LOGIC BREAK CTF // CYBERNEXUS COMMAND ARENA RUNNING  `);
+    console.log(`  LOGIC BREAK CTF // LOGIC CTF COMMAND ARENA RUNNING  `);
     console.log(`  Local Gateway: http://localhost:${port}              `);
     console.log(`  Real-time SSE: http://localhost:${port}/api/events   `);
     console.log(`  Hardcoded Admin: admin / logicbreak_admin_2026        `);
