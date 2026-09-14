@@ -387,7 +387,8 @@ const MIME_TYPES = {
   '.sh': 'text/plain; charset=UTF-8',
   '.c': 'text/plain; charset=UTF-8',
   '.pem': 'text/plain; charset=UTF-8',
-  '.sql': 'text/plain; charset=UTF-8'
+  '.sql': 'text/plain; charset=UTF-8',
+  '.zip': 'application/zip'
 };
 
 // Create Server
@@ -1061,8 +1062,10 @@ const server = http.createServer(async (req, res) => {
     if (fs.existsSync(safePath)) {
       const ext = path.extname(safePath).toLowerCase();
       const mime = MIME_TYPES[ext] || 'application/octet-stream';
+      const stat = fs.statSync(safePath);
       res.writeHead(200, {
         'Content-Type': mime,
+        'Content-Length': stat.size,
         'Content-Disposition': `attachment; filename="${filename}"`
       });
       fs.createReadStream(safePath).pipe(res);

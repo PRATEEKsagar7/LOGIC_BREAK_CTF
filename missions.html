@@ -272,14 +272,6 @@
               📄
             </button>
 
-            <!-- Dedicated Download ZIP Button for archive challenges -->
-            ${ch.file && ch.file.endsWith('.zip') ? `
-              <a href="/api/files/${ch.file}" download="${ch.file}" class="px-3 py-2 rounded-xl text-xs font-mono font-bold bg-[#0e1511] border border-cyan-500/50 hover:bg-cyan-950/60 text-cyan-300 hover:text-cyan-200 transition flex items-center gap-1.5 shadow-sm active:scale-95 cursor-pointer" title="Download ZIP Archive">
-                <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span>Download ZIP</span>
-              </a>
-            ` : ''}
-
             <!-- Primary Action: Submit Flag or View Solved -->
             <button onclick="openSubmitModal('${ch.id}')" class="px-5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${ch.isSolved ? 'bg-[#1a211d] text-emerald-400 border border-emerald-500/40 hover:bg-[#224f3e]' : 'bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 shadow-md active:scale-95'}">
               <span>${ch.isSolved ? 'Re-Submit' : 'Submit Flag'}</span>
@@ -407,10 +399,25 @@
       const ch = challengesData.find(c => c.id === challengeId);
       if (!ch) return;
 
-      document.getElementById('modal-code-title').textContent = `${ch.title} // Code & Files`;
-      document.getElementById('modal-code-filename').textContent = `File: ${ch.file}`;
-      document.getElementById('modal-code-download-btn').href = `/api/files/${ch.file}`;
+      const isInteractivePlatform = (ch.number <= 4) || (ch.file && ch.file.endsWith('.html'));
+      const dlBtn = document.getElementById('modal-code-download-btn');
+
+      document.getElementById('modal-code-title').textContent = `${ch.title} // Code & Vector`;
       document.getElementById('modal-code-body').textContent = ch.codeSnippet || '// No code snippet attached.';
+
+      if (isInteractivePlatform) {
+        document.getElementById('modal-code-filename').textContent = `Target: ${ch.file} (Live Arena Platform Vector)`;
+        dlBtn.classList.add('hidden');
+      } else {
+        document.getElementById('modal-code-filename').textContent = `Artifact: ${ch.file}`;
+        dlBtn.classList.remove('hidden');
+        dlBtn.href = `/api/files/${ch.file}`;
+        dlBtn.setAttribute('download', ch.file);
+        dlBtn.innerHTML = `
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Download Artifact ${ch.file && ch.file.endsWith('.zip') ? '(ZIP)' : ''}</span>
+        `;
+      }
 
       document.getElementById('modal-code-preview').classList.remove('hidden');
     }
