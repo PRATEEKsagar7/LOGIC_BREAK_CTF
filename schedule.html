@@ -684,7 +684,7 @@
 <div class="flex items-center justify-between px-6 py-4 border-b border-cyber-border bg-cyber-elevated">
 <div class="flex items-center space-x-2">
 <svg class="w-4 h-4 text-cyber-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<h3 class="text-sm font-mono font-bold uppercase tracking-wider text-white">Share Schedule</h3>
+<h3 class="text-sm font-mono font-bold uppercase tracking-wider text-white">Share Schedule & Dossier</h3>
 </div>
 <button class="closeModalBtn text-slate-400 hover:text-white transition-colors" data-target="shareModal">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -692,27 +692,88 @@
 </div>
 <div class="p-6 space-y-4 text-xs font-mono">
 <div>
-<label class="block text-slate-300 uppercase mb-1">Direct Tactical Schedule Link</label>
+<label class="block text-slate-300 uppercase mb-1">Direct Tactical Link</label>
 <div class="flex items-center space-x-2">
-<input class="w-full bg-[#0F141C] border border-cyber-border rounded p-2 text-cyber-cyan text-[11px] select-all" id="shareLinkInput" readonly="" type="text" value="https://arena.logicctf.edu/schedule/team-alpha-0912">
+<input class="w-full bg-[#0F141C] border border-cyber-border rounded p-2 text-cyber-cyan text-[11px] select-all" id="shareLinkInput" readonly="" type="text" value="https://arena.logicctf.edu/schedule/scrimmage-dossier-0914">
 <button class="px-3 py-2 bg-cyber-elevated hover:bg-cyber-border text-white rounded border border-cyber-border transition-colors whitespace-nowrap" id="copyShareLinkBtn" type="button">
               Copy Link
             </button>
 </div>
 </div>
+
+<!-- Attached Dossier File Card -->
+<div class="p-3 rounded bg-[#0F141C] border border-cyber-border space-y-2">
+  <div class="flex items-center justify-between text-slate-400 text-[11px]">
+    <span>Attached Scrimmage Dossier:</span>
+    <span class="text-[10px] text-cyber-emerald font-bold">1.4 MB PDF</span>
+  </div>
+  <div class="flex items-center justify-between bg-[#1A2330] p-2.5 rounded border border-cyber-border/80">
+    <div class="flex items-center space-x-2 text-white">
+      <span class="text-rose-400 text-sm">📑</span>
+      <span class="font-bold text-xs">incident_recon_dossier.pdf</span>
+    </div>
+    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30">Public Dispatch</span>
+  </div>
+</div>
+
 <div class="p-3 rounded bg-[#0F141C] border border-cyber-border flex items-center justify-between">
 <div class="flex items-center space-x-2">
 <span class="w-2 h-2 rounded-full bg-cyber-emerald"></span>
-<span class="text-slate-300">Access Tier:</span>
-<span class="text-white font-semibold">Shared with: Team Members</span>
+<span class="text-slate-300">Transmission Channel:</span>
+<span class="text-white font-semibold">Active Public Gateway</span>
 </div>
-<span class="text-[10px] text-slate-500 uppercase">Collegiate Tier-1</span>
+<span class="text-[10px] text-slate-500 uppercase">Collegiate Arena</span>
 </div>
 <div class="pt-2 flex items-center justify-end space-x-3 border-t border-cyber-border/70">
 <button class="closeModalBtn px-4 py-2 rounded text-slate-300 hover:text-white bg-cyber-elevated hover:bg-[#2b3749] transition-colors" data-target="shareModal" type="button">Close</button>
-<button class="px-4 py-2 rounded bg-cyber-emerald text-black font-bold hover:bg-cyber-emeraldDark transition-colors" id="finalShareBtn" type="button">Share</button>
+<button class="px-4 py-2 rounded bg-cyber-emerald text-black font-bold hover:bg-cyber-emeraldDark transition-colors shadow-lg" id="finalShareBtn" type="button">Share File & Link</button>
 </div>
 </div>
+</div>
+</div>
+
+<!-- 6. UI Contradiction Victory Modal (Challenge 6) -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" id="scheduleFlagModal">
+<div class="bg-[#1A2330] border border-cyber-emerald/50 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl p-6 text-center space-y-4 font-mono">
+  <div class="w-12 h-12 rounded-2xl bg-cyber-emerald/20 border border-cyber-emerald/40 text-cyber-emerald flex items-center justify-center mx-auto text-2xl">
+    🎉
+  </div>
+  <div>
+    <h3 class="text-base font-black text-white uppercase tracking-wider">Contradiction Exploited!</h3>
+    <p class="text-xs text-slate-400 mt-1">
+      When two parts disagreed, you tested the truth! The Files &amp; Docs hub claimed file sharing was disabled by policy, yet the Scheduling portal permitted external file transmission.
+    </p>
+  </div>
+  <div class="bg-[#0F141C] border border-cyber-border rounded-xl p-3 text-left space-y-2 text-xs">
+    <div class="flex items-center justify-between text-slate-400 text-[11px]">
+      <span>Generated Public Dispatch Link:</span>
+      <span class="text-cyber-emerald font-bold">HTTP 200 OK</span>
+    </div>
+    <div id="scheduleShareUrlDisplay" class="text-slate-300 truncate text-[11px] font-mono select-all bg-black/40 p-1.5 rounded border border-white/5">
+      https://arena.logicctf.edu/shared/doc/...
+    </div>
+  </div>
+  <div class="bg-emerald-950/40 border border-cyber-emerald/40 rounded-xl p-3.5 space-y-1.5 text-left">
+    <div class="flex items-center justify-between">
+      <span class="text-[10px] text-cyber-emerald font-bold uppercase tracking-wider">Captured Mission Flag:</span>
+      <span class="text-[10px] px-2 py-0.5 rounded bg-cyber-emerald/20 text-cyber-emerald font-bold">+50 PTS</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <code id="scheduleFlagCode" class="flex-1 bg-black/60 px-3 py-2 rounded-lg text-cyber-emerald text-xs font-mono font-bold select-all border border-cyber-emerald/30 break-all">logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}</code>
+      <button onclick="copyScheduleFlag()" id="btnCopyScheduleFlag" class="px-3 py-2 rounded-lg bg-cyber-emerald hover:bg-cyber-emeraldDark text-black text-xs font-bold transition shrink-0">
+        Copy
+      </button>
+    </div>
+  </div>
+  <div class="flex items-center gap-2 pt-2">
+    <a href="missions.html" class="flex-1 py-2.5 rounded-xl bg-cyber-emerald hover:bg-cyber-emeraldDark text-black text-xs font-bold transition flex items-center justify-center gap-1">
+      <span>Go to Missions to Submit</span>
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+    </a>
+    <button onclick="closeModal('scheduleFlagModal')" class="px-4 py-2.5 rounded-xl bg-cyber-elevated hover:bg-[#2b3749] text-slate-300 text-xs font-bold transition">
+      Close
+    </button>
+  </div>
 </div>
 </div>
 <!-- END: ModalsSection -->
@@ -1211,10 +1272,52 @@
       });
     });
 
-    document.getElementById('finalShareBtn').addEventListener('click', () => {
-      closeModal('shareModal');
-      showToast('Schedule broadcasted to team members', 'emerald');
+    document.getElementById('finalShareBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('finalShareBtn');
+      const originalText = btn.textContent;
+      btn.textContent = 'Sharing...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/files/share', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ file: 'incident_recon_dossier.pdf' })
+        });
+        const data = await res.json();
+        btn.textContent = originalText;
+        btn.disabled = false;
+        closeModal('shareModal');
+
+        if (data && data.success) {
+          document.getElementById('scheduleShareUrlDisplay').textContent = data.shareUrl || 'https://arena.logicctf.edu/shared/doc/valid';
+          document.getElementById('scheduleFlagCode').textContent = data.flag || 'logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}';
+          openModal('scheduleFlagModal');
+        } else {
+          showToast('Share failed: ' + ((data && data.message) || 'Unknown error'), 'red');
+        }
+      } catch (e) {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        closeModal('shareModal');
+        document.getElementById('scheduleShareUrlDisplay').textContent = `https://arena.logicctf.edu/shared/doc/share_${Date.now()}`;
+        document.getElementById('scheduleFlagCode').textContent = 'logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}';
+        openModal('scheduleFlagModal');
+      }
     });
+
+    window.copyScheduleFlag = function() {
+      const flagText = document.getElementById('scheduleFlagCode').textContent.trim();
+      navigator.clipboard.writeText(flagText).then(() => {
+        const btn = document.getElementById('btnCopyScheduleFlag');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      }).catch(() => {
+        const btn = document.getElementById('btnCopyScheduleFlag');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    };
 
     // Date Switcher Mock Interactions
     const dates = ['Yesterday (Sep 11, 2026)', 'Today (Sep 12, 2026)', 'Tomorrow (Sep 13, 2026)'];

@@ -119,14 +119,14 @@ const INITIAL_CHALLENGES = [
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'The Files & Docs hub claims file sharing is disabled by policy, yet document actions suggest otherwise. Test which part reflects actual behavior to capture the flag.',
+    description: 'The Files & Docs hub claims file sharing is disabled across all collegiate nodes, yet another arena section suggests otherwise. Find where the contradiction lives and test which part reflects actual behavior.',
     hints: [
-      'Notice the warning banner in Files & Docs claiming file sharing is disabled.',
-      'Look at the active document rows—is there a functional "Share File" button on incident_recon_dossier.pdf?',
+      'Inspect Files & Docs to see what the central security banner claims about file sharing.',
+      'Check other operational sections like Schedule to see if an attached dossier file can actually be shared.',
       'When two parts disagree, test which one is telling the truth by executing the share action.'
     ],
-    file: 'files.html',
-    codeSnippet: '// UI Policy Banner:\n// "File sharing is disabled across all collegiate nodes"\n// Document Action:\n// [Share File] -> calls /api/files/share\n// Flaw: Front-end banner restriction is not enforced by backend!',
+    file: 'schedule.html',
+    codeSnippet: '// Page A (Files & Docs): "File sharing is disabled across all collegiate nodes."\n// Page B (Schedule): "Share Schedule & Dossier" available.\n// Flaw: Front-end policy restriction was cosmetic and not enforced by the backend!',
     flag: 'logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}'
   },
   {
