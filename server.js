@@ -94,20 +94,20 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch5',
     number: 5,
-    title: 'Cookie Monster',
-    category: 'Web Security',
+    title: 'The Source Code Maze',
+    category: 'Forensics & Code Recon',
     difficulty: 'Intermediate',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'A telemetry session cookie is signed with a weak JWT HMAC secret. Forge an administrative token.',
+    description: 'A decommissioned telemetry server backup contains sensitive operational assets hidden within its nested repository tree. Sift through the maze of source files, templates, and configurations to extract the true operational flag.',
     hints: [
-      'The signature HMAC secret is a standard dictionary word: "secret123".',
-      'Change "role": "guest" to "role": "admin" and re-sign the JWT payload.'
+      'Inspect the application entrypoint in app.py to trace how recovery files are routed.',
+      'Beware of decoy flags placed in database dumps and maintenance templates.'
     ],
-    file: 'challenge_05_jwt_token.txt',
-    codeSnippet: 'JWT: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJvcGVyYXRpdmVfMDkiLCJyb2xlIjoiZ3Vlc3QifQ...',
-    flag: 'logicCTF{jwt_s3cr3t_brut3f0rc3_2026}'
+    file: 'challenge_05_source_maze.zip',
+    codeSnippet: '// Decommissioned Telemetry Node v4.7.19\n// Sift through the repository tree to find the genuine recovery beacon.\n// Flag Format: logicCTF{...}',
+    flag: 'logicCTF{DPG_badmos}'
   },
   {
     id: 'ch6',
@@ -543,7 +543,8 @@ const server = http.createServer(async (req, res) => {
         (challenge.id === 'ch1' && (submittedFlag === 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}' || submittedFlag === 'logicCTF{gr4phql_1ntr0sp3ct10n_byp4ss}')) ||
         (challenge.id === 'ch2' && (submittedFlag === 'logicCTF{purg3d_r3cycl3_b1n_csv_3xp0rt}' || submittedFlag === 'logicCTF{x0r_c1ph3r_b4s364_cr4ck3d}')) ||
         (challenge.id === 'ch3' && (submittedFlag === 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}' || submittedFlag === 'logicCTF{p4ck3t_sn1ff3r_cr3ds_l34k}')) ||
-        (challenge.id === 'ch4' && (submittedFlag === 'logicCTF{r3st0r3_purg3d_r3p0rt_int3gr1ty_unl0ck}' || submittedFlag === 'logicCTF{cl13nt_s1d3_auth_1s_n0t_s4f3}'));
+        (challenge.id === 'ch4' && (submittedFlag === 'logicCTF{r3st0r3_purg3d_r3p0rt_int3gr1ty_unl0ck}' || submittedFlag === 'logicCTF{cl13nt_s1d3_auth_1s_n0t_s4f3}')) ||
+        (challenge.id === 'ch5' && (submittedFlag === 'logicCTF{DPG_badmos}' || submittedFlag === 'logicCTF{jwt_s3cr3t_brut3f0rc3_2026}'));
 
       if (isCorrect) {
         // TIER 1: +50 PTS | TIER 2: +100 PTS
@@ -614,9 +615,10 @@ const server = http.createServer(async (req, res) => {
           leaderboard: getSortedLeaderboard()
         });
 
-        const isFakeFlag = submittedFlag.toUpperCase().includes('FAKE_FLAG');
+        const isFakeFlag = submittedFlag.toUpperCase().includes('FAKE_FLAG') ||
+          submittedFlag.includes('d3c0y') || submittedFlag.includes('k33p_s34rch1ng') || submittedFlag.includes('wr0ng_c0nf1g') || submittedFlag.includes('n1c3_try');
         const penaltyMsg = isFakeFlag
-          ? `🚨 FAKE FLAG TRIGGERED! You fell for the Billing Plans decoy trap. -${challenge.penalty} PTS Penalty applied!`
+          ? `🚨 DECOY FLAG TRIGGERED! You fell for an archive decoy trap. -${challenge.penalty} PTS Penalty applied!`
           : `❌ INCORRECT FLAG! -${challenge.penalty} Points penalty applied for failed attempt on "${challenge.title}".`;
 
         res.writeHead(200, { 'Content-Type': 'application/json' });

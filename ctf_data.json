@@ -132,24 +132,24 @@
       "lastSolve": 0
     },
     {
-      "id": "usr_1789309772957",
+      "id": "usr_1789363744140",
       "type": "DUO",
-      "userId": "DUO-7532",
-      "partner1UserId": "DUO-7532-A",
-      "partner2UserId": "DUO-7532-B",
-      "name": "cvbdfg",
-      "password": "Nexus#55wW11",
+      "userId": "DUO-6891",
+      "partner1UserId": "DUO-6891-A",
+      "partner2UserId": "DUO-6891-B",
+      "name": "turuerse",
+      "password": "Nexus#Jejn66",
       "confirmed": true,
-      "college": "dpg",
+      "college": "zdbzbz",
       "partner1": {
         "name": "Prateek",
         "email": "prateeksagar640@gmail.com",
-        "userId": "DUO-7532-A"
+        "userId": "DUO-6891-A"
       },
       "partner2": {
         "name": "tanish",
         "email": "prateeksagar640@gmail.com",
-        "userId": "DUO-7532-B"
+        "userId": "DUO-6891-B"
       },
       "score": 0,
       "solved": [],
@@ -158,5 +158,35 @@
     }
   ],
   "submissions": [],
-  "purgedArtifacts": []
+  "purgedArtifacts": [
+    {
+      "id": "report_REPORT-023",
+      "name": "REPORT-023: PacketZero Network Findings",
+      "type": "Network Security (Reports)",
+      "section": "Reports",
+      "ext": "pdf",
+      "size": "1.4 MB",
+      "iconType": "pdf",
+      "deleted": "Today, 11:02 am",
+      "timestamp": 1789363926836,
+      "raw": {
+        "id": "REPORT-023",
+        "title": "PacketZero Network Findings",
+        "description": "Asynchronous packet tunneling and honeypot bypass telemetry verification.",
+        "category": "Network Security",
+        "author": "Riya Sharma",
+        "status": "Open",
+        "priority": "HIGH",
+        "created": "Sep 09, 2026",
+        "updated": "Today, 09:18 AM",
+        "summary": "Telemetry captured 84.92 KB capture file during the second wave containing unusual ICMP payload encapsulation intended to probe egress filters.",
+        "findings": [
+          "Finding 01: Egress filter evasion attempt via crafted ICMP echo payloads.",
+          "Finding 02: Honey-token ping triggered at 08:55 UTC.",
+          "Finding 03: Origin IP masked behind internal collegiate VPN subnet."
+        ],
+        "notes": "Requires immediate triage by Arena Operations."
+      }
+    }
+  ]
 }
