@@ -101,10 +101,12 @@
         "userId": "SOLO-3097"
       },
       "partner2": null,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0
+      "score": 35,
+      "solved": [
+        "ch6"
+      ],
+      "penalties": 1,
+      "lastSolve": 1789400179639
     },
     {
       "id": "usr_1789309471547",
@@ -157,7 +159,26 @@
       "lastSolve": 0
     }
   ],
-  "submissions": [],
+  "submissions": [
+    {
+      "id": "sub-1789400257154",
+      "team": "GhostOperative",
+      "challengeId": "ch5",
+      "challengeTitle": "The Source Code Maze",
+      "status": "INCORRECT",
+      "delta": "-15",
+      "timestamp": 1789400257154
+    },
+    {
+      "id": "sub-1789400179639",
+      "team": "GhostOperative",
+      "challengeId": "ch6",
+      "challengeTitle": "The UI Contradiction",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789400179639
+    }
+  ],
   "purgedArtifacts": [
     {
       "id": "report_REPORT-023",

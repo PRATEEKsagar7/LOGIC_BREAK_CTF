@@ -252,8 +252,17 @@ for (let i = 1; i <= 7; i++) {
       }, null, 2)
     });
     files.push({
+      subPath: 'core/pipeline/telemetry/manifest/.vault_flag.txt',
+      content: `logicCTF{s0urc3_m4z3_d33p_v4ult_r3c0v3r3d}\n`
+    });
+    // Also keep the flag in static/Secret/flag.txt for backwards compatibility
+    files.push({
+      subPath: 'static/Secret/flag.txt',
+      content: `logicCTF{s0urc3_m4z3_d33p_v4ult_r3c0v3r3d}\n`
+    });
+    files.push({
       subPath: `${sectorDir}/internal_archive/deep_storage/recovery_nodes/.beacon_manifest.txt`,
-      content: `logicCTF{DPG_badmos}\n`
+      content: `logicCTF{s0urc3_m4z3_d33p_v4ult_r3c0v3r3d}\n`
     });
     files.push({
       subPath: `${sectorDir}/internal_archive/deep_storage/recovery_nodes/system_integrity.nfo`,

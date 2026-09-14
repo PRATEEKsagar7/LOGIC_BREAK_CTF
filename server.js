@@ -113,20 +113,21 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch6',
     number: 6,
-    title: 'SQL Infiltration',
-    category: 'Database Security',
-    difficulty: 'Intermediate',
+    title: 'The UI Contradiction',
+    category: 'Business Logic',
+    difficulty: 'Beginner',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'Bypass collegiate database authentication using classical SQL injection and extract the secret vault record.',
+    description: 'The Files & Docs hub claims file sharing is disabled by policy, yet document actions suggest otherwise. Test which part reflects actual behavior to capture the flag.',
     hints: [
-      'Input string is concatenated directly without sanitization: SELECT * FROM users WHERE user=\'$input\'',
-      'Use UNION SELECT secret_type, secret_value FROM secret_vault--'
+      'Notice the warning banner in Files & Docs claiming file sharing is disabled.',
+      'Look at the active document rows—is there a functional "Share File" button on incident_recon_dossier.pdf?',
+      'When two parts disagree, test which one is telling the truth by executing the share action.'
     ],
-    file: 'challenge_06_sqli_dump.sql',
-    codeSnippet: 'SELECT * FROM users WHERE username=\'\' OR 1=1 UNION SELECT 1, secret_value FROM secret_vault--',
-    flag: 'logicCTF{sql1_un10n_s3l3ct_4dm1n_fl4g}'
+    file: 'files.html',
+    codeSnippet: '// UI Policy Banner:\n// "File sharing is disabled across all collegiate nodes"\n// Document Action:\n// [Share File] -> calls /api/files/share\n// Flaw: Front-end banner restriction is not enforced by backend!',
+    flag: 'logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}'
   },
   {
     id: 'ch7',
@@ -695,7 +696,7 @@ const server = http.createServer(async (req, res) => {
 
       // Check Admin Credentials
       if (usernameInput === ADMIN_CREDENTIALS.username &&
-          (passwordInput === ADMIN_CREDENTIALS.password || passwordInput === ADMIN_CREDENTIALS.backupPassword)) {
+        (passwordInput === ADMIN_CREDENTIALS.password || passwordInput === ADMIN_CREDENTIALS.backupPassword)) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
           success: true,
@@ -728,7 +729,7 @@ const server = http.createServer(async (req, res) => {
       // Check if logged in with a partner-specific ID
       const isPartner2 = participant.partner2UserId && participant.partner2UserId.toUpperCase() === usernameInput.toUpperCase();
       const isPartner1 = participant.partner1UserId && participant.partner1UserId.toUpperCase() === usernameInput.toUpperCase();
-      const activePartnerName = isPartner2 
+      const activePartnerName = isPartner2
         ? (participant.partner2 && participant.partner2.name ? participant.partner2.name : 'Partner 2')
         : (isPartner1 && participant.partner1 && participant.partner1.name ? participant.partner1.name : participant.name);
 
@@ -828,7 +829,7 @@ const server = http.createServer(async (req, res) => {
       const password = (creds.password || '').trim();
 
       const isValid = (username === ADMIN_CREDENTIALS.username) &&
-                      (password === ADMIN_CREDENTIALS.password || password === ADMIN_CREDENTIALS.backupPassword);
+        (password === ADMIN_CREDENTIALS.password || password === ADMIN_CREDENTIALS.backupPassword);
 
       if (isValid) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -1052,6 +1053,30 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(400, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ success: false, message: 'Invalid reset target.' }));
     return;
+  }
+
+  // ==========================================
+  // API: FILE SHARING (CHALLENGE 6 - THE UI CONTRADICTION)
+  // ==========================================
+  if (pathname === '/api/files/share' && req.method === 'POST') {
+    try {
+      const body = await parseJsonBody(req);
+      const filename = body.file || 'incident_recon_dossier.pdf';
+      const shareToken = 'share_' + Buffer.from(filename + '_' + Date.now()).toString('base64').replace(/=/g, '');
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        success: true,
+        file: filename,
+        shareUrl: `https://arena.logicctf.edu/shared/doc/${shareToken}`,
+        flag: 'logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}',
+        message: 'Contradiction confirmed! The security banner restriction was purely cosmetic. File sharing link generated successfully.'
+      }));
+      return;
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, message: 'Share endpoint error: ' + e.message }));
+      return;
+    }
   }
 
   // ==========================================

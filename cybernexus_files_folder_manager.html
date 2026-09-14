@@ -86,6 +86,26 @@
       </div>
     </div>
 
+    <!-- System Security Policy Banner (Challenge 6: The UI Contradiction) -->
+    <div id="sharing-policy-banner" class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs font-mono shadow-md">
+      <div class="flex items-center gap-3 text-amber-300">
+        <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <div>
+          <div class="font-bold uppercase tracking-wider text-amber-200 flex items-center gap-2">
+            <span>Global Node Policy Notice:</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">POLICY-06-ENFORCE</span>
+          </div>
+          <p class="text-amber-300/80 text-[11px] mt-0.5">File sharing is disabled across all collegiate nodes by security protocol. External transmissions are locked.</p>
+        </div>
+      </div>
+      <span class="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/40 uppercase tracking-wider shrink-0 flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+        <span>Sharing Disabled</span>
+      </span>
+    </div>
+
     <!-- Challenge Files Explorer (Table) -->
     <div class="flex flex-col gap-4">
       <div class="flex items-center justify-between">
@@ -93,7 +113,7 @@
           <span>📁</span>
           <span>Challenge Artifacts & Source Downloads</span>
         </h2>
-        <span class="text-xs font-mono text-slate-400">12 Files Verified via SHA-256</span>
+        <span class="text-xs font-mono text-slate-400" id="files-verified-count">12 Files Verified via SHA-256</span>
       </div>
 
       <div class="w-full bg-[#161d19] border border-[#2d3a43] rounded-2xl shadow-xl overflow-hidden">
@@ -113,17 +133,20 @@
             <tr id="file-row-01" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">01</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
-                <span class="text-emerald-400">🌐</span>
-                <span>projects.html</span>
+                <span class="text-amber-400">{}</span>
+                <span>challenge_01_graphql.json</span>
               </td>
-              <td class="py-3 px-4 text-slate-300">Limit Break (Business Logic)</td>
+              <td class="py-3 px-4 text-slate-300">Ghost Protocol (Web Security)</td>
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
-              <td class="py-3 px-4 text-center text-slate-400">Live Web Vector</td>
+              <td class="py-3 px-4 text-center text-slate-400">JSON Schema</td>
               <td class="py-3 px-4 text-right">
                 <div class="inline-flex items-center gap-1.5">
-                  <a href="projects.html" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                    <span>Launch Target</span> &rarr;
+                  <a href="/challenge_files/challenge_01_graphql.json" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
                   </a>
+                  <button onclick="purgeFileRow('file-row-01', 'challenge_01_graphql.json', 'JSON Schema', '42 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
                 </div>
               </td>
             </tr>
@@ -132,17 +155,20 @@
             <tr id="file-row-02" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">02</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
-                <span class="text-emerald-400">🌐</span>
-                <span>reports.html & recycle_bin.html</span>
+                <span class="text-cyan-400">📄</span>
+                <span>challenge_02_cipher.txt</span>
               </td>
-              <td class="py-3 px-4 text-slate-300">Export a report. (Business Logic)</td>
+              <td class="py-3 px-4 text-slate-300">Cipher Nexus (Cryptography)</td>
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
-              <td class="py-3 px-4 text-center text-slate-400">Live Web Vector</td>
+              <td class="py-3 px-4 text-center text-slate-400">Hex Text</td>
               <td class="py-3 px-4 text-right">
                 <div class="inline-flex items-center gap-1.5">
-                  <a href="reports.html" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                    <span>Launch Target</span> &rarr;
+                  <a href="/challenge_files/challenge_02_cipher.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
                   </a>
+                  <button onclick="purgeFileRow('file-row-02', 'challenge_02_cipher.txt', 'Hex Text', '18 KB', 'txt')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
                 </div>
               </td>
             </tr>
@@ -151,17 +177,20 @@
             <tr id="file-row-03" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">03</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
-                <span class="text-emerald-400">🌐</span>
-                <span>workspace.html</span>
+                <span class="text-indigo-400">📡</span>
+                <span>challenge_03_network.pcap.txt</span>
               </td>
-              <td class="py-3 px-4 text-slate-300">Read Between the Lines. (Business Logic)</td>
+              <td class="py-3 px-4 text-slate-300">Packet Sniffer (Network Security)</td>
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
-              <td class="py-3 px-4 text-center text-slate-400">Live Web Vector</td>
+              <td class="py-3 px-4 text-center text-slate-400">PCAP Trace</td>
               <td class="py-3 px-4 text-right">
                 <div class="inline-flex items-center gap-1.5">
-                  <a href="workspace.html" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                    <span>Launch Target</span> &rarr;
+                  <a href="/challenge_files/challenge_03_network.pcap.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
                   </a>
+                  <button onclick="purgeFileRow('file-row-03', 'challenge_03_network.pcap.txt', 'PCAP Trace', '156 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
                 </div>
               </td>
             </tr>
@@ -170,17 +199,20 @@
             <tr id="file-row-04" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">04</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
-                <span class="text-emerald-400">🌐</span>
-                <span>reports.html & recycle_bin.html</span>
+                <span class="text-amber-300">JS</span>
+                <span>challenge_04_vault.js</span>
               </td>
-              <td class="py-3 px-4 text-slate-300">Restore a report. (Business Logic)</td>
+              <td class="py-3 px-4 text-slate-300">Logic Gate Bypass (Reverse Eng)</td>
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
-              <td class="py-3 px-4 text-center text-slate-400">Live Web Vector</td>
+              <td class="py-3 px-4 text-center text-slate-400">JavaScript</td>
               <td class="py-3 px-4 text-right">
                 <div class="inline-flex items-center gap-1.5">
-                  <a href="reports.html" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                    <span>Launch Target</span> &rarr;
+                  <a href="/challenge_files/challenge_04_vault.js" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
                   </a>
+                  <button onclick="purgeFileRow('file-row-04', 'challenge_04_vault.js', 'JavaScript', '28 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
                 </div>
               </td>
             </tr>
@@ -189,37 +221,41 @@
             <tr id="file-row-05" class="hover:bg-[#1f2823] transition">
               <td class="py-3 px-4 text-slate-400">05</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
-                <span class="text-cyan-400">📦</span>
-                <span>challenge_05_source_maze.zip</span>
+                <span class="text-rose-400">🍪</span>
+                <span>challenge_05_jwt_token.txt</span>
               </td>
-              <td class="py-3 px-4 text-slate-300">The Source Code Maze (Forensics & Recon)</td>
+              <td class="py-3 px-4 text-slate-300">Cookie Monster (Web Security)</td>
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
-              <td class="py-3 px-4 text-center text-slate-400">ZIP Archive (40 KB)</td>
+              <td class="py-3 px-4 text-center text-slate-400">JWT Token</td>
               <td class="py-3 px-4 text-right">
                 <div class="inline-flex items-center gap-1.5">
-                  <a href="/api/files/challenge_05_source_maze.zip" download="challenge_05_source_maze.zip" class="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-bold transition inline-flex items-center gap-1 shadow-md">
-                    <span>Download ZIP</span> &darr;
+                  <a href="/challenge_files/challenge_05_jwt_token.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
                   </a>
+                  <button onclick="purgeFileRow('file-row-05', 'challenge_05_jwt_token.txt', 'JWT Token', '12 KB', 'txt')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
                 </div>
               </td>
             </tr>
 
-            <!-- Row 6 -->
-            <tr id="file-row-06" class="hover:bg-[#1f2823] transition">
-              <td class="py-3 px-4 text-slate-400">06</td>
+            <!-- Row 6 (Challenge 6: The UI Contradiction) -->
+            <tr id="file-row-06" class="hover:bg-[#1f2823] transition bg-emerald-500/[0.04]">
+              <td class="py-3 px-4 text-emerald-400 font-bold">06</td>
               <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
-                <span class="text-blue-400">SQL</span>
-                <span>challenge_06_sqli_dump.sql</span>
+                <span class="text-emerald-400">📑</span>
+                <span>incident_recon_dossier.pdf</span>
               </td>
-              <td class="py-3 px-4 text-slate-300">SQL Infiltration (Database)</td>
+              <td class="py-3 px-4 text-slate-300">The UI Contradiction (Business Logic)</td>
               <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
-              <td class="py-3 px-4 text-center text-slate-400">SQL Schema</td>
+              <td class="py-3 px-4 text-center text-slate-400">Incident Dossier</td>
               <td class="py-3 px-4 text-right">
                 <div class="inline-flex items-center gap-1.5">
-                  <a href="/challenge_files/challenge_06_sqli_dump.sql" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
-                    <span>Download</span> &darr;
-                  </a>
-                  <button onclick="purgeFileRow('file-row-06', 'challenge_06_sqli_dump.sql', 'SQL Schema', '85 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                  <button onclick="openShareModal('incident_recon_dossier.pdf')" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1.5 shadow-sm" title="Share Document Link">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                    <span>Share File</span>
+                  </button>
+                  <button onclick="purgeFileRow('file-row-06', 'incident_recon_dossier.pdf', 'Incident Dossier', '1.4 MB', 'pdf')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                   </button>
                 </div>
@@ -364,8 +400,174 @@
 
   </main>
 
-  <!-- Purge & Deletion Client Logic -->
+  <!-- Modal: Share File (Challenge 6: The UI Contradiction) -->
+  <div id="modal-share-file" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-[#161d19] border border-[#2d3a43] rounded-2xl p-6 shadow-2xl space-y-4 font-mono">
+      <div class="flex items-center justify-between border-b border-[#2d3a43] pb-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-500/30">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white">Share Document Artifact</h3>
+            <p class="text-[11px] text-slate-400">Target: <span id="share-target-filename" class="text-emerald-400 font-bold">incident_recon_dossier.pdf</span></p>
+          </div>
+        </div>
+        <button onclick="closeShareModal()" class="text-slate-400 hover:text-white text-lg transition">✕</button>
+      </div>
+
+      <div class="p-3 bg-amber-500/10 border border-amber-500/25 rounded-xl text-xs text-amber-300 space-y-1">
+        <div class="font-bold flex items-center gap-1.5 text-amber-200">
+          <span>⚠️</span>
+          <span>Security Contradiction Diagnostic:</span>
+        </div>
+        <p class="text-[11px] text-amber-300/90 leading-relaxed">
+          The global security banner claims file sharing is prohibited. Test if backend authorization enforces this restriction or if external transmission succeeds.
+        </p>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-slate-400 mb-1">Public Access Permitted</label>
+          <select id="share-access-type" class="w-full bg-[#0e1511] border border-[#2d3a43] rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-emerald-500">
+            <option value="public">Public Link (Direct External Transmission)</option>
+            <option value="authenticated">Restricted (Collegiate Nodes Only)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-slate-400 mb-1">Token TTL</label>
+          <input type="text" value="24 Hours (Rolling Expiration)" readonly class="w-full bg-[#0e1511] border border-[#2d3a43] rounded-xl px-3 py-2 text-slate-400 cursor-not-allowed">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-3 border-t border-[#2d3a43]">
+        <button onclick="closeShareModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition">
+          Cancel
+        </button>
+        <button id="btnConfirmShare" onclick="submitFileShare()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 text-xs font-bold transition shadow-lg flex items-center gap-1.5">
+          <span>Confirm & Generate Share Link</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Flag Unlocked Success (Challenge 6) -->
+  <div id="modal-share-flag" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-[#161d19] border border-emerald-500/50 rounded-2xl p-6 shadow-2xl space-y-4 font-mono text-center">
+      <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 flex items-center justify-center mx-auto text-2xl">
+        🎉
+      </div>
+
+      <div>
+        <h3 class="text-base font-black text-white uppercase tracking-wider">Contradiction Exploited!</h3>
+        <p class="text-xs text-slate-400 mt-1">
+          When two parts disagreed, you proved the truth: the security policy restriction was merely cosmetic! File sharing link generated successfully.
+        </p>
+      </div>
+
+      <div class="bg-[#0e1511] border border-[#2d3a43] rounded-xl p-3 text-left space-y-2 text-xs">
+        <div class="flex items-center justify-between text-slate-400 text-[11px]">
+          <span>Generated Public Link:</span>
+          <span class="text-emerald-400 font-bold">HTTP 200 OK</span>
+        </div>
+        <div id="share-link-url" class="text-slate-300 truncate text-[11px] font-mono select-all bg-black/40 p-1.5 rounded border border-white/5">
+          https://arena.logicctf.edu/shared/doc/...
+        </div>
+      </div>
+
+      <div class="bg-emerald-950/40 border border-emerald-500/40 rounded-xl p-3.5 space-y-1.5 text-left">
+        <div class="flex items-center justify-between">
+          <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">Captured Mission Flag:</span>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">+50 PTS</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <code id="share-flag-code" class="flex-1 bg-black/60 px-3 py-2 rounded-lg text-emerald-300 text-xs font-mono font-bold select-all border border-emerald-500/30 break-all">logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}</code>
+          <button onclick="copyShareFlag()" id="btnCopyShareFlag" class="px-3 py-2 rounded-lg bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 text-xs font-bold transition shrink-0">
+            Copy
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 pt-2">
+        <a href="missions.html" class="flex-1 py-2.5 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 text-xs font-bold transition flex items-center justify-center gap-1">
+          <span>Go to Missions to Submit</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+        <button onclick="closeShareFlagModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Purge & Deletion Client Logic + File Sharing Challenge 6 Logic -->
   <script>
+    let currentShareFile = 'incident_recon_dossier.pdf';
+
+    function openShareModal(filename) {
+      currentShareFile = filename || 'incident_recon_dossier.pdf';
+      const label = document.getElementById('share-target-filename');
+      if (label) label.textContent = currentShareFile;
+      document.getElementById('modal-share-file').classList.remove('hidden');
+    }
+
+    function closeShareModal() {
+      document.getElementById('modal-share-file').classList.add('hidden');
+    }
+
+    async function submitFileShare() {
+      const btn = document.getElementById('btnConfirmShare');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = `<span>Sharing...</span>`;
+
+      try {
+        const res = await fetch('/api/files/share', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ file: currentShareFile })
+        });
+        const data = await res.json();
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+
+        if (data.success) {
+          closeShareModal();
+          document.getElementById('share-link-url').textContent = data.shareUrl || 'https://arena.logicctf.edu/shared/doc/valid';
+          document.getElementById('share-flag-code').textContent = data.flag || 'logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}';
+          document.getElementById('modal-share-flag').classList.remove('hidden');
+        } else {
+          alert('Share request failed: ' + (data.message || 'Unknown error'));
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+        // Offline / fallback emulation
+        closeShareModal();
+        document.getElementById('share-link-url').textContent = `https://arena.logicctf.edu/shared/doc/share_${Date.now()}`;
+        document.getElementById('share-flag-code').textContent = 'logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}';
+        document.getElementById('modal-share-flag').classList.remove('hidden');
+      }
+    }
+
+    function closeShareFlagModal() {
+      document.getElementById('modal-share-flag').classList.add('hidden');
+    }
+
+    function copyShareFlag() {
+      const flagText = document.getElementById('share-flag-code').textContent.trim();
+      navigator.clipboard.writeText(flagText).then(() => {
+        const copyBtn = document.getElementById('btnCopyShareFlag');
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+      }).catch(() => {
+        const copyBtn = document.getElementById('btnCopyShareFlag');
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+      });
+    }
+
     function getDeletedFileIds() {
       try {
         return JSON.parse(localStorage.getItem('logic_ctf_deleted_file_ids') || '[]');
