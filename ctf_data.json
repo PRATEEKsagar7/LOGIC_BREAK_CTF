@@ -10,10 +10,12 @@
       "password": "Logic#01Pass!",
       "college": "Collegiate Arena",
       "confirmed": true,
-      "score": 0,
-      "solved": [],
+      "score": 50,
+      "solved": [
+        "ch1"
+      ],
       "penalties": 0,
-      "lastSolve": 0,
+      "lastSolve": 1789585801439,
       "partner1": {
         "name": "Operative 01-A",
         "userId": "TEAM-01"
@@ -576,6 +578,16 @@
       }
     }
   ],
-  "submissions": [],
+  "submissions": [
+    {
+      "id": "sub-1789585801439",
+      "team": "Team 01",
+      "challengeId": "ch1",
+      "challengeTitle": "Limit Break",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789585801439
+    }
+  ],
   "purgedArtifacts": []
 }
