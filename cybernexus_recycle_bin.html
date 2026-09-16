@@ -825,7 +825,7 @@
       const restoreKey = 'logic_ctf_restored_' + userKey;
       let restored = JSON.parse(localStorage.getItem(restoreKey) || '[]');
       const now = Date.now();
-      const TWENTY_MIN_MS = 20 * 60 * 1000;
+      const FIVE_MIN_MS = 5 * 60 * 1000;
 
       deletedFiles.forEach(file => {
         if (file && (file.section === 'Reports' || (file.id && file.id.startsWith('report_')))) {
@@ -835,7 +835,7 @@
             restored.push({
               id: cleanReportId,
               unlockedAt: now,
-              expiresAt: now + TWENTY_MIN_MS
+              expiresAt: now + FIVE_MIN_MS
             });
 
             const firstDelKey = 'logic_ctf_first_deleted_' + userKey;

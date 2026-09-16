@@ -1,0 +1,7 @@
+{
+  "env": "production",
+  "cluster_id": "eu-central-09",
+  "database_uri": "sqlite:////tmp/shadow_backup.db",
+  "cache_backend": "filesystem",
+  "debug": false
+}

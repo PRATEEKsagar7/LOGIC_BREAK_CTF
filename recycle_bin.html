@@ -769,12 +769,12 @@
           let restored = JSON.parse(localStorage.getItem(restoreKey) || '[]');
           
           const now = Date.now();
-          const TWENTY_MIN_MS = 20 * 60 * 1000;
+          const FIVE_MIN_MS = 5 * 60 * 1000;
           restored = restored.filter(r => (typeof r === 'string' ? r : r.id) !== cleanReportId && (!r.expiresAt || r.expiresAt > now));
           restored.push({
             id: cleanReportId,
             unlockedAt: now,
-            expiresAt: now + TWENTY_MIN_MS
+            expiresAt: now + FIVE_MIN_MS
           });
           localStorage.setItem(restoreKey, JSON.stringify(restored));
 
@@ -801,7 +801,7 @@
 
       closeModal('modalRestoreItem');
       renderList();
-      showToast('Item restored successfully. Access unlocked in origin section.');
+      showToast('Item restored successfully. Access unlocked in origin section for 5 minutes.');
       currentActiveMenuFileId = null;
     }
 
@@ -832,12 +832,12 @@
     }
 
     function confirmRestoreAllItems() {
-      // Mark all restored reports as unlocked for this user (20 min window)
+      // Mark all restored reports as unlocked for this user (5 min window)
       const userKey = (typeof window.getLogicCTFUserKey === 'function' ? window.getLogicCTFUserKey() : 'GUEST_OPERATIVE');
       const restoreKey = 'logic_ctf_restored_' + userKey;
       let restored = JSON.parse(localStorage.getItem(restoreKey) || '[]');
       const now = Date.now();
-      const TWENTY_MIN_MS = 20 * 60 * 1000;
+      const FIVE_MIN_MS = 5 * 60 * 1000;
 
       deletedFiles.forEach(file => {
         if (file && (file.section === 'Reports' || (file.id && file.id.startsWith('report_')))) {
@@ -847,7 +847,7 @@
             restored.push({
               id: cleanReportId,
               unlockedAt: now,
-              expiresAt: now + TWENTY_MIN_MS
+              expiresAt: now + FIVE_MIN_MS
             });
 
             const firstDelKey = 'logic_ctf_first_deleted_' + userKey;

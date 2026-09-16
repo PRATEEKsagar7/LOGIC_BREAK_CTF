@@ -165,9 +165,25 @@
           <div class="flex flex-wrap items-baseline justify-between gap-2 mb-4">
             <h2 id="displayPlanName" class="text-xl sm:text-2xl font-bold text-white tracking-tight">LOGIC CTF Pro</h2>
             <div class="text-right">
-              <span id="displayPlanPrice" class="text-xl font-bold font-mono text-[#00FF9D]">â‚¹999</span>
+              <span id="displayPlanPrice" class="text-xl font-bold font-mono text-[#00FF9D]">₹999</span>
               <span id="displayPlanCycle" class="text-xs text-[#94A3B8] font-mono">/ month</span>
             </div>
+          </div>
+
+          <!-- Cancelled State Banner (Challenge 16) -->
+          <div id="planCancelledBanner" class="hidden mb-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs font-mono space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-amber-300 flex items-center gap-1.5">
+                <span>⚠️</span>
+                <span>Account State: Subscription Cancelled</span>
+              </span>
+              <button type="button" onclick="openModal(document.getElementById('cancelledActiveFlagModal'))" class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold hover:bg-emerald-500/30 transition cursor-pointer">
+                View Flag 🚩
+              </button>
+            </div>
+            <p class="text-[10px] text-slate-300">
+              Transaction error bypassed: Server confirmed cancellation. Reverted to Free Community Node.
+            </p>
           </div>
 
           <div class="space-y-2.5 pt-3 border-t border-[#2D3A4B]/80 font-mono text-xs">
@@ -255,12 +271,29 @@
         <div>
           <div class="flex items-center gap-2">
             <span class="text-xs font-mono font-bold uppercase tracking-wider text-[#00FF9D]">ARCHIVE RECORDS</span>
-            <span class="text-xs text-[#94A3B8] font-mono">â€¢ 3 INVOICES</span>
+            <span id="billingRecordCountBadge" class="text-xs text-[#94A3B8] font-mono">• 3 INVOICES</span>
           </div>
           <h2 class="text-base sm:text-lg font-bold text-white tracking-tight">Billing History</h2>
         </div>
-        <div class="text-xs text-[#94A3B8] font-mono">
-          Currency: <span class="text-white font-medium">INR (â‚¹)</span> â€¢ All transactions verified
+        
+        <!-- Built-in Search & Filter Bar (Challenge 7: The Secret Search Result) -->
+        <div class="flex items-center gap-3">
+          <div class="relative w-full sm:w-72">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-[#94A3B8]">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </span>
+            <input type="text" id="invoiceSearchInput" placeholder="Search records or vouchers..." autocomplete="off" class="w-full pl-9 pr-8 py-1.5 rounded-lg bg-[#090E16] border border-[#2D3A4B] text-xs text-white placeholder-[#94A3B8] focus:outline-none focus:border-[#00FF9D] transition font-mono">
+            <button id="btnClearInvoiceSearch" class="hidden absolute inset-y-0 right-0 pr-2.5 flex items-center text-[#94A3B8] hover:text-white transition" title="Clear Search">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div class="hidden md:block text-xs text-[#94A3B8] font-mono whitespace-nowrap">
+            Currency: <span class="text-white font-medium">INR (₹)</span>
+          </div>
         </div>
       </div>
 
@@ -348,7 +381,7 @@
       </div>
 
       <!-- MOBILE RESPONSIVE CARDS VIEW -->
-      <div class="sm:hidden p-4 space-y-3">
+      <div id="billingHistoryMobileCards" class="sm:hidden p-4 space-y-3">
         <!-- Mobile Card 1 -->
         <div class="p-4 rounded-lg bg-[#0F141C] border border-[#2D3A4B] flex flex-col gap-3">
           <div class="flex items-center justify-between">
@@ -576,6 +609,85 @@
     </div>
   </div>
 
+  <!-- ================= MODAL: CANCELLATION FAILED SIMULATION (CHALLENGE 16) ================= -->
+  <div id="modalCancellationFailed" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden modal-backdrop">
+    <div class="bg-[#1A2330] border border-red-500/60 rounded-xl max-w-md w-full p-6 shadow-2xl relative font-mono text-xs" onclick="event.stopPropagation()">
+      <div class="flex items-center gap-3 pb-3 border-b border-[#2D3A4B]">
+        <div class="w-10 h-10 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 text-xl font-bold">
+          ⚠️
+        </div>
+        <div>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">Gateway Error 502: Action Failed</h3>
+          <span class="text-[10px] text-red-400">Subscription Cancellation Aborted</span>
+        </div>
+      </div>
+      <div class="py-4 space-y-3 text-slate-300 leading-relaxed">
+        <div class="p-3 bg-red-950/40 border border-red-500/30 rounded-lg text-red-200">
+          <strong>Transaction Error:</strong> Failed to terminate institutional node subscription. Gateway reported a transient provider lock. Your plan remains marked active.
+        </div>
+        <div class="p-2.5 rounded bg-[#090E16] border border-[#2D3A4B] text-[11px] text-amber-300 space-y-1">
+          <div class="font-bold flex items-center gap-1">
+            <span>💡</span>
+            <span>Audit Hint:</span>
+          </div>
+          <p class="italic text-slate-300">
+            “After billing tells you something, check the account again.”
+          </p>
+        </div>
+      </div>
+      <div class="pt-3 border-t border-[#2D3A4B] flex items-center justify-between">
+        <span class="text-[10px] text-slate-500">HTTP 502 Bad Gateway</span>
+        <button type="button" id="btnCloseCancellationFailed" class="px-4 py-2 rounded-lg bg-[#212B3A] hover:bg-[#2D3A4B] text-white font-medium text-xs transition cursor-pointer">
+          Dismiss
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: CANCELLED BUT ACTIVE VICTORY (CHALLENGE 16) ================= -->
+  <div id="cancelledActiveFlagModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden modal-backdrop">
+    <div class="bg-[#1A2330] border-2 border-emerald-500/80 rounded-2xl max-w-md w-full p-6 text-center space-y-4 font-mono shadow-[0_0_50px_rgba(0,255,157,0.3)] animate-in fade-in zoom-in-95 duration-200" onclick="event.stopPropagation()">
+      <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-300 flex items-center justify-center mx-auto text-3xl shadow-[0_0_20px_rgba(0,255,157,0.4)]">
+        💳
+      </div>
+      <div>
+        <span class="px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold uppercase tracking-wider">
+          CHALLENGE 16 SOLVED • TIER 1 (+50 PTS)
+        </span>
+        <h3 class="text-xl font-black text-white uppercase tracking-wider mt-2">Cancelled but Active!</h3>
+        <p class="text-xs text-slate-300 italic mt-1 font-semibold">
+          “After billing tells you something, check the account again.”
+        </p>
+        <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+          The billing message said no, but the account said yes! The UI reported error 502 on cancellation, but reviewing the refreshed account state proved the cancellation was committed in the background!
+        </p>
+      </div>
+
+      <!-- Flag Display Box -->
+      <div class="p-3.5 rounded-xl bg-[#090E16] border border-[#2D3A4B] space-y-2 text-left">
+        <div class="flex items-center justify-between text-[11px] text-slate-400">
+          <span>OFFICIAL MISSION FLAG:</span>
+          <span class="text-[#00FF9D] text-[10px] font-bold">+50 PTS</span>
+        </div>
+        <div class="flex items-center justify-between bg-[#141B26] p-2.5 rounded border border-[#00FF9D]/40 gap-2">
+          <code class="text-[#00FF9D] font-bold text-xs select-all break-all" id="cancelledActiveFlagCode">logicCTF{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}</code>
+          <button class="px-3 py-1.5 bg-[#00FF9D] text-[#090E16] text-xs font-bold rounded hover:bg-[#10B981] transition-colors shrink-0 cursor-pointer" id="btnCopyCancelledActiveFlag" onclick="copyCancelledActiveFlag()">
+            Copy
+          </button>
+        </div>
+      </div>
+
+      <div class="pt-2 flex items-center justify-between gap-3">
+        <button class="flex-1 py-2.5 rounded-xl bg-[#212B3A] hover:bg-[#2D3A4B] text-slate-300 hover:text-white transition-colors text-xs font-bold cursor-pointer" id="btnCloseCancelledActiveModal" type="button">
+          Dismiss
+        </button>
+        <a href="missions.html" class="flex-1 py-2.5 rounded-xl bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] text-xs font-bold transition-colors flex items-center justify-center gap-1">
+          <span>Submit Flag</span> &rarr;
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- ================= MODAL 4: INVOICE PREVIEW ================= -->
   <div id="modalInvoice" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden modal-backdrop">
     <div class="bg-[#1A2330] border border-[#2D3A4B] rounded-xl max-w-md w-full p-6 shadow-2xl relative" onclick="event.stopPropagation()">
@@ -638,12 +750,73 @@
         <button type="button" id="btnCloseInvoiceBtn" class="px-4 py-2 rounded-lg bg-[#212B3A] hover:bg-[#2D3A4B] text-[#94A3B8] hover:text-white font-medium text-xs transition">
           Close
         </button>
+        <!-- Secret Claim Button for Unlisted Voucher (Challenge 7) -->
+        <button type="button" id="btnClaimSecretVoucher" class="hidden px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 to-emerald-400 hover:from-amber-300 hover:to-emerald-300 text-slate-950 font-black text-xs tracking-wide transition shadow-[0_0_18px_rgba(0,255,157,0.35)] flex items-center gap-1.5 active:scale-95 cursor-pointer">
+          <svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          <span id="claimVoucherBtnText">Claim Classified Voucher</span>
+        </button>
         <button type="button" id="btnExportInvoicePdf" class="px-4 py-2 rounded-lg bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-bold text-xs tracking-wide transition shadow-[0_0_10px_rgba(0,255,157,0.2)] flex items-center gap-1.5">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
           Export
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL: SECRET SEARCH VOUCHER FLAG VICTORY (CHALLENGE 7) ================= -->
+  <div id="secretVoucherFlagModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden bg-black/85 backdrop-blur-md">
+    <div class="bg-[#0F141C] border-2 border-[#00FF9D] rounded-2xl max-w-lg w-full p-6 sm:p-7 shadow-[0_0_50px_rgba(0,255,157,0.3)] space-y-5 relative animate-in fade-in zoom-in duration-200" onclick="event.stopPropagation()">
+      <!-- Header -->
+      <div class="flex items-start justify-between border-b border-[#2D3A4B] pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-[#00FF9D]/10 border border-[#00FF9D]/40 flex items-center justify-center text-2xl shadow-[0_0_20px_rgba(0,255,157,0.25)]">
+            🎯
+          </div>
+          <div>
+            <div class="text-[10px] font-mono text-[#00FF9D] font-bold uppercase tracking-wider animate-pulse">
+              ARENA EXPLOIT CONFIRMED // CHALLENGE 07
+            </div>
+            <h3 class="text-xl font-bold text-white tracking-tight font-mono">
+              The Secret Search Result
+            </h3>
+          </div>
+        </div>
+        <button onclick="closeModal(document.getElementById('secretVoucherFlagModal'))" class="text-[#94A3B8] hover:text-white p-1 rounded-lg transition">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Brief -->
+      <p class="text-xs text-slate-300 leading-relaxed font-sans">
+        You successfully utilized the built-in search filter to surface the unlisted billing record (<span class="text-white font-mono font-bold">INV-SECRET-077</span>) and authorized the classified allocation voucher.
+      </p>
+
+      <!-- Flag Container -->
+      <div class="p-4 rounded-xl bg-[#1A2330] border border-[#00FF9D]/40 space-y-2">
+        <div class="flex items-center justify-between text-[11px] font-mono">
+          <span class="text-[#00FF9D] font-bold">AUTHENTIC RECOVERY BEACON:</span>
+          <span class="text-emerald-400 font-bold">+50 PTS TIER 1</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input id="secretVoucherFlagInput" readonly value="logicCTF{s3cr3t_s34rch_unl1st3d_inv01c3_r3v34l3d}" class="flex-1 bg-[#090E16] px-3.5 py-2.5 rounded-lg font-mono text-xs text-[#00FF9D] font-bold border border-[#2D3A4B] select-all focus:outline-none focus:border-[#00FF9D]" />
+          <button id="btnCopySecretVoucherFlag" onclick="copySecretVoucherFlag()" class="px-4 py-2.5 rounded-lg bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-bold text-xs font-mono transition flex items-center gap-1.5 shrink-0 shadow-[0_0_15px_rgba(0,255,157,0.3)] active:scale-95 cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="copySecretVoucherFlagText">Copy Flag</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]">
+        <span class="text-[11px] font-mono text-[#94A3B8]">Submit key in Missions console</span>
+        <a href="missions.html" class="px-5 py-2.5 rounded-xl bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-bold text-xs font-mono transition flex items-center gap-2 shadow-lg active:scale-95">
+          <span>Go to Missions</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
     </div>
   </div>
@@ -914,28 +1087,332 @@
       if (e.target === modalCancelSub) closeModal(modalCancelSub);
     });
 
+    const modalCancellationFailed = document.getElementById('modalCancellationFailed');
+    const btnCloseCancellationFailed = document.getElementById('btnCloseCancellationFailed');
+    const cancelledActiveFlagModal = document.getElementById('cancelledActiveFlagModal');
+    const btnCloseCancelledActiveModal = document.getElementById('btnCloseCancelledActiveModal');
+
+    if (btnCloseCancellationFailed) {
+      btnCloseCancellationFailed.addEventListener('click', () => closeModal(modalCancellationFailed));
+    }
+    if (modalCancellationFailed) {
+      modalCancellationFailed.addEventListener('click', (e) => {
+        if (e.target === modalCancellationFailed) closeModal(modalCancellationFailed);
+      });
+    }
+    if (btnCloseCancelledActiveModal) {
+      btnCloseCancelledActiveModal.addEventListener('click', () => closeModal(cancelledActiveFlagModal));
+    }
+    if (cancelledActiveFlagModal) {
+      cancelledActiveFlagModal.addEventListener('click', (e) => {
+        if (e.target === cancelledActiveFlagModal) closeModal(cancelledActiveFlagModal);
+      });
+    }
+
     btnConfirmCancelSub.addEventListener('click', () => {
       closeModal(modalCancelSub);
-      state.status = 'Pending Cancellation';
-      const badge = document.getElementById('badgePlanStatus');
-      badge.className = 'inline-flex items-center gap-1.5 text-[11px] font-mono font-medium px-2.5 py-1 rounded-md bg-[#EF4444]/10 border border-[#EF4444]/40 text-[#EF4444]';
-      badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-[#EF4444]"></span>Cancels on Sep 30';
-      showToast('Subscription scheduled for cancellation', 'Access active until Sep 30, 2026');
+
+      // Persist cancellation in background state for Challenge 16!
+      localStorage.setItem('logic_ctf_sub_cancelled', 'true');
+
+      // Surface simulated gateway failure to participant
+      openModal(modalCancellationFailed);
+      showToast('Transaction Error 502: Action Failed', 'Gateway reported transient lock - action aborted');
     });
+
+    window.copyCancelledActiveFlag = function() {
+      const flagCode = document.getElementById('cancelledActiveFlagCode').textContent.trim();
+      navigator.clipboard.writeText(flagCode).then(() => {
+        const btn = document.getElementById('btnCopyCancelledActiveFlag');
+        if (btn) {
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy', 2000);
+        }
+      }).catch(() => {
+        const btn = document.getElementById('btnCopyCancelledActiveFlag');
+        if (btn) {
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy', 2000);
+        }
+      });
+    };
+
+    function checkCancelledActiveState() {
+      if (localStorage.getItem('logic_ctf_sub_cancelled') === 'true') {
+        const badge = document.getElementById('badgePlanStatus');
+        if (badge) {
+          badge.className = 'inline-flex items-center gap-1.5 text-[11px] font-mono font-medium px-2.5 py-1 rounded-md bg-amber-950 text-amber-300 border border-amber-500/40';
+          badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>Cancelled (Free Tier)';
+        }
+        const nameEl = document.getElementById('displayPlanName');
+        if (nameEl) nameEl.textContent = 'LOGIC CTF Pro (Cancelled)';
+        const priceEl = document.getElementById('displayPlanPrice');
+        if (priceEl) priceEl.textContent = '₹0.00';
+
+        const bannerEl = document.getElementById('planCancelledBanner');
+        if (bannerEl) bannerEl.classList.remove('hidden');
+
+        setTimeout(() => {
+          if (cancelledActiveFlagModal) openModal(cancelledActiveFlagModal);
+        }, 500);
+      }
+    }
+
+    // Check account state on initialization
+    checkCancelledActiveState();
+
+    // ================= INVOICE RECORDS & SECRET SEARCH LOGIC =================
+    const INVOICE_RECORDS = [
+      {
+        id: 'INV-2026-0901',
+        date: 'September 01, 2026',
+        description: 'LOGIC CTF Pro',
+        plan: 'LOGIC CTF Pro',
+        amount: '₹999',
+        status: 'Paid',
+        method: 'Visa ending in 4242',
+        isSecret: false
+      },
+      {
+        id: 'INV-2026-0801',
+        date: 'August 01, 2026',
+        description: 'LOGIC CTF Pro',
+        plan: 'LOGIC CTF Pro',
+        amount: '₹999',
+        status: 'Paid',
+        method: 'Visa ending in 4242',
+        isSecret: false
+      },
+      {
+        id: 'INV-2026-0701',
+        date: 'July 01, 2026',
+        description: 'LOGIC CTF Pro',
+        plan: 'LOGIC CTF Pro',
+        amount: '₹999',
+        status: 'Paid',
+        method: 'Visa ending in 4242',
+        isSecret: false
+      },
+      {
+        id: 'INV-SECRET-077',
+        date: 'September 14, 2026',
+        description: 'Classified Arena Vulnerability Bounty Voucher',
+        plan: 'Classified Arena Bounty Voucher',
+        amount: '₹0.00',
+        status: 'Pending Claim',
+        method: 'Institutional Bug Bounty Allocation // UNLISTED',
+        isSecret: true,
+        details: 'Unlisted allocation record unlocked through search filter reconnaissance.'
+      }
+    ];
+
+    const invoiceSearchInput = document.getElementById('invoiceSearchInput');
+    const btnClearInvoiceSearch = document.getElementById('btnClearInvoiceSearch');
+    const billingRecordCountBadge = document.getElementById('billingRecordCountBadge');
+    const billingHistoryTableBody = document.getElementById('billingHistoryTableBody');
+    const billingHistoryMobileCards = document.getElementById('billingHistoryMobileCards');
+
+    function renderInvoiceRecords(searchTerm = '') {
+      const q = searchTerm.trim().toLowerCase();
+      let matched = [];
+
+      if (!q) {
+        // Normal list view: secret records are hidden
+        matched = INVOICE_RECORDS.filter(inv => !inv.isSecret);
+        if (billingRecordCountBadge) billingRecordCountBadge.textContent = `• ${matched.length} INVOICES`;
+      } else {
+        // Search view: searching indexes unlisted records as well!
+        matched = INVOICE_RECORDS.filter(inv => {
+          const inId = inv.id.toLowerCase().includes(q);
+          const inDesc = inv.description.toLowerCase().includes(q);
+          const inStatus = inv.status.toLowerCase().includes(q);
+          const inMethod = inv.method.toLowerCase().includes(q);
+          const inAmount = inv.amount.toLowerCase().includes(q);
+
+          // Keyword matches for Challenge 7
+          const isSecretKeyword = inv.isSecret && (
+            q === 'secret' || q === 'hidden' || q === 'voucher' || q === 'bounty' ||
+            q === 'classified' || q === 'unlisted' || q === 'flag' || q === '077' ||
+            q === 'shadow' || q === 'audit' || q === 'recon'
+          );
+
+          return inId || inDesc || inStatus || inMethod || inAmount || isSecretKeyword;
+        });
+
+        const hasSecret = matched.some(m => m.isSecret);
+        if (billingRecordCountBadge) {
+          if (hasSecret) {
+            billingRecordCountBadge.innerHTML = `<span class="text-amber-400 font-bold animate-pulse">• 1 UNLISTED RECORD FOUND</span>`;
+          } else {
+            billingRecordCountBadge.textContent = `• ${matched.length} FOUND`;
+          }
+        }
+      }
+
+      // Update Desktop Table
+      if (billingHistoryTableBody) {
+        if (matched.length === 0) {
+          billingHistoryTableBody.innerHTML = `
+            <tr>
+              <td colspan="5" class="py-8 text-center text-[#94A3B8] font-mono text-xs">
+                No matching billing records or allocation vouchers located.
+              </td>
+            </tr>
+          `;
+        } else {
+          billingHistoryTableBody.innerHTML = matched.map(inv => {
+            if (inv.isSecret) {
+              return `
+                <tr class="bg-amber-400/5 hover:bg-amber-400/10 transition group border-l-2 border-amber-400">
+                  <td class="py-3.5 px-6 font-mono text-amber-300 font-medium">${inv.date}</td>
+                  <td class="py-3.5 px-6 font-medium text-white flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                    <span class="text-amber-300 font-bold">${inv.description}</span>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-400/20 text-amber-300 border border-amber-400/40">UNLISTED</span>
+                  </td>
+                  <td class="py-3.5 px-6 font-mono font-bold text-amber-400">${inv.amount}</td>
+                  <td class="py-3.5 px-6">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-amber-400/15 text-amber-400 border border-amber-400/40">
+                      ⚡ Pending Claim
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-6 text-right">
+                    <button onclick="openInvoiceModal('${inv.id}', '${inv.date}', '${inv.plan}', '${inv.amount}', '${inv.status}', '${inv.method}', true)" class="px-3.5 py-1.5 rounded bg-gradient-to-r from-amber-400 to-emerald-400 hover:from-amber-300 hover:to-emerald-300 text-slate-950 font-black text-xs transition shadow-[0_0_12px_rgba(245,158,11,0.35)] active:scale-95 cursor-pointer">
+                      View &amp; Claim
+                    </button>
+                  </td>
+                </tr>
+              `;
+            } else {
+              return `
+                <tr class="hover:bg-[#212B3A]/40 transition group">
+                  <td class="py-3.5 px-6 font-mono text-[#94A3B8] group-hover:text-white">${inv.date}</td>
+                  <td class="py-3.5 px-6 font-medium text-white flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#00FF9D]"></span>
+                    ${inv.description}
+                  </td>
+                  <td class="py-3.5 px-6 font-mono font-bold text-white">${inv.amount}</td>
+                  <td class="py-3.5 px-6">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-mono font-medium bg-[#00FF9D]/10 text-[#00FF9D] border border-[#00FF9D]/30">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      ${inv.status}
+                    </span>
+                  </td>
+                  <td class="py-3.5 px-6 text-right">
+                    <button onclick="openInvoiceModal('${inv.id}', '${inv.date}', '${inv.plan}', '${inv.amount}', '${inv.status}', '${inv.method}', false)" class="px-3 py-1.5 rounded bg-[#212B3A] hover:bg-[#00FF9D] hover:text-[#090E16] text-[#00FF9D] border border-[#2D3A4B] font-semibold text-xs transition">
+                      View
+                    </button>
+                  </td>
+                </tr>
+              `;
+            }
+          }).join('');
+        }
+      }
+
+      // Update Mobile Cards
+      if (billingHistoryMobileCards) {
+        if (matched.length === 0) {
+          billingHistoryMobileCards.innerHTML = `
+            <div class="p-6 text-center text-[#94A3B8] font-mono text-xs">
+              No matching records found.
+            </div>
+          `;
+        } else {
+          billingHistoryMobileCards.innerHTML = matched.map(inv => {
+            if (inv.isSecret) {
+              return `
+                <div class="p-4 rounded-lg bg-[#0F141C] border border-amber-400 flex flex-col gap-3 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-mono text-amber-300 font-bold">${inv.date}</span>
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-400/20 text-amber-300 border border-amber-400/40">
+                      ⚡ UNLISTED
+                    </span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-white text-sm">${inv.description}</span>
+                    <span class="font-mono font-bold text-amber-400 text-base">${inv.amount}</span>
+                  </div>
+                  <button onclick="openInvoiceModal('${inv.id}', '${inv.date}', '${inv.plan}', '${inv.amount}', '${inv.status}', '${inv.method}', true)" class="w-full py-2.5 rounded bg-gradient-to-r from-amber-400 to-emerald-400 text-slate-950 font-black text-xs text-center transition shadow-[0_0_12px_rgba(245,158,11,0.35)]">
+                    View &amp; Claim Voucher
+                  </button>
+                </div>
+              `;
+            } else {
+              return `
+                <div class="p-4 rounded-lg bg-[#0F141C] border border-[#2D3A4B] flex flex-col gap-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-mono text-[#94A3B8]">${inv.date}</span>
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#00FF9D]/10 text-[#00FF9D] border border-[#00FF9D]/30">
+                      Paid
+                    </span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-white text-sm">${inv.description}</span>
+                    <span class="font-mono font-bold text-[#00FF9D] text-base">${inv.amount}</span>
+                  </div>
+                  <button onclick="openInvoiceModal('${inv.id}', '${inv.date}', '${inv.plan}', '${inv.amount}', '${inv.status}', '${inv.method}', false)" class="w-full py-2 rounded bg-[#212B3A] text-[#00FF9D] border border-[#2D3A4B] text-xs font-semibold text-center hover:bg-[#00FF9D] hover:text-[#090E16] transition">
+                    View Invoice
+                  </button>
+                </div>
+              `;
+            }
+          }).join('');
+        }
+      }
+    }
+
+    // Bind Search Input
+    if (invoiceSearchInput) {
+      invoiceSearchInput.addEventListener('input', (e) => {
+        const val = e.target.value;
+        if (btnClearInvoiceSearch) {
+          if (val.length > 0) {
+            btnClearInvoiceSearch.classList.remove('hidden');
+          } else {
+            btnClearInvoiceSearch.classList.add('hidden');
+          }
+        }
+        renderInvoiceRecords(val);
+      });
+    }
+
+    if (btnClearInvoiceSearch) {
+      btnClearInvoiceSearch.addEventListener('click', () => {
+        invoiceSearchInput.value = '';
+        btnClearInvoiceSearch.classList.add('hidden');
+        renderInvoiceRecords('');
+        invoiceSearchInput.focus();
+      });
+    }
 
     // INVOICE PREVIEW MODAL
     const modalInvoice = document.getElementById('modalInvoice');
     const btnCloseInvoice = document.getElementById('btnCloseInvoice');
     const btnCloseInvoiceBtn = document.getElementById('btnCloseInvoiceBtn');
     const btnExportInvoicePdf = document.getElementById('btnExportInvoicePdf');
+    const btnClaimSecretVoucher = document.getElementById('btnClaimSecretVoucher');
+    const secretVoucherFlagModal = document.getElementById('secretVoucherFlagModal');
+    let activeModalInvoiceId = null;
 
-    window.openInvoiceModal = function(num, date, plan, amt, status, method) {
+    window.openInvoiceModal = function(num, date, plan, amt, status, method, isSecret = false) {
+      activeModalInvoiceId = num;
       document.getElementById('invNumber').textContent = num;
       document.getElementById('invDate').textContent = date;
-      document.getElementById('invPlan').textContent = plan + ' (Collegiate Tier)';
+      document.getElementById('invPlan').textContent = plan;
       document.getElementById('invAmount').textContent = amt;
       document.getElementById('invMethod').textContent = method;
-      document.getElementById('invStatus').textContent = 'â— ' + status;
+      document.getElementById('invStatus').textContent = '● ' + status;
+
+      if (isSecret) {
+        if (btnClaimSecretVoucher) btnClaimSecretVoucher.classList.remove('hidden');
+        if (btnExportInvoicePdf) btnExportInvoicePdf.classList.add('hidden');
+      } else {
+        if (btnClaimSecretVoucher) btnClaimSecretVoucher.classList.add('hidden');
+        if (btnExportInvoicePdf) btnExportInvoicePdf.classList.remove('hidden');
+      }
       openModal(modalInvoice);
     };
 
@@ -950,6 +1427,79 @@
       closeModal(modalInvoice);
       showToast(invNum + ' exported as PDF', 'Verified digital seal attached');
     });
+
+    // Claim Voucher Action (Challenge 7 Solve Trigger)
+    if (btnClaimSecretVoucher) {
+      btnClaimSecretVoucher.addEventListener('click', async () => {
+        const claimText = document.getElementById('claimVoucherBtnText');
+        if (claimText) claimText.textContent = 'Authorizing...';
+        btnClaimSecretVoucher.disabled = true;
+
+        try {
+          const res = await fetch('/api/billing/claim-voucher', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ voucherId: activeModalInvoiceId || 'INV-SECRET-077' })
+          });
+          const data = await res.json();
+
+          closeModal(modalInvoice);
+          showToast('Voucher Claimed!', 'Authentic CTF Flag Recovered');
+
+          setTimeout(() => {
+            if (secretVoucherFlagModal) {
+              openModal(secretVoucherFlagModal);
+            }
+          }, 300);
+        } catch (err) {
+          // Offline fallback
+          closeModal(modalInvoice);
+          showToast('Voucher Claimed!', 'Authentic CTF Flag Recovered');
+          setTimeout(() => {
+            if (secretVoucherFlagModal) {
+              openModal(secretVoucherFlagModal);
+            }
+          }, 300);
+        } finally {
+          btnClaimSecretVoucher.disabled = false;
+          if (claimText) claimText.textContent = 'Claim Classified Voucher';
+        }
+      });
+    }
+
+    // Flag Copy Helper
+    function copySecretVoucherFlag() {
+      const input = document.getElementById('secretVoucherFlagInput');
+      if (!input) return;
+      const text = input.value;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          updateCopyVoucherFeedback();
+        }).catch(() => {
+          fallbackCopyVoucher(input);
+        });
+      } else {
+        fallbackCopyVoucher(input);
+      }
+    }
+
+    function fallbackCopyVoucher(input) {
+      input.select();
+      document.execCommand('copy');
+      updateCopyVoucherFeedback();
+    }
+
+    function updateCopyVoucherFeedback() {
+      const btnText = document.getElementById('copySecretVoucherFlagText');
+      if (btnText) btnText.textContent = 'COPIED!';
+      showToast('Flag copied to clipboard!', 'Paste into Missions console');
+      setTimeout(() => {
+        if (btnText) btnText.textContent = 'Copy Flag';
+      }, 2500);
+    }
+
+    // Initial render of invoices
+    renderInvoiceRecords('');
 
     // EXPORT FILE MODAL
     const modalExportFile = document.getElementById('modalExportFile');
@@ -1015,6 +1565,7 @@
         closeModal(modalInvoice);
         closeModal(modalExportFile);
         closeModal(fakeFlagModal);
+        if (secretVoucherFlagModal) closeModal(secretVoucherFlagModal);
       }
     });
   </script>

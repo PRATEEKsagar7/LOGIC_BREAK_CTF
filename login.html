@@ -32,31 +32,29 @@
 </head>
 <body class="bg-[#090e16] text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-300">
 
-  <!-- Background Ambient Mesh -->
+  <!-- Background Ambient Glow -->
   <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-    <div class="absolute -top-40 -left-40 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[140px]"></div>
-    <div class="absolute -bottom-40 -right-40 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[140px]"></div>
+    <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[140px]"></div>
+    <div class="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[140px]"></div>
   </div>
 
   <!-- Top Minimal Header -->
   <header class="relative z-10 w-full border-b border-[#2d3a43]/60 bg-[#0e1511]/90 backdrop-blur-md px-6 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-xl bg-[#1a211d] border border-emerald-500/40 flex items-center justify-center text-[#5bdcae] shadow-[0_0_15px_rgba(91,220,174,0.25)]">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M2 17l10 5 10-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M2 12l10 5 10-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+      <div class="w-9 h-9 rounded-xl bg-[#161d19] border border-emerald-500/40 flex items-center justify-center text-[#5bdcae] shadow-[0_0_15px_rgba(91,220,174,0.2)]">
+        <span class="material-symbols-outlined text-[20px]">terminal</span>
       </div>
       <div>
         <span class="text-sm font-black tracking-wider text-white uppercase font-mono">LOGIC BREAK CTF</span>
-        <p class="text-[10px] font-mono text-slate-400 leading-none">Authentication Gateway</p>
+        <p class="text-[10px] font-mono text-slate-400 leading-none">Collegiate Arena &bull; Gateway</p>
       </div>
     </div>
-    <a href="admin.html" class="px-3.5 py-1.5 rounded-lg bg-[#161d19] hover:bg-[#224f3e] border border-[#2d3a43] text-xs font-mono text-slate-300 hover:text-white transition flex items-center gap-1.5">
+    
+    <!-- 1-Click Host Admin Bypass -->
+    <button onclick="bypassToAdmin()" class="px-3.5 py-1.5 rounded-lg bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-500/40 text-xs font-mono text-emerald-300 hover:text-white transition flex items-center gap-1.5 shadow-sm cursor-pointer">
       <span class="material-symbols-outlined text-[16px] text-emerald-400">admin_panel_settings</span>
-      <span>Coordinator Access</span>
-    </a>
+      <span>⚡ Host Admin Console</span>
+    </button>
   </header>
 
   <!-- Login Form Container -->
@@ -69,36 +67,29 @@
       <div class="space-y-1.5 text-center">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px] font-mono mb-2">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>CONFIRMED PARTICIPANTS ONLY</span>
+          <span>OPERATIVE AUTHENTICATION</span>
         </div>
         <h1 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight font-sans">
           Operative Gateway
         </h1>
         <p class="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
-          Sign in using your coordinator-assigned User ID and password to access challenges.
+          Sign in using your team User ID and password to access challenges.
         </p>
       </div>
 
-      <!-- Automated Email Dispatch Notification Banner -->
-      <div class="p-3.5 rounded-2xl bg-[#0e1511]/90 border border-emerald-500/30 shadow-[0_0_15px_rgba(91,220,174,0.08)] space-y-2">
-        <div class="flex items-center justify-between">
-          <span class="flex items-center gap-1.5 text-xs font-mono font-bold text-emerald-400">
-            <span class="material-symbols-outlined text-[16px]">mark_email_read</span>
-            <span>CREDENTIAL DISPATCH VIA GMAIL</span>
+      <!-- Saved Logins Quick Selector (shown when saved logins exist) -->
+      <div id="saved-logins-section" class="hidden p-3.5 rounded-2xl bg-[#0e1511] border border-[#2d3a43] space-y-2">
+        <div class="flex items-center justify-between text-xs font-mono">
+          <span class="text-slate-300 font-bold flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[16px] text-emerald-400">history</span>
+            <span>Saved Quick Logins:</span>
           </span>
-          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-500/30">T-5 MIN DISPATCH</span>
-        </div>
-        <p class="text-[11.5px] text-slate-300 leading-relaxed font-sans">
-          Individual credentials (<span class="font-mono text-cyan-300 font-bold">SOLO-XXXX</span> or partner <span class="font-mono text-emerald-300 font-bold">DUO-XXXX</span>) and one-time passwords are dispatched to your team's registered Gmail accounts <strong>5 minutes prior</strong> to arena start.
-        </p>
-        <div class="flex items-center justify-between text-[10.5px] font-mono text-slate-400 pt-1.5 border-t border-[#2d3a43]/70">
-          <span class="flex items-center gap-1 text-slate-400">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Check Inbox & Spam Folder</span>
-          </span>
-          <button type="button" onclick="openEmailHelpModal()" class="text-emerald-400 hover:text-emerald-300 underline cursor-pointer">
-            Didn't receive email?
+          <button type="button" onclick="clearSavedLogins()" class="text-[10px] text-slate-500 hover:text-red-400 underline cursor-pointer">
+            Clear Saved
           </button>
+        </div>
+        <div id="saved-logins-list" class="space-y-1.5">
+          <!-- Populated by JavaScript -->
         </div>
       </div>
 
@@ -112,7 +103,7 @@
       <form id="participant-login-form" class="space-y-4">
         <div>
           <label for="inputUserId" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5 font-mono">
-            User ID / Username
+            User ID (e.g. TEAM-01)
           </label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
@@ -122,7 +113,7 @@
               type="text" 
               id="inputUserId" 
               required 
-              placeholder="e.g. USER-8319"
+              placeholder="TEAM-01"
               class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 text-sm font-mono text-white placeholder-slate-600 focus:outline-none transition uppercase"
             />
           </div>
@@ -143,10 +134,18 @@
               placeholder="••••••••••••"
               class="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 text-sm font-mono text-white placeholder-slate-600 focus:outline-none transition"
             />
-            <button type="button" id="btnTogglePassword" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300">
+            <button type="button" id="btnTogglePassword" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300 cursor-pointer">
               <span class="material-symbols-outlined text-[18px]" id="iconPasswordEye">visibility</span>
             </button>
           </div>
+        </div>
+
+        <!-- Remember Me Checkbox -->
+        <div class="flex items-center justify-between text-xs font-mono text-slate-400 pt-1">
+          <label class="flex items-center gap-2 cursor-pointer select-none">
+            <input type="checkbox" id="chkRememberMe" checked class="rounded border-[#2d3a43] bg-[#0e1511] text-emerald-500 focus:ring-0 focus:ring-offset-0">
+            <span class="text-slate-300">Remember login on this device</span>
+          </label>
         </div>
 
         <button 
@@ -159,27 +158,15 @@
         </button>
       </form>
 
-      <!-- Pre-seeded Testing Accounts Accordion -->
+      <!-- 1-Click Host Admin Direct Link -->
       <div class="pt-4 border-t border-[#2d3a43]/70">
-        <div class="flex items-center justify-between text-xs font-mono text-slate-400 mb-2">
-          <span class="font-bold uppercase text-[11px] text-slate-300">Confirmed Sample Operatives:</span>
-        </div>
-        <div class="space-y-1.5">
-          <button type="button" onclick="fillCredentials('USER-8319', 'Nexus#4921')" class="w-full px-3 py-1.5 rounded-lg bg-[#0e1511] hover:bg-[#1a211d] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group">
-            <span class="text-emerald-400 font-bold">USER-8319 <span class="text-slate-500 font-normal">(Cyber Strike &bull; Standard)</span></span>
-            <span class="text-slate-400 group-hover:text-white text-[11px]">Click to fill &rarr;</span>
-          </button>
-          <button type="button" onclick="fillCredentials('USER-5172', 'Nexus#8834')" class="w-full px-3 py-1.5 rounded-lg bg-[#0e1511] hover:bg-[#1a211d] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group">
-            <span class="text-emerald-400 font-bold">USER-5172 <span class="text-slate-500 font-normal">(Vanguard Unit &bull; Standard)</span></span>
-            <span class="text-slate-400 group-hover:text-white text-[11px]">Click to fill &rarr;</span>
-          </button>
-          <button type="button" onclick="fillCredentials('DUO-4190-A', 'Nexus#MPDA55')" class="w-full px-3 py-1.5 rounded-lg bg-[#0e1511] hover:bg-[#1a211d] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group">
-            <span class="text-cyan-400 font-bold">DUO-4190-A <span class="text-slate-500 font-normal">(Solaris &bull; Duo Partner)</span></span>
-            <span class="text-slate-400 group-hover:text-white text-[11px]">Click to fill &rarr;</span>
-          </button>
-          <button type="button" onclick="fillCredentials('SOLO-3097', 'Nexus#suaP70')" class="w-full px-3 py-1.5 rounded-lg bg-[#0e1511] hover:bg-[#1a211d] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group">
-            <span class="text-amber-400 font-bold">SOLO-3097 <span class="text-slate-500 font-normal">(GhostOperative &bull; Solo)</span></span>
-            <span class="text-slate-400 group-hover:text-white text-[11px]">Click to fill &rarr;</span>
+        <div class="p-3 rounded-xl bg-[#0e1511] border border-[#2d3a43] flex items-center justify-between">
+          <div class="space-y-0.5">
+            <span class="text-xs font-mono font-bold text-white block">Host Admin Console</span>
+            <span class="text-[11px] text-slate-400 block">Manage teams, view passwords & reset tournament</span>
+          </div>
+          <button type="button" onclick="bypassToAdmin()" class="px-3 py-1.5 rounded-lg bg-[#1a2330] hover:bg-emerald-950 hover:text-emerald-300 border border-[#2d3a43] text-xs font-mono text-slate-300 transition flex items-center gap-1 cursor-pointer">
+            <span>Open &rarr;</span>
           </button>
         </div>
       </div>
@@ -193,10 +180,12 @@
   </footer>
 
   <script>
-    // Quick Credential Fill Helper
-    function fillCredentials(uid, pass) {
-      document.getElementById('inputUserId').value = uid;
-      document.getElementById('inputPassword').value = pass;
+    const SAVED_LOGINS_KEY = 'logic_ctf_saved_accounts';
+
+    // 1-Click Host Admin Direct Bypass (No password required on host)
+    function bypassToAdmin() {
+      localStorage.setItem('logic_ctf_admin_token', 'logicbreak_admin_token_active_session_2026');
+      window.location.href = 'admin.html';
     }
 
     // Toggle Password Visibility
@@ -214,6 +203,63 @@
       }
     });
 
+    // Saved Accounts Management
+    function getSavedAccounts() {
+      try {
+        const raw = localStorage.getItem(SAVED_LOGINS_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveAccount(userId, password, teamName) {
+      try {
+        let accounts = getSavedAccounts();
+        accounts = accounts.filter(a => a.userId.toUpperCase() !== userId.toUpperCase());
+        accounts.unshift({
+          userId: userId.toUpperCase(),
+          password: password,
+          teamName: teamName || userId.toUpperCase(),
+          savedAt: Date.now()
+        });
+        if (accounts.length > 15) accounts.pop();
+        localStorage.setItem(SAVED_LOGINS_KEY, JSON.stringify(accounts));
+      } catch (e) {}
+    }
+
+    function clearSavedLogins() {
+      localStorage.removeItem(SAVED_LOGINS_KEY);
+      renderSavedLogins();
+    }
+
+    function renderSavedLogins() {
+      const accounts = getSavedAccounts();
+      const container = document.getElementById('saved-logins-section');
+      const list = document.getElementById('saved-logins-list');
+
+      if (!accounts || accounts.length === 0) {
+        container.classList.add('hidden');
+        return;
+      }
+
+      container.classList.remove('hidden');
+      list.innerHTML = accounts.map(a => `
+        <button type="button" onclick="fillCredentials('${a.userId}', '${a.password}')" class="w-full px-3 py-1.5 rounded-lg bg-[#161d19] hover:bg-[#1a2330] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group cursor-pointer">
+          <div class="flex items-center gap-2">
+            <span class="text-emerald-400 font-bold">${a.userId}</span>
+            <span class="text-slate-400 text-[11px]">(${a.teamName})</span>
+          </div>
+          <span class="text-slate-500 group-hover:text-emerald-300 text-[11px]">&rarr; Auto-fill</span>
+        </button>
+      `).join('');
+    }
+
+    function fillCredentials(uid, pass) {
+      document.getElementById('inputUserId').value = uid;
+      document.getElementById('inputPassword').value = pass;
+    }
+
     // Form Submission
     const form = document.getElementById('participant-login-form');
     const alertBox = document.getElementById('login-alert-box');
@@ -225,6 +271,7 @@
       e.preventDefault();
       const userId = document.getElementById('inputUserId').value.trim();
       const password = document.getElementById('inputPassword').value.trim();
+      const remember = document.getElementById('chkRememberMe').checked;
 
       alertBox.className = 'hidden';
       btnSubmit.disabled = true;
@@ -246,6 +293,10 @@
           localStorage.setItem('logic_ctf_user', JSON.stringify(data.user));
           localStorage.setItem('logic_ctf_team', data.user.name);
 
+          if (remember) {
+            saveAccount(userId, password, data.user.name);
+          }
+
           if (data.isAdmin) {
             localStorage.setItem('logic_ctf_admin_token', data.token);
           }
@@ -255,12 +306,12 @@
           alertMsg.textContent = `${data.message} Entering arena...`;
 
           setTimeout(() => {
-            window.location.href = data.redirect || 'missions.html';
-          }, 600);
+            window.location.href = data.redirect || 'overview.html';
+          }, 500);
         } else {
           alertBox.className = 'p-3.5 rounded-xl border border-red-500/50 bg-red-950/80 text-red-300 text-xs font-mono flex items-start gap-2.5';
           alertIcon.textContent = '❌';
-          alertMsg.textContent = data.message || 'Authentication failed.';
+          alertMsg.textContent = data.message || 'Authentication failed. Please check your User ID and password.';
           btnSubmit.disabled = false;
           btnSubmit.innerHTML = `<span>Enter CTF Arena</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
         }
@@ -273,43 +324,14 @@
       }
     });
 
-    function openEmailHelpModal() {
-      document.getElementById('email-help-modal').classList.remove('hidden');
-    }
-
-    function closeEmailHelpModal() {
-      document.getElementById('email-help-modal').classList.add('hidden');
-    }
+    // Auto-fill from saved accounts on load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderSavedLogins();
+      const accounts = getSavedAccounts();
+      if (accounts && accounts.length > 0) {
+        fillCredentials(accounts[0].userId, accounts[0].password);
+      }
+    });
   </script>
-
-  <!-- Email Help Modal -->
-  <div id="email-help-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="w-full max-w-md bg-[#161d19] border border-emerald-500/40 rounded-2xl p-6 shadow-2xl space-y-4">
-      <div class="flex items-center justify-between border-b border-[#2d3a43] pb-3">
-        <div class="flex items-center gap-2 text-white font-bold font-mono text-sm">
-          <span class="material-symbols-outlined text-emerald-400">help</span>
-          <span>CREDENTIAL DISPATCH PROTOCOL</span>
-        </div>
-        <button onclick="closeEmailHelpModal()" class="text-slate-400 hover:text-white text-lg">&times;</button>
-      </div>
-      <div class="space-y-3 text-xs text-slate-300 leading-relaxed font-sans">
-        <div class="p-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] space-y-1">
-          <span class="text-emerald-400 font-mono font-bold block">1. 5-Minute Pre-Match Dispatch</span>
-          <p class="text-slate-400">To prevent credential sharing and unauthorized access, the automated arena mailer dispatches access keys exactly 5 minutes before scheduled match time.</p>
-        </div>
-        <div class="p-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] space-y-1">
-          <span class="text-emerald-400 font-mono font-bold block">2. Duo Squad Partner Access</span>
-          <p class="text-slate-400">If registered with a partner, both teammates receive credentials linked to the same squad (e.g. DUO-XXXX-A and DUO-XXXX-B). Both logins share the team scoreboard.</p>
-        </div>
-        <div class="p-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] space-y-1">
-          <span class="text-amber-400 font-mono font-bold block">3. Still Haven't Received Credentials?</span>
-          <p class="text-slate-400">Search for sender <code>arena@logicbreak-ctf.org</code> in Spam / Promotions. Or contact the Arena Coordinator desk.</p>
-        </div>
-      </div>
-      <button onclick="closeEmailHelpModal()" class="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold font-mono text-xs uppercase cursor-pointer">
-        Understood & Close
-      </button>
-    </div>
-  </div>
 </body>
 </html>

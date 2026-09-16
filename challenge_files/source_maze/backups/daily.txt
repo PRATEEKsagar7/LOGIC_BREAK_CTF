@@ -1,0 +1,4 @@
+Daily backup scheduled at 02:00 UTC.
+Integrity verified: OK.
+Note: Flag beacon moved to telemetry pipeline manifest repository for security compliance.
+Legacy secret folder purged.

@@ -60,7 +60,7 @@
           </a>
 
           <a href="missions.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['missions', 'challenges']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
-            <span>Missions (12)</span>
+            <span>Missions (16)</span>
           </a>
 
           <a href="files.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['files', 'folder']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
@@ -90,14 +90,12 @@
                 <a href="projects.html" class="px-3 py-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-[#224f3e] transition">Projects Archive</a>
                 <a href="billing.html" class="px-3 py-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-[#224f3e] transition">Billing Plans</a>
                 <a href="recycle_bin.html" class="px-3 py-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-[#224f3e] transition">Purged Artifacts</a>
+                <a href="documentation.html" class="px-3 py-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-[#224f3e] transition">Platform SOP Docs</a>
+                <a href="users.html" class="px-3 py-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-[#224f3e] transition">Users Directory</a>
+                <a href="archived_users.html" class="px-3 py-2 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-[#224f3e] transition">Archived Users</a>
               </div>
             </div>
           </div>
-
-          <!-- Admin Link -->
-          <a href="admin.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['members', 'admin']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
-            <span>Admin</span>
-          </a>
         </nav>
 
         <!-- Right Side: Confirmed Participant Badge & Logout -->
@@ -135,8 +133,22 @@
     setupGlobalSync();
   });
 
-  // Global Logout Function
+  // Global Logout Function - wipes all session keys including all restored report flags
   window.logoutLogicCTF = function() {
+    try {
+      // Find and remove all restored and deleted tracking keys
+      const keysToRemove = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && (k.startsWith('logic_ctf_restored_') || k.startsWith('logic_ctf_deleted_') || k.startsWith('logic_ctf_first_deleted_'))) {
+          keysToRemove.push(k);
+        }
+      }
+      keysToRemove.forEach(k => localStorage.removeItem(k));
+    } catch (e) {}
+
+    localStorage.removeItem('logic_ctf_restored_reports');
+    localStorage.removeItem('logic_ctf_first_deleted_report_id');
     localStorage.removeItem('logic_ctf_token');
     localStorage.removeItem('logic_ctf_user');
     localStorage.removeItem('logic_ctf_team');

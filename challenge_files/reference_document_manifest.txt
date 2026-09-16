@@ -1,0 +1,57 @@
+================================================================================
+LOGIC BREAK CTF // COLLEGIATE SECURITY ARENA
+DOCUMENT COMPLIANCE & ASSET CLASSIFICATION GUIDE
+Ref: REF-AUDIT-2026-X09 // CLEARANCE LEVEL: OPERATOR
+================================================================================
+
+PURPOSE:
+This reference manual outlines the verified document catalog for the collegiate
+defense grid. All arena files must adhere to exact canonical naming conventions
+to pass automated integrity audits and cryptographic verification checks.
+
+--------------------------------------------------------------------------------
+DOCUMENT CATALOG & CANONICAL MAPPING:
+--------------------------------------------------------------------------------
+
+[CATALOG ITEM #01]
+- Canonical Name: network_telemetry_topology.json
+- Category: Network Infrastructure
+- Expected Content: Egress gateway routing nodes, VPN endpoints, and subnets.
+
+[CATALOG ITEM #02]
+- Canonical Name: collegiate_firewall_ruleset.conf
+- Category: Perimeter Defense
+- Expected Content: Ingress ACL rules, honeypot redirect filters, and rate-limiting.
+
+[CATALOG ITEM #03]
+- Canonical Name: incident_response_runbook.pdf
+- Category: Emergency Operations
+- Description & Content Fingerprint:
+  "Standard Operating Procedure for active perimeter compromise triage.
+   Includes step-by-step quarantine of infected nodes, DNS egress blackholing,
+   activation of decoy honeynet nodes, and executive notification matrix."
+- Compliance Alert:
+  *** AUDIT DISCREPANCY DETECTED ***
+  During the collegiate server migration, an operator mistakenly uploaded this
+  critical emergency procedure under a generic draft name:
+  'temp_draft_notes_04.pdf'.
+  
+  Operational Rule: Inspect the unclassified document in Files & Docs.
+  If the text matches Item #03 (Emergency Operations Runbook), rename the
+  file to its canonical system name:
+  
+  CANONICAL FILENAME: incident_response_runbook.pdf
+  
+  Once renamed, the integrity validator will automatically recognize the
+  compliance restoration and release authorization credentials.
+
+--------------------------------------------------------------------------------
+[CATALOG ITEM #04]
+- Canonical Name: cryptographic_key_rotation_schedule.csv
+- Category: Cryptography & Key Management
+- Expected Content: Bi-weekly elliptic curve and RSA-4096 key retirement timetable.
+
+================================================================================
+HINT: The file that guides you may point you closer than you think.
+Check Files & Docs Hub -> Compare contents -> Rename to canonical filename.
+================================================================================

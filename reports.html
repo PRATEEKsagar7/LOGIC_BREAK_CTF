@@ -2251,18 +2251,7 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
         const userKey = getCurrentUserKey();
         const key = 'logic_ctf_restored_' + userKey;
         let raw = localStorage.getItem(key);
-        
-        // Backward-compatibility fallback for already tested reports
-        if (!raw) {
-          const legacy = JSON.parse(localStorage.getItem('logic_ctf_restored_reports') || '[]');
-          if (legacy.includes(id) || legacy.includes('report_' + id)) {
-            const now = Date.now();
-            const migrated = [{ id, unlockedAt: now, expiresAt: now + (20 * 60 * 1000) }];
-            localStorage.setItem(key, JSON.stringify(migrated));
-            return true;
-          }
-          return false;
-        }
+        if (!raw) return false;
 
         let restored = JSON.parse(raw);
         if (!Array.isArray(restored)) return false;
@@ -2275,10 +2264,10 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
 
         if (!match) return false;
 
-        // Check 20-minute expiration
+        // Check 5-minute expiration (lock button and view after 5 mins)
         if (typeof match === 'object' && match.expiresAt) {
           if (now > match.expiresAt) {
-            // Expired! Clean up from active session
+            // Expired! Clean up from active session and lock
             restored = restored.filter(i => (typeof i === 'string' ? i : i.id) !== id);
             localStorage.setItem(key, JSON.stringify(restored));
             return false;
@@ -2314,7 +2303,7 @@ Session validation issue" class="w-full font-mono bg-[#1A2330] border border-[#2
           if (timerPill) {
             timerPill.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-400"></span><span class="text-red-300 font-bold font-mono">SESSION EXPIRED</span>`;
           }
-          showToast("ACCESS EXPIRED", "The 20-minute inspection window has lapsed. Purge and restore this artifact again.", true);
+          showToast("ACCESS LOCKED", "The 5-minute inspection window has lapsed. The report is now locked.", true);
           setTimeout(() => {
             closeViewDrawer();
             renderAll();

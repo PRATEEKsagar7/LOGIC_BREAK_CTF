@@ -20,8 +20,8 @@ const ADMIN_CREDENTIALS = {
 const ADMIN_TOKEN = 'logicbreak_admin_token_active_session_2026';
 
 // 12 Realistic Logic Break CTF Challenges
-// First 7 challenges (Tier 1): +50 pts solve, -15 pts penalty on wrong
-// Challenges 8-12 (Tier 2): +100 pts solve, -25 pts penalty on wrong
+// Challenges 1-10 (Tier 1): +50 pts solve, -15 pts penalty on wrong
+// Challenges 11-12 (Tier 2): +100 pts solve, -25 pts penalty on wrong
 const INITIAL_CHALLENGES = [
   {
     id: 'ch1',
@@ -132,75 +132,77 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch7',
     number: 7,
-    title: 'Hidden in Plain Byte',
-    category: 'Forensics',
+    title: 'The Secret Search Result',
+    category: 'Business Logic',
+    difficulty: 'Beginner',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'Find an item that is not visible in the normal list. Use the built-in search filter to discover the unlisted record and claim the voucher.',
+    hints: [
+      'The normal billing history displays standard monthly entries, but unlisted allocation records remain indexed.',
+      'Try searching for keywords like "secret", "hidden", "classified", or "bounty" in the billing history search bar.',
+      'Not visible is not the same as unavailable.'
+    ],
+    file: 'billing.html',
+    codeSnippet: '// Billing Archive Engine:\n// Normal view filters out unlisted vouchers.\n// Search query indexes unlisted allocation records:\n// Search "secret" -> INV-SECRET-077 -> Claim Voucher -> Flag revealed!',
+    flag: 'logicCTF{s3cr3t_s34rch_unl1st3d_inv01c3_r3v34l3d}'
+  },
+  {
+    id: 'ch8',
+    number: 8,
+    title: 'The Wrong Workflow',
+    category: 'Business Logic',
     difficulty: 'Intermediate',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'A surveillance operative encoded an emergency beacon flag inside PNG metadata EXIF headers.',
+    description: 'Complete a restricted action through an unexpected but legitimate workflow.',
     hints: [
-      'Check PNG tEXt chunks or use exiftool / strings on the image file.',
-      'Decode the hex-encoded string found in the metadata comment field.'
+      'Directly archiving the institutional project from the projects grid is blocked by security controls.',
+      'Explore other workspace sections where node telemetry and linked project services are managed.',
+      'There may be more than one way to reach the same result.'
     ],
-    file: 'challenge_07_stego_secret.txt',
-    codeSnippet: '$ strings avatar_recon.png | grep logicCTF\n# or decode hex chunk: 6c6f676963435446...',
-    flag: 'logicCTF{st3g0_m3t4d4t4_h1dd3n_fl4g}'
-  },
-  // TIER 2 CHALLENGES (HARD / ELITE: +100 PTS SOLVE, -25 PTS PENALTY)
-  {
-    id: 'ch8',
-    number: 8,
-    title: 'Kernel Panic',
-    category: 'Binary Exploitation',
-    difficulty: 'Advanced',
-    tier: 2,
-    points: 100,
-    penalty: 25,
-    description: 'Analyze an x86-64 ELF binary with an unsafe gets() call. Smash the stack frame to redirect execution to win().',
-    hints: [
-      'Buffer is 64 bytes. Find the offset to the Return Address (72 bytes on x86_64).',
-      'Overwrite RIP with the address of win() to trigger the flag dump.'
-    ],
-    file: 'challenge_08_buffer_overflow.c',
-    codeSnippet: 'char buffer[64];\ngets(buffer); // Stack buffer overflow allows RIP hijacking to win()',
-    flag: 'logicCTF{b1n4ry_0v3rfl0w_r3t2l1bc_pwnd}'
+    file: 'projects.html',
+    codeSnippet: '// Normal Workflow (Projects Grid): Direct archive rejected due to bound node telemetry.\n// Alternative Workflow (Workspace Node): Disconnecting node service archives project to standby storage!\n// Flag unlocked: logicCTF{wr0ng_w0rkfl0w_4lt3rn4t1v3_p4th_c0mpl3t3d}',
+    flag: 'logicCTF{wr0ng_w0rkfl0w_4lt3rn4t1v3_p4th_c0mpl3t3d}'
   },
   {
     id: 'ch9',
     number: 9,
-    title: 'Quantum RSA',
-    category: 'Cryptography',
-    difficulty: 'Advanced',
-    tier: 2,
-    points: 100,
-    penalty: 25,
-    description: 'An RSA public key was generated using weak, small prime factors vulnerable to Pollard rho / Fermat factorization.',
+    title: 'The Archived Project',
+    category: 'Business Logic',
+    difficulty: 'Intermediate',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'Perform an action on an archived project.',
     hints: [
-      'Modulus N factors into primes p and q. Calculate phi = (p-1)*(q-1).',
-      'Compute private exponent d = pow(e, -1, phi) and decrypt the ciphertext payload.'
+      'Archived projects cannot be modified through the normal projects dashboard.',
+      'Explore other ways to access the project such as search, activity history, or audit logs.',
+      'Where you open something can change what you can do with it.'
     ],
-    file: 'challenge_09_rsa_keys.pem',
-    codeSnippet: 'p = 104729; q = 879791\nphi = (p - 1) * (q - 1)\nd = pow(65537, -1, phi)\nm = pow(c, d, n)',
-    flag: 'logicCTF{sm4ll_pr1m3_f4ct0r1z4t10n_rs4}'
+    file: 'projects.html',
+    codeSnippet: '// Normal projects dashboard blocks modification of archived items:\n// "Archived projects cannot be modified."\n// Accessing via Recent Activity / Audit History exposes action workflow:\n// Flag: logicCTF{4rch1v3d_pr0j3ct_h1st0ry_m0d1f13d_unl0ck}',
+    flag: 'logicCTF{4rch1v3d_pr0j3ct_h1st0ry_m0d1f13d_unl0ck}'
   },
   {
     id: 'ch10',
     number: 10,
-    title: 'Zero-Day Memory Dump',
-    category: 'Forensics',
-    difficulty: 'Expert',
-    tier: 2,
-    points: 100,
-    penalty: 25,
-    description: 'Inspect a physical memory crash dump to detect process hollowed malware in svchost and extract decrypted shellcode.',
+    title: 'The Wrong Name',
+    category: 'Business Logic',
+    difficulty: 'Intermediate',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'Find the correct name of the document and rename it to unlock the flag.',
     hints: [
-      'Run Volatility 3: python3 vol.py -f memory.raw windows.malfind',
-      'Inspect VadS memory permissions (PAGE_EXECUTE_READWRITE) on PID 4192.'
+      'A document carries the right information under the wrong name, and the clue to fix it is hiding in plain sight.',
+      'The file that guides you may point you closer than you think. Compare Movie Reference Notes with Annual Project Report.'
     ],
-    file: 'challenge_10_memory_dump.raw.txt',
-    codeSnippet: 'volatility -f memory.raw --profile=Win10x64 malfind -p 4192 -D dump_dir/',
-    flag: 'logicCTF{m3m0ry_f0r3ns1cs_v0l4t1l1ty_d1sc0v3r3d}'
+    file: 'Movie Reference Notes.md',
+    codeSnippet: '// Identified document under wrong generic title: "Annual Project Report.md"\n// Reference guide describes a movie about dreams within dreams, artificial layers, and memories.\n// The document itself mentions: "The final stage was described internally as an inception"\n// Correct Canonical Name: "Inception.md"\n// Flag: logicCTF{wr0ng_n4m3_c0rr3ct_d0cum3nt_unm4sk3d}',
+    flag: 'logicCTF{wr0ng_n4m3_c0rr3ct_d0cum3nt_unm4sk3d}'
   },
   {
     id: 'ch11',
@@ -237,15 +239,87 @@ const INITIAL_CHALLENGES = [
     file: 'challenge_12_privesc_suid.sh',
     codeSnippet: 'echo "/bin/sh" > /tmp/tar && chmod +x /tmp/tar\nexport PATH=/tmp:$PATH\n/usr/local/bin/backup_agent',
     flag: 'logicCTF{su1d_pr1v1l3g3_3sc4l4t10n_r00t}'
+  },
+  {
+    id: 'ch13',
+    number: 13,
+    title: 'The Person Behind the Web',
+    category: 'Web History & Recon',
+    difficulty: 'Beginner',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'He changed the way information was connected, turning a simple idea into something the whole world could use. Locate the archived intelligence dossier in the Files & Docs archive, deduce the pioneer\'s identity, and submit the flag.',
+    hints: [
+      'The person you are looking for was born on 8 June 1955.',
+      'While working at a European research organization (CERN), he proposed hypertext and created the first web server (info.cern.ch).',
+      'Submit the flag in standard format: logicCTF{<first>_<last>} (e.g. logicCTF{tim_berners_lee}).'
+    ],
+    file: 'challenge_13_the_unknown_person.txt',
+    codeSnippet: '// Historical Intelligence Dossier: ARCH-HIST-1955-WWW\n// "The person you are looking for was born on 8 June 1955."\n// Inventor of the World Wide Web at CERN.\n// Flag: logicCTF{tim_berners_lee}',
+    flag: 'logicCTF{tim_berners_lee}'
+  },
+  {
+    id: 'ch14',
+    number: 14,
+    title: 'The Missing Task',
+    category: 'Business Logic',
+    difficulty: 'Beginner',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'Find and complete a task that is not visible in the main task list. Some tasks disappear from the list without disappearing from the application.',
+    hints: [
+      '“Missing from view does not mean missing from the system.”',
+      'Inspect the Tactical Schedule dashboard. Use the search bar or the Activity & Audit log filter to uncover hidden background tasks, then mark it complete.'
+    ],
+    file: 'schedule.html',
+    codeSnippet: '// Main view suppresses background maintenance daemons.\n// Filter by activity/audit or search for cold-storage/unlisted tasks.\n// Flag: logicCTF{m1ss1ng_t4sk_unl1st3d_c0mpl3t3d}',
+    flag: 'logicCTF{m1ss1ng_t4sk_unl1st3d_c0mpl3t3d}'
+  },
+  {
+    id: 'ch15',
+    number: 15,
+    title: 'The Unscheduleable Share',
+    category: 'Business Logic',
+    difficulty: 'Beginner',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'Schedule a share even though scheduling appears unavailable. A share can sometimes find a way onto the calendar.',
+    hints: [
+      '“The first Share button may not tell the whole story.”',
+      'The Files & Docs interface insists scheduling is unavailable, but perhaps a dedicated scheduling workflow looks at it differently.'
+    ],
+    file: 'schedule.html',
+    codeSnippet: '// Files portal disables scheduling with policy restriction.\n// Schedule portal alternative workflow permits calendar share.\n// Flag: logicCTF{unsck3dul4bl3_sh4r3_c4l3nd4r_p4th}',
+    flag: 'logicCTF{unsck3dul4bl3_sh4r3_c4l3nd4r_p4th}'
+  },
+  {
+    id: 'ch16',
+    number: 16,
+    title: 'Cancelled but Active',
+    category: 'Business Logic',
+    difficulty: 'Beginner',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'Complete a billing action that appears to have failed. The billing message says no, but the account may say yes.',
+    hints: [
+      '“After billing tells you something, check the account again.”',
+      'A cancellation error message in the interface may disguise state synchronization on the underlying subscription record.'
+    ],
+    file: 'billing.html',
+    codeSnippet: '// Cancellation yields simulated transaction failure.\n// Refreshing reveals updated account cancellation status and flag.\n// Flag: logicCTF{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}',
+    flag: 'logicCTF{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}'
   }
 ];
 
-// Random Credential Generators
-function generateRandomUserId(type = 'DUO') {
-  const num = Math.floor(1000 + Math.random() * 9000);
-  if (type === 'SOLO') return `SOLO-${num}`;
-  if (type === 'DUO') return `DUO-${num}`;
-  return `USER-${num}`;
+// Clean Team User ID Generator (TEAM-01, TEAM-02, etc.)
+function generateRandomUserId() {
+  const currentCount = ctfState && ctfState.teams ? ctfState.teams.length : 0;
+  const num = String(currentCount + 1).padStart(2, '0');
+  return `TEAM-${num}`;
 }
 
 function generateRandomPassword() {
@@ -258,45 +332,8 @@ function generateRandomPassword() {
   return `Nexus#${rand}${digits}`;
 }
 
-// Confirmed Participants with Random Generated Credentials (Fake teams removed)
-const INITIAL_PARTICIPANTS = [
-  {
-    id: 'usr_8319',
-    userId: 'USER-8319',
-    name: 'Cyber Strike',
-    password: 'Nexus#4921',
-    confirmed: true,
-    college: 'Apex Cyber Institute',
-    score: 0,
-    solved: [],
-    penalties: 0,
-    lastSolve: 0
-  },
-  {
-    id: 'usr_5172',
-    userId: 'USER-5172',
-    name: 'Vanguard Unit',
-    password: 'Nexus#8834',
-    confirmed: true,
-    college: 'Technova University',
-    score: 0,
-    solved: [],
-    penalties: 0,
-    lastSolve: 0
-  },
-  {
-    id: 'usr_9043',
-    userId: 'USER-9043',
-    name: 'Shadow Protocol',
-    password: 'Nexus#1290',
-    confirmed: true,
-    college: 'National Defense Academy',
-    score: 0,
-    solved: [],
-    penalties: 0,
-    lastSolve: 0
-  }
-];
+// Initial participants empty by default for fresh tournament run
+const INITIAL_PARTICIPANTS = [];
 
 // Persistent state
 let ctfState = {
@@ -547,7 +584,24 @@ const server = http.createServer(async (req, res) => {
         (challenge.id === 'ch2' && (submittedFlag === 'logicCTF{purg3d_r3cycl3_b1n_csv_3xp0rt}' || submittedFlag === 'logicCTF{x0r_c1ph3r_b4s364_cr4ck3d}')) ||
         (challenge.id === 'ch3' && (submittedFlag === 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}' || submittedFlag === 'logicCTF{p4ck3t_sn1ff3r_cr3ds_l34k}')) ||
         (challenge.id === 'ch4' && (submittedFlag === 'logicCTF{r3st0r3_purg3d_r3p0rt_int3gr1ty_unl0ck}' || submittedFlag === 'logicCTF{cl13nt_s1d3_auth_1s_n0t_s4f3}')) ||
-        (challenge.id === 'ch5' && (submittedFlag === 'logicCTF{DPG_badmos}' || submittedFlag === 'logicCTF{jwt_s3cr3t_brut3f0rc3_2026}'));
+        (challenge.id === 'ch5' && (submittedFlag === 'logicCTF{DPG_badmos}' || submittedFlag === 'logicCTF{jwt_s3cr3t_brut3f0rc3_2026}')) ||
+        (challenge.id === 'ch6' && submittedFlag === 'logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}') ||
+        (challenge.id === 'ch7' && (submittedFlag === 'logicCTF{s3cr3t_s34rch_unl1st3d_inv01c3_r3v34l3d}' || submittedFlag === 'logicCTF{st3g0_m3t4d4t4_h1dd3n_fl4g}')) ||
+        (challenge.id === 'ch8' && (submittedFlag === 'logicCTF{wr0ng_w0rkfl0w_4lt3rn4t1v3_p4th_c0mpl3t3d}' || submittedFlag === 'logicCTF{b1n4ry_0v3rfl0w_r3t2l1bc_pwnd}')) ||
+        (challenge.id === 'ch9' && (submittedFlag === 'logicCTF{4rch1v3d_pr0j3ct_h1st0ry_m0d1f13d_unl0ck}' || submittedFlag === 'logicCTF{sm4ll_pr1m3_f4ct0r1z4t10n_rs4}')) ||
+        (challenge.id === 'ch10' && (submittedFlag === 'logicCTF{wr0ng_n4m3_c0rr3ct_d0cum3nt_unm4sk3d}' || submittedFlag === 'logicCTF{m3m0ry_f0r3ns1cs_v0l4t1l1ty_d1sc0v3r3d}')) ||
+        (challenge.id === 'ch13' && (
+          submittedFlag.toLowerCase() === 'logicctf{tim_berners_lee}' ||
+          submittedFlag.toLowerCase() === 'logicctf{timothy_berners_lee}' ||
+          submittedFlag.toLowerCase() === 'logicctf{tim_berners_lee_1955}' ||
+          submittedFlag.toLowerCase() === 'logicctf{timbernerslee}' ||
+          submittedFlag.toLowerCase() === 'logicctf{sir_tim_berners_lee}' ||
+          submittedFlag.toLowerCase() === 'tim berners-lee' ||
+          submittedFlag.toLowerCase() === 'tim berners lee'
+        )) ||
+        (challenge.id === 'ch14' && submittedFlag.toLowerCase() === 'logicctf{m1ss1ng_t4sk_unl1st3d_c0mpl3t3d}') ||
+        (challenge.id === 'ch15' && submittedFlag.toLowerCase() === 'logicctf{unsck3dul4bl3_sh4r3_c4l3nd4r_p4th}') ||
+        (challenge.id === 'ch16' && submittedFlag.toLowerCase() === 'logicctf{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}');
 
       if (isCorrect) {
         // TIER 1: +50 PTS | TIER 2: +100 PTS
@@ -750,7 +804,7 @@ const server = http.createServer(async (req, res) => {
           score: participant.score,
           solved: participant.solved || []
         },
-        redirect: 'missions.html',
+        redirect: 'overview.html',
         message: `Welcome, ${activePartnerName} [${participant.name}]!`
       }));
       return;
@@ -918,18 +972,22 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      let userId = generateRandomUserId(type);
-      while (ctfState.teams.some(t => t.userId === userId)) {
-        userId = generateRandomUserId(type);
+      let userId = (body.userId || '').trim().toUpperCase();
+      if (!userId) {
+        let candidateIdx = ctfState.teams.length + 1;
+        do {
+          userId = `TEAM-${String(candidateIdx).padStart(2, '0')}`;
+          candidateIdx++;
+        } while (ctfState.teams.some(t => t.userId === userId));
       }
-      const password = generateRandomPassword();
+      const password = (body.password || '').trim() || generateRandomPassword();
 
       const newParticipant = {
         id: 'usr_' + Date.now(),
         type, // 'SOLO' or 'DUO'
         userId,
-        partner1UserId: type === 'DUO' ? `${userId}-A` : userId,
-        partner2UserId: type === 'DUO' ? `${userId}-B` : null,
+        partner1UserId: userId,
+        partner2UserId: null,
         name,
         password,
         confirmed: true,
@@ -937,12 +995,12 @@ const server = http.createServer(async (req, res) => {
         partner1: {
           name: partner1Name || name,
           email: partner1Email || `${name.toLowerCase().replace(/\s+/g, '')}@gmail.com`,
-          userId: type === 'DUO' ? `${userId}-A` : userId
+          userId: userId
         },
-        partner2: type === 'DUO' ? {
-          name: partner2Name || 'Partner 2',
+        partner2: partner2Name ? {
+          name: partner2Name,
           email: partner2Email || `${name.toLowerCase().replace(/\s+/g, '')}_p2@gmail.com`,
-          userId: `${userId}-B`
+          userId: userId
         } : null,
         score: 0,
         solved: [],
@@ -1080,10 +1138,133 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ==========================================
+  // API: SECRET VOUCHER CLAIM (CHALLENGE 7 - THE SECRET SEARCH RESULT)
+  // ==========================================
+  if (pathname === '/api/billing/claim-voucher' && req.method === 'POST') {
+    try {
+      const body = await parseJsonBody(req);
+      const voucherId = body.voucherId || 'INV-SECRET-077';
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        success: true,
+        voucherId: voucherId,
+        voucherName: 'Classified Arena Vulnerability Bounty Voucher',
+        amount: '₹0.00',
+        flag: 'logicCTF{s3cr3t_s34rch_unl1st3d_inv01c3_r3v34l3d}',
+        message: 'Unlisted voucher claimed successfully! Authorization token confirmed.'
+      }));
+      return;
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, message: 'Claim voucher endpoint error: ' + e.message }));
+      return;
+    }
+  }
+
+  // ==========================================
+  // API: DEACTIVATE & ARCHIVE NODE (CHALLENGE 8 - THE WRONG WORKFLOW)
+  // ==========================================
+  if (pathname === '/api/projects/deactivate-node' && req.method === 'POST') {
+    try {
+      const body = await parseJsonBody(req);
+      const projectId = body.projectId || 'proj-1';
+      const projectName = body.projectName || 'Cyber Defense Challenge';
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        success: true,
+        projectId: projectId,
+        projectName: projectName,
+        status: 'Archived',
+        flag: 'logicCTF{wr0ng_w0rkfl0w_4lt3rn4t1v3_p4th_c0mpl3t3d}',
+        message: 'Telemetry node service disconnected. Institutional project successfully placed in Standby Archive!'
+      }));
+      return;
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, message: 'Deactivate node endpoint error: ' + e.message }));
+      return;
+    }
+  }
+
+  // ==========================================
+  // API: ARCHIVED PROJECT ACTION (CHALLENGE 9 - THE ARCHIVED PROJECT)
+  // ==========================================
+  if (req.method === 'POST' && pathname === '/api/projects/archived-action') {
+    try {
+      const body = await parseJsonBody(req);
+      const projectId = body.projectId || 'proj-archived';
+      const action = body.action || 'sign_manifest';
+
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        success: true,
+        projectId: projectId,
+        action: action,
+        flag: 'logicCTF{4rch1v3d_pr0j3ct_h1st0ry_m0d1f13d_unl0ck}',
+        message: 'Archived project manifest signed & synchronized successfully!'
+      }));
+      return;
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, message: 'Archived action error: ' + e.message }));
+      return;
+    }
+  }
+
+  // ==========================================
+  // API: DOCUMENT RENAME (CHALLENGE 10 - THE WRONG NAME)
+  // ==========================================
+  if (req.method === 'POST' && pathname === '/api/documents/rename') {
+    try {
+      const body = await parseJsonBody(req);
+      const documentId = body.documentId || 'file-row-10';
+      const originalName = body.originalName || 'Annual Project Report.md';
+      const newName = (body.newName || '').trim();
+
+      // Check if rename matches "Inception" (e.g. Inception.md, inception.md, Inception, Inception Report, etc.)
+      // Also maintain backwards-compatibility with incident_response_runbook.pdf
+      const cleanNew = newName.toLowerCase().replace(/['"]/g, '').trim();
+      const isCanonical = cleanNew.includes('inception') || cleanNew === 'incident_response_runbook.pdf';
+
+      if (isCanonical) {
+        const canonicalDisplay = cleanNew.includes('inception')
+          ? (newName.toLowerCase().endsWith('.md') ? newName : `${newName}.md`)
+          : 'incident_response_runbook.pdf';
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          success: true,
+          verified: true,
+          documentId: documentId,
+          newName: canonicalDisplay,
+          flag: 'logicCTF{wr0ng_n4m3_c0rr3ct_d0cum3nt_unm4sk3d}',
+          message: `True identity verified! "${originalName}" correctly renamed to "${canonicalDisplay}" based on the movie reference context.`
+        }));
+        return;
+      } else {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          success: true,
+          verified: false,
+          documentId: documentId,
+          newName: newName,
+          message: `Document renamed to "${newName}", but does not match the true identity revealed by the movie reference.`
+        }));
+        return;
+      }
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, message: 'Document rename error: ' + e.message }));
+      return;
+    }
+  }
+
+  // ==========================================
   // API: DOWNLOAD CHALLENGE FILES
   // ==========================================
   if (pathname.startsWith('/api/files/') || pathname.startsWith('/challenge_files/')) {
-    const filename = path.basename(pathname);
+    const rawFilename = path.basename(pathname);
+    const filename = decodeURIComponent(rawFilename);
     const safePath = path.join(__dirname, 'challenge_files', filename);
     if (fs.existsSync(safePath)) {
       const ext = path.extname(safePath).toLowerCase();
@@ -1112,8 +1293,10 @@ const server = http.createServer(async (req, res) => {
   }
   if (!reqPath || reqPath === '') reqPath = '/';
 
-  // Convenient Route Aliases
-  if (reqPath === '/overview' || reqPath === '/overview.html' || reqPath === '/index.html' || reqPath === '/') {
+  // Convenient Route Aliases - Landing goes directly to login
+  if (reqPath === '/' || reqPath === '/index.html' || reqPath === '/login' || reqPath === '/login.html') {
+    reqPath = '/login.html';
+  } else if (reqPath === '/overview' || reqPath === '/overview.html') {
     reqPath = '/overview.html';
   } else if (reqPath === '/missions' || reqPath === '/missions.html' || reqPath === '/challenges') {
     reqPath = '/missions.html';
@@ -1135,6 +1318,12 @@ const server = http.createServer(async (req, res) => {
     reqPath = '/billing.html';
   } else if (reqPath === '/recycle_bin' || reqPath === '/recycle_bin.html') {
     reqPath = '/recycle_bin.html';
+  } else if (reqPath === '/docs' || reqPath === '/docs.html' || reqPath === '/documentation' || reqPath === '/documentation.html' || reqPath === '/sop') {
+    reqPath = '/documentation.html';
+  } else if (reqPath === '/users' || reqPath === '/users.html') {
+    reqPath = '/users.html';
+  } else if (reqPath === '/archived_users' || reqPath === '/archived_users.html' || reqPath === '/archived-users' || reqPath === '/archived-users.html') {
+    reqPath = '/archived_users.html';
   }
 
   const filePath = path.join(__dirname, reqPath);
