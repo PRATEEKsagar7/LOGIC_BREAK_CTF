@@ -534,12 +534,22 @@
           headers: { 'Authorization': `Bearer ${VALID_TOKEN}` }
         });
         const data = await res.json();
-        if (data.success) {
-          confirmedParticipants = data.participants;
+        if (data.success && Array.isArray(data.participants)) {
+          const localSaved = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
+          const map = new Map();
+          data.participants.forEach(p => map.set(p.userId, p));
+          localSaved.forEach(p => { if (!map.has(p.userId)) map.set(p.userId, p); });
+          confirmedParticipants = Array.from(map.values());
+          localStorage.setItem('logic_ctf_confirmed_participants', JSON.stringify(confirmedParticipants));
           renderParticipants();
         }
       } catch (err) {
-        console.warn('Participants API offline');
+        console.warn('Participants API offline, loading from local cache');
+        const localSaved = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
+        if (localSaved.length > 0) {
+          confirmedParticipants = localSaved;
+          renderParticipants();
+        }
       }
 
       renderAdminFlags();
@@ -853,10 +863,16 @@
         if (data.success) {
           document.getElementById('modal-add-member').classList.add('hidden');
           window.showLogicToast && window.showLogicToast(`Team ${name} created successfully!`, 'success');
-          loadAdminData();
           if (data.participant) {
+            const localSaved = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
+            const filtered = localSaved.filter(p => p.userId !== data.participant.userId);
+            filtered.push(data.participant);
+            localStorage.setItem('logic_ctf_confirmed_participants', JSON.stringify(filtered));
+            confirmedParticipants = filtered;
+            renderParticipants();
             showCreatedCredentialsModal(data.participant);
           }
+          loadAdminData();
         } else {
           alert(data.message || 'Error creating team');
         }

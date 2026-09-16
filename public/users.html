@@ -570,6 +570,14 @@
           initials: 'CB'
         }
       ];
+      
+      try {
+        const savedCustomUsers = localStorage.getItem('cybernexus_saved_users');
+        if (savedCustomUsers) {
+          const parsed = JSON.parse(savedCustomUsers);
+          if (Array.isArray(parsed) && parsed.length > 0) users = parsed;
+        }
+      } catch (e) {}
 
       let selectedUserIds = new Set();
       let activeDropdownMenu = null;
@@ -929,9 +937,28 @@
         };
 
         users.unshift(newUser);
+        try {
+          localStorage.setItem('cybernexus_saved_users', JSON.stringify(users));
+        } catch (e) {}
+
+        // Sync with CTF Login Gateway so participant can login with this User ID & password
+        fetch('/api/admin/confirm-participant', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer logicbreak_admin_token_active_session_2026'
+          },
+          body: JSON.stringify({
+            name,
+            userId: newUser.id,
+            password: p1,
+            college: 'Collegiate Arena'
+          })
+        }).catch(() => {});
+
         closeModals();
         renderTable();
-        showToast(`User ${name} created successfully`);
+        showToast(`User ${name} created successfully (${newUser.id})`);
       });
 
       // Open Edit Modal

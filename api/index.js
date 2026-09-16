@@ -354,25 +354,61 @@ function generateRandomPassword() {
   return `Nexus#${rand}${digits}`;
 }
 
-// Load initial state from ctf_data.json if it exists (read-only on Vercel)
+// Load initial state from /tmp (persists across warm/cold on same container) or bundled ctf_data.json
+const TMP_DATA_FILE = '/tmp/ctf_data.json';
+const BUNDLED_DATA_PATHS = [
+  path.join(__dirname, '..', 'ctf_data.json'),
+  path.join(__dirname, 'ctf_data.json'),
+  path.join(process.cwd(), 'ctf_data.json')
+];
+
 let ctfState = { teams: [], submissions: [], purgedArtifacts: [] };
-try {
-  const dataFilePath = path.join(__dirname, '..', 'ctf_data.json');
-  if (fs.existsSync(dataFilePath)) {
-    const saved = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
-    if (saved.teams && saved.submissions) {
-      ctfState = saved;
-      ctfState.purgedArtifacts = ctfState.purgedArtifacts || [];
+
+function loadStateFromDisk() {
+  try {
+    if (fs.existsSync(TMP_DATA_FILE)) {
+      const saved = JSON.parse(fs.readFileSync(TMP_DATA_FILE, 'utf8'));
+      if (saved && Array.isArray(saved.teams) && saved.teams.length > 0) {
+        ctfState = saved;
+        ctfState.purgedArtifacts = ctfState.purgedArtifacts || [];
+        return;
+      }
+    }
+  } catch (err) {
+    console.error('[CTF] Failed to load /tmp data:', err.message);
+  }
+
+  for (const p of BUNDLED_DATA_PATHS) {
+    try {
+      if (fs.existsSync(p)) {
+        const saved = JSON.parse(fs.readFileSync(p, 'utf8'));
+        if (saved && Array.isArray(saved.teams)) {
+          ctfState = saved;
+          ctfState.purgedArtifacts = ctfState.purgedArtifacts || [];
+          console.log('[CTF] Loaded state from:', p, 'with', ctfState.teams.length, 'teams');
+          return;
+        }
+      }
+    } catch (err) {
+      console.error('[CTF] Failed to load bundled data from', p, err.message);
     }
   }
-} catch (err) {
-  console.error('[CTF] Failed to load ctf_data.json:', err.message);
 }
 
-// saveState is a no-op on Vercel (read-only filesystem) — state lives in memory
+loadStateFromDisk();
+
+// Save state to /tmp (writable on Vercel Serverless) and local disk if possible
 function saveState() {
-  // On Vercel: no-op. State persists in memory for the lifetime of the warm instance.
-  // Use the Admin panel to manage teams; data survives warm instance but resets on cold start.
+  try {
+    fs.writeFileSync(TMP_DATA_FILE, JSON.stringify(ctfState, null, 2), 'utf8');
+  } catch (e) {}
+
+  for (const p of BUNDLED_DATA_PATHS) {
+    try {
+      fs.writeFileSync(p, JSON.stringify(ctfState, null, 2), 'utf8');
+      break;
+    } catch (e) {}
+  }
 }
 
 // =============================================
