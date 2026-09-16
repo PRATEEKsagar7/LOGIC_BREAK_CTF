@@ -45,63 +45,6 @@
 
   <!-- Top Header injected by shared_nav.js -->
 
-  <!-- HARDCODED ADMIN LOGIN GATE MODAL -->
-  <div id="admin-login-modal" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
-    <div class="w-full max-w-md bg-surface-container rounded-2xl border border-primary/40 p-8 shadow-[0_0_50px_rgba(91,220,174,0.15)] flex flex-col gap-6">
-      <div class="flex items-center gap-3 border-b border-outline-variant pb-4">
-        <div class="w-10 h-10 rounded-xl bg-primary/10 border border-primary flex items-center justify-center text-primary">
-          <span class="material-symbols-outlined text-[24px]">security</span>
-        </div>
-        <div>
-          <h2 class="font-display-lg text-xl font-black tracking-tight text-white">ARENA ADMIN CLEARANCE</h2>
-          <p class="font-label-lg text-xs text-outline">Tier-1 Command Authorization</p>
-        </div>
-      </div>
-
-      <div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant/60 text-xs font-label-lg space-y-1">
-        <span class="text-tertiary font-bold block">HARDCODED SYSTEM CREDENTIALS:</span>
-        <div class="text-slate-300">Username: <code class="text-primary font-bold">admin</code></div>
-        <div class="text-slate-300">Password: <code class="text-primary font-bold">logicbreak_admin_2026</code> <span class="text-outline">(or admin123)</span></div>
-      </div>
-
-      <!-- 1-Click Direct Localhost Unlock -->
-      <button type="button" onclick="bypassAdminAuth()" class="w-full py-3 bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-xs font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
-        <span class="material-symbols-outlined text-[18px]">bolt</span>
-        <span>⚡ 1-Click Host Direct Unlock (No Password)</span>
-      </button>
-
-      <div class="relative flex py-1 items-center">
-        <div class="flex-grow border-t border-outline-variant/60"></div>
-        <span class="flex-shrink mx-3 text-[10px] font-label-lg text-outline uppercase">Or manual authorization</span>
-        <div class="flex-grow border-t border-outline-variant/60"></div>
-      </div>
-
-      <form id="admin-login-form" class="flex flex-col gap-4">
-        <div class="flex flex-col gap-1">
-          <label class="font-label-lg text-xs text-on-surface-variant uppercase">Operator ID</label>
-          <input type="text" id="admin-input-user" value="admin" class="w-full px-4 py-2.5 bg-surface-container-high border border-outline-variant rounded-xl font-label-lg text-sm text-white focus:outline-none focus:border-primary">
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label class="font-label-lg text-xs text-on-surface-variant uppercase">Clearance Keyphrase</label>
-          <input type="password" id="admin-input-pass" value="logicbreak_admin_2026" class="w-full px-4 py-2.5 bg-surface-container-high border border-outline-variant rounded-xl font-label-lg text-sm text-white focus:outline-none focus:border-primary">
-        </div>
-
-        <div id="admin-login-error" class="hidden p-3 rounded-xl bg-red-950/80 border border-red-500/50 text-red-300 font-label-lg text-xs"></div>
-
-        <div class="flex items-center gap-3 pt-2">
-          <button type="button" id="btn-quick-fill-admin" class="flex-1 px-4 py-2.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant font-label-lg text-xs rounded-xl border border-outline-variant transition">
-            Auto-Fill
-          </button>
-          <button type="submit" class="flex-1 px-4 py-2.5 bg-primary hover:bg-primary-fixed text-on-primary font-label-lg text-xs font-bold rounded-xl shadow-lg transition flex items-center justify-center gap-2">
-            <span>Authenticate</span>
-            <span class="material-symbols-outlined text-[18px]">lock_open</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <!-- MAIN ADMIN DASHBOARD (UNLOCKED AFTER LOGIN) -->
   <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-6">
 
@@ -440,55 +383,16 @@
     ];
 
     function checkAuth() {
-      // Auto-unlock on host laptop without entering password
-      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '';
-      if (isLocalhost) {
-        localStorage.setItem(ADMIN_TOKEN_KEY, VALID_TOKEN);
-      }
-      const token = localStorage.getItem(ADMIN_TOKEN_KEY);
-      const modal = document.getElementById('admin-login-modal');
-      if (token === VALID_TOKEN || isLocalhost) {
-        modal.classList.add('hidden');
-        loadAdminData();
-      } else {
-        modal.classList.remove('hidden');
-      }
-    }
-
-    function bypassAdminAuth() {
       localStorage.setItem(ADMIN_TOKEN_KEY, VALID_TOKEN);
-      document.getElementById('admin-login-modal').classList.add('hidden');
+      localStorage.setItem('logic_ctf_admin_token', VALID_TOKEN);
       loadAdminData();
-      window.showLogicToast && window.showLogicToast('Host Machine Auto-Authorized', 'success');
     }
-
-    // Login Submission
-    document.getElementById('admin-login-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const u = document.getElementById('admin-input-user').value.trim();
-      const p = document.getElementById('admin-input-pass').value.trim();
-      const err = document.getElementById('admin-login-error');
-
-      if ((u === HARDCODED_ADMIN_USER) && (p === HARDCODED_ADMIN_PASS || p === HARDCODED_ADMIN_PASS_ALT)) {
-        localStorage.setItem(ADMIN_TOKEN_KEY, VALID_TOKEN);
-        document.getElementById('admin-login-modal').classList.add('hidden');
-        err.classList.add('hidden');
-        loadAdminData();
-        window.showLogicToast && window.showLogicToast('Master Admin Authorization Granted', 'success');
-      } else {
-        err.textContent = 'Invalid operator credentials. Access denied.';
-        err.classList.remove('hidden');
-      }
-    });
-
-    document.getElementById('btn-quick-fill-admin').addEventListener('click', () => {
-      document.getElementById('admin-input-user').value = HARDCODED_ADMIN_USER;
-      document.getElementById('admin-input-pass').value = HARDCODED_ADMIN_PASS;
-    });
 
     function lockAdminConsole() {
       localStorage.removeItem(ADMIN_TOKEN_KEY);
-      window.location.reload();
+      localStorage.removeItem('logic_ctf_admin_token');
+      localStorage.removeItem('logic_ctf_token');
+      window.location.href = 'login.html';
     }
 
     // Tab Switching
