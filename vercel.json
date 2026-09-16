@@ -1,0 +1,127 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    },
+    {
+      "src": "/challenge_files/(.*)",
+      "dest": "/api/index.js"
+    },
+    {
+      "src": "/login",
+      "dest": "/login.html"
+    },
+    {
+      "src": "/overview",
+      "dest": "/overview.html"
+    },
+    {
+      "src": "/missions",
+      "dest": "/missions.html"
+    },
+    {
+      "src": "/challenges",
+      "dest": "/missions.html"
+    },
+    {
+      "src": "/leaderboard",
+      "dest": "/leaderboard.html"
+    },
+    {
+      "src": "/standings",
+      "dest": "/leaderboard.html"
+    },
+    {
+      "src": "/admin",
+      "dest": "/admin.html"
+    },
+    {
+      "src": "/files",
+      "dest": "/files.html"
+    },
+    {
+      "src": "/resources",
+      "dest": "/files.html"
+    },
+    {
+      "src": "/schedule",
+      "dest": "/schedule.html"
+    },
+    {
+      "src": "/reports",
+      "dest": "/reports.html"
+    },
+    {
+      "src": "/workspace",
+      "dest": "/workspace.html"
+    },
+    {
+      "src": "/projects",
+      "dest": "/projects.html"
+    },
+    {
+      "src": "/billing",
+      "dest": "/billing.html"
+    },
+    {
+      "src": "/recycle_bin",
+      "dest": "/recycle_bin.html"
+    },
+    {
+      "src": "/docs",
+      "dest": "/documentation.html"
+    },
+    {
+      "src": "/documentation",
+      "dest": "/documentation.html"
+    },
+    {
+      "src": "/sop",
+      "dest": "/documentation.html"
+    },
+    {
+      "src": "/users",
+      "dest": "/users.html"
+    },
+    {
+      "src": "/archived_users",
+      "dest": "/archived_users.html"
+    },
+    {
+      "src": "/archived-users",
+      "dest": "/archived_users.html"
+    },
+    {
+      "src": "/",
+      "dest": "/login.html"
+    },
+    {
+      "src": "/(.*\\.html)",
+      "dest": "/$1"
+    },
+    {
+      "src": "/shared_nav.js",
+      "dest": "/shared_nav.js"
+    },
+    {
+      "src": "/(.*\\.js)",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*\\.css)",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.js"
+    }
+  ]
+}

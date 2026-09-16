@@ -1,0 +1,31 @@
+# Vercel ignores - these are excluded from deployment
+
+# Dev/test scripts
+test_all_challenges.js
+build_challenge5.js
+
+# Git
+.git/
+.gitignore
+
+# Screenshots (large media not needed in production)
+screenshots/
+
+# Design docs
+DESIGN.md
+
+# Duplicate/alternate UI files (not needed in production)
+cybernexus_archived_users.html
+cybernexus_billing_plans.html
+cybernexus_documentation.html
+cybernexus_files_folder_manager.html
+cybernexus_leaderboard_gray_light_green_dark_mode.html
+cybernexus_members_admin.html
+cybernexus_missions_gray_light_green_dark_mode.html
+cybernexus_overview_gray_light_green_dark_mode.html
+cybernexus_projects_with_archive.html
+cybernexus_recycle_bin.html
+cybernexus_reports_management.html
+cybernexus_schedule_clean_task_list.html
+cybernexus_users.html
+cybernexus_workspace_overview.html
