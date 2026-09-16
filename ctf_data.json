@@ -35,10 +35,13 @@
       "password": "Logic#02Pass!",
       "college": "Collegiate Arena",
       "confirmed": true,
-      "score": 0,
-      "solved": [],
+      "score": 100,
+      "solved": [
+        "ch11",
+        "ch12"
+      ],
       "penalties": 0,
-      "lastSolve": 0,
+      "lastSolve": 1789586829620,
       "partner1": {
         "name": "Operative 02-A",
         "userId": "TEAM-02"
@@ -579,6 +582,24 @@
     }
   ],
   "submissions": [
+    {
+      "id": "sub-1789586829621",
+      "team": "Team 02",
+      "challengeId": "ch12",
+      "challengeTitle": "The Outdated Rule",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789586829621
+    },
+    {
+      "id": "sub-1789586829616",
+      "team": "Team 02",
+      "challengeId": "ch11",
+      "challengeTitle": "The Invisible User",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789586829616
+    },
     {
       "id": "sub-1789585801439",
       "team": "Team 01",

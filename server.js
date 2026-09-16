@@ -207,37 +207,37 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch11',
     number: 11,
-    title: 'Decoupled Shadow API',
-    category: 'Cloud Security',
-    difficulty: 'Expert',
-    tier: 2,
-    points: 100,
-    penalty: 25,
-    description: 'Leverage a blind Server-Side Request Forgery (SSRF) flaw to query the link-local AWS metadata service at 169.254.169.254.',
+    title: 'The Invisible User',
+    category: 'Business Logic & Recon',
+    difficulty: 'Beginner',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'Find a user who is missing from the User Directory. Not seeing a user does not always mean the user is gone.',
     hints: [
-      'Access /proxy?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/',
-      'Retrieve temporary STS credentials containing the token flag.'
+      '“Try looking where actions are remembered.”',
+      'Inspect the audit logs or search filters in Users Directory to discover the unlisted operative.'
     ],
-    file: 'challenge_11_shadow_api.json',
-    codeSnippet: 'GET /proxy?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/ArenaWorkerRole HTTP/1.1',
+    file: 'users.html',
+    codeSnippet: '// Directory filter suppresses unlisted active operator.\n// Search or filter to reveal the hidden record.\n// Flag: logicCTF{ssrf_cl0ud_m3t4d4t4_cr3ds_pwn}',
     flag: 'logicCTF{ssrf_cl0ud_m3t4d4t4_cr3ds_pwn}'
   },
   {
     id: 'ch12',
     number: 12,
-    title: 'The Root of All Evil',
-    category: 'Privilege Escalation',
-    difficulty: 'Expert',
-    tier: 2,
-    points: 100,
-    penalty: 25,
-    description: 'A custom root backup agent has SUID bit enabled and executes tar without an absolute path. Hijack the binary search path.',
+    title: 'The Outdated Rule',
+    category: 'Business Logic',
+    difficulty: 'Beginner',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'Find a feature that is described differently in the documentation and in the application. One page still remembers an older version of the application.',
     hints: [
-      'Check SUID binaries: find / -perm -u=s -type f 2>/dev/null',
-      'Create a malicious executable named "tar" in /tmp and prepend /tmp to your PATH variable.'
+      '“Not everything written down was written recently.”',
+      'Compare what the documentation claims is unavailable with what the live application allows.'
     ],
-    file: 'challenge_12_privesc_suid.sh',
-    codeSnippet: 'echo "/bin/sh" > /tmp/tar && chmod +x /tmp/tar\nexport PATH=/tmp:$PATH\n/usr/local/bin/backup_agent',
+    file: 'documentation.html',
+    codeSnippet: '// Documentation marks feature as read-only/deprecated.\n// Live application execution path remains enabled.\n// Flag: logicCTF{su1d_pr1v1l3g3_3sc4l4t10n_r00t}',
     flag: 'logicCTF{su1d_pr1v1l3g3_3sc4l4t10n_r00t}'
   },
   {

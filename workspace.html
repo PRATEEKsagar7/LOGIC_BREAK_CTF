@@ -927,5 +927,45 @@ logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}
       }
     });
   </script>
+
+  <!-- Outdated Rule Modal -->
+  <div id="modal-outdated-flag" class="hidden fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-[#161d19] border-2 border-emerald-500/60 rounded-2xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center gap-3 border-b border-[#2d3a43] pb-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
+          <span class="material-symbols-outlined text-[24px]">verified</span>
+        </div>
+        <div>
+          <h3 class="text-base font-black text-white font-mono uppercase tracking-wide">MISSION 12 // THE OUTDATED RULE</h3>
+          <p class="text-xs text-slate-400 font-mono">One page still remembers an older version of the application.</p>
+        </div>
+      </div>
+      <div class="p-4 rounded-xl bg-[#0e1511] border border-[#2d3a43] space-y-2.5">
+        <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+          <span class="text-emerald-400 font-bold">CAPTURED FLAG:</span>
+          <span class="text-slate-500 font-mono text-[11px]">+50 PTS</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input readonly id="inputOutdatedFlag" value="logicCTF{su1d_pr1v1l3g3_3sc4l4t10n_r00t}" class="flex-1 bg-[#161d19] px-3 py-2 rounded-lg text-emerald-300 font-mono text-xs font-bold border border-emerald-500/40 select-all focus:outline-none" />
+          <button type="button" onclick="navigator.clipboard.writeText('logicCTF{su1d_pr1v1l3g3_3sc4l4t10n_r00t}'); alert('Flag copied to clipboard!');" class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-mono text-xs font-bold uppercase transition cursor-pointer">
+            Copy
+          </button>
+        </div>
+        <p class="text-[11px] text-slate-400 font-mono">Documentation said restricted, but the application executed the override!</p>
+      </div>
+      <div class="flex justify-end">
+        <button type="button" onclick="document.getElementById('modal-outdated-flag').classList.add('hidden')" class="px-4 py-2 rounded-xl bg-[#252b28] hover:bg-[#303632] text-slate-200 font-mono text-xs font-bold transition cursor-pointer">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function triggerOutdatedRuleOverride() {
+      document.getElementById('modal-outdated-flag').classList.remove('hidden');
+    }
+  </script>
+
 </body>
 </html>

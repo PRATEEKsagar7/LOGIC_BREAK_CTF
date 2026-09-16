@@ -64,7 +64,11 @@
 <p class="font-body text-[14px] text-[#94a3b8] mt-1">Manage users, roles and account access without invitation barriers.</p>
 </div>
 <div class="flex items-center gap-3">
-<button class="inline-flex items-center gap-2 px-4 h-10 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-emerald-500/40 text-slate-200 font-mono text-xs font-medium uppercase tracking-wider transition-all active:scale-[0.98]" id="export-csv-btn" type="button">
+<button class="inline-flex items-center gap-2 px-4 h-10 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-emerald-500/40 text-slate-200 font-mono text-xs font-medium uppercase tracking-wider transition-all active:scale-[0.98]" <button id="btn-activity-log" type="button" onclick="showActivityAudit()" class="inline-flex items-center gap-1.5 px-3.5 h-10 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-amber-400/50 text-slate-300 hover:text-amber-300 font-mono text-xs font-medium uppercase tracking-wider transition-all cursor-pointer">
+      <span class="material-symbols-outlined text-[16px] text-amber-400">history</span>
+      <span>Activity Log</span>
+    </button>
+id="export-csv-btn" type="button">
 <span class="material-symbols-outlined text-[18px] text-[#94a3b8]">download</span>
 <span>Export</span>
 </button>
@@ -618,6 +622,10 @@
         const status = statusFilter.value;
         const sort = sortFilter.value;
 
+        
+        const queryLower = query.toLowerCase();
+        const matchesInvisibleQuery = queryLower.includes('ghost') || queryLower.includes('audit') || queryLower.includes('zero') || queryLower.includes('action') || queryLower.includes('invisible') || queryLower.includes('missing');
+        
         let filtered = users.filter(user => {
           const matchesQuery = user.name.toLowerCase().includes(query) ||
                                user.email.toLowerCase().includes(query) ||
@@ -631,6 +639,21 @@
           filtered.sort((a, b) => a.name.localeCompare(b.name));
         } else if (sort === 'newest') {
           filtered.sort((a, b) => b.id.localeCompare(a.id));
+        }
+        
+        if (matchesInvisibleQuery || window.isAuditLogActive) {
+          filtered.unshift({
+            id: 'USR-0000-AUDIT',
+            name: 'Cipher Zero (Audit Ghost)',
+            email: 'actions.remembered@cybernexus.internal',
+            role: 'Manager',
+            status: 'Action Log',
+            created: 'Preserved in Audit',
+            lastActive: 'Recorded',
+            avatarBg: 'bg-amber-500/20 border border-amber-500/40 text-amber-400',
+            initials: 'A0',
+            isInvisibleUserChallenge: true
+          });
         }
         return filtered;
       }
@@ -657,6 +680,20 @@
 
             return `
               <tr class="hover:bg-[#161d19]/60 transition-colors group ${isSelected ? 'bg-primary/5' : ''}" data-id="${user.id}">
+                ${user.isInvisibleUserChallenge ? `
+                  <td colspan="7" class="px-4 py-3 bg-amber-950/40 border-y border-amber-500/40">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-3">
+                        <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+                        <span class="font-mono text-xs font-bold text-amber-300">HISTORICAL ACTION AUDIT LOG ENTRY:</span>
+                        <span class="text-white text-xs font-mono">${user.name} (${user.email})</span>
+                      </div>
+                      <button type="button" onclick="revealInvisibleUserModal()" class="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-mono text-xs font-bold uppercase tracking-wider transition cursor-pointer">
+                        Inspect Audit Trail &rarr;
+                      </button>
+                    </div>
+                  </td>
+                ` : ``
                 <td class="w-12 px-4 py-3.5 text-center">
                   <input type="checkbox" data-select-id="${user.id}" ${isSelected ? 'checked' : ''} class="user-row-checkbox rounded border-[#2d3a4b] bg-[#090e16] w-4 h-4 text-primary focus:ring-0 cursor-pointer" />
                 </td>
