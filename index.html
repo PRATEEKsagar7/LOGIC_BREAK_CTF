@@ -1,270 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Logic Break CTF - Collegiate Security Arena</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta http-equiv="refresh" content="0; url=/login.html">
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              bg: '#090e16',
-              surface: '#0e1511',
-              card: '#161d19',
-              cardHover: '#1f2823',
-              border: '#2d3a43',
-              accent: '#5bdcae',
-              accentGlow: 'rgba(91, 220, 174, 0.2)'
-            }
-          },
-          fontFamily: {
-            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
-          }
-        }
-      }
-    };
+    // Immediate redirect to login arena
+    window.location.replace('/login.html');
   </script>
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background-color: #090e16;
-      color: #dde4de;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #090d0b;
+      color: #10b981;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(14, 21, 17, 0.85);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      padding: 32px 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      max-width: 480px;
+    }
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      margin-right: 8px;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    h1 {
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      color: #e2e8f0;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 0.875rem;
+      margin-bottom: 20px;
+    }
+    a {
+      color: #10b981;
+      text-decoration: underline;
+      font-size: 0.875rem;
     }
   </style>
 </head>
-<body class="min-h-screen bg-[#090e16] flex flex-col antialiased selection:bg-[#5bdcae]/20 selection:text-[#5bdcae]">
-
-  <!-- Top Header injected by shared_nav.js -->
-
-  <!-- Main Content Container (Full-Width Desktop Command View) -->
-  <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-8">
-
-    <!-- Hero Section -->
-    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#161d19] via-[#111914] to-[#09100c] border border-[#2d3a43] p-8 md:p-12 shadow-2xl">
-      <div class="relative z-10 max-w-3xl space-y-5">
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-[1.1] font-sans">
-          Think. Exploit.<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#5bdcae] to-[#7af9c9]">Capture. Rise.</span>
-        </h1>
-
-        <p class="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
-          The premier inter-collegiate cybersecurity capture-the-flag arena. Test your technical prowess across live distributed systems, binary disassembly, cryptography, and cloud vectors.
-        </p>
-
-        <!-- CTAs -->
-        <div class="flex flex-wrap items-center gap-4 pt-2">
-          <a href="cybernexus_missions_gray_light_green_dark_mode.html" class="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] active:scale-95 text-slate-950 font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(91,220,174,0.3)] transition flex items-center gap-2">
-            <span>Enter Mission Arena</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-
-          <a href="workspace.html" class="px-6 py-3 rounded-xl bg-[#1a211d] hover:bg-[#224f3e] border border-[#2d3a43] text-white font-bold text-xs uppercase tracking-wider transition flex items-center gap-2">
-            <span class="material-symbols-outlined text-[18px] text-[#5bdcae]">terminal</span>
-            <span>Workspace Node</span>
-          </a>
-
-          <a href="cybernexus_files_folder_manager.html" class="px-5 py-3 rounded-xl bg-[#161d19] hover:bg-[#1a211d] border border-[#2d3a43] text-slate-300 hover:text-white font-semibold text-xs tracking-wider transition flex items-center gap-2">
-            <span>Download Files & Docs</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- Cyber Matrix Ambient Background Glow -->
-      <div class="absolute -right-16 -bottom-16 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-    </div>
-
-    <!-- Telemetry Bento Grid & Scoring Rules -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <!-- Card 1: Active Squads -->
-      <div class="p-5 rounded-2xl bg-[#161d19] border border-[#2d3a43] flex flex-col justify-between shadow-lg">
-        <div class="flex items-center justify-between text-slate-400 text-xs font-mono">
-          <span>COLLEGIATE SQUADS</span>
-          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-        </div>
-        <div class="my-3">
-          <span class="text-3xl font-black text-white font-mono" id="overview-teams-count">8</span>
-          <span class="text-xs text-emerald-400 font-mono ml-2">Active</span>
-        </div>
-        <p class="text-[11px] text-slate-400">Registered universities competing live</p>
-      </div>
-
-      <!-- Card 2: Live Exploit Vectors -->
-      <div class="p-5 rounded-2xl bg-[#161d19] border border-[#2d3a43] flex flex-col justify-between shadow-lg">
-        <div class="flex items-center justify-between text-slate-400 text-xs font-mono">
-          <span>EXPLOIT VECTORS</span>
-          <span class="text-[10px] text-emerald-400 font-bold">100% ONLINE</span>
-        </div>
-        <div class="my-3">
-          <span class="text-3xl font-black text-[#5bdcae] font-mono">12</span>
-          <span class="text-xs text-slate-400 font-mono ml-2">Challenges</span>
-        </div>
-        <p class="text-[11px] text-slate-400">Web, Crypto, Pwn, Forensics & Cloud</p>
-      </div>
-
-      <!-- Card 3: Tier 1 Scoring -->
-      <div class="p-5 rounded-2xl bg-[#161d19] border border-[#2d3a43] flex flex-col justify-between shadow-lg">
-        <div class="flex items-center justify-between text-slate-400 text-xs font-mono">
-          <span>TIER 1 (CH 01 - 07)</span>
-          <span class="text-[10px] text-emerald-300 font-bold">STANDARD</span>
-        </div>
-        <div class="my-3 flex items-baseline gap-2 font-mono">
-          <span class="text-2xl font-black text-emerald-400">+50 PTS</span>
-          <span class="text-xs text-red-400 font-bold">-15 PENALTY</span>
-        </div>
-        <p class="text-[11px] text-slate-400">Awarded on capture | Deducted on fail</p>
-      </div>
-
-      <!-- Card 4: Tier 2 Scoring -->
-      <div class="p-5 rounded-2xl bg-[#161d19] border border-[#2d3a43] flex flex-col justify-between shadow-lg">
-        <div class="flex items-center justify-between text-slate-400 text-xs font-mono">
-          <span>TIER 2 (CH 08 - 12)</span>
-          <span class="text-[10px] text-amber-300 font-bold">ELITE</span>
-        </div>
-        <div class="my-3 flex items-baseline gap-2 font-mono">
-          <span class="text-2xl font-black text-amber-400">+100 PTS</span>
-          <span class="text-xs text-red-400 font-bold">-25 PENALTY</span>
-        </div>
-        <p class="text-[11px] text-slate-400">Harder flags | Greater penalty risk</p>
-      </div>
-    </div>
-
-    <!-- Active Squad Status & Featured Vector Split View -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-      <!-- Active Squad Snapshot (5 cols) -->
-      <div class="lg:col-span-5 p-6 rounded-2xl bg-[#161d19] border border-emerald-500/40 shadow-xl space-y-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-            <span>YOUR SQUAD TELEMETRY</span>
-          </div>
-          <button onclick="document.getElementById('modal-switch-team').classList.remove('hidden')" class="text-xs text-slate-400 hover:text-white underline font-mono">Change</button>
-        </div>
-
-        <div>
-          <h2 class="text-2xl font-black text-white font-sans" id="overview-my-team-name">Logic Breakers</h2>
-          <p class="text-xs text-slate-400" id="overview-my-team-college">Host College Collective</p>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3 pt-2">
-          <div class="p-3 bg-[#0e1511] rounded-xl border border-[#2d3a43]">
-            <span class="text-[10px] font-mono text-slate-400 block uppercase">CURRENT SCORE</span>
-            <span class="text-2xl font-black text-emerald-400 font-mono" id="overview-my-score">0 PTS</span>
-          </div>
-          <div class="p-3 bg-[#0e1511] rounded-xl border border-[#2d3a43]">
-            <span class="text-[10px] font-mono text-slate-400 block uppercase">ARENA RANK</span>
-            <span class="text-2xl font-black text-white font-mono" id="overview-my-rank">#8</span>
-          </div>
-        </div>
-
-        <div class="pt-2">
-          <a href="cybernexus_missions_gray_light_green_dark_mode.html" class="w-full py-2.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-emerald-300 font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2">
-            <span>Launch Flag Submission Console</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- Challenge of the Hour & Live Standings Preview (7 cols) -->
-      <div class="lg:col-span-7 p-6 rounded-2xl bg-[#161d19] border border-[#2d3a43] shadow-xl space-y-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="text-amber-400 text-sm">⚡</span>
-            <h3 class="text-xs font-mono font-bold text-white uppercase tracking-wider">Featured Challenge Vector</h3>
-          </div>
-          <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30">+50 PTS</span>
-        </div>
-
-        <div class="p-4 bg-[#0e1511] rounded-xl border border-[#2d3a43] space-y-2">
-          <div class="flex items-center justify-between">
-            <h4 class="text-lg font-bold text-white tracking-tight">Ghost Protocol</h4>
-            <span class="text-xs text-slate-400 font-mono">Web Security // Beginner</span>
-          </div>
-          <p class="text-xs text-slate-300 leading-relaxed">
-            GraphQL introspection allows attackers to uncover hidden schemas and unlisted mutations. Probe the endpoint and retrieve the super-admin claim token.
-          </p>
-          <div class="pt-2 flex items-center justify-between">
-            <span class="text-[11px] font-mono text-slate-500">File: challenge_01_graphql.json</span>
-            <a href="cybernexus_missions_gray_light_green_dark_mode.html" class="text-xs text-emerald-400 hover:underline font-bold font-mono">Solve Vector &rarr;</a>
-          </div>
-        </div>
-
-        <!-- Leaderboard Snapshot Table -->
-        <div class="pt-2">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-mono text-slate-400 uppercase">Top 3 Leaderboard Snapshot</span>
-            <a href="cybernexus_leaderboard_gray_light_green_dark_mode.html" class="text-xs text-emerald-400 hover:underline font-mono">Full Standings &rarr;</a>
-          </div>
-          <div class="space-y-1.5" id="overview-leader-preview">
-            <!-- Injected dynamically -->
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- Shared Nav Script -->
-  <script src="shared_nav.js"></script>
-
-  <script>
-    async function loadOverviewData() {
-      const activeTeam = localStorage.getItem('logic_ctf_team') || 'Logic Breakers';
-      document.getElementById('overview-my-team-name').textContent = activeTeam;
-
-      try {
-        const res = await fetch('/api/leaderboard');
-        const data = await res.json();
-        if (data.success) {
-          document.getElementById('overview-teams-count').textContent = data.totalTeams;
-
-          // Find my team
-          const myIndex = data.leaderboard.findIndex(t => t.name.toLowerCase() === activeTeam.toLowerCase());
-          if (myIndex !== -1) {
-            const myTeam = data.leaderboard[myIndex];
-            document.getElementById('overview-my-score').textContent = `${myTeam.score} PTS`;
-            document.getElementById('overview-my-rank').textContent = `#${myIndex + 1}`;
-            document.getElementById('overview-my-team-college').textContent = myTeam.college || 'Collegiate Squad';
-          }
-
-          // Top 3 preview
-          const top3 = data.leaderboard.slice(0, 3);
-          document.getElementById('overview-leader-preview').innerHTML = top3.map((t, i) => `
-            <div class="flex items-center justify-between p-2.5 bg-[#0e1511] rounded-xl border border-[#2d3a43] text-xs font-mono">
-              <div class="flex items-center gap-2">
-                <span class="w-5 h-5 rounded-full ${i === 0 ? 'bg-amber-400 text-slate-950' : i === 1 ? 'bg-slate-300 text-slate-950' : 'bg-amber-700 text-white'} font-black text-[10px] flex items-center justify-center">
-                  ${i + 1}
-                </span>
-                <span class="font-bold text-white">${t.name}</span>
-                <span class="text-slate-500 hidden sm:inline">(${t.college || ''})</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <span class="text-emerald-400">${t.solvedCount} flags</span>
-                <strong class="text-white">${t.score} pts</strong>
-              </div>
-            </div>
-          `).join('');
-        }
-      } catch (err) {
-        console.warn('Overview telemetry fetch offline');
-      }
-    }
-
-    // Auto-Sync hook
-    window.onLeaderboardEvent = () => {
-      loadOverviewData();
-    };
-
-    window.onTeamChanged = () => {
-      loadOverviewData();
-    };
-
-    loadOverviewData();
-  </script>
+<body>
+  <div class="card">
+    <h1><span class="dot"></span>Initializing Arena Vector...</h1>
+    <p>Connecting to collegiate security grid. Redirecting to tactical authorization...</p>
+    <a href="/login.html">Click here if you are not redirected automatically</a>
+  </div>
 </body>
 </html>

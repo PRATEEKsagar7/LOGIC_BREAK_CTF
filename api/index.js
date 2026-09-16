@@ -436,8 +436,14 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const parsedUrl = new URL(req.url, `https://${req.headers.host || 'localhost'}`);
-  const pathname = parsedUrl.pathname;
+  const rawUrl = req.headers['x-matched-path'] || req.url;
+  const parsedUrl = new URL(rawUrl, `https://${req.headers.host || 'localhost'}`);
+  let pathname = parsedUrl.pathname;
+  if (parsedUrl.searchParams.has('__route')) {
+    pathname = parsedUrl.searchParams.get('__route');
+  } else if ((pathname === '/api/index.js' || pathname === '/api' || pathname === '/api/') && req.headers['x-matched-path']) {
+    pathname = req.headers['x-matched-path'].split('?')[0];
+  }
 
   // ------------------------------------------
   // SSE: /api/events

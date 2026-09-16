@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
-    "vercel-build": "echo 'No build step required'"
+    "test": "node test_all_challenges.js"
   },
   "engines": {
     "node": ">=18.x"
