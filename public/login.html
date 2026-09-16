@@ -50,11 +50,7 @@
       </div>
     </div>
     
-    <!-- 1-Click Host Admin Bypass -->
-    <button onclick="bypassToAdmin()" class="px-3.5 py-1.5 rounded-lg bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-500/40 text-xs font-mono text-emerald-300 hover:text-white transition flex items-center gap-1.5 shadow-sm cursor-pointer">
-      <span class="material-symbols-outlined text-[16px] text-emerald-400">admin_panel_settings</span>
-      <span>⚡ Host Admin Console</span>
-    </button>
+
   </header>
 
   <!-- Login Form Container -->
@@ -158,18 +154,7 @@
         </button>
       </form>
 
-      <!-- 1-Click Host Admin Direct Link -->
-      <div class="pt-4 border-t border-[#2d3a43]/70">
-        <div class="p-3 rounded-xl bg-[#0e1511] border border-[#2d3a43] flex items-center justify-between">
-          <div class="space-y-0.5">
-            <span class="text-xs font-mono font-bold text-white block">Host Admin Console</span>
-            <span class="text-[11px] text-slate-400 block">Manage teams, view passwords & reset tournament</span>
-          </div>
-          <button type="button" onclick="bypassToAdmin()" class="px-3 py-1.5 rounded-lg bg-[#1a2330] hover:bg-emerald-950 hover:text-emerald-300 border border-[#2d3a43] text-xs font-mono text-slate-300 transition flex items-center gap-1 cursor-pointer">
-            <span>Open &rarr;</span>
-          </button>
-        </div>
-      </div>
+
 
     </div>
   </main>
@@ -182,11 +167,7 @@
   <script>
     const SAVED_LOGINS_KEY = 'logic_ctf_saved_accounts';
 
-    // 1-Click Host Admin Direct Bypass (No password required on host)
-    function bypassToAdmin() {
-      localStorage.setItem('logic_ctf_admin_token', 'logicbreak_admin_token_active_session_2026');
-      window.location.href = 'admin.html';
-    }
+
 
     // Toggle Password Visibility
     const btnToggle = document.getElementById('btnTogglePassword');
