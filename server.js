@@ -26,18 +26,19 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch1',
     number: 1,
-    title: 'Limit Break',
-    category: 'Business Logic',
+    title: 'The Invisible User',
+    category: 'Business Logic & Recon',
     difficulty: 'Beginner',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'Create a new project after reaching the maximum project limit.',
+    description: 'Find a user who is missing from the User Directory. Not seeing a user does not always mean the user is gone.',
     hints: [
-      'The Create button is not the only way to create a project.'
+      '“Try looking where actions are remembered.”',
+      'Inspect the Activity Log audit or search filters in Users Directory to discover the unlisted operative.'
     ],
-    file: 'projects.html',
-    codeSnippet: '// Standard creation enforces limit:\nif (projects.length >= MAX_PROJECTS) showToast("Project limit reached");\n\n// Duplication flaw: missing quota check!',
+    file: 'users.html',
+    codeSnippet: '// Directory filter suppresses unlisted active operator.\n// Inspect Activity Log audit or search filters in Users Directory to discover the unlisted operative.\n// Flag: logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}',
     flag: 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}'
   },
   {
@@ -60,18 +61,19 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch3',
     number: 3,
-    title: 'Read Between the Lines.',
+    title: 'Documentation Exception',
     category: 'Business Logic',
     difficulty: 'Beginner',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'The workspace description seems brief, but not everything recorded is immediately visible. Find a way to read the complete entry.',
+    description: 'Find the exception to a documented permission rule. A general rule may have a small exception hiding behind a normal workflow.',
     hints: [
-      "The counter beneath the field tells a different story than what you see. Some containers aren't meant to stay small."
+      '“Look beyond the general rule.”',
+      'Compare the role permissions matrix in Documentation with the actions available in the live application.'
     ],
-    file: 'workspace.html',
-    codeSnippet: '// The briefing looks short at first glance.\n// Look closely at the details and find what is tucked away.',
+    file: 'documentation.html',
+    codeSnippet: '// Documentation states viewers cannot modify user accounts.\n// Explore the User Directory workflows to discover the alternate permitted path.\n// Flag: logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}',
     flag: 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}'
   },
   {

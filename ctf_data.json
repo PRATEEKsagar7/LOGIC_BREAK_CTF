@@ -87,10 +87,13 @@
       "password": "Logic#04Pass!",
       "college": "Collegiate Arena",
       "confirmed": true,
-      "score": 0,
-      "solved": [],
+      "score": 100,
+      "solved": [
+        "ch1",
+        "ch3"
+      ],
       "penalties": 0,
-      "lastSolve": 0,
+      "lastSolve": 1789588040937,
       "partner1": {
         "name": "Operative 04-A",
         "userId": "TEAM-04"
@@ -585,6 +588,24 @@
     }
   ],
   "submissions": [
+    {
+      "id": "sub-1789588040937",
+      "team": "Team 04",
+      "challengeId": "ch3",
+      "challengeTitle": "Documentation Exception",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789588040937
+    },
+    {
+      "id": "sub-1789588040933",
+      "team": "Team 04",
+      "challengeId": "ch1",
+      "challengeTitle": "The Invisible User",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789588040933
+    },
     {
       "id": "sub-1789587680886",
       "team": "Team 03",
