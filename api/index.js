@@ -1206,8 +1206,8 @@ module.exports = async function handler(req, res) {
   // Static file serving (fallback for anything not caught above)
   // Vercel handles .html/.js/.css directly — this handles edge cases
   // ------------------------------------------
-  let reqPath = pathname;
-  if (reqPath === '/' || reqPath === '/index.html' || reqPath === '/login' || reqPath === '/login.html') {
+  let reqPath = pathname || '/';
+  if (reqPath === '/' || reqPath === '/index.html' || reqPath === '/login' || reqPath === '/login.html' || reqPath === '/api/index.js' || reqPath === '/api' || reqPath === '/api/') {
     reqPath = '/login.html';
   }
 

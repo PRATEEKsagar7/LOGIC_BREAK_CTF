@@ -3,17 +3,13 @@
   "cleanUrls": true,
   "functions": {
     "api/index.js": {
-      "includeFiles": "{*.html,public/**,challenge_files/**}"
+      "includeFiles": "public/**"
     }
   },
   "rewrites": [
     {
       "source": "/api/:path*",
       "destination": "/api/index.js?__route=/api/:path*"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/api/index.js"
     }
   ]
 }
