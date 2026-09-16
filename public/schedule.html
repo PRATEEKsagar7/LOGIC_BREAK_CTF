@@ -1,0 +1,1517 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Logic CTF - Scheduling</title>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              black: '#090E16',
+              dark: '#0F141C',
+              card: '#1A2330',
+              elevated: '#212B3A',
+              border: '#2D3A4B',
+              borderHover: '#3B4A5D',
+              emerald: '#00FF9D',
+              emeraldDark: '#00C277',
+              emeraldMuted: 'rgba(0, 255, 157, 0.12)',
+              cyan: '#00D9F5',
+              amber: '#F59E0B',
+              red: '#EF4444'
+            }
+          },
+          fontFamily: {
+            mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+            sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+<!-- BEGIN: Custom CSS Styling -->
+<style data-purpose="custom-scrollbars">
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090E16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2D3A4B;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3B4A5D;
+    }
+  </style>
+<style data-purpose="tactical-animations">
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.92); }
+    }
+    .pulse-dot {
+      animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    .cyber-card-glow:hover {
+      box-shadow: 0 0 20px -5px rgba(0, 255, 157, 0.15);
+    }
+  </style>
+<!-- END: Custom CSS Styling -->
+</head>
+<body class="bg-[#090E16] text-[#94A3B8] font-sans antialiased min-h-screen flex flex-col selection:bg-cyber-emerald selection:text-black">
+<!-- BEGIN: MainHeader -->
+<header class="border-b border-cyber-border bg-[#0F141C] sticky top-0 z-40">
+<div class="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+<!-- Brand & Identity -->
+<div class="flex items-center space-x-4">
+<!-- Logo Emblem -->
+<div class="w-9 h-9 rounded-lg bg-[#1A2330] border border-cyber-border flex items-center justify-center text-cyber-emerald shadow-[0_0_12px_rgba(0,255,157,0.25)]">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<div class="flex items-center space-x-2">
+<span class="font-bold text-white tracking-widest text-sm sm:text-base font-mono">LOGIC CTF</span>
+<span class="text-[10px] font-mono uppercase bg-[#1A2330] text-cyber-emerald border border-cyber-border px-1.5 py-0.5 rounded tracking-wider">Collegiate</span>
+</div>
+<p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest hidden sm:block">Arena Ops // Workspace</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+<a class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white rounded-md hover:bg-[#1A2330] transition-colors" href="#">Overview</a>
+<a class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white rounded-md hover:bg-[#1A2330] transition-colors" href="#">Missions</a>
+<a class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white rounded-md hover:bg-[#1A2330] transition-colors" href="#">Reports</a>
+<a class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white rounded-md hover:bg-[#1A2330] transition-colors" href="#">Files</a>
+<a class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white rounded-md hover:bg-[#1A2330] transition-colors" href="#">Workspace</a>
+<a class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white rounded-md hover:bg-[#1A2330] transition-colors" href="#">Projects</a>
+<!-- Active Schedule Pill -->
+<a class="px-3 py-1.5 text-xs font-medium text-white bg-[#1A2330] border border-cyber-border rounded-md flex items-center space-x-2 shadow-inner" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-cyber-emerald pulse-dot"></span>
+<span class="">Schedule</span>
+</a>
+<a class="px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white rounded-md hover:bg-[#1A2330] transition-colors" href="#">Settings</a>
+</nav>
+<!-- Right Header Actions -->
+<div class="flex items-center space-x-4">
+<!-- Live Arena Pill -->
+<div class="flex items-center space-x-2 bg-[#1A2330] border border-cyber-border/80 px-3 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-cyber-emerald pulse-dot"></span>
+<span class="text-[11px] font-mono font-medium tracking-wider text-slate-300">LIVE ARENA</span>
+</div>
+<!-- User Profile Avatar -->
+<button class="w-8 h-8 rounded-full bg-[#1A2330] border border-cyber-border hover:border-cyber-emerald flex items-center justify-center text-slate-300 hover:text-white transition-colors" title="Cadet Profile">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: SubHeader -->
+<section class="border-b border-cyber-border/70 bg-[#0F141C]/80 backdrop-blur-sm">
+<div class="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
+<!-- Breadcrumb -->
+<div class="flex items-center space-x-2">
+<span class="text-cyber-emerald">LOGIC CTF</span>
+<span class="text-slate-600">//</span>
+<span class="text-slate-400">ARENA OPS</span>
+<span class="text-slate-600">//</span>
+<span class="text-white bg-[#1A2330] px-2 py-0.5 rounded border border-cyber-border font-semibold">SCHEDULING</span>
+</div>
+<!-- Operational Status -->
+<div class="flex items-center space-x-2 text-slate-400">
+<svg class="w-3.5 h-3.5 text-cyber-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">TACTICAL TIMELINE: <strong class="text-cyber-emerald font-normal">ACTIVE</strong></span>
+<span class="text-slate-600">|</span>
+<span class="hidden sm:inline">OPERATIONAL CYCLE: <span class="text-white">09:00 - 18:00 UTC</span></span>
+</div>
+</div>
+</section>
+<!-- END: SubHeader -->
+<!-- BEGIN: MainContent -->
+<main class="flex-1 max-w-[1700px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+<!-- Title & Top Control Ribbon -->
+<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 pb-2">
+<div>
+<div class="flex items-center space-x-2 text-xs font-mono tracking-wider text-cyber-emerald uppercase mb-1">
+<span class="w-1.5 h-1.5 bg-cyber-emerald inline-block"></span>
+<span class="">Tactical Chronology</span>
+</div>
+<h1 class="text-3xl font-extrabold text-white tracking-tight flex items-center space-x-3">
+<span class="">Schedule</span>
+<span class="text-xs font-mono font-normal bg-[#1A2330] border border-cyber-border text-slate-300 px-2.5 py-0.5 rounded-full" id="taskCountBadge">4 Tasks Active</span>
+</h1>
+<p class="text-sm text-slate-400 mt-1">Plan your tasks, collegiate scrimmage milestones, and manage your tactical time.</p>
+</div>
+<!-- Action Buttons & Date Selector -->
+<div class="flex flex-wrap items-center gap-3">
+<!-- Date Navigator -->
+<div class="flex items-center bg-[#1A2330] border border-cyber-border rounded-lg p-1">
+<button class="p-1.5 text-slate-400 hover:text-white hover:bg-cyber-elevated rounded transition-colors" id="prevDateBtn" title="Previous Day">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<span class="px-3 text-xs font-mono font-medium text-white select-none" id="currentDateLabel">Today (Sep 12, 2026)</span>
+<button class="p-1.5 text-slate-400 hover:text-white hover:bg-cyber-elevated rounded transition-colors" id="nextDateBtn" title="Next Day">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<!-- Take a Break Button -->
+<button class="px-3.5 py-2 rounded-lg bg-[#1A2330] border border-cyber-border text-xs font-mono font-medium text-slate-200 hover:border-cyber-borderHover hover:text-white hover:bg-cyber-elevated transition-all flex items-center space-x-2" id="openBreakModalBtn">
+<svg class="w-4 h-4 text-cyber-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Take a Break</span>
+</button>
+<!-- Share Schedule Button -->
+<button class="px-3.5 py-2 rounded-lg bg-[#1A2330] border border-cyber-border text-xs font-mono font-medium text-slate-200 hover:border-cyber-borderHover hover:text-white hover:bg-cyber-elevated transition-all flex items-center space-x-2" id="openShareModalBtn">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Share Schedule</span>
+</button>
+<!-- Add Task CTA -->
+<button class="px-4 py-2 rounded-lg bg-cyber-emerald text-black text-xs font-mono font-bold hover:bg-cyber-emeraldDark transition-all flex items-center space-x-2 shadow-[0_0_15px_rgba(0,255,157,0.3)] hover:shadow-[0_0_20px_rgba(0,255,157,0.5)]" id="openAddTaskModalBtn">
+<svg class="w-4 h-4 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+<span class="">+ Add Task</span>
+</button>
+</div>
+</div>
+<!-- Timeline Wrapper & Main Grid -->
+<div class="bg-[#0F141C] border border-cyber-border rounded-xl p-4 sm:p-6 lg:p-8 relative">
+<!-- In-App Schedule Status Notification / Tactical Banner -->
+<div class="mb-8 p-3.5 rounded-lg bg-[#1A2330]/80 border border-cyber-border flex items-center justify-between flex-wrap gap-3">
+<div class="flex items-center space-x-3">
+<div class="w-2.5 h-2.5 rounded-full bg-cyber-emerald pulse-dot"></div>
+<span class="text-xs font-mono text-slate-300">
+<span class="text-cyber-emerald font-semibold">SCHEDULE REAL-TIME ENGINE:</span> Telemetry sync active. Scrimmage tasks align with US-Cyber-East timezone.
+          </span>
+</div>
+<div class="text-[11px] font-mono text-slate-400 flex items-center space-x-2">
+<span class="">Auto-Reminder Dispatch:</span>
+<span class="text-white px-2 py-0.5 rounded bg-cyber-dark border border-cyber-border">ENABLED</span>
+</div>
+</div>
+
+<!-- Search & Filter Ribbon (Challenge 14 Surface) -->
+<div class="mb-6 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 p-3.5 rounded-xl bg-[#141B26] border border-cyber-border">
+  <div class="flex-1 relative">
+    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    </span>
+    <input id="taskSearchInput" type="text" placeholder="Search tasks, unlisted protocols, or audit logs... (e.g. 'backup', 'cold-storage', 'audit')" class="w-full pl-9 pr-8 py-2 rounded-lg bg-[#0A0F17] border border-cyber-border text-white text-xs font-mono focus:border-cyber-emerald focus:ring-1 focus:ring-cyber-emerald outline-none transition" />
+    <button id="clearTaskSearchBtn" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white text-xs font-mono">✕</button>
+  </div>
+  <div class="flex items-center gap-1.5 overflow-x-auto text-xs font-mono" id="taskFilterButtons">
+    <button data-filter="all" class="task-filter-btn px-3 py-1.5 rounded-lg bg-cyber-emerald text-black font-bold transition">All Tasks</button>
+    <button data-filter="active" class="task-filter-btn px-3 py-1.5 rounded-lg bg-[#1A2330] text-slate-300 hover:text-white border border-cyber-border transition">Active Only</button>
+    <button data-filter="activity" class="task-filter-btn px-3 py-1.5 rounded-lg bg-[#1A2330] text-slate-300 hover:text-white border border-cyber-border transition flex items-center gap-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span>
+      <span>Activity & Audit Log</span>
+    </button>
+  </div>
+</div>
+
+<!-- Empty State Container (Hidden by default, controlled via JS) -->
+<div class="hidden flex-col items-center justify-center py-20 px-4 text-center" id="emptyState">
+<div class="w-16 h-16 rounded-full bg-[#1A2330] border border-cyber-border flex items-center justify-center text-slate-500 mb-4">
+<svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold text-white mb-1">No tasks found</h3>
+<p class="text-sm text-slate-400 max-w-sm mb-6">No operational tasks match your active filter or search parameter.</p>
+<button class="px-4 py-2 rounded-lg bg-cyber-emerald text-black text-xs font-mono font-bold hover:bg-cyber-emeraldDark transition-all flex items-center space-x-2" id="emptyStateAddBtn">
+<svg class="w-4 h-4 stroke-[3]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+<span class="">+ Add Task</span>
+</button>
+</div>
+
+<!-- Vertical Timeline List -->
+<div class="space-y-6 relative" id="timelineContainer"></div>
+</div>
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: MainFooter -->
+<footer class="border-t border-cyber-border bg-[#090E16] text-[11px] font-mono py-4 mt-auto">
+<div class="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-slate-500">
+<div class="flex items-center space-x-2">
+<span class="">Logic CTF Defense Grid v4.12.0</span>
+<span class="">â€¢</span>
+<span class="">Collegiate Arena Tier-1 Encrypted</span>
+</div>
+<div class="flex items-center space-x-4">
+<span class="">SCHEDULE SYNC: <span class="text-cyber-emerald">REALTIME</span></span>
+<span class="">â€¢</span>
+<span class="">STATUS: <span class="text-white">OPTIMAL</span></span>
+</div>
+</div>
+</footer>
+<!-- END: MainFooter -->
+<!-- BEGIN: ModalsSection -->
+<!-- 1. Add Task Modal -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm" id="addTaskModal">
+<div class="bg-[#1A2330] border border-cyber-border rounded-xl w-full max-w-lg overflow-hidden shadow-2xl">
+<div class="flex items-center justify-between px-6 py-4 border-b border-cyber-border bg-cyber-elevated">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-cyber-emerald"></span>
+<h3 class="text-sm font-mono font-bold uppercase tracking-wider text-white">Add Tactical Task</h3>
+</div>
+<button class="closeModalBtn text-slate-400 hover:text-white transition-colors" data-target="addTaskModal">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<form class="p-6 space-y-4 text-xs font-mono" id="addTaskForm">
+<div>
+<label class="block text-slate-300 uppercase mb-1">Task Name *</label>
+<input class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white placeholder-slate-600" name="taskName" placeholder="e.g. Reverse Engineering Sandbox" required="" type="text">
+</div>
+<div>
+<label class="block text-slate-300 uppercase mb-1">Description</label>
+<textarea class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white placeholder-slate-600" name="taskDesc" placeholder="Provide operational scope, objectives, or payloads..." rows="3"></textarea>
+</div>
+<div>
+<label class="block text-slate-300 uppercase mb-1">Date</label>
+<input class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white" name="taskDate" type="date" value="2026-09-12">
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-slate-300 uppercase mb-1">Start Time *</label>
+<input class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white" name="startTime" required="" type="time" value="09:00">
+</div>
+<div>
+<label class="block text-slate-300 uppercase mb-1">End Time *</label>
+<input class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white" name="endTime" required="" type="time" value="10:30">
+</div>
+</div>
+<div>
+<label class="block text-slate-300 uppercase mb-1">Reminder Alert</label>
+<select class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white" name="taskReminder">
+<option value="No reminder">No reminder</option>
+<option value="5m before">5 minutes before</option>
+<option value="10m before">10 minutes before</option>
+<option selected="" value="15m before">15 minutes before</option>
+<option value="30m before">30 minutes before</option>
+<option value="1h before">1 hour before</option>
+</select>
+</div>
+<div class="pt-4 flex items-center justify-end space-x-3 border-t border-cyber-border/70">
+<button class="closeModalBtn px-4 py-2 rounded text-slate-300 hover:text-white bg-cyber-elevated hover:bg-[#2b3749] transition-colors" data-target="addTaskModal" type="button">Cancel</button>
+<button class="px-4 py-2 rounded bg-cyber-emerald text-black font-bold hover:bg-cyber-emeraldDark transition-colors shadow-[0_0_12px_rgba(0,255,157,0.3)]" type="submit">Add Task</button>
+</div>
+</form>
+</div>
+</div>
+<!-- 2. Edit Task Modal -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm" id="editTaskModal">
+<div class="bg-[#1A2330] border border-cyber-border rounded-xl w-full max-w-lg overflow-hidden shadow-2xl">
+<div class="flex items-center justify-between px-6 py-4 border-b border-cyber-border bg-cyber-elevated">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-cyber-cyan"></span>
+<h3 class="text-sm font-mono font-bold uppercase tracking-wider text-white">Edit Task Parameters</h3>
+</div>
+<button class="closeModalBtn text-slate-400 hover:text-white transition-colors" data-target="editTaskModal">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<form class="p-6 space-y-4 text-xs font-mono" id="editTaskForm">
+<input id="editTaskId" name="taskId" type="hidden">
+<div>
+<label class="block text-slate-300 uppercase mb-1">Task Name *</label>
+<input class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white" id="editTaskTitle" name="taskName" required="" type="text">
+</div>
+<div>
+<label class="block text-slate-300 uppercase mb-1">Description</label>
+<textarea class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white" id="editTaskDesc" name="taskDesc" rows="3"></textarea>
+</div>
+<div>
+<label class="block text-slate-300 uppercase mb-1">Date</label>
+<input class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white" id="editTaskDate" name="taskDate" type="date" value="2026-09-12">
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-slate-300 uppercase mb-1">Start Time</label>
+<input class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white" id="editTaskStart" name="startTime" placeholder="09:00 AM" required="" type="text">
+</div>
+<div>
+<label class="block text-slate-300 uppercase mb-1">End Time</label>
+<input class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white" id="editTaskEnd" name="endTime" placeholder="10:30 AM" required="" type="text">
+</div>
+</div>
+<div>
+<label class="block text-slate-300 uppercase mb-1">Reminder Alert</label>
+<select class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-emerald focus:ring-0 rounded p-2 text-white" id="editTaskReminder" name="taskReminder">
+<option value="No reminder">No reminder</option>
+<option value="5m before">5 minutes before</option>
+<option value="10m before">10 minutes before</option>
+<option value="15m before">15 minutes before</option>
+<option value="30m before">30 minutes before</option>
+<option value="1h before">1 hour before</option>
+</select>
+</div>
+<div class="pt-4 flex items-center justify-end space-x-3 border-t border-cyber-border/70">
+<button class="closeModalBtn px-4 py-2 rounded text-slate-300 hover:text-white bg-cyber-elevated hover:bg-[#2b3749] transition-colors" data-target="editTaskModal" type="button">Cancel</button>
+<button class="px-4 py-2 rounded bg-cyber-emerald text-black font-bold hover:bg-cyber-emeraldDark transition-colors shadow-[0_0_12px_rgba(0,255,157,0.3)]" type="submit">Save Changes</button>
+</div>
+</form>
+</div>
+</div>
+<!-- 3. Delete Task Confirmation Modal -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm" id="deleteTaskModal">
+<div class="bg-[#1A2330] border border-cyber-border rounded-xl w-full max-w-md overflow-hidden shadow-2xl">
+<div class="p-6 text-center">
+<div class="w-12 h-12 rounded-full bg-red-900/30 border border-red-500/40 text-red-400 mx-auto flex items-center justify-center mb-4">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<h3 class="text-base font-mono font-bold text-white mb-2">Delete Task?</h3>
+<p class="text-xs text-slate-400 mb-6 leading-relaxed">This task will be removed from your collegiate schedule timeline and telemetry logging.</p>
+<input id="deleteTargetId" type="hidden">
+<div class="flex items-center justify-center space-x-3 text-xs font-mono">
+<button class="closeModalBtn px-4 py-2 rounded text-slate-300 hover:text-white bg-cyber-elevated hover:bg-[#2b3749] transition-colors" data-target="deleteTaskModal" type="button">Cancel</button>
+<button class="px-4 py-2 rounded bg-red-600 hover:bg-red-500 text-white font-bold transition-colors shadow-[0_0_12px_rgba(239,68,68,0.3)]" id="confirmDeleteBtn" type="button">Delete Task</button>
+</div>
+</div>
+</div>
+</div>
+<!-- 4. Take a Break Modal -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm" id="breakModal">
+<div class="bg-[#1A2330] border border-cyber-border rounded-xl w-full max-w-lg overflow-hidden shadow-2xl">
+<div class="flex items-center justify-between px-6 py-4 border-b border-cyber-border bg-cyber-elevated">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-cyber-amber"></span>
+<h3 class="text-sm font-mono font-bold uppercase tracking-wider text-white">Schedule Break</h3>
+</div>
+<button class="closeModalBtn text-slate-400 hover:text-white transition-colors" data-target="breakModal">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<form class="p-6 space-y-4 text-xs font-mono" id="breakForm">
+<div>
+<label class="block text-slate-300 uppercase mb-2">Break Duration</label>
+<div class="grid grid-cols-4 gap-2">
+<label class="flex items-center justify-center border border-cyber-border p-2 rounded cursor-pointer hover:border-cyber-amber hover:bg-cyber-elevated transition-all">
+<input class="sr-only peer" name="breakDuration" type="radio" value="15 min">
+<span class="peer-checked:text-cyber-amber peer-checked:font-bold">15m</span>
+</label>
+<label class="flex items-center justify-center border border-cyber-border p-2 rounded cursor-pointer hover:border-cyber-amber hover:bg-cyber-elevated transition-all">
+<input checked="" class="sr-only peer" name="breakDuration" type="radio" value="30 min">
+<span class="peer-checked:text-cyber-amber peer-checked:font-bold text-cyber-amber font-bold">30m</span>
+</label>
+<label class="flex items-center justify-center border border-cyber-border p-2 rounded cursor-pointer hover:border-cyber-amber hover:bg-cyber-elevated transition-all">
+<input class="sr-only peer" name="breakDuration" type="radio" value="1 hour">
+<span class="peer-checked:text-cyber-amber peer-checked:font-bold">1h</span>
+</label>
+<label class="flex items-center justify-center border border-cyber-border p-2 rounded cursor-pointer hover:border-cyber-amber hover:bg-cyber-elevated transition-all">
+<input class="sr-only peer" name="breakDuration" type="radio" value="Custom">
+<span class="peer-checked:text-cyber-amber peer-checked:font-bold">Custom</span>
+</label>
+</div>
+</div>
+<div>
+<label class="block text-slate-300 uppercase mb-1">Time Slot</label>
+<div class="grid grid-cols-2 gap-4">
+<input class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-amber focus:ring-0 rounded p-2 text-white" name="breakStartTime" type="text" value="01:00 PM">
+<input class="w-full bg-[#0F141C] border border-cyber-border focus:border-cyber-amber focus:ring-0 rounded p-2 text-white" name="breakEndTime" type="text" value="01:30 PM">
+</div>
+</div>
+<!-- Document Upload Area -->
+<div>
+<label class="block text-slate-300 uppercase mb-1">Upload Break Document (Optional)</label>
+<p class="text-[11px] text-slate-400 mb-2">Attach a document related to your break or scheduled activity</p>
+<div class="border-2 border-dashed border-cyber-border hover:border-cyber-amber rounded-lg p-4 text-center cursor-pointer transition-colors bg-[#0F141C]/60 relative">
+<input class="absolute inset-0 opacity-0 cursor-pointer w-full h-full" id="breakFileInput" type="file">
+<div class="flex flex-col items-center justify-center space-y-1">
+<svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-white font-medium">Click to attach file or drag &amp; drop</span>
+<span class="text-[10px] text-slate-500">PDF, TXT, MD, DOC up to 10MB</span>
+</div>
+</div>
+<div class="mt-2 flex items-center justify-between bg-cyber-elevated p-2 rounded border border-cyber-border hidden" id="uploadedFileBadge">
+<span class="text-xs text-cyber-amber flex items-center space-x-1.5">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span id="uploadedFileName" class="">file.pdf</span>
+</span>
+<button class="text-slate-400 hover:text-red-400 text-xs" id="removeFileBtn" type="button">Ã—</button>
+</div>
+</div>
+<div class="pt-4 flex items-center justify-end space-x-3 border-t border-cyber-border/70">
+<button class="closeModalBtn px-4 py-2 rounded text-slate-300 hover:text-white bg-cyber-elevated hover:bg-[#2b3749] transition-colors" data-target="breakModal" type="button">Cancel</button>
+<button class="px-4 py-2 rounded bg-cyber-amber text-black font-bold hover:bg-amber-400 transition-colors" type="submit">Save Break</button>
+</div>
+</form>
+</div>
+</div>
+<!-- 5. Share Schedule Modal -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm" id="shareModal">
+<div class="bg-[#1A2330] border border-cyber-border rounded-xl w-full max-w-md overflow-hidden shadow-2xl">
+<div class="flex items-center justify-between px-6 py-4 border-b border-cyber-border bg-cyber-elevated">
+<div class="flex items-center space-x-2">
+<svg class="w-4 h-4 text-cyber-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<h3 class="text-sm font-mono font-bold uppercase tracking-wider text-white">Share Schedule & Dossier</h3>
+</div>
+<button class="closeModalBtn text-slate-400 hover:text-white transition-colors" data-target="shareModal">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+
+<!-- Workflow Tab Bar -->
+<div class="flex border-b border-cyber-border bg-[#141B26] p-1.5 gap-1.5 font-mono text-xs">
+  <button type="button" id="tabShareImmediate" onclick="switchShareTab('immediate')" class="flex-1 py-1.5 px-3 rounded-lg font-bold transition flex items-center justify-center gap-1.5 bg-cyber-elevated text-cyber-emerald border border-cyber-border cursor-pointer">
+    <span>⚡ Direct Dispatch</span>
+  </button>
+  <button type="button" id="tabShareSchedule" onclick="switchShareTab('schedule')" class="flex-1 py-1.5 px-3 rounded-lg font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white border border-transparent cursor-pointer">
+    <span>📅 Schedule to Calendar</span>
+  </button>
+</div>
+
+<div class="p-6 text-xs font-mono">
+  <!-- Panel 1: Direct Dispatch (Challenge 6) -->
+  <div id="panelShareImmediate" class="space-y-4">
+    <div>
+      <label class="block text-slate-300 uppercase mb-1">Direct Tactical Link</label>
+      <div class="flex items-center space-x-2">
+        <input class="w-full bg-[#0F141C] border border-cyber-border rounded p-2 text-cyber-cyan text-[11px] select-all" id="shareLinkInput" readonly="" type="text" value="https://arena.logicctf.edu/schedule/scrimmage-dossier-0914">
+        <button class="px-3 py-2 bg-cyber-elevated hover:bg-cyber-border text-white rounded border border-cyber-border transition-colors whitespace-nowrap cursor-pointer" id="copyShareLinkBtn" type="button">
+          Copy Link
+        </button>
+      </div>
+    </div>
+
+    <!-- Attached Dossier File Card -->
+    <div class="p-3 rounded bg-[#0F141C] border border-cyber-border space-y-2">
+      <div class="flex items-center justify-between text-slate-400 text-[11px]">
+        <span>Attached Scrimmage Dossier:</span>
+        <span class="text-[10px] text-cyber-emerald font-bold">1.4 MB PDF</span>
+      </div>
+      <div class="flex items-center justify-between bg-[#1A2330] p-2.5 rounded border border-cyber-border/80">
+        <div class="flex items-center space-x-2 text-white">
+          <span class="text-rose-400 text-sm">📑</span>
+          <span class="font-bold text-xs">incident_recon_dossier.pdf</span>
+        </div>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30">Public Dispatch</span>
+      </div>
+    </div>
+
+    <div class="p-3 rounded bg-[#0F141C] border border-cyber-border flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="w-2 h-2 rounded-full bg-cyber-emerald"></span>
+        <span class="text-slate-300">Transmission Channel:</span>
+        <span class="text-white font-semibold">Active Public Gateway</span>
+      </div>
+      <span class="text-[10px] text-slate-500 uppercase">Collegiate Arena</span>
+    </div>
+
+    <div class="pt-2 flex items-center justify-end space-x-3 border-t border-cyber-border/70">
+      <button class="closeModalBtn px-4 py-2 rounded text-slate-300 hover:text-white bg-cyber-elevated hover:bg-[#2b3749] transition-colors cursor-pointer" data-target="shareModal" type="button">Close</button>
+      <button class="px-4 py-2 rounded bg-cyber-emerald text-black font-bold hover:bg-cyber-emeraldDark transition-colors shadow-lg cursor-pointer" id="finalShareBtn" type="button">Share File & Link</button>
+    </div>
+  </div>
+
+  <!-- Panel 2: Schedule Share to Calendar (Challenge 15!) -->
+  <div id="panelShareSchedule" class="hidden space-y-4">
+    <!-- Attached Dossier File Card -->
+    <div class="p-3 rounded bg-[#0F141C] border border-cyber-border space-y-2">
+      <div class="flex items-center justify-between text-slate-400 text-[11px]">
+        <span>Document for Scheduled Dispatch:</span>
+        <span class="text-[10px] text-cyber-emerald font-bold">1.4 MB PDF</span>
+      </div>
+      <div class="flex items-center justify-between bg-[#1A2330] p-2.5 rounded border border-cyber-border/80">
+        <div class="flex items-center space-x-2 text-white">
+          <span class="text-rose-400 text-sm">📑</span>
+          <span class="font-bold text-xs">incident_recon_dossier.pdf</span>
+        </div>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/30">Calendar Share Target</span>
+      </div>
+    </div>
+
+    <div class="space-y-3">
+      <div>
+        <label class="block text-slate-300 uppercase mb-1">Target Dispatch Date</label>
+        <input type="date" id="inputScheduleDate" value="2026-09-17" class="w-full bg-[#0F141C] border border-cyber-border rounded p-2 text-white text-xs font-mono focus:border-cyber-emerald outline-none">
+      </div>
+      <div>
+        <label class="block text-slate-300 uppercase mb-1">Dispatch Time Slot</label>
+        <select id="selectScheduleTime" class="w-full bg-[#0F141C] border border-cyber-border rounded p-2 text-white text-xs font-mono focus:border-cyber-emerald outline-none">
+          <option value="18:00">18:00 (Evening Operations Briefing)</option>
+          <option value="09:00">09:00 (Morning Synchronous Review)</option>
+          <option value="14:00">14:00 (Midday Tactical Scrimmage)</option>
+          <option value="23:59">23:59 (EOD Security Snapshot)</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-slate-300 uppercase mb-1">Calendar Channel / Stream</label>
+        <input type="text" readonly value="Collegiate Security Arena Dispatch & Chronology" class="w-full bg-[#0F141C] border border-cyber-border rounded p-2 text-cyber-cyan text-xs font-mono">
+      </div>
+    </div>
+
+    <!-- Narrative hint callout -->
+    <div class="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 space-y-1">
+      <div class="font-bold flex items-center gap-1.5 text-[11px]">
+        <span>💡</span>
+        <span>Alternative Chronological Workflow</span>
+      </div>
+      <p class="text-[10px] text-slate-300 leading-relaxed italic">
+        “A share can sometimes find a way onto the calendar.”
+      </p>
+      <p class="text-[10px] text-slate-400">
+        Even when files interface insists scheduling is unavailable, committing through this calendar workflow completes the scheduled share.
+      </p>
+    </div>
+
+    <div class="pt-2 flex items-center justify-end space-x-3 border-t border-cyber-border/70">
+      <button class="closeModalBtn px-4 py-2 rounded text-slate-300 hover:text-white bg-cyber-elevated hover:bg-[#2b3749] transition-colors cursor-pointer" data-target="shareModal" type="button">Cancel</button>
+      <button onclick="commitCalendarScheduleShare()" id="btnConfirmCalendarScheduleShare" class="px-4 py-2 rounded bg-gradient-to-r from-emerald-500 to-teal-400 text-black font-bold hover:opacity-95 transition-all shadow-lg flex items-center gap-1.5 cursor-pointer" type="button">
+        <span>📅 Schedule Share to Calendar</span>
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- 6. UI Contradiction Victory Modal (Challenge 6) -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" id="scheduleFlagModal">
+<div class="bg-[#1A2330] border border-cyber-emerald/50 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl p-6 text-center space-y-4 font-mono">
+  <div class="w-12 h-12 rounded-2xl bg-cyber-emerald/20 border border-cyber-emerald/40 text-cyber-emerald flex items-center justify-center mx-auto text-2xl">
+    🎉
+  </div>
+  <div>
+    <h3 class="text-base font-black text-white uppercase tracking-wider">Contradiction Exploited!</h3>
+    <p class="text-xs text-slate-400 mt-1">
+      When two parts disagreed, you tested the truth! The Files &amp; Docs hub claimed file sharing was disabled by policy, yet the Scheduling portal permitted external file transmission.
+    </p>
+  </div>
+  <div class="bg-[#0F141C] border border-cyber-border rounded-xl p-3 text-left space-y-2 text-xs">
+    <div class="flex items-center justify-between text-slate-400 text-[11px]">
+      <span>Generated Public Dispatch Link:</span>
+      <span class="text-cyber-emerald font-bold">HTTP 200 OK</span>
+    </div>
+    <div id="scheduleShareUrlDisplay" class="text-slate-300 truncate text-[11px] font-mono select-all bg-black/40 p-1.5 rounded border border-white/5">
+      https://arena.logicctf.edu/shared/doc/...
+    </div>
+  </div>
+  <div class="bg-emerald-950/40 border border-cyber-emerald/40 rounded-xl p-3.5 space-y-1.5 text-left">
+    <div class="flex items-center justify-between">
+      <span class="text-[10px] text-cyber-emerald font-bold uppercase tracking-wider">Captured Mission Flag:</span>
+      <span class="text-[10px] px-2 py-0.5 rounded bg-cyber-emerald/20 text-cyber-emerald font-bold">+50 PTS</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <code id="scheduleFlagCode" class="flex-1 bg-black/60 px-3 py-2 rounded-lg text-cyber-emerald text-xs font-mono font-bold select-all border border-cyber-emerald/30 break-all">logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}</code>
+      <button onclick="copyScheduleFlag()" id="btnCopyScheduleFlag" class="px-3 py-2 rounded-lg bg-cyber-emerald hover:bg-cyber-emeraldDark text-black text-xs font-bold transition shrink-0">
+        Copy
+      </button>
+    </div>
+  </div>
+  <div class="flex items-center gap-2 pt-2">
+    <a href="missions.html" class="flex-1 py-2.5 rounded-xl bg-cyber-emerald hover:bg-cyber-emeraldDark text-black text-xs font-bold transition flex items-center justify-center gap-1">
+      <span>Go to Missions to Submit</span>
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+    </a>
+    <button onclick="closeModal('scheduleFlagModal')" class="px-4 py-2.5 rounded-xl bg-cyber-elevated hover:bg-[#2b3749] text-slate-300 text-xs font-bold transition">
+      Close
+    </button>
+  </div>
+</div>
+</div>
+
+<!-- Missing Task Flag Modal (Challenge 14) -->
+<div id="missingTaskFlagModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+  <div class="bg-[#1A2330] border border-cyber-emerald/60 rounded-2xl max-w-md w-full p-6 text-center space-y-4 shadow-[0_0_50px_rgba(0,255,157,0.25)]">
+    <div class="w-14 h-14 mx-auto rounded-full bg-cyber-emeraldMuted border border-cyber-emerald/50 flex items-center justify-center text-cyber-emerald text-2xl shadow-[0_0_20px_rgba(0,255,157,0.4)]">
+      🚩
+    </div>
+    <div>
+      <div class="inline-block px-2.5 py-0.5 rounded-full bg-cyber-emerald/10 border border-cyber-emerald/30 text-cyber-emerald text-[10px] font-mono font-bold tracking-widest uppercase mb-1.5">
+        Business Logic // Tier 1
+      </div>
+      <h3 class="text-lg font-black text-white uppercase tracking-wider">Mission Complete: The Missing Task</h3>
+      <p class="text-xs text-cyber-emerald font-mono mt-1 font-semibold">
+        “Missing from view does not mean missing from the system.”
+      </p>
+      <p class="text-[11px] text-slate-400 mt-1">
+        You successfully filtered the operational logs, surfaced the unlisted background task, and executed it to completion.
+      </p>
+    </div>
+    <div class="bg-emerald-950/40 border border-cyber-emerald/40 rounded-xl p-3.5 space-y-1.5 text-left">
+      <div class="flex items-center justify-between">
+        <span class="text-[10px] text-cyber-emerald font-bold uppercase tracking-wider">Official Mission Flag:</span>
+        <span class="text-[10px] px-2 py-0.5 rounded bg-cyber-emerald/20 text-cyber-emerald font-bold">+50 PTS</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <code id="missingTaskFlagCode" class="flex-1 bg-black/60 px-3 py-2 rounded-lg text-cyber-emerald text-xs font-mono font-bold select-all border border-cyber-emerald/30 break-all">logicCTF{m1ss1ng_t4sk_unl1st3d_c0mpl3t3d}</code>
+        <button onclick="copyMissingTaskFlag()" id="btnCopyMissingTaskFlag" class="px-3 py-2 rounded-lg bg-cyber-emerald hover:bg-cyber-emeraldDark text-black text-xs font-bold transition shrink-0 cursor-pointer">
+          Copy
+        </button>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 pt-2">
+      <a href="missions.html" class="flex-1 py-2.5 rounded-xl bg-cyber-emerald hover:bg-cyber-emeraldDark text-black text-xs font-bold transition flex items-center justify-center gap-1">
+        <span>Go to Missions to Submit</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+      </a>
+      <button onclick="closeModal('missingTaskFlagModal')" class="px-4 py-2.5 rounded-xl bg-cyber-elevated hover:bg-[#2b3749] text-slate-300 text-xs font-bold transition cursor-pointer">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 8. Unscheduleable Share Victory Modal (Challenge 15) -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/85 backdrop-blur-md" id="unscheduleableShareModal">
+  <div class="bg-[#1A2330] border-2 border-emerald-500/80 rounded-2xl w-full max-w-md overflow-hidden shadow-[0_0_50px_rgba(0,255,157,0.3)] p-6 text-center space-y-4 font-mono animate-in fade-in zoom-in-95 duration-200">
+    <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 border-2 border-emerald-400 text-emerald-300 flex items-center justify-center mx-auto text-3xl shadow-[0_0_20px_rgba(0,255,157,0.4)]">
+      📅
+    </div>
+    <div>
+      <span class="px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold uppercase tracking-wider">
+        CHALLENGE 15 SOLVED • TIER 1 (+50 PTS)
+      </span>
+      <h3 class="text-xl font-black text-white uppercase tracking-wider mt-2">The Unscheduleable Share!</h3>
+      <p class="text-xs text-slate-300 italic mt-1 font-semibold">
+        “The first Share button may not tell the whole story.”
+      </p>
+      <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+        A share can sometimes find a way onto the calendar. Even though scheduling appeared unavailable on the files portal, the chronological scheduler successfully committed the share event!
+      </p>
+    </div>
+
+    <!-- Flag Display Box -->
+    <div class="p-3.5 rounded-xl bg-[#0F141C] border border-cyber-border space-y-2 text-left">
+      <div class="flex items-center justify-between text-[11px] text-slate-400">
+        <span>OFFICIAL MISSION FLAG:</span>
+        <span class="text-cyber-emerald text-[10px] font-bold">+50 PTS</span>
+      </div>
+      <div class="flex items-center justify-between bg-[#141B26] p-2.5 rounded border border-cyber-emerald/40 gap-2">
+        <code class="text-cyber-emerald font-bold text-xs select-all break-all" id="unscheduleableShareFlagCode">logicCTF{unsck3dul4bl3_sh4r3_c4l3nd4r_p4th}</code>
+        <button class="px-3 py-1.5 bg-cyber-emerald text-black text-xs font-bold rounded hover:bg-cyber-emeraldDark transition-colors shrink-0 cursor-pointer" id="btnCopyUnscheduleableShareFlag" onclick="copyUnscheduleableShareFlag()">
+          Copy
+        </button>
+      </div>
+    </div>
+
+    <div class="pt-2 flex items-center justify-between gap-3">
+      <button class="closeModalBtn flex-1 py-2.5 rounded-xl bg-cyber-elevated text-slate-300 hover:text-white transition-colors text-xs font-bold cursor-pointer" data-target="unscheduleableShareModal" type="button">
+        Dismiss
+      </button>
+      <a href="missions.html" class="flex-1 py-2.5 rounded-xl bg-cyber-emerald hover:bg-cyber-emeraldDark text-black text-xs font-bold transition-colors flex items-center justify-center gap-1">
+        <span>Submit Flag</span> &rarr;
+      </a>
+    </div>
+  </div>
+</div>
+<!-- END: ModalsSection -->
+<!-- BEGIN: ToastNotifications -->
+<div class="fixed bottom-6 right-6 z-50 flex flex-col space-y-3 pointer-events-none" id="toastContainer">
+<!-- Reminders and operation alerts will appear here -->
+</div>
+<!-- END: ToastNotifications -->
+<!-- BEGIN: VanillaJS Logic -->
+<script data-purpose="app-logic">
+    // State Store
+    let scheduleItems = [
+      {
+        id: 't-1',
+        type: 'task',
+        title: 'Security Research',
+        startTime: '09:00 AM',
+        endTime: '10:30 AM',
+        status: 'In Progress',
+        description: 'Vulnerability analysis on perimeter endpoints and OAuth tokens.',
+        reminder: '15m before',
+        hourSlot: '09:00 AM'
+      },
+      {
+        id: 't-2',
+        type: 'task',
+        title: 'CTF Challenge Practice',
+        startTime: '11:00 AM',
+        endTime: '12:30 PM',
+        status: 'Scheduled',
+        description: 'Reverse engineering ELF binary payloads in isolated sandbox.',
+        reminder: '30m before',
+        hourSlot: '11:00 AM'
+      },
+      {
+        id: 't-break',
+        type: 'break',
+        title: 'Break',
+        startTime: '01:00 PM',
+        endTime: '01:30 PM',
+        status: 'Break',
+        description: '',
+        document: 'break-reading-notes.pdf (142 KB)',
+        hourSlot: '01:00 PM'
+      },
+      {
+        id: 't-3',
+        type: 'task',
+        title: 'Project Documentation',
+        startTime: '02:00 PM',
+        endTime: '03:30 PM',
+        status: 'Scheduled',
+        description: 'Compiling collegiate incident report draft and IOC correlation.',
+        reminder: '10m before',
+        hourSlot: '02:00 PM'
+      },
+      {
+        id: 't-4',
+        type: 'task',
+        title: 'Team Review',
+        startTime: '04:00 PM',
+        endTime: '05:00 PM',
+        status: 'Scheduled',
+        description: 'Briefing arena proctor and cross-validating telemetry flags.',
+        reminder: '5m before',
+        hourSlot: '04:00 PM'
+      }
+    ];
+
+    // Timeline Hours Reference
+    const timelineHours = [
+      '09:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', 
+      '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'
+    ];
+
+    // DOM Elements
+    const timelineContainer = document.getElementById('timelineContainer');
+    const emptyState = document.getElementById('emptyState');
+    const taskCountBadge = document.getElementById('taskCountBadge');
+    const toastContainer = document.getElementById('toastContainer');
+
+    // Show Toast Function
+    function showToast(message, type = 'info', actionBtn = null) {
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto bg-[#1A2330] border ${
+        type === 'emerald' ? 'border-cyber-emerald shadow-[0_0_15px_rgba(0,255,157,0.2)]' :
+        type === 'amber' ? 'border-cyber-amber shadow-[0_0_15px_rgba(245,158,11,0.2)]' :
+        type === 'red' ? 'border-red-500' : 'border-cyber-border'
+      } rounded-lg p-3.5 flex items-center justify-between space-x-3 text-xs font-mono shadow-2xl transition-all duration-300 transform translate-y-2 opacity-0 max-w-sm`;
+
+      let iconHtml = `
+        <span class="w-2 h-2 rounded-full ${
+          type === 'emerald' ? 'bg-cyber-emerald' : 
+          type === 'amber' ? 'bg-cyber-amber' : 
+          type === 'red' ? 'bg-red-500' : 'bg-cyber-cyan'
+        }"></span>
+      `;
+
+      toast.innerHTML = `
+        <div class="flex items-center space-x-2.5">
+          ${iconHtml}
+          <span class="text-white">${message}</span>
+        </div>
+        ${actionBtn ? `<button class="text-cyber-emerald underline hover:text-white ml-2 text-[11px]">${actionBtn.label}</button>` : ''}
+      `;
+
+      if (actionBtn && actionBtn.onClick) {
+        const btn = toast.querySelector('button');
+        if (btn) btn.addEventListener('click', actionBtn.onClick);
+      }
+
+      toastContainer.appendChild(toast);
+
+      // Animate In
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      // Auto Dismiss
+      setTimeout(() => {
+        toast.classList.add('translate-y-2', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Modal Control Helpers
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+      }
+    }
+
+    // Setup Modal Dismiss Events
+    document.querySelectorAll('.closeModalBtn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = btn.getAttribute('data-target');
+        closeModal(target);
+      });
+    });
+
+    // Close Modals on backdrop click
+    ['addTaskModal', 'editTaskModal', 'deleteTaskModal', 'breakModal', 'shareModal', 'scheduleFlagModal', 'missingTaskFlagModal', 'unscheduleableShareModal'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('click', (e) => {
+          if (e.target === el) closeModal(id);
+        });
+      }
+    });
+
+    let currentFilter = 'all';
+    let currentSearchQuery = '';
+
+    const unlistedTaskItem = {
+      id: 't-unlisted-sec-09',
+      type: 'task',
+      title: 'TASK-SEC-09: Cold-Storage Node Sync & Cryptographic Verification',
+      startTime: '04:30 AM',
+      endTime: '05:15 AM',
+      status: localStorage.getItem('logic_ctf_missing_task_completed') === 'true' ? 'Completed' : 'Pending Verification',
+      isUnlisted: true,
+      description: 'Automated institutional cold-storage synchronization protocol. Suppressed from operator default dashboard by system policy. Requires manual verification.',
+      reminder: 'System Auto-Audit',
+      hourSlot: '04:00 AM'
+    };
+
+    // Render Timeline View
+    function renderTimeline() {
+      timelineContainer.innerHTML = '';
+
+      let list = [...scheduleItems];
+      const query = (currentSearchQuery || '').trim().toLowerCase();
+
+      const isSearchingUnlisted = query.length > 0 && (
+        'task-sec-09'.includes(query) ||
+        'missing'.includes(query) ||
+        'cold'.includes(query) ||
+        'storage'.includes(query) ||
+        'backup'.includes(query) ||
+        'unlisted'.includes(query) ||
+        'audit'.includes(query) ||
+        'node'.includes(query) ||
+        'sync'.includes(query) ||
+        'integrity'.includes(query) ||
+        'protocol'.includes(query) ||
+        'secret'.includes(query) ||
+        'hidden'.includes(query)
+      );
+
+      if (currentFilter === 'activity' || isSearchingUnlisted) {
+        list.unshift(unlistedTaskItem);
+      }
+
+      if (currentFilter === 'active') {
+        list = list.filter(t => t.status === 'In Progress' || t.status === 'Pending Verification');
+      }
+
+      if (query.length > 0) {
+        list = list.filter(t => 
+          t.title.toLowerCase().includes(query) ||
+          (t.description && t.description.toLowerCase().includes(query)) ||
+          (t.hourSlot && t.hourSlot.toLowerCase().includes(query)) ||
+          (t.isUnlisted && isSearchingUnlisted)
+        );
+      }
+      
+      const activeTasks = list.filter(item => item.type === 'task').length;
+      taskCountBadge.textContent = `${activeTasks} Task${activeTasks === 1 ? '' : 's'} Active`;
+
+      if (list.length === 0) {
+        timelineContainer.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+        emptyState.classList.add('flex');
+        return;
+      } else {
+        timelineContainer.classList.remove('hidden');
+        emptyState.classList.add('hidden');
+        emptyState.classList.remove('flex');
+      }
+
+      // Group items or position them
+      list.forEach((item) => {
+        const row = document.createElement('div');
+        row.className = 'relative flex items-start space-x-4 sm:space-x-8 z-10 group';
+
+        // Hour column marker
+        const timeMarker = document.createElement('div');
+        timeMarker.className = 'w-16 sm:w-24 pt-3 flex-shrink-0 text-right';
+        timeMarker.innerHTML = `
+          <span class="text-xs font-mono font-medium text-slate-400 block">${item.startTime.split(' ')[0]}</span>
+          <span class="text-[10px] font-mono text-slate-600 block uppercase">${item.startTime.split(' ')[1] || 'AM'}</span>
+        `;
+
+        // Node dot on the timeline
+        const timelineDot = document.createElement('div');
+        timelineDot.className = `w-4 h-4 rounded-full border-2 border-[#0F141C] mt-4 flex-shrink-0 z-10 ${
+          item.isUnlisted
+            ? (item.status === 'Completed' ? 'bg-cyber-emerald ring-4 ring-cyber-emerald/30' : 'bg-amber-400 ring-4 ring-amber-400/30 animate-pulse')
+            : item.type === 'break' 
+              ? 'bg-cyber-amber ring-4 ring-cyber-amber/20' 
+              : item.status === 'In Progress' 
+                ? 'bg-cyber-emerald ring-4 ring-cyber-emerald/20' 
+                : 'bg-cyber-border ring-4 ring-slate-800'
+        }`;
+
+        // Content Card
+        const card = document.createElement('div');
+        card.className = `flex-1 rounded-xl p-4 sm:p-5 border transition-all ${
+          item.isUnlisted
+            ? (item.status === 'Completed' ? 'bg-[#12221b] border-cyber-emerald/60 shadow-[0_0_20px_rgba(0,255,157,0.15)]' : 'bg-[#1e1b18] border-amber-500/50 hover:border-amber-400 shadow-[0_0_20px_rgba(245,158,11,0.1)]')
+            : item.type === 'break'
+              ? 'bg-[#18202c] border-dashed border-cyber-amber/50 hover:border-cyber-amber text-slate-300'
+              : 'bg-[#1A2330] border-cyber-border hover:border-cyber-borderHover cyber-card-glow'
+        }`;
+
+        if (item.isUnlisted) {
+          const isCompleted = item.status === 'Completed';
+          card.innerHTML = `
+            <div class="flex items-start justify-between gap-4">
+              <div class="space-y-2 flex-1">
+                <div class="flex items-center space-x-3 flex-wrap gap-y-1">
+                  <h3 class="text-sm sm:text-base font-bold text-white tracking-wide font-sans">${item.title}</h3>
+                  <span class="inline-flex items-center space-x-1 text-[10px] font-mono px-2 py-0.5 rounded bg-amber-950/80 text-amber-300 border border-amber-500/40 font-bold tracking-wider">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span>UNLISTED AUDIT PROTOCOL</span>
+                  </span>
+                  <span class="text-[10px] font-mono px-2 py-0.5 rounded ${isCompleted ? 'bg-cyber-emeraldMuted text-cyber-emerald border border-cyber-emerald/40' : 'bg-[#212B3A] text-amber-300 border border-cyber-border'} font-medium">
+                    ${item.status}
+                  </span>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed max-w-3xl">${item.description}</p>
+                <div class="flex items-center space-x-3 text-[11px] font-mono text-slate-400">
+                  <span>Time: <span class="text-white">${item.startTime} — ${item.endTime}</span></span>
+                  <span class="text-slate-600">|</span>
+                  <span class="text-cyan-400">Sector: ARCH-NODE-09</span>
+                  <span class="text-slate-600">|</span>
+                  <span class="text-amber-400/90 italic">“Missing from view does not mean missing from the system.”</span>
+                </div>
+                <div class="pt-2 flex items-center gap-3">
+                  <button onclick="completeUnlistedTask()" class="px-3.5 py-1.5 rounded-lg ${isCompleted ? 'bg-cyber-emerald/20 text-cyber-emerald border border-cyber-emerald/50' : 'bg-cyber-emerald hover:bg-cyber-emeraldDark text-black shadow-[0_0_15px_rgba(0,255,157,0.3)]'} text-xs font-mono font-bold transition flex items-center gap-1.5 cursor-pointer">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    <span>${isCompleted ? 'Task Completed (View Flag)' : 'Complete Task'}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        } else if (item.type === 'break') {
+          // Break Slot Layout
+          card.innerHTML = `
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded bg-cyber-amber/10 border border-cyber-amber/30 flex items-center justify-center text-cyber-amber">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <h3 class="text-sm font-mono font-bold text-white uppercase tracking-wider">${item.title}</h3>
+                    <span class="text-[10px] font-mono bg-cyber-amber/15 text-cyber-amber px-2 py-0.5 rounded border border-cyber-amber/30">RECOVERY PERIOD</span>
+                  </div>
+                  <p class="text-xs font-mono text-slate-400 mt-0.5">${item.startTime} — ${item.endTime}</p>
+                </div>
+              </div>
+
+              <!-- Action Menu -->
+              <div class="relative">
+                <button class="threeDotBtn p-1.5 rounded hover:bg-cyber-elevated text-slate-400 hover:text-white" data-id="${item.id}">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                </button>
+                <div id="menu-${item.id}" class="taskDropdown hidden absolute right-0 mt-1 w-32 bg-cyber-elevated border border-cyber-border rounded shadow-xl z-30 py-1 text-xs font-mono">
+                  <button class="w-full text-left px-3 py-1.5 text-red-400 hover:bg-[#2e3b4e] flex items-center space-x-1.5" onclick="promptDelete('${item.id}')">
+                    <span>Delete Break</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            ${item.document ? `
+              <div class="mt-3 pt-3 border-t border-cyber-border/40 flex items-center space-x-2 text-xs font-mono text-cyan-300">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <span class="bg-[#0F141C] px-2 py-1 rounded border border-cyber-border/80 text-[11px] flex items-center space-x-2">
+                  <span>${item.document}</span>
+                </span>
+              </div>
+            ` : ''}
+          `;
+        } else {
+          // Standard Task Layout
+          const isInProgress = item.status === 'In Progress';
+          card.innerHTML = `
+            <div class="flex items-start justify-between gap-4">
+              <div class="space-y-1 flex-1">
+                <div class="flex items-center space-x-3 flex-wrap gap-y-1">
+                  <h3 class="text-sm sm:text-base font-bold text-white tracking-wide font-sans">${item.title}</h3>
+                  
+                  <!-- Status Badge -->
+                  ${isInProgress ? `
+                    <span class="inline-flex items-center space-x-1 text-[10px] font-mono px-2 py-0.5 rounded bg-cyber-emeraldMuted text-cyber-emerald border border-cyber-emerald/30 font-medium">
+                      <span class="w-1.5 h-1.5 rounded-full bg-cyber-emerald pulse-dot"></span>
+                      <span>In Progress</span>
+                    </span>
+                  ` : `
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#212B3A] text-slate-400 border border-cyber-border font-medium">
+                      Scheduled
+                    </span>
+                  `}
+
+                  <!-- Reminder Pill -->
+                  ${item.reminder && item.reminder !== 'No reminder' ? `
+                    <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#0F141C] text-slate-300 border border-cyber-border/70 flex items-center space-x-1">
+                      <span>🔔</span>
+                      <span>${item.reminder}</span>
+                    </span>
+                  ` : ''}
+                </div>
+
+                <p class="text-xs text-slate-400 leading-relaxed max-w-3xl">${item.description}</p>
+                
+                <div class="flex items-center space-x-3 pt-2 text-[11px] font-mono text-slate-500">
+                  <span class="text-slate-400">Time: <span class="text-white">${item.startTime} — ${item.endTime}</span></span>
+                </div>
+              </div>
+
+              <!-- Actions Menu Button -->
+              <div class="relative">
+                <button class="threeDotBtn p-1.5 rounded hover:bg-cyber-elevated text-slate-400 hover:text-white transition-colors" data-id="${item.id}">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+                </button>
+                
+                <!-- Dropdown Popover -->
+                <div id="menu-${item.id}" class="taskDropdown hidden absolute right-0 mt-1 w-32 bg-cyber-elevated border border-cyber-border rounded shadow-2xl z-30 py-1 text-xs font-mono">
+                  <button class="w-full text-left px-3 py-1.5 text-slate-300 hover:bg-[#2b3749] hover:text-white flex items-center space-x-1.5" onclick="triggerEditTask('${item.id}')">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    <span>Edit Task</span>
+                  </button>
+                  <button class="w-full text-left px-3 py-1.5 text-red-400 hover:bg-[#2b3749] hover:text-red-300 flex items-center space-x-1.5 border-t border-cyber-border/40" onclick="promptDelete('${item.id}')">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    <span>Delete Task</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        row.appendChild(timeMarker);
+        row.appendChild(timelineDot);
+        row.appendChild(card);
+        timelineContainer.appendChild(row);
+      });
+
+      // Bind Three-Dot Triggers
+      document.querySelectorAll('.threeDotBtn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const id = btn.getAttribute('data-id');
+          closeAllDropdowns();
+          const targetMenu = document.getElementById(`menu-${id}`);
+          if (targetMenu) targetMenu.classList.toggle('hidden');
+        });
+      });
+    }
+
+    function closeAllDropdowns() {
+      document.querySelectorAll('.taskDropdown').forEach(m => m.classList.add('hidden'));
+    }
+
+    // Dismiss Dropdowns when clicking anywhere outside
+    window.addEventListener('click', () => {
+      closeAllDropdowns();
+    });
+
+    // Handle Edit Task Pre-fill
+    window.triggerEditTask = function(taskId) {
+      closeAllDropdowns();
+      const task = scheduleItems.find(t => t.id === taskId);
+      if (!task) return;
+
+      document.getElementById('editTaskId').value = task.id;
+      document.getElementById('editTaskTitle').value = task.title;
+      document.getElementById('editTaskDesc').value = task.description || '';
+      document.getElementById('editTaskStart').value = task.startTime;
+      document.getElementById('editTaskEnd').value = task.endTime;
+      document.getElementById('editTaskReminder').value = task.reminder || 'No reminder';
+
+      openModal('editTaskModal');
+    };
+
+    // Handle Delete Prompt
+    window.promptDelete = function(taskId) {
+      closeAllDropdowns();
+      document.getElementById('deleteTargetId').value = taskId;
+      openModal('deleteTaskModal');
+    };
+
+    // Confirm Delete Action
+    document.getElementById('confirmDeleteBtn').addEventListener('click', () => {
+      const targetId = document.getElementById('deleteTargetId').value;
+      const targetItem = scheduleItems.find(item => item.id === targetId);
+
+      if (targetItem && typeof window.addToPurgedArtifacts === 'function') {
+        window.addToPurgedArtifacts({
+          id: 'schedule_' + targetId,
+          name: `${targetItem.title} (${targetItem.startTime} - ${targetItem.endTime})`,
+          type: `${targetItem.type === 'break' ? 'Break Interval' : 'Arena Task'} (Schedule)`,
+          section: 'Schedule',
+          ext: 'task',
+          size: '12 KB',
+          iconType: 'code',
+          raw: targetItem
+        });
+      }
+
+      scheduleItems = scheduleItems.filter(item => item.id !== targetId);
+
+      try {
+        const deletedIds = JSON.parse(localStorage.getItem('logic_ctf_deleted_schedule_ids') || '[]');
+        if (!deletedIds.includes(targetId)) {
+          deletedIds.push(targetId);
+          localStorage.setItem('logic_ctf_deleted_schedule_ids', JSON.stringify(deletedIds));
+        }
+      } catch (e) {}
+
+      closeModal('deleteTaskModal');
+      renderTimeline();
+      showToast('Task Purged to Recycle Bin', 'amber');
+    });
+
+    // Add Task Form Submission
+    document.getElementById('addTaskForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      
+      const formatTime = (timeStr) => {
+        if (!timeStr) return '09:00 AM';
+        let [hours, minutes] = timeStr.split(':');
+        hours = parseInt(hours, 10);
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12;
+        return `${String(hours).padStart(2, '0')}:${minutes} ${ampm}`;
+      };
+
+      const newTask = {
+        id: 'task-' + Date.now(),
+        type: 'task',
+        title: formData.get('taskName'),
+        startTime: formatTime(formData.get('startTime')),
+        endTime: formatTime(formData.get('endTime')),
+        status: 'Scheduled',
+        description: formData.get('taskDesc') || 'No additional parameters provided.',
+        reminder: formData.get('taskReminder')
+      };
+
+      scheduleItems.push(newTask);
+      e.target.reset();
+      closeModal('addTaskModal');
+      renderTimeline();
+      showToast('Task Added to Schedule', 'emerald');
+    });
+
+    // Edit Task Form Submission
+    document.getElementById('editTaskForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = document.getElementById('editTaskId').value;
+      const targetIndex = scheduleItems.findIndex(t => t.id === id);
+      
+      if (targetIndex !== -1) {
+        scheduleItems[targetIndex].title = document.getElementById('editTaskTitle').value;
+        scheduleItems[targetIndex].description = document.getElementById('editTaskDesc').value;
+        scheduleItems[targetIndex].startTime = document.getElementById('editTaskStart').value;
+        scheduleItems[targetIndex].endTime = document.getElementById('editTaskEnd').value;
+        scheduleItems[targetIndex].reminder = document.getElementById('editTaskReminder').value;
+      }
+
+      closeModal('editTaskModal');
+      renderTimeline();
+      showToast('Task Updated', 'emerald');
+    });
+
+    // Take a Break Form Submission & File Handling
+    const breakFileInput = document.getElementById('breakFileInput');
+    const uploadedFileBadge = document.getElementById('uploadedFileBadge');
+    const uploadedFileName = document.getElementById('uploadedFileName');
+    const removeFileBtn = document.getElementById('removeFileBtn');
+    let currentUploadedFileName = '';
+
+    breakFileInput.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        currentUploadedFileName = `${e.target.files[0].name} (${Math.round(e.target.files[0].size / 1024)} KB)`;
+        uploadedFileName.textContent = currentUploadedFileName;
+        uploadedFileBadge.classList.remove('hidden');
+      }
+    });
+
+    removeFileBtn.addEventListener('click', () => {
+      breakFileInput.value = '';
+      currentUploadedFileName = '';
+      uploadedFileBadge.classList.add('hidden');
+    });
+
+    document.getElementById('breakForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      
+      const newBreak = {
+        id: 'break-' + Date.now(),
+        type: 'break',
+        title: 'Break',
+        startTime: formData.get('breakStartTime') || '01:00 PM',
+        endTime: formData.get('breakEndTime') || '01:30 PM',
+        status: 'Break',
+        description: '',
+        document: currentUploadedFileName || (breakFileInput.files[0] ? breakFileInput.files[0].name : '')
+      };
+
+      scheduleItems.push(newBreak);
+      closeModal('breakModal');
+      renderTimeline();
+      showToast('Break Scheduled', 'amber');
+      // Reset break form
+      e.target.reset();
+      currentUploadedFileName = '';
+      uploadedFileBadge.classList.add('hidden');
+    });
+
+    // Share Modal Copy Link Action
+    document.getElementById('copyShareLinkBtn').addEventListener('click', () => {
+      const copyInput = document.getElementById('shareLinkInput');
+      copyInput.select();
+      navigator.clipboard.writeText(copyInput.value).then(() => {
+        showToast('Schedule link copied to clipboard', 'emerald');
+      }).catch(() => {
+        showToast('Link copied', 'emerald');
+      });
+    });
+
+    document.getElementById('finalShareBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('finalShareBtn');
+      const originalText = btn.textContent;
+      btn.textContent = 'Sharing...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/files/share', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ file: 'incident_recon_dossier.pdf' })
+        });
+        const data = await res.json();
+        btn.textContent = originalText;
+        btn.disabled = false;
+        closeModal('shareModal');
+
+        if (data && data.success) {
+          document.getElementById('scheduleShareUrlDisplay').textContent = data.shareUrl || 'https://arena.logicctf.edu/shared/doc/valid';
+          document.getElementById('scheduleFlagCode').textContent = data.flag || 'logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}';
+          openModal('scheduleFlagModal');
+        } else {
+          showToast('Share failed: ' + ((data && data.message) || 'Unknown error'), 'red');
+        }
+      } catch (e) {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        closeModal('shareModal');
+        document.getElementById('scheduleShareUrlDisplay').textContent = `https://arena.logicctf.edu/shared/doc/share_${Date.now()}`;
+        document.getElementById('scheduleFlagCode').textContent = 'logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}';
+        openModal('scheduleFlagModal');
+      }
+    });
+
+    window.copyScheduleFlag = function() {
+      const flagText = document.getElementById('scheduleFlagCode').textContent.trim();
+      navigator.clipboard.writeText(flagText).then(() => {
+        const btn = document.getElementById('btnCopyScheduleFlag');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      }).catch(() => {
+        const btn = document.getElementById('btnCopyScheduleFlag');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    };
+
+    window.completeUnlistedTask = function() {
+      localStorage.setItem('logic_ctf_missing_task_completed', 'true');
+      unlistedTaskItem.status = 'Completed';
+      renderTimeline();
+      showToast('Task TASK-SEC-09 completed! Flag unlocked.', 'emerald');
+      openModal('missingTaskFlagModal');
+    };
+
+    window.copyMissingTaskFlag = function() {
+      const flagText = document.getElementById('missingTaskFlagCode').textContent.trim();
+      navigator.clipboard.writeText(flagText).then(() => {
+        const btn = document.getElementById('btnCopyMissingTaskFlag');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      }).catch(() => {
+        const btn = document.getElementById('btnCopyMissingTaskFlag');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    };
+
+    // Challenge 15: The Unscheduleable Share Functions
+    window.switchShareTab = function(tab) {
+      const btnImm = document.getElementById('tabShareImmediate');
+      const btnSch = document.getElementById('tabShareSchedule');
+      const pnlImm = document.getElementById('panelShareImmediate');
+      const pnlSch = document.getElementById('panelShareSchedule');
+
+      if (tab === 'schedule') {
+        if (btnSch) btnSch.className = 'flex-1 py-1.5 px-3 rounded-lg font-bold transition flex items-center justify-center gap-1.5 bg-cyber-elevated text-cyber-emerald border border-cyber-border cursor-pointer';
+        if (btnImm) btnImm.className = 'flex-1 py-1.5 px-3 rounded-lg font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white border border-transparent cursor-pointer';
+        if (pnlImm) pnlImm.classList.add('hidden');
+        if (pnlSch) pnlSch.classList.remove('hidden');
+      } else {
+        if (btnImm) btnImm.className = 'flex-1 py-1.5 px-3 rounded-lg font-bold transition flex items-center justify-center gap-1.5 bg-cyber-elevated text-cyber-emerald border border-cyber-border cursor-pointer';
+        if (btnSch) btnSch.className = 'flex-1 py-1.5 px-3 rounded-lg font-bold transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-white border border-transparent cursor-pointer';
+        if (pnlSch) pnlSch.classList.add('hidden');
+        if (pnlImm) pnlImm.classList.remove('hidden');
+      }
+    };
+
+    window.commitCalendarScheduleShare = function() {
+      localStorage.setItem('logic_ctf_unscheduleable_share_completed', 'true');
+      closeModal('shareModal');
+      showToast('Dossier share committed to calendar chronology! Flag unlocked.', 'emerald');
+      openModal('unscheduleableShareModal');
+    };
+
+    window.copyUnscheduleableShareFlag = function() {
+      const flagText = document.getElementById('unscheduleableShareFlagCode').textContent.trim();
+      navigator.clipboard.writeText(flagText).then(() => {
+        const btn = document.getElementById('btnCopyUnscheduleableShareFlag');
+        if (btn) {
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy', 2000);
+        }
+      }).catch(() => {
+        const btn = document.getElementById('btnCopyUnscheduleableShareFlag');
+        if (btn) {
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy', 2000);
+        }
+      });
+    };
+
+    // Filter and Search Events for Tasks Ribbon
+    const searchInput = document.getElementById('taskSearchInput');
+    const clearSearchBtn = document.getElementById('clearTaskSearchBtn');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        currentSearchQuery = e.target.value;
+        if (clearSearchBtn) {
+          if (currentSearchQuery.length > 0) {
+            clearSearchBtn.classList.remove('hidden');
+          } else {
+            clearSearchBtn.classList.add('hidden');
+          }
+        }
+        renderTimeline();
+      });
+    }
+
+    if (clearSearchBtn) {
+      clearSearchBtn.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        currentSearchQuery = '';
+        clearSearchBtn.classList.add('hidden');
+        renderTimeline();
+      });
+    }
+
+    document.querySelectorAll('.task-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.task-filter-btn').forEach(b => {
+          b.className = 'task-filter-btn px-3 py-1.5 rounded-lg bg-[#1A2330] text-slate-300 hover:text-white border border-cyber-border transition';
+        });
+        btn.className = 'task-filter-btn px-3 py-1.5 rounded-lg bg-cyber-emerald text-black font-bold transition';
+        currentFilter = btn.getAttribute('data-filter') || 'all';
+        renderTimeline();
+      });
+    });
+
+    // Date Switcher Mock Interactions
+    const dates = ['Yesterday (Sep 11, 2026)', 'Today (Sep 12, 2026)', 'Tomorrow (Sep 13, 2026)'];
+    let currentDateIdx = 1;
+    const currentDateLabel = document.getElementById('currentDateLabel');
+
+    document.getElementById('prevDateBtn').addEventListener('click', () => {
+      if (currentDateIdx > 0) {
+        currentDateIdx--;
+        currentDateLabel.textContent = dates[currentDateIdx];
+        showToast(`Loaded timeline for ${dates[currentDateIdx]}`);
+      }
+    });
+
+    document.getElementById('nextDateBtn').addEventListener('click', () => {
+      if (currentDateIdx < dates.length - 1) {
+        currentDateIdx++;
+        currentDateLabel.textContent = dates[currentDateIdx];
+        showToast(`Loaded timeline for ${dates[currentDateIdx]}`);
+      }
+    });
+
+    // Open Modal Triggers
+    document.getElementById('openAddTaskModalBtn').addEventListener('click', () => openModal('addTaskModal'));
+    document.getElementById('emptyStateAddBtn').addEventListener('click', () => openModal('addTaskModal'));
+    document.getElementById('openBreakModalBtn').addEventListener('click', () => openModal('breakModal'));
+    document.getElementById('openShareModalBtn').addEventListener('click', () => openModal('shareModal'));
+
+    // Sync previously purged tasks from shared vault
+    function syncPurgedScheduleItems() {
+      try {
+        let purged = [];
+        if (typeof window.getPurgedArtifacts === 'function') {
+          purged = window.getPurgedArtifacts();
+        } else {
+          purged = JSON.parse(localStorage.getItem('logic_ctf_purged_items') || '[]');
+        }
+        const purgedScheduleIds = new Set(
+          purged.filter(p => p.section === 'Schedule' || (p.id && p.id.startsWith('schedule_')))
+                .map(p => p.id.replace('schedule_', ''))
+        );
+        const savedDeleted = JSON.parse(localStorage.getItem('logic_ctf_deleted_schedule_ids') || '[]');
+        savedDeleted.forEach(id => {
+          if (purgedScheduleIds.has(id)) {
+            scheduleItems = scheduleItems.filter(item => item.id !== id);
+          }
+        });
+      } catch (e) {}
+    }
+
+    // Initial Initializer
+    syncPurgedScheduleItems();
+    renderTimeline();
+
+    // Trigger Initial Simulated In-App Task Reminder
+    setTimeout(() => {
+      showToast('ðŸ”” Task Reminder: Security Research starts in 15 minutes.', 'emerald', {
+        label: 'View Task',
+        onClick: () => {
+          window.scrollTo({ top: 120, behavior: 'smooth' });
+        }
+      });
+    }, 1800);
+
+  </script>
+<!-- END: VanillaJS Logic -->
+
+
+<script src="shared_nav.js"></script></body></html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logic Break CTF - Missions & Exploit Vectors</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#090e16',
+              surface: '#0e1511',
+              card: '#161d19',
+              cardHover: '#1f2823',
+              border: '#2d3a43',
+              borderHover: '#5bdcae',
+              accent: '#5bdcae',
+              accentGlow: 'rgba(91, 220, 174, 0.25)',
+              tier1: '#4edea3',
+              tier2: '#dfc573',
+              penalty: '#ffb4ab'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #090e16;
+      color: #dde4de;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #2d3a43;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#090e16] flex flex-col antialiased selection:bg-[#5bdcae]/20 selection:text-[#5bdcae]">
+
+  <!-- Top Unified Header will be injected by shared_nav.js -->
+
+  <!-- Main Content Container (Full-Width Desktop) -->
+  <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-8">
+
+    <!-- Clean Header -->
+    <div class="flex items-center justify-between pb-3 border-b border-[#2d3a43]">
+      <h1 class="text-2xl font-bold tracking-tight text-white uppercase font-sans">
+        Missions
+      </h1>
+      <span class="text-xs font-mono text-slate-400">14 Challenges Available</span>
+    </div>
+
+    <!-- Challenges List (Horizontal Row Cards) -->
+    <div id="challengesGrid" class="flex flex-col gap-4">
+      <!-- Populated dynamically via JS -->
+      <div class="col-span-full py-16 text-center text-slate-400 font-mono text-xs">
+        <div class="animate-spin inline-block w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full mb-3"></div>
+        <p>Connecting to Arena Telemetry Core...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL: FLAG SUBMISSION -->
+  <div id="modal-submit-flag" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-[#121820] border border-[#2d3a43] rounded-2xl p-6 shadow-2xl space-y-5 animate-scale-up">
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between border-b border-[#2d3a43] pb-4">
+        <div>
+          <div class="flex items-center gap-2 mb-1 text-xs font-mono">
+            <span id="modal-flag-cat-badge" class="text-slate-300 font-semibold">Web Security</span>
+            <span class="text-slate-600">•</span>
+            <span id="modal-flag-tier-badge" class="text-emerald-400 font-semibold">Tier 1</span>
+          </div>
+          <h3 id="modal-flag-title" class="text-xl font-black text-white tracking-tight">Ghost Protocol</h3>
+        </div>
+        <button onclick="closeSubmitModal()" class="text-slate-400 hover:text-white p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Point Staking Alert -->
+      <div class="p-3.5 rounded-xl bg-[#161d19] border border-[#2d3a43] flex items-center justify-between font-mono text-xs">
+        <div>
+          <span class="text-slate-400 block text-[10px]">POTENTIAL GAIN</span>
+          <span id="modal-flag-points" class="font-bold text-emerald-400 text-sm">+50 PTS</span>
+        </div>
+        <div class="text-right">
+          <span class="text-slate-400 block text-[10px]">INCORRECT RISK</span>
+          <span id="modal-flag-penalty" class="font-bold text-red-400 text-sm">-15 PTS PENALTY</span>
+        </div>
+      </div>
+
+      <!-- Active Submitter Details -->
+      <div class="text-xs text-slate-300 flex items-center justify-between">
+        <span>Active Squad: <strong class="text-white font-mono" id="modal-flag-team-name">Logic Breakers</strong></span>
+        <button onclick="document.getElementById('modal-switch-team').classList.remove('hidden')" class="text-emerald-400 hover:underline text-[11px] font-semibold">Change Squad</button>
+      </div>
+
+      <!-- Flag Input Box -->
+      <div class="space-y-2">
+        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Submit Flag String</label>
+        <div class="relative">
+          <input type="text" id="inputFlagString" placeholder="logicCTF{flag_string_here}" class="w-full bg-[#0e1511] border border-[#2d3a43] rounded-xl px-4 py-3 text-sm text-white font-mono placeholder:text-slate-600 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/40">
+        </div>
+        <p class="text-[11px] text-slate-500 font-mono">Format: logicCTF{...}. Whitespace is automatically trimmed.</p>
+      </div>
+
+      <!-- Response Alert Container -->
+      <div id="flag-feedback-alert" class="hidden p-3.5 rounded-xl font-mono text-xs"></div>
+
+      <!-- Modal Actions -->
+      <div class="flex items-center justify-end gap-3 pt-2 border-t border-[#2d3a43]">
+        <button onclick="closeSubmitModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition">Cancel</button>
+        <button id="btnConfirmFlagSubmit" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] active:scale-95 text-slate-950 font-bold text-xs shadow-lg transition flex items-center gap-2">
+          <span>Submit Flag Vector</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: HINTS & DOCUMENTATION -->
+  <div id="modal-hints-view" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-[#121820] border border-[#2d3a43] rounded-2xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-[#2d3a43] pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-amber-400 text-lg">💡</span>
+          <h3 id="modal-hints-title" class="text-sm font-bold text-white uppercase tracking-wider">Challenge Hints</h3>
+        </div>
+        <button onclick="document.getElementById('modal-hints-view').classList.add('hidden')" class="text-slate-400 hover:text-white">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div id="modal-hints-content" class="space-y-3 font-mono text-xs text-slate-300">
+        <!-- Injected dynamically -->
+      </div>
+      <div class="pt-3 border-t border-[#2d3a43] flex justify-end">
+        <button onclick="document.getElementById('modal-hints-view').classList.add('hidden')" class="px-4 py-2 rounded-xl bg-[#161d19] border border-[#2d3a43] text-xs font-semibold text-white hover:bg-[#224f3e]">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CODE & FILE PREVIEW -->
+  <div id="modal-code-preview" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-[#121820] border border-[#2d3a43] rounded-2xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-[#2d3a43] pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-cyan-400 text-lg">📄</span>
+          <h3 id="modal-code-title" class="text-sm font-bold text-white uppercase tracking-wider font-mono">Challenge Artifact & Code</h3>
+        </div>
+        <button onclick="document.getElementById('modal-code-preview').classList.add('hidden')" class="text-slate-400 hover:text-white">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between gap-3 flex-wrap">
+          <span id="modal-code-filename" class="text-xs font-mono text-emerald-400">artifact.txt</span>
+          <div class="flex items-center gap-2">
+            <a id="modal-code-open-target-btn" href="#" class="hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-mono text-xs font-bold transition shadow-md">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              <span id="modal-code-open-target-text">Launch Target Page</span>
+            </a>
+            <a id="modal-code-download-btn" href="#" download class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500 hover:text-slate-950 font-mono text-xs font-bold transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Download Artifact</span>
+            </a>
+          </div>
+        </div>
+        <pre id="modal-code-body" class="bg-[#090e16] border border-[#2d3a43] rounded-xl p-4 font-mono text-xs text-slate-300 overflow-x-auto max-h-80 custom-scrollbar"></pre>
+      </div>
+      <div class="pt-3 border-t border-[#2d3a43] flex justify-end">
+        <button onclick="document.getElementById('modal-code-preview').classList.add('hidden')" class="px-4 py-2 rounded-xl bg-[#161d19] border border-[#2d3a43] text-xs font-semibold text-white hover:bg-[#224f3e]">Close Preview</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Nav & Logic Scripts -->
+  <script src="shared_nav.js"></script>
+
+  <script>
+    // State
+    let challengesData = [];
+    let currentSelectedChallenge = null;
+
+    // Fetch and render challenges
+    async function fetchChallenges() {
+      const activeTeam = localStorage.getItem('logic_ctf_team') || 'Logic Breakers';
+      try {
+        const res = await fetch(`/api/challenges?team=${encodeURIComponent(activeTeam)}`);
+        const json = await res.json();
+        if (json.success) {
+          challengesData = json.challenges;
+          renderChallenges();
+        }
+      } catch (e) {
+        console.warn('Backend offline, using fallback challenge catalog');
+        challengesData = getFallbackChallenges();
+        renderChallenges();
+      }
+    }
+
+    function renderChallenges() {
+      const container = document.getElementById('challengesGrid');
+      if (!container) return;
+
+      if (!challengesData || challengesData.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full py-12 text-center text-slate-400 font-mono text-xs">
+            No missions available.
+          </div>
+        `;
+        return;
+      }
+
+      const filtered = challengesData;
+
+      container.innerHTML = filtered.map(ch => `
+        <article class="relative flex flex-col justify-between gap-3 p-5 rounded-2xl bg-[#161d19] border ${ch.isSolved ? 'border-emerald-500/50 shadow-[0_0_20px_rgba(91,220,174,0.12)]' : 'border-[#2d3a43]'} hover:border-emerald-500/50 transition-all duration-200 group">
+          <!-- Top Row: Challenge Name & Metadata on left, Points / Solved on right -->
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <span class="text-xs font-mono text-slate-500 font-bold">#${ch.number < 10 ? '0' + ch.number : ch.number}</span>
+              <span class="text-slate-600">•</span>
+              <h3 class="text-base sm:text-lg font-bold text-white tracking-tight group-hover:text-emerald-300 transition-colors font-mono">
+                ${ch.title}
+              </h3>
+              <span class="text-slate-600">•</span>
+              <span class="text-xs font-mono ${ch.tier === 1 ? 'text-emerald-400' : 'text-amber-400'} font-semibold">Tier ${ch.tier}</span>
+            </div>
+
+            <!-- Points / Solved Status -->
+            <div class="font-mono text-right shrink-0">
+              ${ch.isSolved ? `
+                <span class="text-xs font-bold text-emerald-400 flex items-center justify-end gap-1">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>SOLVED</span>
+                </span>
+              ` : `
+                <span class="text-sm font-black ${ch.tier === 1 ? 'text-emerald-400' : 'text-amber-400'}">
+                  +${ch.points} PTS
+                </span>
+              `}
+            </div>
+          </div>
+
+          <!-- Middle: Objective / Summary Section -->
+          <div class="py-1">
+            <p class="text-sm sm:text-base font-normal text-slate-300 leading-relaxed max-w-4xl">
+              <strong class="font-bold text-white mr-1.5">Summary:</strong>${ch.description}
+            </p>
+          </div>
+
+          <!-- Bottom: All Three Buttons Below the Objective -->
+          <div class="flex items-center gap-2 pt-2">
+            <!-- Hint Button -->
+            <button onclick="openHintsModal('${ch.id}')" title="View Hints" class="w-9 h-9 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-amber-400/50 text-slate-400 hover:text-amber-300 flex items-center justify-center text-sm transition">
+              💡
+            </button>
+
+            <!-- File / Code Preview Button -->
+            <button onclick="openCodePreviewModal('${ch.id}')" title="Inspect Code / Download Artifact" class="w-9 h-9 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-cyan-400/50 text-slate-400 hover:text-cyan-300 flex items-center justify-center text-sm transition">
+              📄
+            </button>
+
+            <!-- Primary Action: Submit Flag or View Solved -->
+            <button onclick="openSubmitModal('${ch.id}')" class="px-5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${ch.isSolved ? 'bg-[#1a211d] text-emerald-400 border border-emerald-500/40 hover:bg-[#224f3e]' : 'bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 shadow-md active:scale-95'}">
+              <span>${ch.isSolved ? 'Re-Submit' : 'Submit Flag'}</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // Open Submit Flag Modal
+    function openSubmitModal(challengeId) {
+      const ch = challengesData.find(c => c.id === challengeId);
+      if (!ch) return;
+      currentSelectedChallenge = ch;
+
+      const activeTeam = localStorage.getItem('logic_ctf_team') || 'Logic Breakers';
+      document.getElementById('modal-flag-title').textContent = ch.title;
+      document.getElementById('modal-flag-tier-badge').textContent = `Tier ${ch.tier} (${ch.difficulty})`;
+      document.getElementById('modal-flag-cat-badge').textContent = ch.category;
+      document.getElementById('modal-flag-points').textContent = `+${ch.points} PTS`;
+      document.getElementById('modal-flag-penalty').textContent = `-${ch.penalty} PTS PENALTY`;
+      document.getElementById('modal-flag-team-name').textContent = activeTeam;
+      document.getElementById('inputFlagString').value = '';
+
+      const alert = document.getElementById('flag-feedback-alert');
+      alert.className = 'hidden';
+      alert.innerHTML = '';
+
+      document.getElementById('modal-submit-flag').classList.remove('hidden');
+      setTimeout(() => document.getElementById('inputFlagString').focus(), 150);
+    }
+
+    function closeSubmitModal() {
+      document.getElementById('modal-submit-flag').classList.add('hidden');
+    }
+
+    // Submit Flag Action
+    document.getElementById('btnConfirmFlagSubmit').addEventListener('click', async () => {
+      if (!currentSelectedChallenge) return;
+
+      const flagInput = document.getElementById('inputFlagString');
+      const flagVal = flagInput.value.trim();
+      const activeTeam = localStorage.getItem('logic_ctf_team') || 'Logic Breakers';
+      const alert = document.getElementById('flag-feedback-alert');
+
+      if (!flagVal) {
+        alert.className = 'p-3 rounded-xl bg-amber-950/70 border border-amber-500 text-amber-300 text-xs font-mono';
+        alert.textContent = 'Please enter a flag string before submitting.';
+        return;
+      }
+
+      const submitBtn = document.getElementById('btnConfirmFlagSubmit');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Validating vector...';
+
+      try {
+        const res = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            team: activeTeam,
+            challengeId: currentSelectedChallenge.id,
+            flag: flagVal
+          })
+        });
+        const data = await res.json();
+
+        if (data.status === 'correct') {
+          alert.className = 'p-3.5 rounded-xl bg-emerald-950 border border-emerald-400 text-emerald-200 text-xs font-mono animate-pulse';
+          alert.innerHTML = `<strong>🚩 ACCESS GRANTED!</strong><br>${data.message}<br>Total Score: ${data.newScore} PTS`;
+          currentSelectedChallenge.isSolved = true;
+          renderChallenges();
+        } else if (data.status === 'already_solved') {
+          alert.className = 'p-3.5 rounded-xl bg-cyan-950 border border-cyan-400 text-cyan-200 text-xs font-mono';
+          alert.innerHTML = `<strong>ℹ️ ALREADY CAPTURED</strong><br>${data.message}`;
+        } else {
+          alert.className = 'p-3.5 rounded-xl bg-red-950 border border-red-500 text-red-200 text-xs font-mono';
+          alert.innerHTML = `<strong>❌ EXPLOIT FAILED</strong><br>${data.message}<br>Total Score: ${data.newScore} PTS`;
+        }
+      } catch (err) {
+        alert.className = 'p-3.5 rounded-xl bg-red-950 border border-red-500 text-red-200 text-xs font-mono';
+        alert.textContent = 'Network error communicating with arena gateway.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Submit Flag Vector</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      }
+    });
+
+    // Enter key submit in flag input
+    document.getElementById('inputFlagString').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('btnConfirmFlagSubmit').click();
+      }
+    });
+
+    // Open Hints Modal
+    async function openHintsModal(challengeId) {
+      const ch = challengesData.find(c => c.id === challengeId);
+      if (!ch) return;
+
+      document.getElementById('modal-hints-title').textContent = `Hints // ${ch.title}`;
+      const content = document.getElementById('modal-hints-content');
+      content.innerHTML = '<div class="py-4 text-center text-slate-400">Loading encrypted hints...</div>';
+      document.getElementById('modal-hints-view').classList.remove('hidden');
+
+      try {
+        const res = await fetch(`/api/hint/${challengeId}`);
+        const data = await res.json();
+        if (data.success && data.hints) {
+          content.innerHTML = data.hints.map((h, i) => `
+            <div class="p-3 bg-[#090e16] border border-[#2d3a43] rounded-xl">
+              <span class="text-amber-400 font-bold block mb-1">Hint 0${i + 1}:</span>
+              <p class="text-slate-300 leading-relaxed">${h}</p>
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        content.innerHTML = `<div class="p-3 bg-[#090e16] border border-[#2d3a43] rounded-xl text-slate-400">Hints available on live server connection.</div>`;
+      }
+    }
+
+    // Open Code & File Preview Modal
+    function openCodePreviewModal(challengeId) {
+      const ch = challengesData.find(c => c.id === challengeId);
+      if (!ch) return;
+
+      const isInteractivePlatform = (ch.number <= 4) || (ch.file && ch.file.endsWith('.html'));
+      const dlBtn = document.getElementById('modal-code-download-btn');
+      const openTargetBtn = document.getElementById('modal-code-open-target-btn');
+      const openTargetText = document.getElementById('modal-code-open-target-text');
+
+      document.getElementById('modal-code-title').textContent = `${ch.title} // Code & Vector`;
+      document.getElementById('modal-code-body').textContent = ch.codeSnippet || '// No code snippet attached.';
+
+      if (isInteractivePlatform) {
+        document.getElementById('modal-code-filename').textContent = `Target: ${ch.targetLocation || ch.file} (Live Arena Platform Vector)`;
+        dlBtn.classList.add('hidden');
+        if (openTargetBtn) {
+          openTargetBtn.classList.remove('hidden');
+          openTargetBtn.href = ch.file;
+          if (openTargetText) {
+            openTargetText.textContent = `Launch Target Page (${ch.file})`;
+          }
+        }
+      } else {
+        document.getElementById('modal-code-filename').textContent = `Artifact: ${ch.file}`;
+        if (openTargetBtn) {
+          openTargetBtn.classList.add('hidden');
+        }
+        dlBtn.classList.remove('hidden');
+        dlBtn.href = `/api/files/${ch.file}`;
+        dlBtn.setAttribute('download', ch.file);
+        dlBtn.innerHTML = `
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Download Artifact ${ch.file && ch.file.endsWith('.zip') ? '(ZIP)' : ''}</span>
+        `;
+      }
+
+      document.getElementById('modal-code-preview').classList.remove('hidden');
+    }
+
+    // Re-fetch challenges when team changes
+    window.onTeamChanged = () => {
+      fetchChallenges();
+    };
+
+    // On SSE event, update challenge card solve status if it matches our active team
+    window.onLeaderboardEvent = (data) => {
+      const activeTeam = localStorage.getItem('logic_ctf_team') || 'Logic Breakers';
+      if (data.type === 'FLAG_SOLVED' && data.team.toLowerCase() === activeTeam.toLowerCase()) {
+        const ch = challengesData.find(c => c.title.toLowerCase() === data.challengeTitle.toLowerCase());
+        if (ch) {
+          ch.isSolved = true;
+          renderChallenges();
+        }
+      }
+    };
+
+    // Fallback challenges in case backend is loading
+    function getFallbackChallenges() {
+      return [
+        { id: 'ch1', number: 1, title: 'Limit Break', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Beginner', file: 'projects.html', description: 'Create a new project after reaching the maximum project limit.', codeSnippet: '// Standard creation enforces limit:\nif (projects.length >= MAX_PROJECTS) showToast("Project limit reached");\n\n// Duplication flaw: missing quota check!', isSolved: false },
+        { id: 'ch2', number: 2, title: 'Export a report.', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Beginner', file: 'reports.html', description: "The Reports page doesn't provide the export option you need. Find another place where the report can be handled.", codeSnippet: '// The Reports page does not provide the export option you need.\n// Find another place where the report can be handled.', isSolved: false },
+        { id: 'ch3', number: 3, title: 'Read Between the Lines.', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Beginner', file: 'workspace.html', description: 'The workspace description seems brief, but not everything recorded is immediately visible. Find a way to read the complete entry.', codeSnippet: '// The briefing looks short at first glance.\n// Look closely at the details and find what is tucked away.', isSolved: false },
+        { id: 'ch4', number: 4, title: 'Restore a report.', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Beginner', file: 'reports.html', description: 'Direct access to the incident report is blocked by security controls. Find another way to inspect its verified details.', codeSnippet: '// Direct inspection: Integrity check locked.\n// Archive recovery resets verification state and unlocks inspection.', isSolved: false },
+        { id: 'ch5', number: 5, title: 'The Source Code Maze', category: 'Forensics & Code Recon', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'challenge_05_source_maze.zip', description: 'Download and extract the repository ZIP using the artifact button (📄). Search through the nested source code and audit logs to find the authentic recovery flag while avoiding decoys.', codeSnippet: '// 1. Click "Download Artifact (ZIP)" in the modal to download challenge_05_source_maze.zip\n// 2. Extract the archive onto your computer and explore the folders.\n// 3. Locate the authentic recovery beacon and submit the flag:\n// Format: logicCTF{...}', isSolved: false },
+        { id: 'ch6', number: 6, title: 'The UI Contradiction', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Beginner', file: 'schedule.html', description: 'The Files & Docs hub claims file sharing is disabled across all collegiate nodes, yet another arena section suggests otherwise. Find where the contradiction lives and test which part reflects actual behavior.', codeSnippet: '// Page A (Files & Docs): "File sharing is disabled across all collegiate nodes."\n// Page B (Schedule): "Share Schedule & Dossier" available.\n// Flaw: Front-end policy restriction was cosmetic and not enforced by the backend!', isSolved: false },
+        { id: 'ch7', number: 7, title: 'The Secret Search Result', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Beginner', file: 'billing.html', description: 'Find an item that is not visible in the normal list. Use the built-in search filter to discover the unlisted record and claim the voucher.', codeSnippet: '// Billing Archive Engine:\n// Normal view filters out unlisted vouchers.\n// Search query indexes unlisted allocation records:\n// Search "secret" -> INV-SECRET-077 -> Claim Voucher -> Flag revealed!', isSolved: false },
+        { id: 'ch8', number: 8, title: 'The Wrong Workflow', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'projects.html', description: 'Complete a restricted action through an unexpected but legitimate workflow.', codeSnippet: '// Normal Workflow (Projects Grid): Direct archive rejected due to bound node telemetry.\n// Alternative Workflow (Workspace Node): Disconnecting node service archives project to standby storage!\n// Flag unlocked: logicCTF{wr0ng_w0rkfl0w_4lt3rn4t1v3_p4th_c0mpl3t3d}', isSolved: false },
+        { id: 'ch9', number: 9, title: 'The Archived Project', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'projects.html', description: 'Perform an action on an archived project.', codeSnippet: '// Normal projects dashboard blocks modification of archived items:\n// "Archived projects cannot be modified."\n// Accessing via Recent Activity / Audit History exposes action workflow:\n// Flag: logicCTF{4rch1v3d_pr0j3ct_h1st0ry_m0d1f13d_unl0ck}', isSolved: false },
+        { id: 'ch10', number: 10, title: 'The Wrong Name', category: 'Business Logic', tier: 1, points: 50, penalty: 15, difficulty: 'Intermediate', file: 'Movie Reference Notes.md', targetLocation: 'files.html', description: 'Find the correct name of the document and rename it to unlock the flag.', codeSnippet: '// Identified document under wrong generic title: "Annual Project Report.md"\n// Reference guide describes a movie about dreams within dreams, artificial layers, and memories.\n// The document itself mentions: "The final stage was described internally as an inception"\n// Correct Canonical Name: "Inception.md"\n// Flag: logicCTF{wr0ng_n4m3_c0rr3ct_d0cum3nt_unm4sk3d}', isSolved: false },
+        { id: 'ch11', number: 11, title: 'Decoupled Shadow API', category: 'Cloud Security', tier: 2, points: 100, penalty: 25, difficulty: 'Expert', file: 'challenge_11_shadow_api.json', description: 'SSRF attack against AWS metadata 169.254.169.254 to grab IAM role access keys.', codeSnippet: 'GET /proxy?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/', isSolved: false },
+        { id: 'ch12', number: 12, title: 'The Root of All Evil', category: 'Privilege Escalation', tier: 2, points: 100, penalty: 25, difficulty: 'Expert', file: 'challenge_12_privesc_suid.sh', description: 'SUID relative path hijacking on tar binary to escalate privileges to root.', codeSnippet: 'echo "/bin/sh" > /tmp/tar; export PATH=/tmp:$PATH; ./backup_agent', isSolved: false }
+      ];
+    }
+
+    // Init
+    fetchChallenges();
+  </script>
+</body>
+</html>

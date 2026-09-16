@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Nexus Admin // Users Directory</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-primary-fixed-variant": "#00513b",
+          "primary": "#5bdcae",
+          "primary-fixed": "#7af9c9",
+          "primary-fixed-dim": "#5bdcae",
+          "on-primary-container": "#003324",
+          "on-tertiary-fixed": "#231b00",
+          "primary-container": "#03a77c",
+          "on-error": "#690005",
+          "on-secondary-fixed-variant": "#224f3e",
+          "on-tertiary": "#3c2f00",
+          "tertiary-container": "#c2a95b",
+          "on-tertiary-fixed-variant": "#564500",
+          "outline-variant": "#202b38",
+          "tertiary": "#dfc573",
+          "surface-container-high": "#1e293b",
+          "error-container": "#93000a",
+          "tertiary-fixed": "#fce18c",
+          "secondary-container": "#224f3e",
+          "surface-dim": "#0e1511",
+          "on-surface-variant": "#94a3b8",
+          "on-secondary": "#053828",
+          "surface-container-low": "#111822",
+          "inverse-primary": "#006c4f",
+          "surface-container-lowest": "#090e16",
+          "on-surface": "#ffffff",
+          "on-tertiary-container": "#4d3e00",
+          "on-background": "#ffffff",
+          "on-secondary-container": "#90bfaa",
+          "inverse-surface": "#dde4de",
+          "on-secondary-fixed": "#002116",
+          "surface-variant": "#1a2330",
+          "tertiary-fixed-dim": "#dfc573",
+          "secondary-fixed": "#bdedd6",
+          "secondary-fixed-dim": "#a1d1bb",
+          "error": "#ffb4ab",
+          "background": "#090e16",
+          "surface-bright": "#223042",
+          "surface": "#090e16",
+          "inverse-on-surface": "#2b322e",
+          "surface-tint": "#5bdcae",
+          "outline": "#2d3a4b",
+          "on-primary": "#003827",
+          "surface-container-highest": "#243144",
+          "surface-container": "#161d19",
+          "on-primary-fixed": "#002116",
+          "on-error-container": "#ffdad6",
+          "secondary": "#a1d1bb",
+          "cyber-green": "#00FF9D"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "fontFamily": {
+          "headline": ["Geist", "Plus Jakarta Sans", "sans-serif"],
+          "body": ["Geist", "sans-serif"],
+          "mono": ["JetBrains Mono", "monospace"]
+        }
+      },
+    },
+  }
+</script></head><body class="bg-[#090e16] font-body text-[14px] text-white antialiased selection:bg-primary/30 selection:text-primary"><aside class="fixed left-0 top-0 h-full w-72 bg-[#111822] border-r border-[#202b38] z-50 flex flex-col justify-between"><div class="flex flex-col p-4"><div class="flex items-center gap-3 px-1 py-1 mb-4"><div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-[0_0_15px_rgba(0,255,157,0.3)]"><span class="material-symbols-outlined text-on-primary text-[20px] font-bold">hub</span></div><div class="flex flex-col"><span class="font-headline font-bold text-[16px] text-white tracking-wide leading-none">Nexus Admin</span><span class="font-mono text-[11px] text-[#94a3b8] mt-1">Enterprise Core</span></div></div><div class="mb-5"><button class="w-full flex items-center justify-between p-2.5 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-primary/40 text-white transition-all duration-150" type="button"><div class="flex items-center gap-2.5 min-w-0"><div class="w-6 h-6 rounded-lg bg-[#090e16] flex items-center justify-center border border-[#202b38]"><span class="material-symbols-outlined text-primary text-[15px]">corporate_fare</span></div><div class="flex flex-col items-start min-w-0 text-left"><span class="font-body text-[13px] font-medium text-white truncate">Production Workspace</span><span class="font-mono text-[10px] text-[#94a3b8] truncate">nexus-prod-us-east</span></div></div><span class="material-symbols-outlined text-[#94a3b8] text-[18px]">unfold_more</span></button></div><div class="px-2 mb-2"><span class="font-mono text-[10px] text-[#94a3b8] uppercase tracking-wider font-semibold">Main Navigation</span></div><nav class="flex flex-col gap-1"><a class="flex items-center gap-3 px-3 py-2 rounded-xl text-[13px] font-medium text-[#94a3b8] hover:bg-[#1a2330] hover:text-white transition-colors" data-path="dashboard" href="admin.html"><span class="material-symbols-outlined text-[20px]">dashboard</span><span>Dashboard</span></a><a aria-current="page" class="flex items-center gap-3 px-3 py-2 rounded-xl text-[13px] font-semibold bg-primary text-on-primary shadow-[0_0_12px_rgba(0,255,157,0.25)] transition-all" data-path="users" href="users.html"><span class="material-symbols-outlined text-[20px]">group</span><span>Users</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-xl text-[13px] font-medium text-[#94a3b8] hover:bg-[#1a2330] hover:text-white transition-colors" data-path="archived-users" href="archived_users.html"><span class="material-symbols-outlined text-[20px]">archive</span><span>Archived Users</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-xl text-[13px] font-medium text-[#94a3b8] hover:bg-[#1a2330] hover:text-white transition-colors" data-path="activity-logs" href="documentation.html"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span>Activity / Logs</span></a><a class="flex items-center gap-3 px-3 py-2 rounded-xl text-[13px] font-medium text-[#94a3b8] hover:bg-[#1a2330] hover:text-white transition-colors" data-path="settings" href="workspace.html"><span class="material-symbols-outlined text-[20px]">settings</span><span>Settings</span></a></nav></div><div class="p-4 bg-[#111822] border-t border-[#202b38]"><div class="flex items-center justify-between p-2.5 rounded-xl bg-[#161d19] border border-[#202b38]"><div class="flex items-center gap-2.5 min-w-0"><div class="relative"><div class="w-9 h-9 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-[18px]">person</span></div><span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-primary ring-2 ring-[#161d19]"></span></div><div class="flex flex-col min-w-0"><span class="font-body text-[13px] text-white font-semibold truncate">Sarah Jenkins</span><span class="font-mono text-[11px] text-[#94a3b8] truncate">System Admin</span></div></div><div class="flex items-center gap-1"><button class="w-8 h-8 rounded-lg flex items-center justify-center text-[#94a3b8] hover:bg-[#1a2330] hover:text-white transition-colors" title="Sign out" type="button" onclick="window.location.href='login.html'"><span class="material-symbols-outlined text-[18px]">logout</span></button></div></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 z-40 bg-[#090e16]/85 backdrop-blur-xl border-b border-[#202b38]"><div class="h-16 w-full px-6 flex items-center justify-between gap-4"><div class="flex items-center gap-4 min-w-0"><div class="hidden md:flex items-center gap-1.5 font-body text-[13px] text-[#94a3b8]"><a href="admin.html" class="hover:text-white transition-colors">Platform</a><span class="material-symbols-outlined text-[14px]">chevron_right</span><span class="text-white font-medium">Users</span></div><div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#161d19] border border-[#202b38]"><span class="w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#5bdcae] animate-pulse"></span><span class="font-mono text-[11px] text-[#94a3b8]">All systems operational</span></div></div><div class="flex items-center gap-3"><div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#161d19] border border-[#202b38] text-[#94a3b8] focus-within:border-primary/50 transition-all"><span class="material-symbols-outlined text-[18px]">search</span><input class="bg-transparent font-body text-[13px] text-white placeholder:text-[#94a3b8] focus:outline-none w-44" placeholder="Quick search..." type="text"/><kbd class="px-1.5 py-0.5 rounded bg-[#090e16] border border-[#202b38] font-mono text-[11px] text-[#94a3b8]">⌘K</kbd></div><div class="hidden lg:flex items-center"><button class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#161d19] border border-[#202b38] hover:border-primary/40 text-white transition-colors" type="button"><span class="material-symbols-outlined text-[18px] text-primary">domain</span><span class="font-body text-[13px] font-medium">Acme Global Inc.</span><span class="material-symbols-outlined text-[16px] text-[#94a3b8]">expand_more</span></button></div><button class="relative w-9 h-9 rounded-xl border border-[#202b38] bg-[#161d19] flex items-center justify-center text-[#94a3b8] hover:text-white hover:border-primary/40 transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-primary ring-2 ring-[#161d19]"></span></button><div class="w-8 h-8 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center"><span class="material-symbols-outlined text-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-[#090e16] min-h-screen"><div class="flex flex-col w-full">
+<!-- Toast Notification Container -->
+<div class="fixed bottom-6 right-6 z-[100] flex flex-col gap-2 pointer-events-none" id="toast-container"></div>
+<!-- Content Canvas -->
+<div class="p-6 md:p-8 flex flex-col gap-6 max-w-[1600px] mx-auto w-full">
+<!-- Top Header & Primary Action -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex flex-col">
+<div class="flex items-center gap-2.5">
+<h1 class="font-headline text-[26px] font-bold text-white tracking-tight">Users</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/30 text-primary font-mono text-[11px] font-medium">Directory</span>
+</div>
+<p class="font-body text-[14px] text-[#94a3b8] mt-1">Manage users, roles and account access without invitation barriers.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="inline-flex items-center gap-2 px-4 h-10 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-primary/40 text-white font-body text-[13px] font-medium transition-all active:scale-[0.98]" id="export-csv-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-[#94a3b8]">download</span>
+<span>Export</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 h-10 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-body text-[13px] font-semibold shadow-[0_0_15px_rgba(0,255,157,0.3)] transition-all active:scale-[0.98]" id="open-create-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>Add User</span>
+</button>
+</div>
+</div>
+<!-- 5 Statistic Overview Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+<!-- Total Users -->
+<div class="group relative p-4 rounded-xl bg-[#111822] border border-[#202b38] hover:border-primary/40 transition-all duration-200 flex flex-col justify-between overflow-hidden">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-mono text-[11px] uppercase tracking-wider text-[#94a3b8]">Total Users</span>
+<span class="font-mono text-[26px] font-bold text-white mt-1">2,845</span>
+</div>
+<div class="w-9 h-9 rounded-lg bg-[#161d19] border border-[#2d3a4b] flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">group</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 mt-3">
+<span class="inline-flex items-center font-mono text-[11px] text-primary bg-primary/10 border border-primary/20 px-1.5 py-0.5 rounded">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +12%
+          </span>
+<span class="font-body text-[12px] text-[#94a3b8]">this month</span>
+</div>
+</div>
+<!-- Active Users -->
+<div class="group relative p-4 rounded-xl bg-[#111822] border border-[#202b38] hover:border-primary/40 transition-all duration-200 flex flex-col justify-between overflow-hidden">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-mono text-[11px] uppercase tracking-wider text-[#94a3b8]">Active Users</span>
+<span class="font-mono text-[26px] font-bold text-white mt-1">2,610</span>
+</div>
+<div class="w-9 h-9 rounded-lg bg-[#161d19] border border-[#2d3a4b] flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-3">
+<span class="w-2 h-2 rounded-full bg-primary shadow-[0_0_6px_#5bdcae]"></span>
+<span class="font-body text-[12px] text-[#94a3b8]"><strong class="text-white">91.7%</strong> engagement</span>
+</div>
+</div>
+<!-- Managers -->
+<div class="group relative p-4 rounded-xl bg-[#111822] border border-[#202b38] hover:border-primary/40 transition-all duration-200 flex flex-col justify-between overflow-hidden">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-mono text-[11px] uppercase tracking-wider text-[#94a3b8]">Managers</span>
+<span class="font-mono text-[26px] font-bold text-white mt-1">142</span>
+</div>
+<div class="w-9 h-9 rounded-lg bg-[#161d19] border border-[#2d3a4b] flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black transition-colors">
+<span class="material-symbols-outlined text-[20px]">admin_panel_settings</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 mt-3">
+<span class="font-body text-[12px] text-[#94a3b8]">Elevated privileges</span>
+</div>
+</div>
+<!-- Viewers -->
+<div class="group relative p-4 rounded-xl bg-[#111822] border border-[#202b38] hover:border-primary/40 transition-all duration-200 flex flex-col justify-between overflow-hidden">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-mono text-[11px] uppercase tracking-wider text-[#94a3b8]">Viewers</span>
+<span class="font-mono text-[26px] font-bold text-white mt-1">488</span>
+</div>
+<div class="w-9 h-9 rounded-lg bg-[#161d19] border border-[#2d3a4b] flex items-center justify-center text-[#94a3b8] group-hover:bg-white group-hover:text-black transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 mt-3">
+<span class="font-body text-[12px] text-[#94a3b8]">Read-only audit scope</span>
+</div>
+</div>
+<!-- Archived Users -->
+<div class="group relative p-4 rounded-xl bg-[#111822] border border-[#202b38] hover:border-primary/40 transition-all duration-200 flex flex-col justify-between overflow-hidden">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-mono text-[11px] uppercase tracking-wider text-[#94a3b8]">Archived Users</span>
+<span class="font-mono text-[26px] font-bold text-white mt-1">235</span>
+</div>
+<div class="w-9 h-9 rounded-lg bg-[#161d19] border border-[#2d3a4b] flex items-center justify-center text-[#94a3b8] group-hover:bg-slate-400 group-hover:text-black transition-colors">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 mt-3">
+<span class="font-body text-[12px] text-[#94a3b8]">Data retained in vault</span>
+</div>
+</div>
+</div>
+<!-- Data Table Container Module -->
+<div class="flex flex-col rounded-xl bg-[#111822] border border-[#202b38] overflow-hidden">
+<!-- Filter, Search & Batch Bar -->
+<div class="p-4 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 border-b border-[#202b38]">
+<!-- Search Input with Keyboard Indicator -->
+<div class="relative flex-1 max-w-md">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[18px] text-[#94a3b8] pointer-events-none">search</span>
+<input class="w-full h-10 pl-10 pr-12 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white placeholder:text-[#94a3b8] font-body text-[13px] focus:outline-none focus:border-primary/60 transition-all" id="user-search-input" placeholder="Search by name, email or ID..." type="text"/>
+<kbd class="absolute right-3 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded bg-[#090e16] border border-[#202b38] font-mono text-[11px] text-[#94a3b8] pointer-events-none">/</kbd>
+</div>
+<!-- Filter Dropdowns & Sorting -->
+<div class="flex flex-wrap items-center gap-2.5">
+<!-- Role Filter -->
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white font-body text-[13px] appearance-none cursor-pointer focus:outline-none focus:border-primary/60 transition-colors" id="role-filter">
+<option class="bg-[#161d19]" value="all">All Roles</option>
+<option class="bg-[#161d19]" value="Manager">Manager</option>
+<option class="bg-[#161d19]" value="User">User</option>
+<option class="bg-[#161d19]" value="Viewer">Viewer</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[18px] text-[#94a3b8] pointer-events-none">expand_more</span>
+</div>
+<!-- Status Filter -->
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white font-body text-[13px] appearance-none cursor-pointer focus:outline-none focus:border-primary/60 transition-colors" id="status-filter">
+<option class="bg-[#161d19]" value="all">All Status</option>
+<option class="bg-[#161d19]" value="Active">Active</option>
+<option class="bg-[#161d19]" value="Archived">Archived</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[18px] text-[#94a3b8] pointer-events-none">expand_more</span>
+</div>
+<!-- Sort Filter -->
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white font-body text-[13px] appearance-none cursor-pointer focus:outline-none focus:border-primary/60 transition-colors" id="sort-filter">
+<option class="bg-[#161d19]" value="recent">Sort: Last Active (Recent)</option>
+<option class="bg-[#161d19]" value="newest">Sort: Created (Newest)</option>
+<option class="bg-[#161d19]" value="name-asc">Sort: Name (A-Z)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-[18px] text-[#94a3b8] pointer-events-none">swap_vert</span>
+</div>
+<!-- Reset Filter -->
+<button class="h-10 px-3 rounded-xl border border-[#2d3a4b] bg-[#161d19] text-[#94a3b8] hover:text-white hover:border-primary/40 flex items-center justify-center transition-colors" id="clear-filters-btn" title="Reset filters" type="button">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+</button>
+</div>
+</div>
+<!-- Batch Actions Toolbar (Appears on selection) -->
+<div class="hidden px-4 py-2.5 bg-primary/20 border-b border-primary/30 text-white flex items-center justify-between transition-all" id="batch-toolbar">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">check_circle</span>
+<span class="font-mono text-[12px] text-white font-medium" id="batch-count-text">0 users selected</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1 rounded-lg bg-[#161d19] border border-[#2d3a4b] hover:border-primary/40 text-white font-body text-[12px] transition-colors" id="batch-archive-btn" type="button">Archive Selected</button>
+<button class="px-3 py-1 rounded-lg text-[#94a3b8] hover:text-white font-body text-[12px] transition-colors" id="batch-clear-btn" type="button">Cancel</button>
+</div>
+</div>
+<!-- Table Scroll Canvas -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#161d19]/80 border-b border-[#202b38] text-[#94a3b8] font-mono text-[11px] uppercase tracking-wider select-none">
+<th class="w-12 px-4 py-3 text-center" scope="col">
+<input class="rounded border-[#2d3a4b] bg-[#090e16] w-4 h-4 text-primary focus:ring-0 cursor-pointer" id="select-all-checkbox" type="checkbox"/>
+</th>
+<th class="px-4 py-3" scope="col">User</th>
+<th class="px-4 py-3" scope="col">Role</th>
+<th class="px-4 py-3" scope="col">Status</th>
+<th class="px-4 py-3" scope="col">Created</th>
+<th class="px-4 py-3" scope="col">Last Active</th>
+<th class="w-28 px-4 py-3 text-right" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#202b38] font-body text-[13px] text-white" id="users-table-body">
+<!-- Dynamically rendered rows by vanilla JS -->
+</tbody>
+</table>
+</div>
+<!-- Empty State -->
+<div class="hidden p-8 flex flex-col items-center justify-center text-center" id="table-empty-state">
+<div class="w-12 h-12 rounded-full bg-[#161d19] border border-[#202b38] flex items-center justify-center text-[#94a3b8] mb-3">
+<span class="material-symbols-outlined text-[24px]">search_off</span>
+</div>
+<h3 class="font-headline font-semibold text-[16px] text-white">No users match your criteria</h3>
+<p class="font-body text-[13px] text-[#94a3b8] max-w-sm mt-1">Try relaxing filters, searching for alternate emails, or resetting current query values.</p>
+<button class="mt-4 px-4 py-2 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-primary/40 font-body text-[13px] text-primary" id="reset-empty-btn" type="button">Reset Filters</button>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#202b38] bg-[#111822]">
+<div class="flex items-center gap-2">
+<span class="font-mono text-[12px] text-[#94a3b8]" id="results-count-indicator">Showing 1-8 of 2,845 users</span>
+<div class="hidden sm:flex items-center gap-1.5 text-[#94a3b8] font-mono text-[11px]">
+<span>•</span>
+<select class="bg-[#161d19] border border-[#2d3a4b] text-white rounded-lg px-2 py-1 focus:outline-none cursor-pointer" id="rows-per-page">
+<option class="bg-[#161d19]" value="8">8 per page</option>
+<option class="bg-[#161d19]" value="15">15 per page</option>
+<option class="bg-[#161d19]" value="25">25 per page</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[#161d19] border border-[#202b38] hover:border-primary/40 text-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors" id="prev-page-btn" title="Previous Page" type="button">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<div class="flex items-center gap-1" id="pagination-buttons">
+<button class="w-8 h-8 rounded-lg bg-primary text-on-primary font-mono text-[12px] font-semibold shadow-[0_0_8px_rgba(0,255,157,0.3)]">1</button>
+<button class="w-8 h-8 rounded-lg border border-[#202b38] bg-[#161d19] hover:border-primary/40 text-white font-mono text-[12px]">2</button>
+<button class="w-8 h-8 rounded-lg border border-[#202b38] bg-[#161d19] hover:border-primary/40 text-white font-mono text-[12px]">3</button>
+<span class="px-1 text-[#94a3b8] font-mono text-[12px]">…</span>
+<button class="w-8 h-8 rounded-lg border border-[#202b38] bg-[#161d19] hover:border-primary/40 text-white font-mono text-[12px]">28</button>
+</div>
+<button class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-[#161d19] border border-[#202b38] hover:border-primary/40 text-white transition-colors" id="next-page-btn" title="Next Page" type="button">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- MODAL: Create User Drawer / Modal -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm transition-opacity" id="modal-create">
+<div class="relative w-full max-w-lg rounded-2xl bg-[#111822] border border-[#2d3a4b] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+<div class="px-6 py-4 flex items-center justify-between border-b border-[#202b38]">
+<div class="flex flex-col">
+<h2 class="font-headline font-bold text-[18px] text-white">Create New User</h2>
+<p class="font-body text-[13px] text-[#94a3b8]">Add a new user manually with direct credentials. No invitation needed.</p>
+</div>
+<button class="modal-close-btn w-8 h-8 rounded-lg flex items-center justify-center text-[#94a3b8] hover:bg-[#1a2330] hover:text-white" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="p-6 flex flex-col gap-4" id="create-user-form">
+<!-- Full Name -->
+<div class="flex flex-col gap-1">
+<label class="font-body text-[13px] font-medium text-white">Full Name</label>
+<input class="h-10 px-3 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white placeholder:text-[#94a3b8] font-body text-[13px] focus:outline-none focus:border-primary/60 transition-all" id="create-name" placeholder="e.g. Elena Rostova" required="" type="text"/>
+</div>
+<!-- Email -->
+<div class="flex flex-col gap-1">
+<label class="font-body text-[13px] font-medium text-white">Email Address</label>
+<input class="h-10 px-3 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white placeholder:text-[#94a3b8] font-body text-[13px] focus:outline-none focus:border-primary/60 transition-all" id="create-email" placeholder="elena@company.com" required="" type="email"/>
+</div>
+<!-- Password Inputs -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div class="flex flex-col gap-1">
+<label class="font-body text-[13px] font-medium text-white">Initial Password</label>
+<div class="relative">
+<input class="w-full h-10 px-3 pr-9 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white placeholder:text-[#94a3b8] font-body text-[13px] focus:outline-none focus:border-primary/60" id="create-password" placeholder="••••••••" required="" type="password"/>
+<button class="pw-toggle absolute right-2.5 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-white" type="button">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-body text-[13px] font-medium text-white">Confirm Password</label>
+<div class="relative">
+<input class="w-full h-10 px-3 pr-9 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white placeholder:text-[#94a3b8] font-body text-[13px] focus:outline-none focus:border-primary/60" id="create-confirm-password" placeholder="••••••••" required="" type="password"/>
+<button class="pw-toggle absolute right-2.5 top-1/2 -translate-y-1/2 text-[#94a3b8] hover:text-white" type="button">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Role Radio Selector -->
+<div class="flex flex-col gap-2">
+<label class="font-body text-[13px] font-medium text-white">Assigned Role</label>
+<div class="grid grid-cols-3 gap-2">
+<label class="relative flex flex-col p-3 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-primary/40 cursor-pointer transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+<input class="sr-only" name="create-role" type="radio" value="Manager"/>
+<span class="font-body text-[13px] text-white font-semibold">Manager</span>
+<span class="font-mono text-[10px] text-[#94a3b8] mt-0.5">Admin scope</span>
+</label>
+<label class="relative flex flex-col p-3 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-primary/40 cursor-pointer transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+<input checked="" class="sr-only" name="create-role" type="radio" value="User"/>
+<span class="font-body text-[13px] text-white font-semibold">User</span>
+<span class="font-mono text-[10px] text-[#94a3b8] mt-0.5">Standard ops</span>
+</label>
+<label class="relative flex flex-col p-3 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-primary/40 cursor-pointer transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/10">
+<input class="sr-only" name="create-role" type="radio" value="Viewer"/>
+<span class="font-body text-[13px] text-white font-semibold">Viewer</span>
+<span class="font-mono text-[10px] text-[#94a3b8] mt-0.5">Read-only audit</span>
+</label>
+</div>
+</div>
+<!-- Account Status Selection -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-[#161d19] border border-[#202b38]">
+<div class="flex flex-col">
+<span class="font-body text-[13px] font-medium text-white">Initial Status</span>
+<span class="font-body text-[12px] text-[#94a3b8]">Immediate operational availability</span>
+</div>
+<select class="h-8 px-2 rounded-lg bg-[#090e16] border border-[#2d3a4b] text-white font-body text-[12px] focus:outline-none" id="create-status">
+<option value="Active">Active</option>
+<option value="Archived">Archived</option>
+</select>
+</div>
+<!-- Form Actions -->
+<div class="flex items-center justify-end gap-3 mt-2">
+<button class="modal-close-btn px-4 h-10 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-primary/40 text-white font-body text-[13px] transition-colors" type="button">Cancel</button>
+<button class="px-4 h-10 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-body text-[13px] font-semibold shadow-[0_0_15px_rgba(0,255,157,0.3)] transition-all" type="submit">Create User</button>
+</div>
+</form>
+</div>
+</div>
+<!-- MODAL: Edit User Modal -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm transition-opacity" id="modal-edit">
+<div class="relative w-full max-w-lg rounded-2xl bg-[#111822] border border-[#2d3a4b] shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+<div class="px-6 py-4 flex items-center justify-between border-b border-[#202b38]">
+<div class="flex flex-col">
+<h2 class="font-headline font-bold text-[18px] text-white">Edit User Profile</h2>
+<p class="font-body text-[13px] text-[#94a3b8]">Modify credentials, system tier or access status.</p>
+</div>
+<button class="modal-close-btn w-8 h-8 rounded-lg flex items-center justify-center text-[#94a3b8] hover:bg-[#1a2330] hover:text-white" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<form class="p-6 flex flex-col gap-4" id="edit-user-form">
+<input id="edit-user-id" type="hidden"/>
+<!-- Full Name -->
+<div class="flex flex-col gap-1">
+<label class="font-body text-[13px] font-medium text-white">Full Name</label>
+<input class="h-10 px-3 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white font-body text-[13px] focus:outline-none focus:border-primary/60 transition-all" id="edit-name" required="" type="text"/>
+</div>
+<!-- Email -->
+<div class="flex flex-col gap-1">
+<label class="font-body text-[13px] font-medium text-white">Email Address</label>
+<input class="h-10 px-3 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white font-body text-[13px] focus:outline-none focus:border-primary/60 transition-all" id="edit-email" required="" type="email"/>
+</div>
+<!-- Role & Status in single row -->
+<div class="grid grid-cols-2 gap-3">
+<div class="flex flex-col gap-1">
+<label class="font-body text-[13px] font-medium text-white">System Role</label>
+<select class="h-10 px-3 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white font-body text-[13px] focus:outline-none" id="edit-role">
+<option value="Manager">Manager</option>
+<option value="User">User</option>
+<option value="Viewer">Viewer</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-body text-[13px] font-medium text-white">Account Status</label>
+<select class="h-10 px-3 rounded-xl bg-[#161d19] border border-[#2d3a4b] text-white font-body text-[13px] focus:outline-none" id="edit-status">
+<option value="Active">Active</option>
+<option value="Archived">Archived</option>
+</select>
+</div>
+</div>
+<!-- Optional Reset Password Toggle Accordion -->
+<div class="flex flex-col gap-2 rounded-xl bg-[#161d19] border border-[#202b38] p-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-[#94a3b8]">lock_reset</span>
+<span class="font-body text-[13px] font-medium text-white">Direct Password Reset</span>
+</div>
+<input class="w-4 h-4 rounded border-[#2d3a4b] bg-[#090e16] text-primary focus:ring-0 cursor-pointer" id="toggle-reset-password" type="checkbox"/>
+</div>
+<div class="hidden flex-col gap-2 pt-2" id="reset-password-fields">
+<input class="h-9 px-3 rounded-lg bg-[#090e16] border border-[#2d3a4b] text-white placeholder:text-[#94a3b8] font-body text-[13px] focus:outline-none focus:border-primary/60" id="edit-new-password" placeholder="New direct password" type="password"/>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center justify-end gap-3 mt-2">
+<button class="modal-close-btn px-4 h-10 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-primary/40 text-white font-body text-[13px] transition-colors" type="button">Cancel</button>
+<button class="px-4 h-10 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-body text-[13px] font-semibold shadow-[0_0_15px_rgba(0,255,157,0.3)] transition-all" type="submit">Save Changes</button>
+</div>
+</form>
+</div>
+</div>
+<!-- MODAL: Archive User Confirmation -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm transition-opacity" id="modal-archive">
+<div class="relative w-full max-w-md rounded-2xl bg-[#111822] border border-[#2d3a4b] shadow-2xl overflow-hidden p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
+<div class="w-12 h-12 rounded-xl bg-[#161d19] border border-[#2d3a4b] flex items-center justify-center text-[#94a3b8]">
+<span class="material-symbols-outlined text-[26px]">archive</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline font-bold text-[18px] text-white">Archive this user?</h3>
+<p class="font-body text-[13px] text-[#94a3b8] mt-1">Archived users will no longer appear in the active users list but their data, audit history, and permissions will be preserved in the archive vault.</p>
+</div>
+<input id="archive-user-id" type="hidden"/>
+<div class="flex items-center justify-end gap-3 pt-2">
+<button class="modal-close-btn px-4 h-10 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-primary/40 text-white font-body text-[13px] transition-colors" type="button">Cancel</button>
+<button class="px-4 h-10 rounded-xl bg-[#161d19] border border-primary/50 text-primary hover:bg-primary/10 font-body text-[13px] font-medium transition-all" id="confirm-archive-btn" type="button">Archive User</button>
+</div>
+</div>
+</div>
+<!-- MODAL: Delete Permanently Confirmation -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm transition-opacity" id="modal-delete">
+<div class="relative w-full max-w-md rounded-2xl bg-[#111822] border border-[#2d3a4b] shadow-2xl overflow-hidden p-6 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-150">
+<div class="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
+<span class="material-symbols-outlined text-[26px]">delete_forever</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline font-bold text-[18px] text-white">Delete user permanently?</h3>
+<p class="font-body text-[13px] text-[#94a3b8] mt-1">This will permanently destroy the user identity record, auth tokens, and personal vault references. This action is irreversible.</p>
+</div>
+<input id="delete-user-id" type="hidden"/>
+<div class="flex items-center justify-end gap-3 pt-2">
+<button class="modal-close-btn px-4 h-10 rounded-xl bg-[#161d19] border border-[#2d3a4b] hover:border-primary/40 text-white font-body text-[13px] transition-colors" type="button">Cancel</button>
+<button class="px-4 h-10 rounded-xl bg-red-600 hover:bg-red-700 text-white font-body text-[13px] font-medium transition-all shadow-[0_0_12px_rgba(239,68,68,0.3)]" id="confirm-delete-btn" type="button">Delete Permanently</button>
+</div>
+</div>
+</div>
+<!-- Vanilla JavaScript Implementation -->
+<script>
+    (function() {
+      // Primary Data Set
+      let users = [
+        {
+          id: 'USR-9021',
+          name: 'Alex Rivera',
+          email: 'alex.rivera@company.com',
+          role: 'Manager',
+          status: 'Active',
+          created: 'Oct 14, 2024',
+          lastActive: '12 mins ago',
+          avatarBg: 'bg-primary/20 border border-primary/40 text-primary',
+          initials: 'AR'
+        },
+        {
+          id: 'USR-8419',
+          name: 'Sarah Chen',
+          email: 'sarah.chen@company.com',
+          role: 'Manager',
+          status: 'Active',
+          created: 'Nov 02, 2024',
+          lastActive: '2 hours ago',
+          avatarBg: 'bg-cyan-500/20 border border-cyan-500/40 text-cyan-400',
+          initials: 'SC'
+        },
+        {
+          id: 'USR-7732',
+          name: 'Marcus Vance',
+          email: 'm.vance@company.com',
+          role: 'User',
+          status: 'Active',
+          created: 'Aug 29, 2024',
+          lastActive: 'Yesterday, 3:40 PM',
+          avatarBg: 'bg-primary/20 border border-primary/40 text-primary',
+          initials: 'MV'
+        },
+        {
+          id: 'USR-6194',
+          name: 'Elena Rostova',
+          email: 'elena.rostova@company.com',
+          role: 'User',
+          status: 'Active',
+          created: 'Dec 05, 2024',
+          lastActive: '4 mins ago',
+          avatarBg: 'bg-emerald-500/20 border border-emerald-500/40 text-emerald-400',
+          initials: 'ER'
+        },
+        {
+          id: 'USR-5521',
+          name: 'David Kim',
+          email: 'david.kim@company.com',
+          role: 'Viewer',
+          status: 'Active',
+          created: 'Jul 19, 2024',
+          lastActive: '3 days ago',
+          avatarBg: 'bg-slate-700/50 border border-slate-600 text-slate-300',
+          initials: 'DK'
+        },
+        {
+          id: 'USR-4810',
+          name: 'Olivia Sterling',
+          email: 'olivia.s@company.com',
+          role: 'Manager',
+          status: 'Archived',
+          created: 'Jan 10, 2024',
+          lastActive: '2 months ago',
+          avatarBg: 'bg-slate-800 border border-slate-700 text-slate-400',
+          initials: 'OS'
+        },
+        {
+          id: 'USR-3928',
+          name: 'Tariq Al-Mansoor',
+          email: 'tariq.m@company.com',
+          role: 'User',
+          status: 'Active',
+          created: 'Sep 15, 2024',
+          lastActive: 'Just now',
+          avatarBg: 'bg-teal-500/20 border border-teal-500/40 text-teal-300',
+          initials: 'TA'
+        },
+        {
+          id: 'USR-2914',
+          name: 'Claire Beauchamp',
+          email: 'c.beauchamp@company.com',
+          role: 'Viewer',
+          status: 'Archived',
+          created: 'Feb 21, 2024',
+          lastActive: '5 months ago',
+          avatarBg: 'bg-slate-800 border border-slate-700 text-slate-400',
+          initials: 'CB'
+        }
+      ];
+
+      let selectedUserIds = new Set();
+      let activeDropdownMenu = null;
+
+      // DOM Node caching
+      const tableBody = document.getElementById('users-table-body');
+      const searchInput = document.getElementById('user-search-input');
+      const roleFilter = document.getElementById('role-filter');
+      const statusFilter = document.getElementById('status-filter');
+      const sortFilter = document.getElementById('sort-filter');
+      const emptyState = document.getElementById('table-empty-state');
+      const selectAllCheckbox = document.getElementById('select-all-checkbox');
+      const batchToolbar = document.getElementById('batch-toolbar');
+      const batchCountText = document.getElementById('batch-count-text');
+      const resultsIndicator = document.getElementById('results-count-indicator');
+      const toastContainer = document.getElementById('toast-container');
+
+      // Modals
+      const modalCreate = document.getElementById('modal-create');
+      const modalEdit = document.getElementById('modal-edit');
+      const modalArchive = document.getElementById('modal-archive');
+      const modalDelete = document.getElementById('modal-delete');
+
+      // Toast dispatch helper
+      function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `flex items-center gap-2 px-4 py-2.5 rounded-xl border shadow-xl pointer-events-auto transition-all transform duration-200 translate-y-2 opacity-0 text-[13px] font-body ${
+          type === 'success' ? 'bg-[#111822] border-primary/50 text-white' :
+          type === 'error' ? 'bg-[#111822] border-red-500/50 text-red-300' :
+          'bg-[#111822] border-[#2d3a4b] text-white'
+        }`;
+
+        const icon = type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info';
+        const iconColor = type === 'success' ? 'text-primary' : type === 'error' ? 'text-red-400' : 'text-[#94a3b8]';
+        toast.innerHTML = `
+          <span class="material-symbols-outlined text-[18px] ${iconColor}">${icon}</span>
+          <span class="font-medium">${message}</span>
+        `;
+
+        toastContainer.appendChild(toast);
+        requestAnimationFrame(() => {
+          toast.classList.remove('translate-y-2', 'opacity-0');
+        });
+
+        setTimeout(() => {
+          toast.classList.add('opacity-0', 'translate-y-2');
+          setTimeout(() => toast.remove(), 250);
+        }, 3000);
+      }
+
+      // Filter and query evaluation
+      function getFilteredUsers() {
+        const query = searchInput.value.toLowerCase().trim();
+        const role = roleFilter.value;
+        const status = statusFilter.value;
+        const sort = sortFilter.value;
+
+        let filtered = users.filter(user => {
+          const matchesQuery = user.name.toLowerCase().includes(query) ||
+                               user.email.toLowerCase().includes(query) ||
+                               user.id.toLowerCase().includes(query);
+          const matchesRole = role === 'all' || user.role === role;
+          const matchesStatus = status === 'all' || user.status === status;
+          return matchesQuery && matchesRole && matchesStatus;
+        });
+
+        if (sort === 'name-asc') {
+          filtered.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (sort === 'newest') {
+          filtered.sort((a, b) => b.id.localeCompare(a.id));
+        }
+        return filtered;
+      }
+
+      // Render Table Data
+      function renderTable() {
+        closeAllDropdowns();
+        const filtered = getFilteredUsers();
+
+        if (filtered.length === 0) {
+          tableBody.innerHTML = '';
+          emptyState.classList.remove('hidden');
+        } else {
+          emptyState.classList.add('hidden');
+          tableBody.innerHTML = filtered.map(user => {
+            const isSelected = selectedUserIds.has(user.id);
+            const isArchived = user.status === 'Archived';
+
+            // Role Badge styling
+            let roleBadgeClass = 'bg-[#161d19] border border-[#2d3a4b] text-[#94a3b8]';
+            if (user.role === 'Manager') roleBadgeClass = 'bg-cyan-500/10 border border-cyan-500/30 text-cyan-400';
+            if (user.role === 'User') roleBadgeClass = 'bg-primary/10 border border-primary/30 text-primary';
+            if (user.role === 'Viewer') roleBadgeClass = 'bg-slate-700/20 border border-slate-600/40 text-slate-300';
+
+            return `
+              <tr class="hover:bg-[#161d19]/60 transition-colors group ${isSelected ? 'bg-primary/5' : ''}" data-id="${user.id}">
+                <td class="w-12 px-4 py-3.5 text-center">
+                  <input type="checkbox" data-select-id="${user.id}" ${isSelected ? 'checked' : ''} class="user-row-checkbox rounded border-[#2d3a4b] bg-[#090e16] w-4 h-4 text-primary focus:ring-0 cursor-pointer" />
+                </td>
+                <td class="px-4 py-3.5">
+                  <div class="flex items-center gap-3">
+                    <div class="relative w-8 h-8 rounded-full ${user.avatarBg} flex items-center justify-center font-mono text-[12px] font-semibold shrink-0">
+                      ${user.initials}
+                      <span class="absolute bottom-0 right-0 w-2 h-2 rounded-full ${isArchived ? 'bg-slate-500' : 'bg-primary shadow-[0_0_6px_#5bdcae]'} ring-1 ring-[#111822]"></span>
+                    </div>
+                    <div class="flex flex-col min-w-0">
+                      <span class="font-body text-[13px] text-white font-semibold truncate hover:text-primary cursor-pointer btn-edit-trigger" data-id="${user.id}">${user.name}</span>
+                      <span class="font-mono text-[11px] text-[#94a3b8] truncate">${user.email}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3.5">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-mono text-[11px] font-medium ${roleBadgeClass}">
+                    ${user.role}
+                  </span>
+                </td>
+                <td class="px-4 py-3.5">
+                  ${!isArchived ? `
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-mono text-[11px] bg-primary/10 border border-primary/30 text-primary">
+                      <span class="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_6px_#5bdcae] animate-pulse"></span>
+                      Active
+                    </span>
+                  ` : `
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-mono text-[11px] bg-[#161d19] border border-[#2d3a4b] text-[#94a3b8]">
+                      Archived
+                    </span>
+                  `}
+                </td>
+                <td class="px-4 py-3.5 text-[#94a3b8] font-mono text-[12px] whitespace-nowrap">${user.created}</td>
+                <td class="px-4 py-3.5 text-[#94a3b8] font-mono text-[12px] whitespace-nowrap">${user.lastActive}</td>
+                <td class="px-4 py-3.5 text-right">
+                  <div class="relative inline-flex items-center justify-end gap-1">
+                    <button type="button" class="btn-edit-trigger px-2.5 py-1 rounded-lg text-primary hover:bg-primary/10 font-body text-[12px] font-medium transition-colors" data-id="${user.id}">Edit</button>
+                    
+                    <button type="button" class="row-menu-btn w-8 h-8 rounded-lg flex items-center justify-center text-[#94a3b8] hover:bg-[#161d19] hover:text-white transition-colors" data-id="${user.id}">
+                      <span class="material-symbols-outlined text-[18px]">more_horiz</span>
+                    </button>
+
+                    <!-- Contextual Dropdown Menu -->
+                    <div id="dropdown-${user.id}" class="row-dropdown-menu hidden absolute right-0 top-full mt-1 z-30 w-44 rounded-xl bg-[#111822] border border-[#2d3a4b] shadow-2xl py-1 text-left">
+                      <button type="button" class="action-edit w-full px-3 py-2 text-left font-body text-[12px] text-white hover:bg-[#161d19] hover:text-primary flex items-center gap-2" data-id="${user.id}">
+                        <span class="material-symbols-outlined text-[16px]">edit</span>
+                        <span>Edit Details</span>
+                      </button>
+                      <button type="button" class="action-role w-full px-3 py-2 text-left font-body text-[12px] text-white hover:bg-[#161d19] hover:text-cyan-400 flex items-center gap-2" data-id="${user.id}">
+                        <span class="material-symbols-outlined text-[16px]">admin_panel_settings</span>
+                        <span>Change Role</span>
+                      </button>
+                      <button type="button" class="action-archive w-full px-3 py-2 text-left font-body text-[12px] text-[#94a3b8] hover:bg-[#161d19] hover:text-white flex items-center gap-2" data-id="${user.id}">
+                        <span class="material-symbols-outlined text-[16px]">archive</span>
+                        <span>Archive User</span>
+                      </button>
+                      <div class="my-1 bg-[#202b38] h-px"></div>
+                      <button type="button" class="action-delete w-full px-3 py-2 text-left font-body text-[12px] text-red-400 hover:bg-red-500/10 flex items-center gap-2" data-id="${user.id}">
+                        <span class="material-symbols-outlined text-[16px]">delete</span>
+                        <span>Delete Permanently</span>
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('');
+        }
+
+        // Update counts
+        resultsIndicator.textContent = `Showing 1-${filtered.length} of ${users.length} users`;
+        updateBatchState();
+      }
+
+      function updateBatchState() {
+        if (selectedUserIds.size > 0) {
+          batchToolbar.classList.remove('hidden');
+          batchCountText.textContent = `${selectedUserIds.size} user${selectedUserIds.size > 1 ? 's' : ''} selected`;
+        } else {
+          batchToolbar.classList.add('hidden');
+        }
+        selectAllCheckbox.checked = selectedUserIds.size > 0 && selectedUserIds.size === getFilteredUsers().length;
+      }
+
+      function closeAllDropdowns() {
+        document.querySelectorAll('.row-dropdown-menu').forEach(menu => menu.classList.add('hidden'));
+        activeDropdownMenu = null;
+      }
+
+      // Event Delegation for row actions
+      tableBody.addEventListener('click', (e) => {
+        const menuBtn = e.target.closest('.row-menu-btn');
+        const editTrigger = e.target.closest('.btn-edit-trigger');
+        const actionEdit = e.target.closest('.action-edit');
+        const actionRole = e.target.closest('.action-role');
+        const actionArchive = e.target.closest('.action-archive');
+        const actionDelete = e.target.closest('.action-delete');
+        const rowCheckbox = e.target.closest('.user-row-checkbox');
+
+        if (rowCheckbox) {
+          const id = rowCheckbox.getAttribute('data-select-id');
+          if (rowCheckbox.checked) {
+            selectedUserIds.add(id);
+          } else {
+            selectedUserIds.delete(id);
+          }
+          updateBatchState();
+          return;
+        }
+
+        if (menuBtn) {
+          e.stopPropagation();
+          const id = menuBtn.getAttribute('data-id');
+          const targetMenu = document.getElementById(`dropdown-${id}`);
+          const isCurrentlyOpen = !targetMenu.classList.contains('hidden');
+          closeAllDropdowns();
+          if (!isCurrentlyOpen) {
+            targetMenu.classList.remove('hidden');
+            activeDropdownMenu = targetMenu;
+          }
+          return;
+        }
+
+        if (editTrigger || actionEdit || actionRole) {
+          const id = (editTrigger || actionEdit || actionRole).getAttribute('data-id');
+          openEditModal(id);
+          closeAllDropdowns();
+          return;
+        }
+
+        if (actionArchive) {
+          const id = actionArchive.getAttribute('data-id');
+          openArchiveModal(id);
+          closeAllDropdowns();
+          return;
+        }
+
+        if (actionDelete) {
+          const id = actionDelete.getAttribute('data-id');
+          openDeleteModal(id);
+          closeAllDropdowns();
+          return;
+        }
+      });
+
+      // Close dropdown when clicked elsewhere
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.row-dropdown-menu') && !e.target.closest('.row-menu-btn')) {
+          closeAllDropdowns();
+        }
+      });
+
+      // Filter Inputs Binding
+      searchInput.addEventListener('input', renderTable);
+      roleFilter.addEventListener('change', renderTable);
+      statusFilter.addEventListener('change', renderTable);
+      sortFilter.addEventListener('change', renderTable);
+
+      document.getElementById('clear-filters-btn').addEventListener('click', () => {
+        searchInput.value = '';
+        roleFilter.value = 'all';
+        statusFilter.value = 'all';
+        sortFilter.value = 'recent';
+        renderTable();
+        showToast('Filters reset', 'info');
+      });
+
+      document.getElementById('reset-empty-btn').addEventListener('click', () => {
+        searchInput.value = '';
+        roleFilter.value = 'all';
+        statusFilter.value = 'all';
+        renderTable();
+      });
+
+      // Keyboard shortcut: '/' to focus search
+      window.addEventListener('keydown', (e) => {
+        if (e.key === '/' && document.activeElement !== searchInput && document.activeElement.tagName !== 'INPUT') {
+          e.preventDefault();
+          searchInput.focus();
+        }
+        if (e.key === 'Escape') {
+          closeModals();
+          closeAllDropdowns();
+        }
+      });
+
+      // Select All Checkbox Handler
+      selectAllCheckbox.addEventListener('change', (e) => {
+        const filtered = getFilteredUsers();
+        if (e.target.checked) {
+          filtered.forEach(u => selectedUserIds.add(u.id));
+        } else {
+          selectedUserIds.clear();
+        }
+        renderTable();
+      });
+
+      // Batch Actions
+      document.getElementById('batch-clear-btn').addEventListener('click', () => {
+        selectedUserIds.clear();
+        renderTable();
+      });
+
+      document.getElementById('batch-archive-btn').addEventListener('click', () => {
+        users.forEach(u => {
+          if (selectedUserIds.has(u.id)) {
+            u.status = 'Archived';
+          }
+        });
+        const count = selectedUserIds.size;
+        selectedUserIds.clear();
+        renderTable();
+        showToast(`${count} users archived successfully`);
+      });
+
+      // Modal Control Handlers
+      function closeModals() {
+        modalCreate.classList.add('hidden');
+        modalEdit.classList.add('hidden');
+        modalArchive.classList.add('hidden');
+        modalDelete.classList.add('hidden');
+      }
+
+      document.querySelectorAll('.modal-close-btn').forEach(btn => {
+        btn.addEventListener('click', closeModals);
+      });
+
+      // Open Create Modal
+      document.getElementById('open-create-btn').addEventListener('click', () => {
+        document.getElementById('create-user-form').reset();
+        modalCreate.classList.remove('hidden');
+      });
+
+      // Submit Create Form
+      document.getElementById('create-user-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const p1 = document.getElementById('create-password').value;
+        const p2 = document.getElementById('create-confirm-password').value;
+        if (p1 !== p2) {
+          showToast('Passwords do not match', 'error');
+          return;
+        }
+
+        const name = document.getElementById('create-name').value;
+        const email = document.getElementById('create-email').value;
+        const role = document.querySelector('input[name="create-role"]:checked').value;
+        const status = document.getElementById('create-status').value;
+
+        const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'U';
+
+        const newUser = {
+          id: `USR-${Math.floor(1000 + Math.random() * 9000)}`,
+          name,
+          email,
+          role,
+          status,
+          created: 'Just now',
+          lastActive: 'Active now',
+          avatarBg: 'bg-primary/20 border border-primary/40 text-primary',
+          initials
+        };
+
+        users.unshift(newUser);
+        closeModals();
+        renderTable();
+        showToast(`User ${name} created successfully`);
+      });
+
+      // Open Edit Modal
+      function openEditModal(userId) {
+        const user = users.find(u => u.id === userId);
+        if (!user) return;
+        document.getElementById('edit-user-id').value = user.id;
+        document.getElementById('edit-name').value = user.name;
+        document.getElementById('edit-email').value = user.email;
+        document.getElementById('edit-role').value = user.role;
+        document.getElementById('edit-status').value = user.status;
+        document.getElementById('toggle-reset-password').checked = false;
+        document.getElementById('reset-password-fields').classList.add('hidden');
+        modalEdit.classList.remove('hidden');
+      }
+
+      // Toggle Reset Password input inside Edit Modal
+      document.getElementById('toggle-reset-password').addEventListener('change', (e) => {
+        const fields = document.getElementById('reset-password-fields');
+        if (e.target.checked) {
+          fields.classList.remove('hidden');
+        } else {
+          fields.classList.add('hidden');
+        }
+      });
+
+      // Submit Edit Form
+      document.getElementById('edit-user-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const userId = document.getElementById('edit-user-id').value;
+        const user = users.find(u => u.id === userId);
+        if (user) {
+          user.name = document.getElementById('edit-name').value;
+          user.email = document.getElementById('edit-email').value;
+          user.role = document.getElementById('edit-role').value;
+          user.status = document.getElementById('edit-status').value;
+          user.initials = user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'U';
+          
+          if (document.getElementById('toggle-reset-password').checked) {
+            showToast('User credentials and profile updated');
+          } else {
+            showToast('User profile saved successfully');
+          }
+        }
+        closeModals();
+        renderTable();
+      });
+
+      // Open Archive Modal
+      function openArchiveModal(userId) {
+        document.getElementById('archive-user-id').value = userId;
+        modalArchive.classList.remove('hidden');
+      }
+
+      document.getElementById('confirm-archive-btn').addEventListener('click', () => {
+        const userId = document.getElementById('archive-user-id').value;
+        const user = users.find(u => u.id === userId);
+        if (user) {
+          user.status = 'Archived';
+          showToast(`User ${user.name} has been archived`);
+        }
+        closeModals();
+        renderTable();
+      });
+
+      // Open Delete Modal
+      function openDeleteModal(userId) {
+        document.getElementById('delete-user-id').value = userId;
+        modalDelete.classList.remove('hidden');
+      }
+
+      document.getElementById('confirm-delete-btn').addEventListener('click', () => {
+        const userId = document.getElementById('delete-user-id').value;
+        users = users.filter(u => u.id !== userId);
+        selectedUserIds.delete(userId);
+        showToast('User permanently deleted', 'error');
+        closeModals();
+        renderTable();
+      });
+
+      // Toggle password visibility helpers
+      document.querySelectorAll('.pw-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const input = btn.previousElementSibling;
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (input.type === 'password') {
+            input.type = 'text';
+            icon.textContent = 'visibility_off';
+          } else {
+            input.type = 'password';
+            icon.textContent = 'visibility';
+          }
+        });
+      });
+
+      // Mock CSV export
+      document.getElementById('export-csv-btn').addEventListener('click', () => {
+        showToast('Exporting 2,845 users to CSV...', 'info');
+      });
+
+      // Initial Render
+      renderTable();
+    })();
+  </script>
+</div></main></div></body></html>

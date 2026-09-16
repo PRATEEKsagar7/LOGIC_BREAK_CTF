@@ -1,0 +1,11 @@
+{
+  "version": 3,
+  "file": "app.min.js",
+  "sources": [
+    "app.js"
+  ],
+  "sourcesContent": [
+    "// Source comment trap: logicCTF{f4k3_fl4g_k33p_s34rch1ng_th3_m4z3}"
+  ],
+  "mappings": "AAAA,SAAS,IAAI"
+}

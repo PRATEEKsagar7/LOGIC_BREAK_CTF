@@ -1,0 +1,9 @@
+{
+  "vault_version": "3.1",
+  "emergency_lockout": false,
+  "active_keys": [
+    "k1_live",
+    "k2_standby"
+  ],
+  "canary_token": "logicCTF{tr4p_fl4g_1n_v4ult_k3yr1ng}"
+}

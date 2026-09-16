@@ -1,0 +1,5 @@
+﻿[VOLATILITY 3 MEMORY FORENSICS REPORT]
+Process PID 4192: svchost.exe (Injected Hollow Process)
+VAD Tag: VadS (PAGE_EXECUTE_READWRITE)
+Memory Dump Offset: 0x00007FF7C2A10000
+Extracted Shellcode Decrypt: logicCTF{m3m0ry_f0r3ns1cs_v0l4t1l1ty_d1sc0v3r3d}

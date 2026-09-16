@@ -1,0 +1,12 @@
+{
+  "app_name": "ShadowBackup",
+  "environment": "production",
+  "port": 5000,
+  "debug": false,
+  "telemetry": {
+    "enabled": true,
+    "endpoint": "https://telemetry.internal.logic-ctf.local/collect",
+    "sample_rate": 1
+  },
+  "decoy_vault": "logicCTF{al0st_th3r3_but_wr0ng_c0nf1g}"
+}

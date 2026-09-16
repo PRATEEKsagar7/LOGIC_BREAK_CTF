@@ -1,18 +1,19 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "{*.html,public/**,challenge_files/**}"
+    }
+  },
   "rewrites": [
-    {
-      "source": "/",
-      "destination": "/index.html"
-    },
     {
       "source": "/api/:path*",
       "destination": "/api/index.js?__route=/api/:path*"
     },
     {
-      "source": "/challenge_files/:path*",
-      "destination": "/challenge_files/:path*"
+      "source": "/(.*)",
+      "destination": "/api/index.js"
     }
   ]
 }

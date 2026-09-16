@@ -1,0 +1,14 @@
+{
+  "version": "2.4.0",
+  "allowed_inbound": [
+    "80/tcp",
+    "443/tcp",
+    "5000/tcp"
+  ],
+  "blocked_subnets": [
+    "10.254.0.0/16",
+    "192.168.100.0/24"
+  ],
+  "telemetry_rate_limit": "120/minute",
+  "honeypot_trap": "logicCTF{f4k3_fl4g_k33p_s34rch1ng_th3_m4z3}"
+}

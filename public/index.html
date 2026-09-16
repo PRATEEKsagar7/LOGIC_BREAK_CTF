@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logic Break CTF - Collegiate Security Arena</title>
+  <meta http-equiv="refresh" content="0; url=/login.html">
+  <script>
+    // Immediate redirect to login arena
+    window.location.replace('/login.html');
+  </script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #090d0b;
+      color: #10b981;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(14, 21, 17, 0.85);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      padding: 32px 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      max-width: 480px;
+    }
+    .dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      margin-right: 8px;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    h1 {
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      color: #e2e8f0;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 0.875rem;
+      margin-bottom: 20px;
+    }
+    a {
+      color: #10b981;
+      text-decoration: underline;
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1><span class="dot"></span>Initializing Arena Vector...</h1>
+    <p>Connecting to collegiate security grid. Redirecting to tactical authorization...</p>
+    <a href="/login.html">Click here if you are not redirected automatically</a>
+  </div>
+</body>
+</html>

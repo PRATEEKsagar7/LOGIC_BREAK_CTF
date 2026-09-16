@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logic CTF - Recycle Bin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas: '#090E16',
+            surface: '#0F141C',
+            'surface-card': '#1A2330',
+            'surface-elevated': '#212B3A',
+            'border-base': '#2D3A4B',
+            'border-active': '#3B4A5D',
+            'text-primary': '#FFFFFF',
+            'text-secondary': '#94A3B8',
+            'cyber-green': '#00FF9D',
+            'cyber-green-dark': '#00CC7D',
+            'cyber-red': '#EF4444',
+            'cyber-red-dark': '#DC2626'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Courier New', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #090E16;
+      color: #FFFFFF;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0F141C;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #2D3A4B;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #3B4A5D;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-canvas text-text-primary flex flex-col selection:bg-cyber-green selection:text-black">
+
+  <!-- TOP PERSISTENT LOGIC CTF HEADER -->
+  <header class="sticky top-0 z-40 w-full bg-surface/95 backdrop-blur border-b border-border-base px-4 lg:px-8 py-3 flex items-center justify-between">
+    <div class="flex items-center space-x-6">
+      <!-- Logo Mark -->
+      <a href="#" class="flex items-center space-x-3 group">
+        <div class="w-8 h-8 rounded bg-cyber-green/10 border border-cyber-green/30 flex items-center justify-center text-cyber-green group-hover:border-cyber-green transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center space-x-2">
+            <span class="font-mono font-bold tracking-wider text-sm text-white">LOGIC CTF</span>
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#16202C] text-[#94A3B8] border border-border-base">COLLEGIATE</span>
+          </div>
+          <span class="text-[10px] font-mono text-[#64748B] tracking-tight uppercase">ARENA OPS // STORAGE VAULT</span>
+        </div>
+      </a>
+
+      <!-- Desktop Route Navigation -->
+      <nav class="hidden md:flex items-center space-x-1 pl-4 border-l border-border-base/60 text-xs font-medium">
+        <a href="#" class="px-3 py-1.5 rounded text-text-secondary hover:text-white transition-colors">Overview</a>
+        <a href="#" class="px-3 py-1.5 rounded text-text-secondary hover:text-white transition-colors">Missions</a>
+        <a href="#" class="px-3 py-1.5 rounded text-text-secondary hover:text-white transition-colors">Reports</a>
+        <a href="#" class="px-3 py-1.5 rounded text-text-secondary hover:text-white transition-colors">Files</a>
+        <a href="#" class="px-3 py-1.5 rounded text-text-secondary hover:text-white transition-colors">Workspace</a>
+        <a href="#" class="px-3 py-1.5 rounded text-text-secondary hover:text-white transition-colors">Projects</a>
+        <a href="#" class="px-3 py-1.5 rounded text-text-secondary hover:text-white transition-colors">Schedule</a>
+        <a href="#" class="px-3 py-1.5 rounded bg-[#1A2330] text-cyber-green font-semibold border border-cyber-green/40 flex items-center space-x-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-cyber-green animate-pulse"></span>
+          <span>Recycle Bin</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Header Right Controls -->
+    <div class="flex items-center space-x-3">
+      <!-- Live Arena Badge -->
+      <div class="hidden sm:flex items-center space-x-2 px-2.5 py-1 rounded-full bg-[#111A24] border border-border-base text-[11px] font-mono text-text-secondary">
+        <span class="w-2 h-2 rounded-full bg-cyber-green animate-ping"></span>
+        <span class="text-white">LIVE ARENA</span>
+      </div>
+
+      <!-- Storage Telemetry -->
+      <div class="hidden lg:flex items-center space-x-2 text-[11px] font-mono text-text-secondary pl-2 border-l border-border-base">
+        <span>STORAGE ENCRYPTED</span>
+        <span class="text-cyber-green">â€¢ ACTIVE</span>
+      </div>
+
+      <!-- User Profile -->
+      <div class="w-8 h-8 rounded-full bg-surface-card border border-border-base flex items-center justify-center text-text-secondary text-xs font-mono font-medium hover:border-text-secondary cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col space-y-6">
+
+    <!-- PAGE HEADER SECTION -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border-base/50">
+      <div>
+        <div class="flex items-center space-x-2 mb-1">
+          <span class="text-[11px] font-mono font-semibold tracking-wider text-cyber-green uppercase">STORAGE</span>
+          <span class="text-[#475569] font-mono text-xs">//</span>
+          <span class="text-[11px] font-mono text-text-secondary uppercase">ARENA RETENTION MATRIX</span>
+        </div>
+        <div class="flex items-center space-x-3">
+          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-white font-sans">Recycle Bin</h1>
+          <span id="headerItemCountBadge" class="px-2.5 py-0.5 rounded-full bg-surface-card border border-border-base text-xs font-mono font-semibold text-cyber-green">
+            8 Items
+          </span>
+        </div>
+        <p class="text-sm text-text-secondary mt-1 max-w-xl">
+          View, restore or permanently remove deleted files.
+        </p>
+      </div>
+
+      <!-- Header Top-Right Action Buttons -->
+      <div class="flex items-center space-x-2.5 sm:self-center">
+        <!-- Upload File Button -->
+        <button id="btnUploadFile" onclick="triggerFileUploadModal()" class="inline-flex items-center space-x-2 px-3.5 py-2 rounded bg-surface-card border border-border-base hover:border-cyber-green text-xs font-medium text-white hover:text-cyber-green transition-all shadow-sm">
+          <svg class="w-4 h-4 text-cyber-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+          </svg>
+          <span>Upload File</span>
+        </button>
+
+        <!-- Export Button -->
+        <button id="btnExport" onclick="openExportModal()" class="inline-flex items-center space-x-2 px-3.5 py-2 rounded bg-surface-card border border-border-base hover:border-cyber-green text-xs font-medium text-white hover:text-cyber-green transition-all shadow-sm">
+          <svg class="w-4 h-4 text-cyber-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          <span>Export</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- RECYCLE BIN TOOLBAR -->
+    <div class="bg-surface-card/70 border border-border-base rounded-lg p-3 sm:px-4 flex flex-wrap items-center justify-between gap-3 shadow-sm">
+      <!-- Left side: Select All -->
+      <div class="flex items-center space-x-3">
+        <label class="flex items-center space-x-2.5 cursor-pointer select-none">
+          <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll(this)" class="w-4 h-4 rounded border-border-base bg-[#121A24] text-cyber-green focus:ring-cyber-green focus:ring-offset-canvas accent-cyber-green cursor-pointer">
+          <span class="text-xs font-medium text-text-primary">Select All</span>
+        </label>
+        <span id="selectedCountIndicator" class="hidden text-xs font-mono text-text-secondary border-l border-border-base pl-3">
+          <span id="selectedCountNum" class="text-cyber-green font-semibold">0</span> selected
+        </span>
+      </div>
+
+      <!-- Right side: Restore All Items & Empty Recycle Bin -->
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <button id="btnRestoreAll" onclick="openRestoreAllModal()" class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded bg-surface-elevated/70 border border-border-base hover:border-cyber-green text-xs font-medium text-white hover:text-cyber-green transition-all">
+          <svg class="w-3.5 h-3.5 text-cyber-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span>Restore All Items</span>
+        </button>
+
+        <button id="btnEmptyBin" onclick="openEmptyBinModal()" class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded bg-[#2A1719] border border-cyber-red/40 hover:border-cyber-red text-xs font-medium text-cyber-red hover:bg-cyber-red/10 transition-all">
+          <svg class="w-3.5 h-3.5 text-cyber-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+          <span>Empty Recycle Bin</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MAIN LIST / TABLE CONTAINER -->
+    <div id="recycleBinTableWrapper" class="bg-surface-card border border-border-base rounded-lg overflow-hidden shadow-lg">
+      
+      <!-- DESKTOP TABLE VIEW (Visible md and up) -->
+      <div class="hidden md:block overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead>
+            <tr class="bg-[#121A24] border-b border-border-base text-text-secondary uppercase tracking-wider font-mono text-[11px]">
+              <th scope="col" class="py-3 px-4 w-10 text-center">
+                <span class="sr-only">Select</span>
+              </th>
+              <th scope="col" class="py-3 px-4 font-semibold">Name</th>
+              <th scope="col" class="py-3 px-4 font-semibold">Type</th>
+              <th scope="col" class="py-3 px-4 font-semibold">Deleted</th>
+              <th scope="col" class="py-3 px-4 font-semibold">Size</th>
+              <th scope="col" class="py-3 px-4 font-semibold text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="filesTableBody" class="divide-y divide-border-base/60">
+            <!-- Populated via JavaScript dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- MOBILE / TABLET CARDS VIEW (Visible below md) -->
+      <div id="mobileCardsContainer" class="md:hidden divide-y divide-border-base/60 p-1">
+        <!-- Populated via JavaScript dynamically -->
+      </div>
+
+      <!-- EMPTY STATE CONTAINER (Shown when 0 items) -->
+      <div id="emptyStateContainer" class="hidden py-16 px-4 text-center flex flex-col items-center justify-center space-y-3">
+        <div class="w-12 h-12 rounded-full bg-surface-elevated border border-border-base flex items-center justify-center text-text-secondary">
+          <svg class="w-6 h-6 text-[#64748B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-white">Recycle Bin is empty</h3>
+          <p class="text-xs text-text-secondary mt-0.5">Deleted files will appear here.</p>
+        </div>
+        <button onclick="triggerFileUploadModal()" class="mt-2 inline-flex items-center space-x-1.5 px-3 py-1.5 rounded bg-surface-elevated border border-border-base hover:border-cyber-green text-xs text-text-primary hover:text-cyber-green transition-colors">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          <span>Upload File to Test</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- RETENTION POLICY / SYSTEM STATUS FOOTER -->
+    <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-text-secondary/70 pt-2 font-mono gap-2">
+      <div class="flex items-center space-x-2">
+        <span class="w-2 h-2 rounded-full bg-cyber-green"></span>
+        <span>RETENTION LIFECYCLE: 30 DAYS PURGE PROTOCOL ACTIVE</span>
+      </div>
+      <div>SECURE ENCLAVE // NODE: US-EAST-09</div>
+    </div>
+
+  </main>
+
+  <!-- HIDDEN NATIVE FILE INPUT FOR UPLOAD -->
+  <input type="file" id="nativeFileInput" class="hidden" multiple onchange="handleNativeFileSelect(event)">
+
+  <!-- CONTEXTUAL THREE-DOT POPUP MENU (FLOAT) -->
+  <div id="threeDotDropdown" class="hidden fixed z-50 w-48 bg-surface-elevated border border-border-base rounded-md shadow-2xl py-1 text-xs divide-y divide-border-base/50 transition-opacity">
+    <div class="py-1">
+      <button onclick="onMenuAction('restore')" class="w-full text-left px-3.5 py-2 text-text-primary hover:bg-[#1A2330] hover:text-cyber-green flex items-center space-x-2 transition-colors">
+        <svg class="w-4 h-4 text-cyber-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        <span>Restore</span>
+      </button>
+      <button onclick="onMenuAction('export')" class="w-full text-left px-3.5 py-2 text-text-primary hover:bg-[#1A2330] hover:text-cyber-green flex items-center space-x-2 transition-colors">
+        <svg class="w-4 h-4 text-cyber-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        <span>Export</span>
+      </button>
+    </div>
+    <div class="py-1">
+      <button onclick="onMenuAction('delete_permanently')" class="w-full text-left px-3.5 py-2 text-cyber-red hover:bg-cyber-red/10 flex items-center space-x-2 transition-colors">
+        <svg class="w-4 h-4 text-cyber-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+        <span>Delete Permanently</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: RESTORE SINGLE ITEM -->
+  <div id="modalRestoreItem" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="bg-surface-elevated border border-border-base rounded-lg max-w-sm w-full p-5 shadow-2xl relative">
+      <h3 class="text-base font-semibold text-white">Restore Item?</h3>
+      <p class="text-xs text-text-secondary mt-2">
+        This item will be restored to its original location.
+      </p>
+      <div id="restoreItemPreviewName" class="mt-3 px-3 py-2 rounded bg-surface-card border border-border-base text-xs font-mono text-cyber-green truncate">
+        file.name
+      </div>
+      <div class="mt-5 flex items-center justify-end space-x-2.5">
+        <button onclick="closeModal('modalRestoreItem')" class="px-3 py-1.5 rounded bg-surface-card border border-border-base text-xs font-medium text-text-secondary hover:text-white transition-colors">
+          Cancel
+        </button>
+        <button onclick="confirmRestoreSingleItem()" class="px-3.5 py-1.5 rounded bg-cyber-green text-black font-semibold text-xs hover:bg-cyber-green-dark transition-colors">
+          Restore
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RESTORE ALL ITEMS -->
+  <div id="modalRestoreAll" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="bg-surface-elevated border border-border-base rounded-lg max-w-sm w-full p-5 shadow-2xl relative">
+      <h3 class="text-base font-semibold text-white">Restore All Items?</h3>
+      <p class="text-xs text-text-secondary mt-2">
+        All items in the Recycle Bin will be restored.
+      </p>
+      <div class="mt-5 flex items-center justify-end space-x-2.5">
+        <button onclick="closeModal('modalRestoreAll')" class="px-3 py-1.5 rounded bg-surface-card border border-border-base text-xs font-medium text-text-secondary hover:text-white transition-colors">
+          Cancel
+        </button>
+        <button onclick="confirmRestoreAllItems()" class="px-3.5 py-1.5 rounded bg-cyber-green text-black font-semibold text-xs hover:bg-cyber-green-dark transition-colors">
+          Restore All
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DELETE PERMANENTLY (SINGLE) -->
+  <div id="modalDeletePermanently" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="bg-surface-elevated border border-border-base rounded-lg max-w-sm w-full p-5 shadow-2xl relative">
+      <div class="flex items-center space-x-2 text-cyber-red mb-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <h3 class="text-base font-semibold text-white">Delete Permanently?</h3>
+      </div>
+      <p class="text-xs text-text-secondary mt-2">
+        This item will be permanently removed and cannot be restored.
+      </p>
+      <div id="deleteItemPreviewName" class="mt-3 px-3 py-2 rounded bg-surface-card border border-border-base text-xs font-mono text-cyber-red truncate">
+        file.name
+      </div>
+      <div class="mt-5 flex items-center justify-end space-x-2.5">
+        <button onclick="closeModal('modalDeletePermanently')" class="px-3 py-1.5 rounded bg-surface-card border border-border-base text-xs font-medium text-text-secondary hover:text-white transition-colors">
+          Cancel
+        </button>
+        <button onclick="confirmDeletePermanentlySingle()" class="px-3.5 py-1.5 rounded bg-cyber-red text-white font-semibold text-xs hover:bg-cyber-red-dark transition-colors shadow-sm">
+          Delete Permanently
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: EMPTY RECYCLE BIN (ALL) -->
+  <div id="modalEmptyBin" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="bg-surface-elevated border border-border-base rounded-lg max-w-sm w-full p-5 shadow-2xl relative">
+      <div class="flex items-center space-x-2 text-cyber-red mb-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+        </svg>
+        <h3 class="text-base font-semibold text-white">Empty Recycle Bin?</h3>
+      </div>
+      <p class="text-xs text-text-secondary mt-2">
+        All items will be permanently deleted. This action cannot be undone.
+      </p>
+      <div class="mt-5 flex items-center justify-end space-x-2.5">
+        <button onclick="closeModal('modalEmptyBin')" class="px-3 py-1.5 rounded bg-surface-card border border-border-base text-xs font-medium text-text-secondary hover:text-white transition-colors">
+          Cancel
+        </button>
+        <button onclick="confirmEmptyRecycleBin()" class="px-3.5 py-1.5 rounded bg-cyber-red text-white font-semibold text-xs hover:bg-cyber-red-dark transition-colors shadow-sm">
+          Empty Recycle Bin
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: EXPORT RECYCLE BIN -->
+  <div id="modalExport" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="bg-surface-elevated border border-border-base rounded-lg max-w-sm w-full p-5 shadow-2xl relative">
+      <h3 class="text-base font-semibold text-white">Export Recycle Bin</h3>
+      <p class="text-xs text-text-secondary mt-1">
+        Select format to download the audit log of deleted files.
+      </p>
+      
+      <div class="mt-4 space-y-2">
+        <label class="flex items-center space-x-3 p-2.5 rounded bg-surface-card border border-border-base hover:border-cyber-green cursor-pointer transition-colors">
+          <input type="radio" name="exportFormat" value="csv" checked class="text-cyber-green focus:ring-cyber-green accent-cyber-green">
+          <div class="flex flex-col">
+            <span class="text-xs font-medium text-white">Export as CSV</span>
+            <span class="text-[10px] text-text-secondary font-mono">Comma-separated audit ledger</span>
+          </div>
+        </label>
+        <label class="flex items-center space-x-3 p-2.5 rounded bg-surface-card border border-border-base hover:border-cyber-green cursor-pointer transition-colors">
+          <input type="radio" name="exportFormat" value="json" class="text-cyber-green focus:ring-cyber-green accent-cyber-green">
+          <div class="flex flex-col">
+            <span class="text-xs font-medium text-white">Export as JSON</span>
+            <span class="text-[10px] text-text-secondary font-mono">Structured JSON metadata payload</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="mt-5 flex items-center justify-end space-x-2.5">
+        <button onclick="closeModal('modalExport')" class="px-3 py-1.5 rounded bg-surface-card border border-border-base text-xs font-medium text-text-secondary hover:text-white transition-colors">
+          Cancel
+        </button>
+        <button onclick="confirmExportAction()" class="px-3.5 py-1.5 rounded bg-cyber-green text-black font-semibold text-xs hover:bg-cyber-green-dark transition-colors">
+          Export
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: UPLOAD FILE DRAG/DROP ZONE -->
+  <div id="modalUpload" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="bg-surface-elevated border border-border-base rounded-lg max-w-md w-full p-5 shadow-2xl relative">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-base font-semibold text-white">Upload File</h3>
+        <button onclick="closeModal('modalUpload')" class="text-text-secondary hover:text-white">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      
+      <div onclick="document.getElementById('nativeFileInput').click()" class="border-2 border-dashed border-border-base hover:border-cyber-green/80 rounded-lg p-6 text-center cursor-pointer transition-colors bg-surface-card/50 flex flex-col items-center justify-center group">
+        <div class="w-10 h-10 rounded-full bg-surface-elevated border border-border-base flex items-center justify-center text-text-secondary group-hover:text-cyber-green group-hover:border-cyber-green transition-colors mb-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+          </svg>
+        </div>
+        <p class="text-xs font-medium text-white">Click to select a file from device</p>
+        <p class="text-[11px] text-text-secondary mt-1">PDF, DOCX, TXT, XLSX, JSON, PNG (up to 25MB)</p>
+      </div>
+
+      <div class="mt-4 flex items-center justify-end space-x-2">
+        <button onclick="closeModal('modalUpload')" class="px-3 py-1.5 rounded bg-surface-card border border-border-base text-xs font-medium text-text-secondary hover:text-white transition-colors">
+          Cancel
+        </button>
+        <button onclick="document.getElementById('nativeFileInput').click()" class="px-3.5 py-1.5 rounded bg-cyber-green text-black font-semibold text-xs hover:bg-cyber-green-dark transition-colors">
+          Browse Files
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- FLAG 2 EXPLOIT POPUP MODAL (CHALLENGE 02) -->
+  <!-- ============================================================ -->
+  <div id="flag2ExploitModal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-[#0F141C] border-2 border-cyber-green rounded-2xl p-6 shadow-[0_0_50px_rgba(0,255,157,0.3)] space-y-5 animate-in fade-in zoom-in duration-150">
+      <!-- Header -->
+      <div class="flex items-start justify-between border-b border-border-base pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-cyber-green/10 border border-cyber-green/40 flex items-center justify-center text-2xl shadow-[0_0_20px_rgba(0,255,157,0.3)]">
+            🚩
+          </div>
+          <div>
+            <div class="text-[10px] font-mono text-cyber-green font-bold uppercase tracking-wider animate-pulse">
+              SECURITY EXPLOIT UNLOCKED // CHALLENGE #02
+            </div>
+            <h3 class="text-xl font-bold text-white tracking-tight font-mono">
+              Export a report.
+            </h3>
+          </div>
+        </div>
+        <button onclick="closeFlag2ExploitModal()" class="text-text-secondary hover:text-white p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Exploit Brief -->
+      <p class="text-xs text-slate-300 leading-relaxed font-sans">
+        Objective achieved! The Reports page didn't provide the export option you needed, but you found another place where the report could be handled and exported it as CSV!
+      </p>
+
+      <!-- Flag Container -->
+      <div class="p-4 rounded-xl bg-[#1A2330] border border-cyber-green/40 space-y-2">
+        <div class="flex items-center justify-between text-[11px] font-mono">
+          <span class="text-cyber-green font-bold">CHALLENGE #02 CAPTURED FLAG:</span>
+          <span class="text-amber-400 font-bold">+50 POINTS</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input id="flag2SecretInput" readonly value="logicCTF{purg3d_r3cycl3_b1n_csv_3xp0rt}" class="flex-1 bg-[#090E16] px-3.5 py-2.5 rounded-lg font-mono text-xs text-cyber-green font-bold border border-border-base select-all focus:outline-none focus:border-cyber-green" />
+          <button id="btnCopyFlag2" onclick="copyFlag2()" class="px-4 py-2.5 rounded-lg bg-cyber-green hover:bg-cyber-green-dark text-slate-950 font-bold text-xs font-mono transition flex items-center gap-1.5 shrink-0 shadow-[0_0_15px_rgba(0,255,157,0.3)] active:scale-95">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="copyFlag2BtnText">Copy Flag</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center justify-between pt-2 border-t border-border-base">
+        <span class="text-[11px] font-mono text-text-secondary">Copy the flag string and submit in Missions!</span>
+        <a href="missions.html" class="px-5 py-2 rounded-xl bg-cyber-green hover:bg-cyber-green-dark text-slate-950 font-bold text-xs font-mono transition flex items-center gap-1.5 shadow-lg active:scale-95">
+          <span>Go to Missions</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastNotification" class="fixed bottom-5 right-5 z-50 transform translate-y-12 opacity-0 transition-all duration-300 pointer-events-none flex items-center space-x-2.5 px-4 py-2.5 rounded bg-surface-elevated border border-border-active shadow-2xl text-xs font-medium">
+    <div id="toastIconContainer" class="w-4 h-4 text-cyber-green flex-shrink-0">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+      </svg>
+    </div>
+    <span id="toastMessage" class="text-white font-sans">Action completed</span>
+  </div>
+
+  <!-- JAVASCRIPT STATE & INTERACTIONS -->
+  <script>
+    // Dynamic Purged Artifacts State loaded from shared storage
+    let deletedFiles = [];
+    let selectedFileIds = new Set();
+    let currentActiveMenuFileId = null;
+    let toastTimeout = null;
+
+    function loadPurgedItems() {
+      if (typeof window.getPurgedArtifacts === 'function') {
+        deletedFiles = window.getPurgedArtifacts();
+      } else {
+        try {
+          deletedFiles = JSON.parse(localStorage.getItem('logic_ctf_purged_items') || '[]');
+        } catch (e) {
+          deletedFiles = [];
+        }
+      }
+      renderList();
+
+      // Background check to sync with server vault
+      fetch('/api/recycle-bin')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.success && Array.isArray(data.items)) {
+            const currentIds = new Set(deletedFiles.map(f => f.id));
+            let hasNew = false;
+            data.items.forEach(item => {
+              if (!currentIds.has(item.id)) {
+                deletedFiles.push(item);
+                hasNew = true;
+              }
+            });
+            if (hasNew) {
+              if (window.savePurgedArtifacts) window.savePurgedArtifacts(deletedFiles);
+              renderList();
+            }
+          }
+        }).catch(() => {});
+    }
+
+    // Helper: Generate File SVG Icon based on type
+    function getFileIcon(type) {
+      if (type === 'pdf') {
+        return `<svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>`;
+      } else if (type === 'doc') {
+        return `<svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>`;
+      } else if (type === 'sheet') {
+        return `<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>`;
+      } else if (type === 'code') {
+        return `<svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>`;
+      } else if (type === 'img') {
+        return `<svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>`;
+      }
+      return `<svg class="w-4 h-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>`;
+    }
+
+    // Render Table & Mobile Cards
+    function renderList() {
+      const tbody = document.getElementById('filesTableBody');
+      const mobileContainer = document.getElementById('mobileCardsContainer');
+      const emptyContainer = document.getElementById('emptyStateContainer');
+      const badge = document.getElementById('headerItemCountBadge');
+      const selectAll = document.getElementById('selectAllCheckbox');
+      const count = deletedFiles.length;
+
+      // Update badge
+      badge.textContent = `${count} Items`;
+
+      if (count === 0) {
+        tbody.innerHTML = '';
+        mobileContainer.innerHTML = '';
+        emptyContainer.classList.remove('hidden');
+        selectAll.checked = false;
+        selectAll.disabled = true;
+        document.getElementById('selectedCountIndicator').classList.add('hidden');
+        return;
+      }
+
+      emptyContainer.classList.add('hidden');
+      selectAll.disabled = false;
+
+      // Check if all are selected
+      const allSelected = count > 0 && deletedFiles.every(f => selectedFileIds.has(f.id));
+      selectAll.checked = allSelected;
+
+      // Render Desktop Rows
+      let desktopHtml = '';
+      deletedFiles.forEach(file => {
+        const isChecked = selectedFileIds.has(file.id);
+        const sectionBadge = file.section ? `<span class="px-2 py-0.5 rounded bg-[#162232] text-emerald-400 border border-emerald-500/20 text-[10px] font-mono mr-1.5">${file.section}</span>` : '';
+        desktopHtml += `
+          <tr class="hover:bg-[#151E2A]/70 transition-colors group ${isChecked ? 'bg-[#162232]/80' : ''}">
+            <td class="py-3.5 px-4 text-center">
+              <input type="checkbox" onchange="toggleFileSelection('${file.id}', this)" ${isChecked ? 'checked' : ''} class="w-4 h-4 rounded border-border-base bg-[#121A24] text-cyber-green focus:ring-cyber-green accent-cyber-green cursor-pointer">
+            </td>
+            <td class="py-3.5 px-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded bg-surface-elevated border border-border-base flex items-center justify-center flex-shrink-0">
+                  ${getFileIcon(file.iconType)}
+                </div>
+                <div class="truncate max-w-xs lg:max-w-sm">
+                  <span class="font-medium text-white text-xs hover:text-cyber-green transition-colors cursor-pointer">${file.name}</span>
+                </div>
+              </div>
+            </td>
+            <td class="py-3.5 px-4 font-mono text-text-secondary text-[11px]">${sectionBadge}${file.type}</td>
+            <td class="py-3.5 px-4 font-mono text-text-secondary text-[11px]">${file.deleted || 'Recently'}</td>
+            <td class="py-3.5 px-4 font-mono text-text-secondary text-[11px]">${file.size || '18 KB'}</td>
+            <td class="py-3.5 px-4 text-right">
+              <button onclick="openThreeDotMenu(event, '${file.id}')" aria-label="Item Actions" class="p-1.5 rounded hover:bg-surface-elevated text-text-secondary hover:text-white transition-colors">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = desktopHtml;
+
+      // Render Mobile / Tablet Cards
+      let mobileHtml = '';
+      deletedFiles.forEach(file => {
+        const isChecked = selectedFileIds.has(file.id);
+        const sectionBadge = file.section ? `<span class="px-1.5 py-0.5 rounded bg-[#162232] text-emerald-400 border border-emerald-500/20 text-[9px] font-mono mr-1">${file.section}</span>` : '';
+        mobileHtml += `
+          <div class="p-3.5 flex items-start justify-between gap-3 ${isChecked ? 'bg-[#162232]/80' : 'hover:bg-[#151E2A]/60'} transition-colors">
+            <div class="flex items-start space-x-3 min-w-0">
+              <input type="checkbox" onchange="toggleFileSelection('${file.id}', this)" ${isChecked ? 'checked' : ''} class="w-4 h-4 mt-1 rounded border-border-base bg-[#121A24] text-cyber-green focus:ring-cyber-green accent-cyber-green cursor-pointer">
+              <div class="w-8 h-8 rounded bg-surface-elevated border border-border-base flex items-center justify-center flex-shrink-0 mt-0.5">
+                ${getFileIcon(file.iconType)}
+              </div>
+              <div class="min-w-0">
+                <div class="text-xs font-semibold text-white truncate max-w-[200px] sm:max-w-xs">${file.name}</div>
+                <div class="text-[11px] font-mono text-text-secondary mt-0.5 flex flex-wrap items-center gap-x-2">
+                  <span>${sectionBadge}${file.type}</span>
+                  <span>•</span>
+                  <span>${file.size || '18 KB'}</span>
+                </div>
+                <div class="text-[10px] font-mono text-text-secondary/80 mt-1">
+                  Deleted: ${file.deleted || 'Recently'}
+                </div>
+              </div>
+            </div>
+            <button onclick="openThreeDotMenu(event, '${file.id}')" aria-label="Item Actions" class="p-1.5 rounded hover:bg-surface-elevated text-text-secondary hover:text-white transition-colors flex-shrink-0">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+              </svg>
+            </button>
+          </div>
+        `;
+      });
+      mobileContainer.innerHTML = mobileHtml;
+
+      // Update Selection Indicator
+      updateSelectionIndicator();
+    }
+
+    // Toggle single file selectione selection
+    function toggleFileSelection(id, checkbox) {
+      if (checkbox.checked) {
+        selectedFileIds.add(id);
+      } else {
+        selectedFileIds.delete(id);
+      }
+      renderList();
+    }
+
+    // Toggle select all
+    function toggleSelectAll(checkbox) {
+      if (checkbox.checked) {
+        deletedFiles.forEach(f => selectedFileIds.add(f.id));
+      } else {
+        selectedFileIds.clear();
+      }
+      renderList();
+    }
+
+    function updateSelectionIndicator() {
+      const indicator = document.getElementById('selectedCountIndicator');
+      const numSpan = document.getElementById('selectedCountNum');
+      if (selectedFileIds.size > 0) {
+        numSpan.textContent = selectedFileIds.size;
+        indicator.classList.remove('hidden');
+      } else {
+        indicator.classList.add('hidden');
+      }
+    }
+
+    // Contextual Three-Dot Menu
+    function openThreeDotMenu(e, fileId) {
+      e.stopPropagation();
+      currentActiveMenuFileId = fileId;
+      const dropdown = document.getElementById('threeDotDropdown');
+      
+      const buttonRect = e.currentTarget.getBoundingClientRect();
+      const dropdownWidth = 192; // 12rem = 192px
+      const dropdownHeight = 120;
+      
+      // Calculate coordinates ensuring it stays in viewport
+      let left = buttonRect.right - dropdownWidth;
+      let top = buttonRect.bottom + 6;
+
+      if (left < 10) left = 10;
+      if (top + dropdownHeight > window.innerHeight) {
+        top = buttonRect.top - dropdownHeight - 6;
+      }
+
+      dropdown.style.left = `${left}px`;
+      dropdown.style.top = `${top}px`;
+      dropdown.classList.remove('hidden');
+    }
+
+    function closeThreeDotMenu() {
+      const dropdown = document.getElementById('threeDotDropdown');
+      dropdown.classList.add('hidden');
+    }
+
+    // Menu Item Actions
+    function onMenuAction(action) {
+      const fileId = currentActiveMenuFileId;
+      closeThreeDotMenu();
+      if (!fileId) return;
+
+      const file = deletedFiles.find(f => f.id === fileId);
+      if (!file) return;
+
+      if (action === 'restore') {
+        document.getElementById('restoreItemPreviewName').textContent = file.name;
+        openModal('modalRestoreItem');
+      } else if (action === 'export') {
+        showToast(`Exporting ${file.name}...`);
+        setTimeout(() => {
+          showToast('Export completed');
+        }, 800);
+      } else if (action === 'delete_permanently') {
+        document.getElementById('deleteItemPreviewName').textContent = file.name;
+        openModal('modalDeletePermanently');
+      }
+    }
+
+    // Modal Control Helpers
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    // Confirmation Handlers
+    function confirmRestoreSingleItem() {
+      if (!currentActiveMenuFileId) return;
+      const targetId = currentActiveMenuFileId;
+      const file = deletedFiles.find(f => f.id === targetId);
+
+      // Track restored report to unlock view option in Reports
+      if (file && (file.section === 'Reports' || (file.id && file.id.startsWith('report_')))) {
+        const cleanReportId = file.id.replace('report_', '');
+        try {
+          let restored = JSON.parse(localStorage.getItem('logic_ctf_restored_reports') || '[]');
+          if (!restored.includes(cleanReportId)) {
+            restored.push(cleanReportId);
+            localStorage.setItem('logic_ctf_restored_reports', JSON.stringify(restored));
+          }
+          if (file.hasFlag && !localStorage.getItem('logic_ctf_first_deleted_report_id')) {
+            localStorage.setItem('logic_ctf_first_deleted_report_id', cleanReportId);
+          }
+          let deletedIds = JSON.parse(localStorage.getItem('logic_ctf_deleted_report_ids') || '[]');
+          deletedIds = deletedIds.filter(d => d !== cleanReportId);
+          localStorage.setItem('logic_ctf_deleted_report_ids', JSON.stringify(deletedIds));
+        } catch (e) {}
+      }
+
+      deletedFiles = deletedFiles.filter(f => f.id !== targetId);
+      selectedFileIds.delete(targetId);
+
+      if (typeof window.removePurgedArtifact === 'function') {
+        window.removePurgedArtifact(targetId);
+      } else {
+        localStorage.setItem('logic_ctf_purged_items', JSON.stringify(deletedFiles));
+      }
+
+      closeModal('modalRestoreItem');
+      renderList();
+      showToast('Item restored successfully. Access unlocked in origin section.');
+      currentActiveMenuFileId = null;
+    }
+
+    function confirmDeletePermanentlySingle() {
+      if (!currentActiveMenuFileId) return;
+      const targetId = currentActiveMenuFileId;
+      deletedFiles = deletedFiles.filter(f => f.id !== targetId);
+      selectedFileIds.delete(targetId);
+
+      if (typeof window.removePurgedArtifact === 'function') {
+        window.removePurgedArtifact(targetId);
+      } else {
+        localStorage.setItem('logic_ctf_purged_items', JSON.stringify(deletedFiles));
+      }
+
+      closeModal('modalDeletePermanently');
+      renderList();
+      showToast('Item permanently deleted', true);
+      currentActiveMenuFileId = null;
+    }
+
+    function openRestoreAllModal() {
+      if (deletedFiles.length === 0) {
+        showToast('No items to restore');
+        return;
+      }
+      openModal('modalRestoreAll');
+    }
+
+    function confirmRestoreAllItems() {
+      // Mark all restored reports as unlocked for this user (20 min window)
+      const userKey = (typeof window.getLogicCTFUserKey === 'function' ? window.getLogicCTFUserKey() : 'GUEST_OPERATIVE');
+      const restoreKey = 'logic_ctf_restored_' + userKey;
+      let restored = JSON.parse(localStorage.getItem(restoreKey) || '[]');
+      const now = Date.now();
+      const FIVE_MIN_MS = 5 * 60 * 1000;
+
+      deletedFiles.forEach(file => {
+        if (file && (file.section === 'Reports' || (file.id && file.id.startsWith('report_')))) {
+          const cleanReportId = file.id.replace('report_', '');
+          try {
+            restored = restored.filter(r => (typeof r === 'string' ? r : r.id) !== cleanReportId && (!r.expiresAt || r.expiresAt > now));
+            restored.push({
+              id: cleanReportId,
+              unlockedAt: now,
+              expiresAt: now + FIVE_MIN_MS
+            });
+
+            const firstDelKey = 'logic_ctf_first_deleted_' + userKey;
+            if (file.hasFlag && !localStorage.getItem(firstDelKey)) {
+              localStorage.setItem(firstDelKey, cleanReportId);
+            }
+
+            const delKey = 'logic_ctf_deleted_report_ids_' + userKey;
+            let deletedIds = JSON.parse(localStorage.getItem(delKey) || '[]');
+            deletedIds = deletedIds.filter(d => d !== cleanReportId);
+            localStorage.setItem(delKey, JSON.stringify(deletedIds));
+          } catch (e) {}
+        }
+      });
+      localStorage.setItem(restoreKey, JSON.stringify(restored));
+
+      deletedFiles = [];
+      selectedFileIds.clear();
+
+      if (typeof window.clearPurgedArtifacts === 'function') {
+        window.clearPurgedArtifacts();
+      } else {
+        localStorage.setItem('logic_ctf_purged_items', JSON.stringify([]));
+      }
+
+      closeModal('modalRestoreAll');
+      renderList();
+      showToast('All items restored successfully. Access unlocked in origin sections.');
+    }
+
+    function openEmptyBinModal() {
+      if (deletedFiles.length === 0) {
+        showToast('Recycle Bin is already empty');
+        return;
+      }
+      openModal('modalEmptyBin');
+    }
+
+    function confirmEmptyRecycleBin() {
+      deletedFiles = [];
+      selectedFileIds.clear();
+
+      if (typeof window.clearPurgedArtifacts === 'function') {
+        window.clearPurgedArtifacts();
+      } else {
+        localStorage.setItem('logic_ctf_purged_items', JSON.stringify([]));
+      }
+
+      closeModal('modalEmptyBin');
+      renderList();
+      showToast('Recycle Bin emptied', true);
+    }
+
+    // Export Modal & Execution
+    function openExportModal() {
+      openModal('modalExport');
+    }
+
+    function confirmExportAction() {
+      const selectedFormat = document.querySelector('input[name="exportFormat"]:checked')?.value || 'csv';
+      closeModal('modalExport');
+      showToast('Export ledger generated');
+
+      // Exploit condition: Exporting purged artifacts as CSV triggers Challenge 2 flag!
+      if (selectedFormat === 'csv') {
+        setTimeout(() => {
+          openFlag2ExploitModal();
+        }, 350);
+      }
+    }
+
+    function openFlag2ExploitModal() {
+      const modal = document.getElementById('flag2ExploitModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeFlag2ExploitModal() {
+      const modal = document.getElementById('flag2ExploitModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function copyFlag2() {
+      const input = document.getElementById('flag2SecretInput');
+      if (!input) return;
+      const text = input.value;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          updateCopyFlag2Feedback();
+        }).catch(() => {
+          fallbackCopyFlag2(input);
+        });
+      } else {
+        fallbackCopyFlag2(input);
+      }
+    }
+
+    function fallbackCopyFlag2(input) {
+      input.select();
+      document.execCommand('copy');
+      updateCopyFlag2Feedback();
+    }
+
+    function updateCopyFlag2Feedback() {
+      const btnText = document.getElementById('copyFlag2BtnText');
+      if (btnText) btnText.textContent = "COPIED!";
+      showToast("Flag copied! Submit it in Missions.");
+      setTimeout(() => {
+        if (btnText) btnText.textContent = "Copy Flag";
+      }, 2500);
+    }
+
+    // Upload Execution & Native File Input
+    function triggerFileUploadModal() {
+      openModal('modalUpload');
+    }
+
+    function handleNativeFileSelect(e) {
+      const files = e.target.files;
+      if (!files || files.length === 0) return;
+
+      Array.from(files).forEach(f => {
+        const ext = f.name.split('.').pop().toLowerCase();
+        let type = 'File';
+        let iconType = 'file';
+
+        if (ext === 'pdf') { type = 'PDF Document'; iconType = 'pdf'; }
+        else if (['doc', 'docx'].includes(ext)) { type = 'Word Document'; iconType = 'doc'; }
+        else if (['xls', 'xlsx'].includes(ext)) { type = 'Spreadsheet'; iconType = 'sheet'; }
+        else if (['json', 'js', 'py', 'sh'].includes(ext)) { type = 'Config / Script'; iconType = 'code'; }
+        else if (['png', 'jpg', 'jpeg', 'svg'].includes(ext)) { type = 'Image Asset'; iconType = 'img'; }
+        else if (['txt', 'log'].includes(ext)) { type = 'Text Document'; iconType = 'txt'; }
+
+        // Size format
+        const sizeKb = Math.round(f.size / 1024);
+        const sizeStr = sizeKb > 1024 ? `${(sizeKb/1024).toFixed(1)} MB` : `${sizeKb} KB`;
+
+        const newId = 'f_' + Date.now() + Math.random().toString(36).substr(2, 4);
+        deletedFiles.unshift({
+          id: newId,
+          name: f.name,
+          type: type,
+          ext: ext,
+          deleted: 'Just now',
+          size: sizeStr,
+          iconType: iconType
+        });
+      });
+
+      closeModal('modalUpload');
+      renderList();
+      showToast(`Uploaded ${files.length} file(s) to Recycle Bin`);
+      e.target.value = '';
+    }
+
+    // Toast Notification System
+    function showToast(message, isDestructive = false) {
+      const toast = document.getElementById('toastNotification');
+      const toastMessage = document.getElementById('toastMessage');
+      const iconContainer = document.getElementById('toastIconContainer');
+
+      toastMessage.textContent = message;
+
+      if (isDestructive) {
+        iconContainer.innerHTML = `<svg class="w-4 h-4 text-cyber-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>`;
+      } else {
+        iconContainer.innerHTML = `<svg class="w-4 h-4 text-cyber-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
+      }
+
+      toast.classList.remove('translate-y-12', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-12', 'opacity-0');
+      }, 2600);
+    }
+
+    // Global Click Listener to close â‹¯ menu
+    window.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('threeDotDropdown');
+      if (!dropdown.classList.contains('hidden') && !dropdown.contains(e.target)) {
+        closeThreeDotMenu();
+      }
+    });
+
+    // Escape Key Listener
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeThreeDotMenu();
+        closeModal('modalRestoreItem');
+        closeModal('modalRestoreAll');
+        closeModal('modalDeletePermanently');
+        closeModal('modalEmptyBin');
+        closeModal('modalExport');
+        closeModal('modalUpload');
+      }
+    });
+
+    // Initial render
+    document.addEventListener('DOMContentLoaded', () => {
+      loadPurgedItems();
+    });
+  </script>
+<script src="shared_nav.js"></script></body>
+</html>
+

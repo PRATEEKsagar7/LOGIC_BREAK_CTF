@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logic Break CTF - Files, Code & Documentation Hub</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              bg: '#090e16',
+              surface: '#0e1511',
+              card: '#161d19',
+              cardHover: '#1f2823',
+              border: '#2d3a43',
+              accent: '#5bdcae'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #090e16;
+      color: #dde4de;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#090e16] flex flex-col antialiased selection:bg-[#5bdcae]/20 selection:text-[#5bdcae]">
+
+  <!-- Top Header injected by shared_nav.js -->
+
+  <!-- Main Content Container (Full-Width Desktop Command View) -->
+  <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-8">
+
+    <!-- Header Section -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 rounded-2xl bg-[#161d19] border border-[#2d3a43] shadow-xl">
+      <div>
+        <h1 class="text-3xl font-black text-white uppercase tracking-tight font-sans">
+          Files, Code & Documentation Hub
+        </h1>
+        <p class="text-xs text-slate-400 mt-0.5">
+          Download challenge artifacts, capture transcripts, vulnerability source codes, and read official arena manuals.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="cybernexus_missions_gray_light_green_dark_mode.html" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-bold text-xs uppercase tracking-wider transition flex items-center gap-2 shadow-lg">
+          <span>Go to Missions</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Official Tournament Guidelines & Protocol Card -->
+    <div class="p-6 rounded-2xl bg-gradient-to-r from-[#161d19] to-[#0f1713] border border-[#2d3a43] shadow-lg space-y-3">
+      <h2 class="text-sm font-bold text-white uppercase font-mono tracking-wider flex items-center gap-2">
+        <span class="text-amber-400">📜</span>
+        <span>Tournament Rules & Flag Protocol</span>
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono text-slate-300">
+        <div class="p-3 bg-[#0e1511] rounded-xl border border-[#2d3a43]">
+          <span class="text-emerald-400 font-bold block mb-1">1. FLAG FORMAT</span>
+          All captured flags follow standard formatting: <code class="text-white bg-black/40 px-1 py-0.5 rounded">logicCTF{...}</code>. Submit flags exactly as revealed.
+        </div>
+        <div class="p-3 bg-[#0e1511] rounded-xl border border-[#2d3a43]">
+          <span class="text-emerald-400 font-bold block mb-1">2. TIERED SCORING PROTOCOL</span>
+          Challenges 01-07 award <strong>+50 pts</strong> (<strong>-15 penalty</strong> on wrong flag). Challenges 08-12 award <strong>+100 pts</strong> (<strong>-25 penalty</strong> on wrong flag).
+        </div>
+        <div class="p-3 bg-[#0e1511] rounded-xl border border-[#2d3a43]">
+          <span class="text-emerald-400 font-bold block mb-1">3. FAIR PLAY & INFRASTRUCTURE</span>
+          Attacking arena infrastructure or denial of service is prohibited. Work within the scope of designated challenge targets.
+        </div>
+      </div>
+    </div>
+
+    <!-- System Security Policy Banner (Challenge 6: The UI Contradiction) -->
+    <div id="sharing-policy-banner" class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between text-xs font-mono shadow-md">
+      <div class="flex items-center gap-3 text-amber-300">
+        <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 shrink-0">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <div>
+          <div class="font-bold uppercase tracking-wider text-amber-200 flex items-center gap-2">
+            <span>Global Node Policy Notice:</span>
+            <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 font-mono">POLICY-06-ENFORCE</span>
+          </div>
+          <p class="text-amber-300/80 text-[11px] mt-0.5">File sharing is disabled across all collegiate nodes by security protocol. External transmissions are locked.</p>
+        </div>
+      </div>
+      <span class="px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/40 uppercase tracking-wider shrink-0 flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+        <span>Sharing Disabled</span>
+      </span>
+    </div>
+
+    <!-- Document Compliance Reference Guide Banner (Challenge 10) -->
+    <div class="p-4 rounded-xl bg-gradient-to-r from-[#161d19] to-[#121c16] border border-emerald-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-[#5bdcae]/15 border border-[#5bdcae]/30 flex items-center justify-center text-[#5bdcae] text-lg font-bold shrink-0">
+          🎬
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-white text-xs font-mono">REFERENCE GUIDE:</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#0e1511] text-[#5bdcae] border border-[#2d3a43]">Movie Reference Notes.md</span>
+          </div>
+          <p class="text-xs text-slate-300 mt-0.5 font-sans">
+            Compare this reference story with documents in the arena to identify the file carrying the right information under the wrong name.
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="btn-open-ref-guide" onclick="openReferenceGuideModal()" class="px-3.5 py-2 rounded-lg bg-[#0e1511] hover:bg-[#1f2823] text-white border border-[#2d3a43] hover:border-[#5bdcae]/40 text-xs font-mono font-bold transition flex items-center gap-1.5 cursor-pointer">
+          <span>Read Movie Notes</span>
+          <svg class="w-3.5 h-3.5 text-[#5bdcae]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+        </button>
+        <a href="/challenge_files/Movie%20Reference%20Notes.md" download="Movie Reference Notes.md" class="px-3.5 py-2 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-mono font-bold transition flex items-center gap-1.5">
+          <span>Download Notes (.md)</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Challenge Files Explorer (Table) -->
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-bold text-white uppercase font-mono tracking-wider flex items-center gap-2">
+          <span>📁</span>
+          <span>Challenge Artifacts & Source Downloads</span>
+        </h2>
+        <span class="text-xs font-mono text-slate-400" id="files-verified-count">12 Files Verified via SHA-256</span>
+      </div>
+
+      <div class="w-full bg-[#161d19] border border-[#2d3a43] rounded-2xl shadow-xl overflow-hidden">
+        <table class="w-full text-left text-xs font-mono">
+          <thead class="bg-[#0e1511] border-b border-[#2d3a43] text-slate-400 uppercase text-[11px]">
+            <tr>
+              <th class="py-3.5 px-4 w-16">CH#</th>
+              <th class="py-3.5 px-4">FILE ARTIFACT</th>
+              <th class="py-3.5 px-4">ASSOCIATED VECTOR</th>
+              <th class="py-3.5 px-4 text-center">TIER</th>
+              <th class="py-3.5 px-4 text-center">TYPE</th>
+              <th class="py-3.5 px-4 text-right">ACTION</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#2d3a43]/50" id="files-table-body">
+            <!-- Row 1 -->
+            <tr id="file-row-01" class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">01</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-amber-400">{}</span>
+                <span>challenge_01_graphql.json</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Ghost Protocol (Web Security)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">JSON Schema</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_01_graphql.json" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-01', 'challenge_01_graphql.json', 'JSON Schema', '42 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 2 -->
+            <tr id="file-row-02" class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">02</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-cyan-400">📄</span>
+                <span>challenge_02_cipher.txt</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Cipher Nexus (Cryptography)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">Hex Text</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_02_cipher.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-02', 'challenge_02_cipher.txt', 'Hex Text', '18 KB', 'txt')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 3 -->
+            <tr id="file-row-03" class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">03</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-indigo-400">📡</span>
+                <span>challenge_03_network.pcap.txt</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Packet Sniffer (Network Security)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">PCAP Trace</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_03_network.pcap.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-03', 'challenge_03_network.pcap.txt', 'PCAP Trace', '156 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 4 -->
+            <tr id="file-row-04" class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">04</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-amber-300">JS</span>
+                <span>challenge_04_vault.js</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Logic Gate Bypass (Reverse Eng)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">JavaScript</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_04_vault.js" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-04', 'challenge_04_vault.js', 'JavaScript', '28 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 5 -->
+            <tr id="file-row-05" class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">05</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-rose-400">🍪</span>
+                <span>challenge_05_jwt_token.txt</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Cookie Monster (Web Security)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">JWT Token</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_05_jwt_token.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-05', 'challenge_05_jwt_token.txt', 'JWT Token', '12 KB', 'txt')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 6 -->
+            <tr id="file-row-06" class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">06</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-rose-400">📑</span>
+                <span>incident_recon_dossier.pdf</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Incident Recon Dossier</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">Incident Dossier</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/incident_recon_dossier.pdf" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-06', 'incident_recon_dossier.pdf', 'Incident Dossier', '1.4 MB', 'pdf')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 7 -->
+            <tr id="file-row-07" class="hover:bg-[#1f2823] transition">
+              <td class="py-3 px-4 text-slate-400">07</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-purple-400">🖼️</span>
+                <span>challenge_07_stego_secret.txt</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Hidden in Plain Byte (Forensics)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">EXIF Metadata</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_07_stego_secret.txt" download class="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-07', 'challenge_07_stego_secret.txt', 'EXIF Metadata', '34 KB', 'img')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 8 (Tier 2) -->
+            <tr id="file-row-08" class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+              <td class="py-3 px-4 text-amber-400">08</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-red-400">C</span>
+                <span>challenge_08_buffer_overflow.c</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Kernel Panic (Binary Exploitation)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">C Source</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_08_buffer_overflow.c" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-08', 'challenge_08_buffer_overflow.c', 'C Source', '22 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 9 -->
+            <tr id="file-row-09" class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+              <td class="py-3 px-4 text-amber-400">09</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-amber-400">🔑</span>
+                <span>challenge_09_rsa_keys.pem</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Quantum RSA (Cryptography)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">PEM Key</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_09_rsa_keys.pem" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-09', 'challenge_09_rsa_keys.pem', 'PEM Key', '16 KB', 'txt')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 10 (Challenge 10: The Wrong Name) -->
+            <tr id="file-row-10" class="hover:bg-[#1f2823] transition bg-[#161f1a]/60">
+              <td class="py-3 px-4 text-emerald-400">10</td>
+              <td class="py-3 px-4 font-bold text-white">
+                <div class="flex items-center gap-2">
+                  <span class="text-rose-400">📑</span>
+                  <span id="doc-10-name">Annual Project Report.md</span>
+                  <span id="doc-10-badge" class="px-1.5 py-0.5 rounded bg-amber-950/40 text-amber-400 border border-amber-500/30 text-[9px] font-mono">MISNAMED DRAFT</span>
+                </div>
+              </td>
+              <td class="py-3 px-4 text-slate-300">The Wrong Name (Document Audit)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[10px]">Tier 1 (+50)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">Markdown (.md)</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <button id="btn-preview-doc-10" onclick="openDocPreviewModal('doc-10')" class="px-2.5 py-1.5 rounded-lg bg-[#212B3A] hover:bg-[#2D3A4B] text-slate-200 hover:text-white border border-[#2D3A4B] text-xs font-semibold transition inline-flex items-center gap-1 cursor-pointer" title="Inspect Document Content">
+                    <span>Preview</span>
+                  </button>
+                  <button id="btn-rename-doc-10" onclick="openDocRenameModal('doc-10')" class="px-2.5 py-1.5 rounded-lg bg-emerald-500/20 text-[#5bdcae] hover:bg-[#5bdcae] hover:text-slate-950 border border-emerald-500/40 text-xs font-bold transition inline-flex items-center gap-1 cursor-pointer" title="Rename Document">
+                    <span>Rename</span> ✏️
+                  </button>
+                  <a href="/challenge_files/Annual%20Project%20Report.md" download="Annual Project Report.md" class="p-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/30 text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 transition shadow-sm" title="Download Document">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                  </a>
+                  <button onclick="purgeFileRow('file-row-10', 'Annual Project Report.md', 'Markdown Report', '1.2 KB', 'txt')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 11 -->
+            <tr id="file-row-11" class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+              <td class="py-3 px-4 text-amber-400">11</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-amber-400">☁️</span>
+                <span>challenge_11_shadow_api.json</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">Decoupled Shadow API (Cloud / SSRF)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">JSON Meta</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_11_shadow_api.json" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-11', 'challenge_11_shadow_api.json', 'JSON Meta', '52 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Row 12 -->
+            <tr id="file-row-12" class="hover:bg-[#1f2823] transition bg-[#161f1a]/40">
+              <td class="py-3 px-4 text-amber-400">12</td>
+              <td class="py-3 px-4 font-bold text-white flex items-center gap-2">
+                <span class="text-emerald-400">🐚</span>
+                <span>challenge_12_privesc_suid.sh</span>
+              </td>
+              <td class="py-3 px-4 text-slate-300">The Root of All Evil (Privilege Esc)</td>
+              <td class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-300 border border-amber-500/30 text-[10px]">Tier 2 (+100)</span></td>
+              <td class="py-3 px-4 text-center text-slate-400">Bash Script</td>
+              <td class="py-3 px-4 text-right">
+                <div class="inline-flex items-center gap-1.5">
+                  <a href="/challenge_files/challenge_12_privesc_suid.sh" download class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-emerald-500 hover:text-slate-950 font-bold transition inline-flex items-center gap-1">
+                    <span>Download</span> &darr;
+                  </a>
+                  <button onclick="purgeFileRow('file-row-12', 'challenge_12_privesc_suid.sh', 'Bash Script', '19 KB', 'code')" class="p-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/30 text-red-400 hover:text-red-300 border border-red-500/30 transition shadow-sm" title="Purge Artifact to Recycle Bin">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: MOVIE REFERENCE GUIDE (CHALLENGE 10) -->
+  <!-- ======================================================== -->
+  <div id="modalReferenceGuide" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-[#121820] border border-emerald-500/40 rounded-2xl p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between border-b border-[#2d3a43] pb-3 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <span class="text-xl">🎬</span>
+          <div>
+            <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono flex items-center gap-2">
+              <span>Movie Reference Notes</span>
+              <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-950 text-[#5bdcae] border border-emerald-500/30">HINT GUIDE</span>
+            </h3>
+            <p class="text-[11px] text-slate-400">Contextual synopsis to cross-examine arena documents</p>
+          </div>
+        </div>
+        <button onclick="closeReferenceGuideModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#1f2823] transition cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto custom-scrollbar p-4 bg-[#090e16] border border-[#2d3a43] rounded-xl font-mono text-xs text-slate-300 space-y-3.5 leading-relaxed">
+        <div class="text-emerald-400 font-bold border-b border-[#2d3a43]/60 pb-2">
+          ## Movie Reference Notes
+        </div>
+        
+        <p>
+          This story follows a small team hired to enter a highly controlled virtual environment and influence the decisions of a powerful businessman.
+        </p>
+
+        <p>
+          Instead of fighting enemies directly, the team uses carefully designed artificial worlds where each level exists inside another. Time behaves differently in each layer, making every mistake more dangerous.
+        </p>
+
+        <p>
+          The main character is an experienced specialist who is struggling with memories of his past. During the mission, those memories begin interfering with the artificial world and putting the entire team at risk.
+        </p>
+
+        <p>
+          The team must complete the mission before the deeper layers become unstable and they lose their way back to reality.
+        </p>
+
+        <p>
+          The story focuses on dreams, memory, perception, time, and the difficulty of knowing whether what you are experiencing is real.
+        </p>
+
+        <div class="p-3 bg-emerald-950/20 border border-emerald-500/30 rounded-lg text-emerald-300 text-[11px] mt-2">
+          💡 <strong>Hint:</strong> “The file that guides you may point you closer than you think.”<br>
+          Look at the documents in Files & Docs. One report details this exact plot under a misleading, generic name.
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-[#2d3a43] flex items-center justify-between shrink-0">
+        <a href="/challenge_files/Movie%20Reference%20Notes.md" download="Movie Reference Notes.md" class="text-xs font-mono text-[#5bdcae] hover:underline flex items-center gap-1">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+          <span>Download Raw Notes (.md)</span>
+        </a>
+        <button onclick="closeReferenceGuideModal()" class="px-5 py-2 rounded-xl bg-[#161d19] hover:bg-[#224f3e] border border-[#2d3a43] text-xs font-semibold text-white transition cursor-pointer">
+          Close Notes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: DOCUMENT PREVIEW (CHALLENGE 10) -->
+  <!-- ======================================================== -->
+  <div id="docPreviewModal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-[#121820] border border-[#2d3a43] rounded-2xl p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between border-b border-[#2d3a43] pb-3 shrink-0">
+        <div class="flex items-center gap-2.5">
+          <span class="text-rose-400 text-xl">📑</span>
+          <div>
+            <h3 id="preview-modal-filename" class="text-sm font-bold text-white font-mono flex items-center gap-2">
+              <span id="preview-modal-filename-text">Annual Project Report.md</span>
+              <span id="preview-modal-badge" class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-500/30">MISNAMED DRAFT</span>
+            </h3>
+            <p class="text-[11px] text-slate-400 font-mono">Document Content Inspector</p>
+          </div>
+        </div>
+        <button onclick="closeDocPreviewModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#1f2823] transition cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <!-- Document Content Body -->
+      <div class="flex-1 overflow-y-auto custom-scrollbar space-y-4">
+        <div class="p-4 rounded-xl bg-slate-900 border border-slate-700/60 font-mono text-xs text-slate-300 space-y-3">
+          <div class="text-base font-bold text-white tracking-wide uppercase font-sans border-b border-slate-800 pb-2">
+            ## Annual Project Report
+          </div>
+
+          <p class="leading-relaxed">
+            The project began as an experimental study of simulated environments and human decision-making. A small specialist team was assembled because ordinary methods could not reach the target directly.
+          </p>
+
+          <p class="leading-relaxed">
+            The team designed multiple artificial environments, with each environment operating inside another. Every deeper layer changed the flow of time, so a few minutes in one place could represent hours somewhere else.
+          </p>
+
+          <p class="leading-relaxed">
+            During the operation, the team discovered that the lead specialist's memories were affecting the simulated environments. People and locations from his past began appearing without warning, creating unexpected obstacles.
+          </p>
+
+          <div class="p-3 bg-black/40 rounded-lg border border-amber-500/40 text-amber-200 leading-relaxed font-semibold">
+            "The final stage was described internally as an <strong>inception</strong>, where an idea had to be placed into the target's mind without the target realizing that it had been introduced."
+          </div>
+
+          <p class="leading-relaxed">
+            The team eventually completed the operation, but the experience raised a difficult question: when every layer looks real, how can anyone be certain that they have truly returned?
+          </p>
+
+          <p class="leading-relaxed">
+            The project demonstrated that perception, memory, and reality can become difficult to separate when people are given enough control over what they experience.
+          </p>
+        </div>
+
+        <!-- Discrepancy Alert Box -->
+        <div id="preview-discrepancy-box" class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs font-mono text-amber-300 space-y-1.5">
+          <div class="font-bold flex items-center gap-1.5 text-amber-200">
+            <span>⚠️</span>
+            <span>CLUE IN PLAIN SIGHT:</span>
+          </div>
+          <p class="text-[11px] text-amber-300/90">
+            This document's content matches the synopsis in <strong>Movie Reference Notes</strong>, and the text specifically notes: <em>"The final stage was described internally as an inception..."</em>
+          </p>
+          <p class="text-[11px] text-amber-300/80">
+            The document is hiding under the wrong title: <code id="preview-alert-current-name" class="text-white bg-black/50 px-1 py-0.5 rounded">Annual Project Report.md</code>. Rename it to its correct name to unlock the flag!
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-[#2d3a43] flex items-center justify-between shrink-0">
+        <button onclick="closeDocPreviewModal()" class="px-4 py-2 rounded-xl bg-[#161d19] hover:bg-[#1f2823] border border-[#2d3a43] text-xs font-semibold text-slate-300 transition cursor-pointer">
+          Close Preview
+        </button>
+        <button id="preview-modal-rename-btn" onclick="closeDocPreviewModal(); openDocRenameModal('doc-10')" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-bold text-xs uppercase tracking-wider transition flex items-center gap-1.5 shadow-lg cursor-pointer">
+          <span>Rename Document</span>
+          <span>✏️</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: DOCUMENT RENAME (CHALLENGE 10) -->
+  <!-- ======================================================== -->
+  <div id="docRenameModal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-[#121820] border border-emerald-500/40 rounded-2xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-[#2d3a43] pb-3">
+        <div class="flex items-center gap-2.5">
+          <span class="text-emerald-400 text-lg">✏️</span>
+          <div>
+            <h3 class="text-sm font-bold text-white font-mono uppercase tracking-wider">Rename Document Artifact</h3>
+            <p class="text-[11px] text-slate-400">Discover the true title and rename the file</p>
+          </div>
+        </div>
+        <button onclick="closeDocRenameModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-[#1f2823] transition cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <div class="space-y-3 font-mono text-xs">
+        <div class="p-3 bg-[#090e16] rounded-xl border border-[#2d3a43]">
+          <span class="text-slate-400 text-[11px] block">CURRENT FILENAME:</span>
+          <span id="rename-current-filename" class="text-amber-400 font-bold">Annual Project Report.md</span>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 text-xs font-bold mb-1.5" for="doc-rename-input">
+            ENTER CORRECT DOCUMENT NAME:
+          </label>
+          <input 
+            type="text" 
+            id="doc-rename-input" 
+            placeholder="e.g. Inception.md"
+            class="w-full px-3.5 py-2.5 rounded-xl bg-[#090e16] border border-[#2d3a43] focus:border-[#5bdcae] text-white placeholder-slate-500 text-xs font-mono focus:outline-none transition"
+            autocomplete="off"
+          />
+          <p class="text-[10px] text-slate-400 mt-1">
+            Compare with Movie Reference Notes to identify the real name.
+          </p>
+        </div>
+
+        <div id="rename-error-msg" class="hidden p-2.5 rounded-lg bg-red-950/40 border border-red-500/40 text-red-300 text-[11px]">
+          <!-- Error message injected here -->
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-[#2d3a43] flex items-center justify-end gap-2.5">
+        <button onclick="closeDocRenameModal()" class="px-4 py-2 rounded-xl bg-[#161d19] hover:bg-[#1f2823] border border-[#2d3a43] text-xs font-semibold text-slate-300 transition cursor-pointer">
+          Cancel
+        </button>
+        <button id="btn-submit-rename" onclick="submitDocRename()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-bold text-xs uppercase tracking-wider transition flex items-center gap-1.5 shadow-lg cursor-pointer">
+          <span>Validate & Rename</span>
+          <span>⚡</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: VICTORY FLAG REVEAL (CHALLENGE 10) -->
+  <!-- ======================================================== -->
+  <div id="wrongNameFlagModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-[#121820] border-2 border-emerald-500/80 rounded-2xl p-6 shadow-[0_0_50px_rgba(91,220,174,0.25)] space-y-5 animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Victory Header -->
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-400 text-3xl shadow-[0_0_20px_rgba(91,220,174,0.4)]">
+          🚩
+        </div>
+        <div class="space-y-1">
+          <span class="px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500/40 text-[10px] font-mono font-bold uppercase tracking-wider">
+            CHALLENGE 10 COMPLETED • TIER 1 (+50 PTS)
+          </span>
+          <h2 class="text-2xl font-black text-white uppercase tracking-tight font-sans">
+            The Wrong Name Unmasked!
+          </h2>
+          <p class="text-xs text-slate-300 font-mono">
+            Document identity verified and successfully restored to <span class="text-emerald-400 font-bold">Inception.md</span>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Flag Display Box -->
+      <div class="p-4 rounded-xl bg-[#090e16] border border-emerald-500/50 space-y-2 shadow-inner">
+        <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
+          <span class="text-emerald-400 font-bold flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            OFFICIAL ARENA FLAG TOKEN:
+          </span>
+          <span class="text-[10px] bg-emerald-950/80 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/30 font-bold">+50 PTS</span>
+        </div>
+        
+        <div class="flex items-center justify-between gap-2 p-2.5 rounded-lg bg-black/60 border border-[#2d3a43]">
+          <code id="flag-text-ch10" class="text-sm sm:text-base font-mono font-bold text-emerald-300 select-all break-all">logicCTF{wr0ng_n4m3_c0rr3ct_d0cum3nt_unm4sk3d}</code>
+          <button id="btn-copy-flag-ch10" onclick="copyWrongNameFlag()" class="px-3 py-1.5 rounded bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 text-xs font-bold font-mono transition shrink-0 cursor-pointer shadow">
+            Copy Flag
+          </button>
+        </div>
+      </div>
+
+      <!-- Exploit Rationale Summary -->
+      <div class="p-3.5 rounded-xl bg-[#161d19] border border-[#2d3a43] text-xs font-mono text-slate-300 space-y-1">
+        <span class="text-emerald-400 font-bold text-[11px]">ARCHITECTURAL SUMMARY:</span>
+        <p class="text-slate-400 text-[11px] leading-relaxed">
+          The document <code class="text-white">Annual Project Report.md</code> detailed the plot of Christopher Nolan's <em>Inception</em> (simulated dream layers, time dilation, memories interfering with reality) and concealed the clue in plain sight (<em>"described internally as an inception"</em>). Cross-referencing it with <code class="text-emerald-300">Movie Reference Notes.md</code> uncovered its true name: <code class="text-white">Inception.md</code>.
+        </p>
+      </div>
+
+      <!-- Actions -->
+      <div class="pt-2 flex flex-col sm:flex-row items-center justify-end gap-3">
+        <button onclick="document.getElementById('wrongNameFlagModal').classList.add('hidden')" class="w-full sm:w-auto px-4 py-2 rounded-xl bg-[#161d19] hover:bg-[#1f2823] border border-[#2d3a43] text-xs font-semibold text-slate-300 transition cursor-pointer">
+          Close Window
+        </button>
+        <a href="cybernexus_missions_gray_light_green_dark_mode.html" class="w-full sm:w-auto px-5 py-2 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-bold text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow-lg">
+          <span>Go to Missions to Submit</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Purge & Deletion Client Logic -->
+  <script>
+    function getDeletedFileIds() {
+      try {
+        return JSON.parse(localStorage.getItem('logic_ctf_deleted_file_ids') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveDeletedFileIds(ids) {
+      localStorage.setItem('logic_ctf_deleted_file_ids', JSON.stringify(ids));
+    }
+
+    function purgeFileRow(rowId, name, type, size, iconType) {
+      if (typeof window.addToPurgedArtifacts === 'function') {
+        window.addToPurgedArtifacts({
+          id: rowId,
+          name: name,
+          type: `${type} (Challenge Artifact)`,
+          section: 'Files & Docs',
+          ext: name.split('.').pop(),
+          size: size,
+          iconType: iconType
+        });
+      }
+
+      const rowEl = document.getElementById(rowId);
+      if (rowEl) {
+        rowEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        rowEl.style.opacity = '0';
+        rowEl.style.transform = 'translateX(20px)';
+        setTimeout(() => rowEl.remove(), 300);
+      }
+
+      const deletedIds = getDeletedFileIds();
+      if (!deletedIds.includes(rowId)) {
+        deletedIds.push(rowId);
+        saveDeletedFileIds(deletedIds);
+      }
+
+      setTimeout(updateFileCount, 350);
+    }
+
+    function updateFileCount() {
+      const rows = document.querySelectorAll('#files-table-body tr');
+      const countLabel = document.getElementById('files-verified-count');
+      if (countLabel) {
+        countLabel.textContent = `${rows.length} Files Available (SHA-256 Verified)`;
+      }
+    }
+
+    // Challenge 10: The Wrong Name - Logic & Modals
+    function openReferenceGuideModal() {
+      const modal = document.getElementById('modalReferenceGuide');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeReferenceGuideModal() {
+      const modal = document.getElementById('modalReferenceGuide');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function isCh10Renamed() {
+      return !!localStorage.getItem('logic_ctf_ch10_renamed');
+    }
+
+    function getCh10TargetName() {
+      const rawSaved = localStorage.getItem('logic_ctf_ch10_renamed');
+      return (rawSaved && rawSaved !== 'true') ? rawSaved : 'Inception.md';
+    }
+
+    function openDocPreviewModal(docId) {
+      const modal = document.getElementById('docPreviewModal');
+      const filenameEl = document.getElementById('preview-modal-filename-text');
+      const badgeEl = document.getElementById('preview-modal-badge');
+      const alertCurrentNameEl = document.getElementById('preview-alert-current-name');
+      const discrepancyBox = document.getElementById('preview-discrepancy-box');
+
+      const isRenamed = isCh10Renamed();
+      const currentName = isRenamed ? getCh10TargetName() : 'Annual Project Report.md';
+
+      if (filenameEl) filenameEl.textContent = currentName;
+      if (alertCurrentNameEl) alertCurrentNameEl.textContent = currentName;
+
+      if (badgeEl) {
+        if (isRenamed) {
+          badgeEl.textContent = 'VERIFIED IDENTITY';
+          badgeEl.className = 'text-[9px] font-mono px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30';
+        } else {
+          badgeEl.textContent = 'MISNAMED DRAFT';
+          badgeEl.className = 'text-[9px] font-mono px-1.5 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-500/30';
+        }
+      }
+
+      if (discrepancyBox) {
+        if (isRenamed) {
+          discrepancyBox.className = 'p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs font-mono text-emerald-300 space-y-1.5';
+          discrepancyBox.innerHTML = `
+            <div class="font-bold flex items-center gap-1.5 text-emerald-200">
+              <span>✅</span>
+              <span>IDENTITY VERIFIED:</span>
+            </div>
+            <p class="text-[11px] text-emerald-300/90">
+              Document title restored to <strong><code class="text-white bg-black/50 px-1 py-0.5 rounded">${escapeHtml(currentName)}</code></strong>. Matches the movie synopsis in Movie Reference Notes.
+            </p>
+          `;
+        } else {
+          discrepancyBox.className = 'p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-xs font-mono text-amber-300 space-y-1.5';
+          discrepancyBox.innerHTML = `
+            <div class="font-bold flex items-center gap-1.5 text-amber-200">
+              <span>⚠️</span>
+              <span>CLUE IN PLAIN SIGHT:</span>
+            </div>
+            <p class="text-[11px] text-amber-300/90">
+              This document's content matches the synopsis in <strong>Movie Reference Notes</strong>, and the text specifically notes: <em>"The final stage was described internally as an inception..."</em>
+            </p>
+            <p class="text-[11px] text-amber-300/80">
+              The document is hiding under the wrong title: <code class="text-white bg-black/50 px-1 py-0.5 rounded">Annual Project Report.md</code>. Rename it to its correct name to unlock the flag!
+            </p>
+          `;
+        }
+      }
+
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeDocPreviewModal() {
+      const modal = document.getElementById('docPreviewModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function openDocRenameModal(docId) {
+      const modal = document.getElementById('docRenameModal');
+      const curFilenameEl = document.getElementById('rename-current-filename');
+      const inputEl = document.getElementById('doc-rename-input');
+      const errorEl = document.getElementById('rename-error-msg');
+
+      const isRenamed = isCh10Renamed();
+      const currentName = isRenamed ? getCh10TargetName() : 'Annual Project Report.md';
+
+      if (curFilenameEl) curFilenameEl.textContent = currentName;
+      if (inputEl) {
+        inputEl.value = '';
+        inputEl.placeholder = isRenamed ? currentName : 'e.g. Inception.md';
+      }
+      if (errorEl) errorEl.classList.add('hidden');
+
+      if (modal) modal.classList.remove('hidden');
+      setTimeout(() => inputEl && inputEl.focus(), 100);
+    }
+
+    function closeDocRenameModal() {
+      const modal = document.getElementById('docRenameModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function submitDocRename() {
+      const inputEl = document.getElementById('doc-rename-input');
+      const errorEl = document.getElementById('rename-error-msg');
+      const btn = document.getElementById('btn-submit-rename');
+      const newName = (inputEl ? inputEl.value : '').trim();
+
+      if (!newName) {
+        if (errorEl) {
+          errorEl.textContent = 'Please enter a target filename.';
+          errorEl.classList.remove('hidden');
+        }
+        return;
+      }
+
+      const cleanNew = newName.toLowerCase().replace(/['"]/g, '').trim();
+      const isCanonical = cleanNew.includes('inception') || cleanNew === 'incident_response_runbook.pdf';
+
+      if (btn) btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/documents/rename', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            documentId: 'file-row-10',
+            originalName: 'Annual Project Report.md',
+            newName: newName
+          })
+        });
+        const data = await res.json();
+
+        if (data.verified || isCanonical) {
+          const canonicalName = data.newName || (cleanNew.includes('inception') ? (newName.toLowerCase().endsWith('.md') ? newName : `${newName}.md`) : 'Inception.md');
+          localStorage.setItem('logic_ctf_ch10_renamed', canonicalName);
+          applyCh10RenamedState(canonicalName);
+          closeDocRenameModal();
+
+          const victoryModal = document.getElementById('wrongNameFlagModal');
+          if (victoryModal) victoryModal.classList.remove('hidden');
+
+          if (window.showLogicToast) {
+            window.showLogicToast('True document identity verified! Flag unlocked.', 'success');
+          }
+        } else {
+          if (errorEl) {
+            errorEl.innerHTML = `
+              <strong>Audit Discrepancy:</strong> "${escapeHtml(newName)}" does not match the true document identity.<br>
+              <span class="text-amber-300/90 text-[10px]">Hint: Read Movie Reference Notes and check the clue hiding in plain sight in the Annual Project Report.</span>
+            `;
+            errorEl.classList.remove('hidden');
+          }
+        }
+      } catch (err) {
+        if (isCanonical) {
+          const canonicalName = cleanNew.includes('inception') ? (newName.toLowerCase().endsWith('.md') ? newName : `${newName}.md`) : 'Inception.md';
+          localStorage.setItem('logic_ctf_ch10_renamed', canonicalName);
+          applyCh10RenamedState(canonicalName);
+          closeDocRenameModal();
+          const victoryModal = document.getElementById('wrongNameFlagModal');
+          if (victoryModal) victoryModal.classList.remove('hidden');
+        } else {
+          if (errorEl) {
+            errorEl.textContent = `"${newName}" does not match the movie reference context.`;
+            errorEl.classList.remove('hidden');
+          }
+        }
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    function applyCh10RenamedState(savedName) {
+      const targetName = savedName || getCh10TargetName();
+      const nameEl = document.getElementById('doc-10-name');
+      const badgeEl = document.getElementById('doc-10-badge');
+      if (nameEl) {
+        nameEl.textContent = targetName;
+        nameEl.classList.add('text-emerald-300');
+      }
+      if (badgeEl) {
+        badgeEl.textContent = 'VERIFIED IDENTITY';
+        badgeEl.className = 'px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30 text-[9px] font-mono';
+      }
+    }
+
+    function copyWrongNameFlag() {
+      const flag = 'logicCTF{wr0ng_n4m3_c0rr3ct_d0cum3nt_unm4sk3d}';
+      navigator.clipboard.writeText(flag).then(() => {
+        const btn = document.getElementById('btn-copy-flag-ch10');
+        if (btn) {
+          const prevText = btn.textContent;
+          btn.textContent = 'Copied! ✓';
+          btn.classList.add('bg-emerald-400');
+          setTimeout(() => {
+            btn.textContent = prevText;
+            btn.classList.remove('bg-emerald-400');
+          }, 2000);
+        }
+        if (window.showLogicToast) {
+          window.showLogicToast('Flag copied to clipboard!', 'success');
+        }
+      }).catch(() => {
+        if (window.showLogicToast) {
+          window.showLogicToast('Flag: ' + flag, 'info');
+        }
+      });
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // Sync on page load: hide files that are in purged artifacts and restore rename state
+    document.addEventListener('DOMContentLoaded', () => {
+      if (isCh10Renamed()) {
+        applyCh10RenamedState();
+      }
+
+      let purged = [];
+      try {
+        purged = window.getPurgedArtifacts ? window.getPurgedArtifacts() : JSON.parse(localStorage.getItem('logic_ctf_purged_items') || '[]');
+      } catch (e) {}
+      const purgedIds = new Set(purged.map(p => p.id));
+
+      const deletedIds = getDeletedFileIds();
+      deletedIds.forEach(id => {
+        if (purgedIds.has(id)) {
+          const el = document.getElementById(id);
+          if (el) el.remove();
+        }
+      });
+      updateFileCount();
+    });
+  </script>
+
+  <!-- Shared Nav Script -->
+  <script src="shared_nav.js"></script>
+</body>
+</html>

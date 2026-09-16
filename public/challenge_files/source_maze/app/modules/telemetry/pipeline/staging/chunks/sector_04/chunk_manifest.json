@@ -1,0 +1,6 @@
+{
+  "sector": 4,
+  "allocated_blocks": 1024,
+  "redundancy_level": "HIGH",
+  "internal_vault_active": true
+}

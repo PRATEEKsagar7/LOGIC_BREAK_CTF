@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@100..900&family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-lowest": "#09100c", "background": "#0e1511", "primary-fixed": "#7af9c9", "on-tertiary": "#3c2f00", "on-error": "#690005", "surface-bright": "#343b37", "secondary-fixed": "#bdedd6", "tertiary": "#dfc573", "secondary-container": "#224f3e", "surface-dim": "#0e1511", "surface-tint": "#5bdcae", "on-error-container": "#ffdad6", "tertiary-container": "#c2a95b", "outline-variant": "#3d4a43", "surface-container": "#1a211d", "on-primary-fixed": "#002116", "on-background": "#dde4de", "on-primary-fixed-variant": "#00513b", "error": "#ffb4ab", "on-secondary": "#053828", "inverse-on-surface": "#2b322e", "primary-fixed-dim": "#5bdcae", "surface-container-low": "#161d19", "on-secondary-container": "#90bfaa", "on-surface": "#dde4de", "tertiary-fixed": "#fce18c", "surface-container-high": "#252b28", "on-surface-variant": "#bccac1", "on-secondary-fixed-variant": "#224f3e", "surface": "#0e1511", "on-primary-container": "#003324", "tertiary-fixed-dim": "#dfc573", "error-container": "#93000a", "primary-container": "#03a77c", "surface-container-highest": "#303632", "outline": "#86948c", "on-primary": "#003827", "surface-variant": "#303632", "secondary": "#a1d1bb", "on-secondary-fixed": "#002116", "on-tertiary-container": "#4d3e00", "secondary-fixed-dim": "#a1d1bb", "primary": "#5bdcae", "on-tertiary-fixed-variant": "#564500", "inverse-primary": "#006c4f", "on-tertiary-fixed": "#231b00", "inverse-surface": "#dde4de" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.75rem", "space-3xl": "4rem", "gutter-mobile": "0.75rem", "margin-tablet": "1.5rem", "space-md": "1rem", "gutter-tablet": "1rem", "margin-mobile": "1rem", "space-xs": "0.5rem", "space-2xs": "0.25rem", "space-xl": "2rem", "space-lg": "1.5rem", "gutter-desktop": "1.5rem", "space-2xl": "3rem", "margin-desktop": "2rem" }, "fontFamily": { "body-lg": ["Geist"], "label-lg": ["JetBrains Mono"], "display-lg": ["Bodoni Moda"] }, "fontSize": { "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }], "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-surface font-body-lg text-body-lg text-on-surface min-h-screen selection:bg-primary selection:text-on-primary"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-low/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.25)]"><div class="h-16 w-full px-gutter-desktop flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-xl"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-primary text-[24px]">terminal</span><div class="flex items-center gap-space-xs"><span class="font-display-lg text-body-lg font-bold tracking-tight text-on-surface">CYBER<span class="text-primary">NEXUS</span></span><span class="font-label-lg text-label-lg px-space-xs py-space-2xs rounded bg-surface-container text-outline text-[10px] uppercase tracking-wider">Collegiate</span></div></div><nav class="hidden xl:flex items-center gap-space-xs" data-active-classes="bg-secondary-container text-on-secondary-container font-medium rounded-lg"><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="overview" href="overview.html">Overview</a><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="missions" href="missions.html">Missions</a><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="reports" href="reports.html">Reports</a><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="files" href="files.html">Files</a><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="workspace" href="workspace.html">Workspace</a><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-lg text-label-lg" data-path="settings-workspace-overview" href="workspace.html">Settings</a></nav></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs px-space-sm py-space-xs bg-surface-container rounded-full"><span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span></span><span class="font-label-lg text-label-lg text-primary uppercase text-[11px] tracking-wider">Live Arena</span></div><div class="flex items-center gap-space-md"><button class="w-9 h-9 flex items-center justify-center rounded-lg bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-16 bg-surface min-h-[calc(100vh-4rem)] flex flex-col"><section class="w-full bg-surface-container-low"><div class="w-full px-gutter-desktop pt-space-lg pb-space-md"><div class="flex flex-col gap-space-md"><div class="flex items-center justify-between"><div class="flex items-center gap-space-xs text-outline text-label-lg font-label-lg text-[12px]"><span>CYBERNEXUS</span><span>/</span><span>ARENA OPS</span><span>/</span><span class="text-primary">SETTINGS</span></div><div class="flex items-center gap-space-xs text-outline font-label-lg text-[12px]"><span class="material-symbols-outlined text-tertiary text-[16px]">security</span><span>SECURE CLUSTER: US-EAST-COLLEGIATE-09</span></div></div><div class="flex items-center justify-between"><nav class="flex items-center gap-space-xs" data-active-classes="bg-surface-container-high text-primary font-bold rounded-lg"><a class="px-space-md py-space-xs text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-lg text-label-lg rounded-lg" data-path="settings-workspace-overview" href="workspace.html">Workspace Overview</a><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-surface-container-high text-primary font-bold rounded-lg" data-path="settings-members-and-admin" href="admin.html">Members & Admin</a></nav></div></div></div></section><div class="w-full px-gutter-desktop py-space-lg flex-1"><div class="flex flex-col w-full">
+<!-- Toast Notification Container -->
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 pointer-events-none transition-all duration-200 flex items-center gap-space-sm px-space-md py-space-sm rounded-lg bg-surface-container-highest text-primary shadow-xl font-label-lg text-label-lg" id="toast">
+<span class="material-symbols-outlined text-[18px] text-primary">verified</span>
+<span class="text-on-surface text-[13px]" id="toast-message">Protocol ID copied to clipboard</span>
+</div>
+<!-- Operational Header Status Strip -->
+<section class="w-full bg-surface-container-lowest px-gutter-desktop py-space-xs flex flex-wrap items-center justify-between gap-space-sm text-outline font-label-lg text-label-lg text-[11px] uppercase tracking-wider">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-space-2xs text-primary">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+        STATUS: ENCRYPTED // TIER-1 OPS
+      </span>
+<span class="text-outline-variant">|</span>
+<span>CLASSIFICATION: PROTOCOL LEVEL-3 SECURE</span>
+<span class="text-outline-variant">|</span>
+<span>NODE: ARENA-OPS-NEXUS-01</span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant">
+<span>LATENCY: 4.8ms</span>
+<span>TELEMETRY: DUAL-SYNCED</span>
+<button class="hover:text-primary transition-colors flex items-center gap-space-2xs" onclick="copyProtocol('SOP-NEXUS-V1.0', this)">
+<span class="material-symbols-outlined text-[13px]">content_copy</span>
+<span>SOP-NEXUS-V1.0</span>
+</button>
+</div>
+</section>
+<!-- Main 3-Column Documentation View -->
+<div class="w-full flex flex-col lg:flex-row items-start gap-space-lg">
+<!-- LEFT SIDEBAR: Operational Modules Navigation -->
+<aside class="w-full lg:w-72 lg:shrink-0 lg:sticky lg:top-20 flex flex-col gap-space-md bg-surface-container-low p-space-md rounded-xl">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between text-outline font-label-lg text-[11px] uppercase tracking-wider">
+<span>Manual Index</span>
+<span class="text-primary font-bold">16 Modules</span>
+</div>
+<!-- Module Search Filter -->
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface-container-lowest text-on-surface font-label-lg text-label-lg pl-9 pr-space-sm py-space-xs rounded-lg placeholder:text-outline focus:outline-none focus:bg-surface-container text-[12px]" id="module-search" oninput="filterModules(this.value)" placeholder="Filter protocols..." type="text"/>
+</div>
+</div>
+<!-- Navigation Link List -->
+<nav class="flex flex-col gap-space-2xs max-h-[calc(100vh-14rem)] overflow-y-auto pr-1" id="module-nav-list">
+<a class="nav-module-item active flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg transition-colors bg-surface-container-high text-primary" data-title="getting started overview" href="#section-meta">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">01</span>
+<span class="truncate">Getting Started</span>
+</div>
+<span class="material-symbols-outlined text-[14px]">arrow_right</span>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="platform overview architecture" href="#section-architecture">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">02</span>
+<span class="truncate">Platform Architecture</span>
+</div>
+<span class="material-symbols-outlined text-[14px] opacity-0 group-hover:opacity-100">arrow_right</span>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="dashboard overview telemetry" href="#section-dashboard">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">03</span>
+<span class="truncate">Arena Dashboard</span>
+</div>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="missions arenas vectors challenges" href="#section-missions">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">04</span>
+<span class="truncate">Missions & Arenas</span>
+</div>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="standings telemetry solve stream" href="#section-standings">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">05</span>
+<span class="truncate">Standings & Solves</span>
+</div>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="reports management operations" href="#section-reports">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">06</span>
+<span class="truncate">Reports Management</span>
+</div>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="files evidence vault forensics" href="#section-vault">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">07</span>
+<span class="truncate">Files & Evidence Vault</span>
+</div>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="competitor workspace scratchpad findings" href="#section-workspace">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">08</span>
+<span class="truncate">Competitor Workspace</span>
+</div>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="administration core provisioning direct creation" href="#section-admin">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">09</span>
+<span class="truncate">Administration Core</span>
+</div>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="users and roles matrix permissions manager user viewer" href="#section-roles">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">10</span>
+<span class="truncate">Users & Roles</span>
+</div>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="role permission matrix granular controls" href="#section-matrix">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">11</span>
+<span class="truncate">Permission Matrix</span>
+</div>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="archive vault cold storage purge deletion" href="#section-archive">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">12</span>
+<span class="truncate">Archive & Purge Vault</span>
+</div>
+</a>
+<a class="nav-module-item flex items-center justify-between px-space-sm py-space-xs rounded-lg text-[13px] font-label-lg text-on-surface-variant hover:bg-surface-container-highest hover:text-on-surface transition-colors" data-title="security safety protocols soc2 compliance" href="#section-security">
+<div class="flex items-center gap-space-xs">
+<span class="text-outline text-[11px]">13</span>
+<span class="truncate">Security & Compliance</span>
+</div>
+</a>
+</nav>
+<!-- Sidebar Bottom Protocol Clearance Widget -->
+<div class="mt-space-xs p-space-sm rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs text-[11px] font-label-lg">
+<div class="flex items-center justify-between text-outline">
+<span>CLEARANCE TIER</span>
+<span class="text-tertiary">STRICT</span>
+</div>
+<div class="text-on-surface-variant">SYS_BUILD: 2026.09.R4</div>
+<div class="text-outline truncate">AUTH_HASH: 9e88a04bf7c...</div>
+</div>
+</aside>
+<!-- CENTER CONTENT: Operations Manual Core -->
+<main class="flex-1 w-full max-w-5xl flex flex-col gap-space-2xl min-w-0">
+<!-- HERO & METADATA SECTION -->
+<header class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-meta">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-primary font-label-lg text-label-lg text-[12px] tracking-wider uppercase">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>CYBERNEXUS // STANDARD OPERATING PROCEDURE (SOP)</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">
+            CyberNexus Platform Documentation
+          </h1>
+<p class="text-on-surface-variant font-body-lg text-body-lg max-w-3xl">
+            Official tactical operations manual governing mission deployment, real-time forensic telemetry, evidence auditing, and collegiate arena security workflows.
+          </p>
+</div>
+<!-- 4-Stat Metadata Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-sm">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="font-label-lg text-label-lg text-[11px] text-outline uppercase">VERSION</span>
+<span class="font-label-lg text-on-surface text-[15px] font-bold">1.0.0 (Production)</span>
+<span class="text-[11px] text-primary font-label-lg">Build #2026.09</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="font-label-lg text-label-lg text-[11px] text-outline uppercase">STATUS</span>
+<span class="font-label-lg text-primary text-[15px] font-bold flex items-center gap-space-2xs">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+              Operational
+            </span>
+<span class="text-[11px] text-outline font-label-lg">Cryptographically Verified</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="font-label-lg text-label-lg text-[11px] text-outline uppercase">PLATFORM</span>
+<span class="font-label-lg text-on-surface text-[15px] font-bold">Responsive Web App</span>
+<span class="text-[11px] text-outline font-label-lg">Multi-Tenant Grid</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="font-label-lg text-label-lg text-[11px] text-outline uppercase">MODE</span>
+<span class="font-label-lg text-secondary text-[15px] font-bold">Cyber Tactical</span>
+<span class="text-[11px] text-outline font-label-lg">Obsidian Slate // AA</span>
+</div>
+</div>
+<!-- Category Jump Cards Grid -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between text-outline font-label-lg text-label-lg text-[12px] uppercase">
+<span>Core Domain Modules</span>
+<span>8 Operational Verticals</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col justify-between gap-space-sm group" href="#section-workflow">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-primary text-[22px]">play_circle</span>
+<span class="font-label-lg text-[11px] text-outline">10 STEPS</span>
+</div>
+<div>
+<h3 class="font-label-lg text-on-surface font-bold text-[14px]">Getting Started</h3>
+<p class="text-[12px] text-on-surface-variant mt-space-2xs">Clearance, verification, task submission cycle.</p>
+</div>
+<span class="text-primary font-label-lg text-[12px] flex items-center gap-space-2xs group-hover:translate-x-1 transition-transform">
+                Read SOP →
+              </span>
+</a>
+<a class="p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col justify-between gap-space-sm group" href="#section-architecture">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-secondary text-[22px]">schema</span>
+<span class="font-label-lg text-[11px] text-outline">7 AREAS</span>
+</div>
+<div>
+<h3 class="font-label-lg text-on-surface font-bold text-[14px]">Architecture</h3>
+<p class="text-[12px] text-on-surface-variant mt-space-2xs">Operational routes and domain scope boundaries.</p>
+</div>
+<span class="text-secondary font-label-lg text-[12px] flex items-center gap-space-2xs group-hover:translate-x-1 transition-transform">
+                Read SOP →
+              </span>
+</a>
+<a class="p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col justify-between gap-space-sm group" href="#section-missions">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-tertiary text-[22px]">flag</span>
+<span class="font-label-lg text-[11px] text-outline">4 TIERS</span>
+</div>
+<div>
+<h3 class="font-label-lg text-on-surface font-bold text-[14px]">Missions & Arenas</h3>
+<p class="text-[12px] text-on-surface-variant mt-space-2xs">Vector execution, sandbox launch, CTF flags.</p>
+</div>
+<span class="text-tertiary font-label-lg text-[12px] flex items-center gap-space-2xs group-hover:translate-x-1 transition-transform">
+                Read SOP →
+              </span>
+</a>
+<a class="p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col justify-between gap-space-sm group" href="#section-reports">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-primary text-[22px]">description</span>
+<span class="font-label-lg text-[11px] text-outline">FULL CRUD</span>
+</div>
+<div>
+<h3 class="font-label-lg text-on-surface font-bold text-[14px]">Reports Ops</h3>
+<p class="text-[12px] text-on-surface-variant mt-space-2xs">Incident triage, reviewer notes, auditing.</p>
+</div>
+<span class="text-primary font-label-lg text-[12px] flex items-center gap-space-2xs group-hover:translate-x-1 transition-transform">
+                Read SOP →
+              </span>
+</a>
+<a class="p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col justify-between gap-space-sm group" href="#section-vault">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-secondary text-[22px]">folder_zip</span>
+<span class="font-label-lg text-[11px] text-outline">VAULT</span>
+</div>
+<div>
+<h3 class="font-label-lg text-on-surface font-bold text-[14px]">Evidence Vault</h3>
+<p class="text-[12px] text-on-surface-variant mt-space-2xs">Drag-drop forensic chain of custody.</p>
+</div>
+<span class="text-secondary font-label-lg text-[12px] flex items-center gap-space-2xs group-hover:translate-x-1 transition-transform">
+                Read SOP →
+              </span>
+</a>
+<a class="p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col justify-between gap-space-sm group" href="#section-workspace">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-primary text-[22px]">edit_note</span>
+<span class="font-label-lg text-[11px] text-outline">SPLIT-UI</span>
+</div>
+<div>
+<h3 class="font-label-lg text-on-surface font-bold text-[14px]">Workspace</h3>
+<p class="text-[12px] text-on-surface-variant mt-space-2xs">Autosave markdown draft & safety verification.</p>
+</div>
+<span class="text-primary font-label-lg text-[12px] flex items-center gap-space-2xs group-hover:translate-x-1 transition-transform">
+                Read SOP →
+              </span>
+</a>
+<a class="p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col justify-between gap-space-sm group" href="#section-admin">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-tertiary text-[22px]">admin_panel_settings</span>
+<span class="font-label-lg text-[11px] text-outline">DIRECT PROV</span>
+</div>
+<div>
+<h3 class="font-label-lg text-on-surface font-bold text-[14px]">Admin Core</h3>
+<p class="text-[12px] text-on-surface-variant mt-space-2xs">Direct user accounts, no invite link vector.</p>
+</div>
+<span class="text-tertiary font-label-lg text-[12px] flex items-center gap-space-2xs group-hover:translate-x-1 transition-transform">
+                Read SOP →
+              </span>
+</a>
+<a class="p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col justify-between gap-space-sm group" href="#section-roles">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-primary text-[22px]">badge</span>
+<span class="font-label-lg text-[11px] text-outline">3 TIERS</span>
+</div>
+<div>
+<h3 class="font-label-lg text-on-surface font-bold text-[14px]">Users & Roles</h3>
+<p class="text-[12px] text-on-surface-variant mt-space-2xs">Manager, User, Viewer access boundaries.</p>
+</div>
+<span class="text-primary font-label-lg text-[12px] flex items-center gap-space-2xs group-hover:translate-x-1 transition-transform">
+                Read SOP →
+              </span>
+</a>
+</div>
+</div>
+</header>
+<!-- SECTION 1: GETTING STARTED WORKFLOW (10 Operational Steps) -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-workflow">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between">
+<span class="text-primary font-label-lg text-[12px] uppercase tracking-wider">MODULE 01 // EXECUTION CYCLE</span>
+<span class="font-label-lg text-[12px] text-outline">TIMELINE SEQUENCE</span>
+</div>
+<h2 class="font-display-lg text-[28px] text-on-surface">Getting Started Operational Workflow</h2>
+<p class="text-on-surface-variant text-body-lg">
+            Every collegiate team member and administrator must observe this strict linear lifecycle to ensure verifiable submissions and forensic evidence integrity.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="flex items-start gap-space-md p-space-md rounded-lg bg-surface-container-lowest">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary font-label-lg font-bold flex items-center justify-center shrink-0">01</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Authenticate Clearance</span>
+<p class="text-[13px] text-on-surface-variant">Sign in with dual-factor tokens. Ensure identity verification is confirmed on cluster US-EAST-09.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-md p-space-md rounded-lg bg-surface-container-lowest">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-primary font-label-lg font-bold flex items-center justify-center shrink-0">02</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Open Overview & Telemetry</span>
+<p class="text-[13px] text-on-surface-variant">Inspect live arena influx waves, active proctor notices, and verify your team node uplink status.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-md p-space-md rounded-lg bg-surface-container-lowest">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-primary font-label-lg font-bold flex items-center justify-center shrink-0">03</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Select Mission Vector</span>
+<p class="text-[13px] text-on-surface-variant">Filter missions by difficulty (Beginner to Expert) and tactical domain (Web, Crypto, Forensics, OSINT).</p>
+</div>
+</div>
+<div class="flex items-start gap-space-md p-space-md rounded-lg bg-surface-container-lowest">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-primary font-label-lg font-bold flex items-center justify-center shrink-0">04</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Investigate Target Node</span>
+<p class="text-[13px] text-on-surface-variant">Launch ephemeral sandbox targeting assigned IP <code class="text-primary font-label-lg text-[12px]">node-introspect.nexus</code> within dedicated container boundaries.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-md p-space-md rounded-lg bg-surface-container-lowest">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-primary font-label-lg font-bold flex items-center justify-center shrink-0">05</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Collect Forensic Evidence</span>
+<p class="text-[13px] text-on-surface-variant">Extract memory captures, PCAP logs, and payload strings. Hash all files via SHA-256 prior to staging.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-md p-space-md rounded-lg bg-surface-container-lowest">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-primary font-label-lg font-bold flex items-center justify-center shrink-0">06</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Create Findings Draft</span>
+<p class="text-[13px] text-on-surface-variant">Document reproduction paths, proof-of-concept exploits, and vulnerability severity in Markdown.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-md p-space-md rounded-lg bg-surface-container-lowest">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-primary font-label-lg font-bold flex items-center justify-center shrink-0">07</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Workspace Autosave</span>
+<p class="text-[13px] text-on-surface-variant">Competitor Workspace synchronizes text buffers locally and remotely every 4 seconds without lockups.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-md p-space-md rounded-lg bg-surface-container-lowest">
+<div class="w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary font-label-lg font-bold flex items-center justify-center shrink-0">08</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Safe Submit Verification Gate</span>
+<p class="text-[13px] text-on-surface-variant">Trigger mandatory 2-step verification modal to prevent unintended flag submissions during match waves.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-md p-space-md rounded-lg bg-surface-container-lowest">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-primary font-label-lg font-bold flex items-center justify-center shrink-0">09</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Review Proctor Audit Notes</span>
+<p class="text-[13px] text-on-surface-variant">Inspect feedback in Reports Management. Address reviewer requests for PoC clarification or telemetry proof.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-md p-space-md rounded-lg bg-surface-container-lowest">
+<div class="w-8 h-8 rounded-full bg-primary font-label-lg text-on-primary font-bold flex items-center justify-center shrink-0">10</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Monitor Live Standings</span>
+<p class="text-[13px] text-on-surface-variant">Track division delta scores, anti-tamper validation points, and live telemetry solve streams.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 2: PLATFORM OVERVIEW & ARCHITECTURE -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-architecture">
+<div class="flex flex-col gap-space-2xs">
+<span class="text-secondary font-label-lg text-[12px] uppercase tracking-wider">MODULE 02 // SYSTEM SCHEMATICS</span>
+<h2 class="font-display-lg text-[28px] text-on-surface">Platform Architecture & Subsystems</h2>
+<p class="text-on-surface-variant text-body-lg">
+            CyberNexus partitions competitive operations into 7 isolated modular subsystems, preventing cross-vector data leaks.
+          </p>
+</div>
+<div class="flex flex-col gap-space-sm">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="p-space-xs rounded bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Overview & Telemetry Grid</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container text-primary font-label-lg text-[10px]">ROUTE: /overview</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">Central operational HUD, collegiate standings ticker, real-time proctor alert broadcast.</p>
+</div>
+</div>
+<span class="font-label-lg text-[12px] text-outline shrink-0">SCOPE: ALL OPERATORS</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="p-space-xs rounded bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[24px]">terminal</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Missions & Arenas</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container text-primary font-label-lg text-[10px]">ROUTE: /missions</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">Multi-tier attack-and-defense challenge environments with on-demand isolated virtual machines.</p>
+</div>
+</div>
+<span class="font-label-lg text-[12px] text-outline shrink-0">SCOPE: COMPETITORS & MANAGERS</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="p-space-xs rounded bg-surface-container text-tertiary">
+<span class="material-symbols-outlined text-[24px]">leaderboard</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Standings & Telemetry Stream</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container text-tertiary font-label-lg text-[10px]">ROUTE: /standings</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">Live solve telemetry broadcast feed, anti-cheat validation score graphs, and collegiate divisions.</p>
+</div>
+</div>
+<span class="font-label-lg text-[12px] text-outline shrink-0">SCOPE: PUBLIC // VERIFIED</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="p-space-xs rounded bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[24px]">assignment</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Reports Management</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container text-primary font-label-lg text-[10px]">ROUTE: /reports</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">Incident report lifecycles, technical proof validation, peer reviewer notes, and resolution statuses.</p>
+</div>
+</div>
+<span class="font-label-lg text-[12px] text-outline shrink-0">SCOPE: MANAGERS & COMPETITORS</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="p-space-xs rounded bg-surface-container text-secondary">
+<span class="material-symbols-outlined text-[24px]">inventory_2</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Files & Evidence Vault</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container text-secondary font-label-lg text-[10px]">ROUTE: /files</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">Encrypted artifact repository for memory dumps, network packets, exploit scripts, and certificates.</p>
+</div>
+</div>
+<span class="font-label-lg text-[12px] text-outline shrink-0">SCOPE: RESTRICTED ACCESS</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="p-space-xs rounded bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[24px]">space_dashboard</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Competitor Workspace</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container text-primary font-label-lg text-[10px]">ROUTE: /workspace</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">Dual-panel research desk featuring autosaved markdown scratchpads and live flag verification triggers.</p>
+</div>
+</div>
+<span class="font-label-lg text-[12px] text-outline shrink-0">SCOPE: COMPETITORS ONLY</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="p-space-xs rounded bg-surface-container text-error">
+<span class="material-symbols-outlined text-[24px]">admin_panel_settings</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Administration Core</span>
+<span class="px-space-xs py-space-2xs rounded bg-surface-container text-error font-label-lg text-[10px]">ROUTE: /settings</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">Direct provisioning of operator credentials, permission matrices, audit logs, and cold archive vault.</p>
+</div>
+</div>
+<span class="font-label-lg text-[12px] text-outline shrink-0">SCOPE: SYSTEM ADMINS</span>
+</div>
+</div>
+</section>
+<!-- SECTION 3: OVERVIEW & TELEMETRY DASHBOARD -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-dashboard">
+<div class="flex flex-col gap-space-2xs">
+<span class="text-primary font-label-lg text-[12px] uppercase tracking-wider">MODULE 03 // MONITORING OPERATIONS</span>
+<h2 class="font-display-lg text-[28px] text-on-surface">Overview & Live Telemetry Dashboard</h2>
+<p class="text-on-surface-variant text-body-lg">
+            Operational guide explaining the real-time arena monitors, influx wave cycles, challenge of the hour, and proctor messaging systems.
+          </p>
+</div>
+<!-- Operational Callout Notice -->
+<div class="p-space-md rounded-lg bg-surface-container-high flex items-start gap-space-md">
+<span class="material-symbols-outlined text-primary text-[24px] shrink-0">info</span>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">OPERATIONAL INTENT & USAGE</span>
+<p class="text-[13px] text-on-surface-variant">
+              The Overview interface is not a passive analytics screen. It acts as the tactical command bridge where operators identify attack waves, observe server health, acknowledge critical broadcast bulletins from proctors, and jump straight into live mission sandboxes.
+            </p>
+</div>
+</div>
+<!-- Telemetry Metrics Grid Preview -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-sm font-label-lg">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="text-[11px] text-outline">COLLEGIATE TEAMS</span>
+<span class="text-[24px] text-primary font-bold">128</span>
+<span class="text-[11px] text-on-surface-variant">Active Across 14 States</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="text-[11px] text-outline">LIVE VECTORS</span>
+<span class="text-[24px] text-secondary font-bold">40</span>
+<span class="text-[11px] text-on-surface-variant">Concurrent Sandbox Nodes</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="text-[11px] text-outline">FLAGS CAPTURED</span>
+<span class="text-[24px] text-tertiary font-bold">2,840</span>
+<span class="text-[11px] text-on-surface-variant">Validated Submissions</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="text-[11px] text-outline">NEXT INFLUX WAVE</span>
+<span class="text-[24px] text-on-surface font-bold">00:42:19</span>
+<span class="text-[11px] text-primary flex items-center gap-space-2xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+              Wave 03 Primed
+            </span>
+</div>
+</div>
+<!-- Breakdown of Core Arena Features -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="p-space-md rounded-lg bg-surface-container flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-primary font-label-lg text-[13px] font-bold">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span>Challenge of the Hour</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">
+              Rotates dynamically every 60 minutes. Current target: <span class="text-on-surface font-bold">"Ghost Protocol"</span> — a high-yield memory dump reverse engineering sprint offering 2x point multipliers.
+            </p>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-secondary font-label-lg text-[13px] font-bold">
+<span class="material-symbols-outlined text-[18px]">route</span>
+<span>Arena Progression</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">
+              Follows the 3-stage tactical pipeline: <span class="text-on-surface">01 Recon & Mapping</span> → <span class="text-on-surface">02 Exploit & Breach</span> → <span class="text-on-surface">03 Capture & Defend</span>.
+            </p>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-tertiary font-label-lg text-[13px] font-bold">
+<span class="material-symbols-outlined text-[18px]">campaign</span>
+<span>Proctor Ping System</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">
+              Official arbiters push critical rule modifications, hint broadcasts, or service downtime warnings directly to competitor screens without page reload.
+            </p>
+</div>
+</div>
+</section>
+<!-- SECTION 4: MISSIONS & CHALLENGE ARENAS -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-missions">
+<div class="flex flex-col gap-space-2xs">
+<span class="text-primary font-label-lg text-[12px] uppercase tracking-wider">MODULE 04 // VECTOR CATALOG</span>
+<h2 class="font-display-lg text-[28px] text-on-surface">Missions & Challenge Arenas</h2>
+<p class="text-on-surface-variant text-body-lg">
+            Operational guide covering challenge categories, difficulty tier calibrations, ephemeral target node sandboxes, and flag submission protocols.
+          </p>
+</div>
+<!-- Tier & Category Specs -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-sm">
+<span class="font-label-lg font-bold text-on-surface text-[13px]">DIFFICULTY TIERS</span>
+<div class="flex flex-col gap-space-2xs font-label-lg text-[12px]">
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container">
+<span class="text-primary">BEGINNER</span>
+<span class="text-outline">100 - 250 PTS // Foundational protocols & encoding</span>
+</div>
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container">
+<span class="text-secondary">INTERMEDIATE</span>
+<span class="text-outline">300 - 500 PTS // Web exploitation, buffer bypass</span>
+</div>
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container">
+<span class="text-tertiary">ADVANCED</span>
+<span class="text-outline">600 - 850 PTS // Kernel heap spraying, crypto attack</span>
+</div>
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container">
+<span class="text-error">EXPERT</span>
+<span class="text-outline">1,000+ PTS // Multi-stage airgap extraction</span>
+</div>
+</div>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-sm">
+<span class="font-label-lg font-bold text-on-surface text-[13px]">TACTICAL CATEGORIES</span>
+<div class="grid grid-cols-2 gap-space-xs font-label-lg text-[11px]">
+<div class="p-space-xs rounded bg-surface-container text-on-surface-variant">WEB SECURITY (SQLi, SSRF)</div>
+<div class="p-space-xs rounded bg-surface-container text-on-surface-variant">CRYPTOGRAPHY (RSA, Elliptic)</div>
+<div class="p-space-xs rounded bg-surface-container text-on-surface-variant">FORENSICS (PCAP, Memory Dump)</div>
+<div class="p-space-xs rounded bg-surface-container text-on-surface-variant">REVERSE ENGINEERING (Ghidra)</div>
+<div class="p-space-xs rounded bg-surface-container text-on-surface-variant">OSINT (Infrastructure Mapping)</div>
+<div class="p-space-xs rounded bg-surface-container text-on-surface-variant">NETWORK PENTEST (Subnet Pivot)</div>
+</div>
+</div>
+</div>
+<!-- Challenge Schema Breakdown Card -->
+<div class="p-space-md rounded-lg bg-surface-container flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">CHALLENGE CARD ANATOMY & SCHEMA</span>
+<span class="font-label-lg text-primary text-[12px]">SCHEMA SPEC v2.4</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-space-2xs rounded bg-surface-container-high text-tertiary font-label-lg text-[11px] font-bold">ADVANCED</span>
+<span class="font-label-lg text-on-surface font-bold text-[15px]">Spectre Memory Leak (CVE-2024-8841)</span>
+</div>
+<div class="flex items-center gap-space-xs font-label-lg text-[12px]">
+<span class="text-tertiary font-bold">750 PTS</span>
+<span class="text-outline">/ 38 Solves</span>
+</div>
+</div>
+<p class="text-[13px] text-on-surface-variant">
+              Extract microarchitectural cache state through branch prediction manipulation on the target virtualization hypervisor.
+            </p>
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex items-center gap-space-xs font-label-lg text-[12px] text-outline">
+<span>TARGET:</span>
+<code class="text-primary bg-surface-container px-space-xs py-space-2xs rounded">node-introspect.nexus:8443</code>
+<button class="hover:text-primary transition-colors" onclick="copyProtocol('node-introspect.nexus:8443', this)">
+<span class="material-symbols-outlined text-[15px]">content_copy</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-md py-space-xs rounded bg-surface-container-high text-on-surface hover:bg-surface-bright font-label-lg text-[12px] transition-colors flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span>Launch Sandbox</span>
+</button>
+<button class="px-space-md py-space-xs rounded bg-primary text-on-primary font-label-lg text-[12px] font-bold hover:bg-primary-fixed transition-colors flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px]">flag</span>
+<span>Submit Vector Flag</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 5: STANDINGS & LIVE TELEMETRY STREAM -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-standings">
+<div class="flex flex-col gap-space-2xs">
+<span class="text-tertiary font-label-lg text-[12px] uppercase tracking-wider">MODULE 05 // COMPETITIVE TELEMETRY</span>
+<h2 class="font-display-lg text-[28px] text-on-surface">Standings & Real-Time Solve Stream</h2>
+<p class="text-on-surface-variant text-body-lg">
+            High-precision ranking calculation using anti-tamper decay weighting and millisecond-accurate solve packet confirmation.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="font-label-lg text-[11px] text-outline">DYNAMIC DECAY ALGORITHM</span>
+<p class="text-[13px] text-on-surface-variant">
+              Challenge values dynamically scale downward as more teams submit valid flags, rewarding teams who capture first-bloods.
+            </p>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="font-label-lg text-[11px] text-outline">DIVISION FILTERING</span>
+<p class="text-[13px] text-on-surface-variant">
+              Switch instantaneous views between <span class="text-on-surface font-bold">All Teams</span>, <span class="text-on-surface font-bold">Collegiate Tier-1</span>, and <span class="text-on-surface font-bold">Ivy League Division</span> without reload.
+            </p>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="font-label-lg text-[11px] text-outline">FIRST BLOOD TELEMETRY</span>
+<p class="text-[13px] text-on-surface-variant">
+              Audited in real-time with automated screen pulses broadcast across all arena monitors when an expert node is solved.
+            </p>
+</div>
+</div>
+<!-- Live Solve Stream Simulator Preview -->
+<div class="flex flex-col gap-space-xs p-space-md rounded-lg bg-surface-container font-label-lg text-[12px]">
+<div class="flex items-center justify-between text-outline text-[11px]">
+<span class="flex items-center gap-space-2xs text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+              LIVE PACKET SOLVE FEED
+            </span>
+<span>ENCRYPTED SOCKET: 443/WSS</span>
+</div>
+<div class="flex flex-col gap-space-2xs mt-space-2xs">
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container-lowest">
+<div class="flex items-center gap-space-sm">
+<span class="text-tertiary">14:02:18</span>
+<span class="text-on-surface font-bold">MIT BeaverSec</span>
+<span class="text-outline">captured</span>
+<span class="text-primary font-bold">Ghost Protocol</span>
+</div>
+<span class="text-primary">+850 PTS (FIRST BLOOD)</span>
+</div>
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container-lowest">
+<div class="flex items-center gap-space-sm">
+<span class="text-outline">14:01:45</span>
+<span class="text-on-surface font-bold">Carnegie Mell0n Cyber</span>
+<span class="text-outline">captured</span>
+<span class="text-secondary font-bold">RSA Oracle Attack</span>
+</div>
+<span class="text-secondary">+500 PTS</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 6: REPORTS MANAGEMENT (Operations Control Center) -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-reports">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between">
+<span class="text-primary font-label-lg text-[12px] uppercase tracking-wider">MODULE 06 // CONTROL CENTER</span>
+<button class="font-label-lg text-primary text-[12px] hover:underline flex items-center gap-space-2xs" onclick="copyProtocol('REPORT-024', this)">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+<span>SAMPLE_ID: REPORT-024</span>
+</button>
+</div>
+<h2 class="font-display-lg text-[28px] text-on-surface">Reports Management & Triage SOP</h2>
+<p class="text-on-surface-variant text-body-lg">
+            Operational procedure for generating, editing, reviewing, and cryptographically approving mission vulnerability disclosures.
+          </p>
+</div>
+<!-- Status and Priority Indicators Matrix -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-sm">
+<span class="font-label-lg font-bold text-on-surface text-[13px]">TRIAGE STATUS STATES</span>
+<div class="flex flex-col gap-space-xs font-label-lg text-[12px]">
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-tertiary font-bold">OPEN</span>
+</div>
+<span class="text-on-surface-variant">Report logged, awaiting initial proctor intake.</span>
+</div>
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-secondary font-bold">IN REVIEW</span>
+</div>
+<span class="text-on-surface-variant">Proctor or Manager currently inspecting PoC.</span>
+</div>
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-primary font-bold">RESOLVED</span>
+</div>
+<span class="text-on-surface-variant">PoC verified, points allocated, cryptographically signed.</span>
+</div>
+</div>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-sm">
+<span class="font-label-lg font-bold text-on-surface text-[13px]">SEVERITY / PRIORITY LEVELS</span>
+<div class="flex flex-col gap-space-xs font-label-lg text-[12px]">
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container">
+<span class="text-outline font-bold">LOW</span>
+<span class="text-on-surface-variant">Informational vulnerability or minor config drift.</span>
+</div>
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container">
+<span class="text-secondary font-bold">MEDIUM</span>
+<span class="text-on-surface-variant">Non-root bypass or limited credential access.</span>
+</div>
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container">
+<span class="text-tertiary font-bold">HIGH</span>
+<span class="text-on-surface-variant">Subnet traversal or arbitrary code execution.</span>
+</div>
+<div class="flex items-center justify-between p-space-xs rounded bg-surface-container">
+<span class="text-error font-bold">CRITICAL</span>
+<span class="text-on-surface-variant">Host hypervisor escape or full arena takeover.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Full CRUD Lifecycle Breakdown -->
+<div class="p-space-md rounded-lg bg-surface-container flex flex-col gap-space-md">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">CRUD ACTIONS & DETAIL DRAWER WORKFLOW</span>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm text-[13px]">
+<div class="p-space-sm rounded bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="font-label-lg text-primary font-bold">01. Search & Filter</span>
+<p class="text-on-surface-variant">Full-text query across titles, tags, and authors with multi-parameter facets for rapid triage during live waves.</p>
+</div>
+<div class="p-space-sm rounded bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="font-label-lg text-secondary font-bold">02. Slide-Over Detail Drawer</span>
+<p class="text-on-surface-variant">Clicking any row opens non-destructive right-hand inspector with live markdown preview and timeline logs.</p>
+</div>
+<div class="p-space-sm rounded bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="font-label-lg text-tertiary font-bold">03. Cryptographic Sign-Off</span>
+<p class="text-on-surface-variant">Managers append encrypted reviewer notes. Destructive deletions require explicit double-confirmation prompts.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 7: FILES & EVIDENCE VAULT -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-vault">
+<div class="flex flex-col gap-space-2xs">
+<span class="text-secondary font-label-lg text-[12px] uppercase tracking-wider">MODULE 07 // EVIDENCE REPOSITORY</span>
+<h2 class="font-display-lg text-[28px] text-on-surface">Files & Forensic Evidence Vault</h2>
+<p class="text-on-surface-variant text-body-lg">
+            Secure multi-tier artifact storage preserving chain of custody for vulnerability proof, network captures, and CTF writeups.
+          </p>
+</div>
+<!-- Directory Model & Drag Drop Simulated Zone -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">DIRECTORY SCHEME</span>
+<p class="text-[13px] text-on-surface-variant">Files are segregated into 3 isolated physical buckets to prevent cross-contamination:</p>
+</div>
+<div class="flex flex-col gap-space-xs font-label-lg text-[12px]">
+<div class="flex items-center gap-space-xs p-space-xs rounded bg-surface-container">
+<span class="material-symbols-outlined text-primary text-[18px]">folder</span>
+<span class="text-on-surface">/reports</span>
+<span class="text-outline text-[11px] ml-auto">Official sanitized audit writeups</span>
+</div>
+<div class="flex items-center gap-space-xs p-space-xs rounded bg-surface-container">
+<span class="material-symbols-outlined text-secondary text-[18px]">folder</span>
+<span class="text-on-surface">/submissions</span>
+<span class="text-outline text-[11px] ml-auto">PoC exploits & raw captures</span>
+</div>
+<div class="flex items-center gap-space-xs p-space-xs rounded bg-surface-container">
+<span class="material-symbols-outlined text-tertiary text-[18px]">folder</span>
+<span class="text-on-surface">/assets</span>
+<span class="text-outline text-[11px] ml-auto">Tactical binaries & wordlists</span>
+</div>
+</div>
+<div class="text-[11px] font-label-lg text-outline">
+              SUPPORTED EXTENSIONS: .pdf, .pcap, .log, .zip, .xlsx, .docx, .png, .txt
+            </div>
+</div>
+<!-- Drag and Drop Staging Box -->
+<div class="p-space-md rounded-lg bg-surface-container flex flex-col items-center justify-center text-center gap-space-sm p-space-xl">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">cloud_upload</span>
+</div>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">Forensic Drag & Drop Intake</span>
+<span class="text-[12px] text-on-surface-variant">Maximum artifact payload: 250 MB per single file</span>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-full h-1.5 mt-space-xs overflow-hidden">
+<div class="bg-primary h-full w-3/4"></div>
+</div>
+<span class="font-label-lg text-[11px] text-primary">Automated SHA-256 Hash Ingestion Active</span>
+</div>
+</div>
+</section>
+<!-- SECTION 8: COMPETITOR WORKSPACE -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-workspace">
+<div class="flex flex-col gap-space-2xs">
+<span class="text-primary font-label-lg text-[12px] uppercase tracking-wider">MODULE 08 // RESEARCH CONSOLE</span>
+<h2 class="font-display-lg text-[28px] text-on-surface">Competitor Workspace Console</h2>
+<p class="text-on-surface-variant text-body-lg">
+            Split-screen tactical workbench tailored for uninterrupted live-fire competition documentation.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-sm">
+<div class="flex items-center justify-between font-label-lg text-[13px]">
+<span class="text-primary font-bold flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px]">edit_note</span>
+                LEFT PANEL: FINDINGS EDITOR
+              </span>
+<span class="text-outline">AUTOSAVE: ON</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">
+              Full Markdown authoring station featuring dynamic headings, code block syntaxes, and real-time word counting. State persistency guarantees that accidental browser restarts retain unsaved data.
+            </p>
+<div class="p-space-xs rounded bg-surface-container text-outline font-label-lg text-[11px]">
+              STORAGE: Local IndexedDB + Periodic Cluster Snapshot (Every 4000ms)
+            </div>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-sm">
+<div class="flex items-center justify-between font-label-lg text-[13px]">
+<span class="text-secondary font-bold flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px]">attach_file</span>
+                RIGHT PANEL: TASK EVIDENCE
+              </span>
+<span class="text-outline">CHAIN-OF-CUSTODY</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">
+              Displays quick-drop attachments, ephemeral scratchpad terminal logs, and node ping responses associated with the currently open challenge vector.
+            </p>
+<div class="p-space-xs rounded bg-surface-container text-outline font-label-lg text-[11px]">
+              INTEGRITY: Automated VirusTotal & ClamAV Sandbox Scanning On Stage
+            </div>
+</div>
+</div>
+<!-- Safe Submit Verification Gate Callout -->
+<div class="p-space-md rounded-lg bg-surface-container-high flex items-start gap-space-md">
+<span class="material-symbols-outlined text-tertiary text-[24px] shrink-0">security</span>
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">SAFE SUBMIT VERIFICATION GATE</span>
+<p class="text-[13px] text-on-surface-variant">
+              To mitigate accidental flag leakage or partial submissions under competition pressure, CyberNexus enforces a secondary cryptographic modal verification. Once submitted, submissions enter a mandatory 3-minute lock during proctor grading.
+            </p>
+</div>
+</div>
+</section>
+<!-- SECTION 9: ADMINISTRATION CORE & DIRECT USER CREATION -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-admin">
+<div class="flex flex-col gap-space-2xs">
+<span class="text-tertiary font-label-lg text-[12px] uppercase tracking-wider">MODULE 09 // GOVERNANCE & PROVISIONING</span>
+<h2 class="font-display-lg text-[28px] text-on-surface">Administration Core & Direct Provisioning</h2>
+<p class="text-on-surface-variant text-body-lg">
+            Rigid identity governance without vulnerable public invitation links. Administrators provision and revoke operators directly.
+          </p>
+</div>
+<!-- KPI Metrics Grid -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-space-sm font-label-lg">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="text-[11px] text-outline">TOTAL USERS</span>
+<span class="text-[22px] text-on-surface font-bold">2,845</span>
+<span class="text-[11px] text-outline">Cluster Capacity</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="text-[11px] text-outline">ACTIVE USERS</span>
+<span class="text-[22px] text-primary font-bold">2,610</span>
+<span class="text-[11px] text-primary">Live Sessions</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="text-[11px] text-outline">MANAGERS</span>
+<span class="text-[22px] text-secondary font-bold">142</span>
+<span class="text-[11px] text-outline">Lead Evaluators</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs">
+<span class="text-[11px] text-outline">VIEWERS</span>
+<span class="text-[22px] text-outline font-bold">488</span>
+<span class="text-[11px] text-outline">Audit Observers</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-2xs col-span-2 md:col-span-1">
+<span class="text-[11px] text-outline">ARCHIVED</span>
+<span class="text-[22px] text-error font-bold">235</span>
+<span class="text-[11px] text-error">Cold Storage</span>
+</div>
+</div>
+<!-- Add User Schema Breakdown Card -->
+<div class="p-space-md rounded-lg bg-surface-container flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">DIRECT "+ ADD USER" SCHEMA REQUIREMENTS</span>
+<span class="font-label-lg text-tertiary text-[12px]">ZERO-TRUST ENFORCEMENT</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">
+            Because public signup portals present attack surfaces, administrators manually inject operator records through the Add User schema modal:
+          </p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-xs font-label-lg text-[12px]">
+<div class="p-space-xs rounded bg-surface-container-lowest flex flex-col">
+<span class="text-primary font-bold">1. Full Name & Clearance</span>
+<span class="text-outline text-[11px]">e.g. Elena Rostova (SysAdmin)</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container-lowest flex flex-col">
+<span class="text-secondary font-bold">2. Institutional Email</span>
+<span class="text-outline text-[11px]">e.g. e.rostova@mit.edu</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container-lowest flex flex-col">
+<span class="text-tertiary font-bold">3. Fixed Handle & Password</span>
+<span class="text-outline text-[11px]">Automated 24-char entropy string</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 10 & 11: USERS & ROLES MATRIX -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-roles">
+<div class="flex flex-col gap-space-2xs">
+<span class="text-primary font-label-lg text-[12px] uppercase tracking-wider">MODULE 10 & 11 // ACCESS POLICIES</span>
+<h2 class="font-display-lg text-[28px] text-on-surface">Users & Roles Permission Matrix</h2>
+<p class="text-on-surface-variant text-body-lg">
+            Granular enforcement separating evaluation privileges, competitor execution capabilities, and read-only observer access.
+          </p>
+</div>
+<!-- 3 Role Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col justify-between gap-space-sm">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-space-xs py-space-2xs rounded bg-secondary-container text-on-secondary-container font-label-lg text-[11px] font-bold">MANAGER</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">manage_accounts</span>
+</div>
+<h3 class="font-label-lg font-bold text-on-surface text-[15px]">Operational Evaluator</h3>
+<p class="text-[13px] text-on-surface-variant">
+                Full authority to review competitor submissions, approve writeups, submit proctor pings, and adjust scored flags.
+              </p>
+</div>
+<span class="font-label-lg text-secondary text-[11px]">CLEARANCE LEVEL: 2</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col justify-between gap-space-sm">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-space-xs py-space-2xs rounded bg-primary-container text-on-primary-container font-label-lg text-[11px] font-bold">USER</span>
+<span class="material-symbols-outlined text-primary text-[20px]">person</span>
+</div>
+<h3 class="font-label-lg font-bold text-on-surface text-[15px]">Arena Competitor</h3>
+<p class="text-[13px] text-on-surface-variant">
+                Standard collegiate team operator. Permitted to launch mission sandboxes, submit PoC writeups, and upload evidence.
+              </p>
+</div>
+<span class="font-label-lg text-primary text-[11px]">CLEARANCE LEVEL: 1</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col justify-between gap-space-sm">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-space-xs py-space-2xs rounded bg-surface-container-high text-outline font-label-lg text-[11px] font-bold">VIEWER</span>
+<span class="material-symbols-outlined text-outline text-[20px]">visibility</span>
+</div>
+<h3 class="font-label-lg font-bold text-on-surface text-[15px]">Observer / Auditor</h3>
+<p class="text-[13px] text-on-surface-variant">
+                Strict read-only telemetry audit clearance. Cannot initiate sandbox instances, modify reports, or submit flags.
+              </p>
+</div>
+<span class="font-label-lg text-outline text-[11px]">CLEARANCE LEVEL: 0</span>
+</div>
+</div>
+<!-- Full Permission Matrix Technical Table -->
+<div class="flex flex-col gap-space-sm" id="section-matrix">
+<div class="flex items-center justify-between text-outline font-label-lg text-[12px] uppercase">
+<span>Granular Capability Matrix</span>
+<span class="text-primary font-bold">ROLE ENTITLEMENTS</span>
+</div>
+<div class="w-full overflow-x-auto rounded-lg bg-surface-container-lowest">
+<table class="w-full text-left font-label-lg text-[13px]">
+<thead>
+<tr class="bg-surface-container text-outline text-[11px] uppercase tracking-wider">
+<th class="py-space-sm px-space-md">FEATURE / OPERATIONAL DOMAIN</th>
+<th class="py-space-sm px-space-md text-secondary">MANAGER</th>
+<th class="py-space-sm px-space-md text-primary">USER (COMPETITOR)</th>
+<th class="py-space-sm px-space-md text-outline">VIEWER</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container text-on-surface">
+<tr class="hover:bg-surface-container/50">
+<td class="py-space-xs px-space-md">Overview & Telemetry Monitor</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+</tr>
+<tr class="hover:bg-surface-container/50">
+<td class="py-space-xs px-space-md">Missions Sandbox Deployment</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+</tr>
+<tr class="hover:bg-surface-container/50">
+<td class="py-space-xs px-space-md">Standings & Solves View</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+</tr>
+<tr class="hover:bg-surface-container/50">
+<td class="py-space-xs px-space-md">Create & Edit Reports</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+</tr>
+<tr class="hover:bg-surface-container/50">
+<td class="py-space-xs px-space-md">Delete Reports (Soft Delete)</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+</tr>
+<tr class="hover:bg-surface-container/50">
+<td class="py-space-xs px-space-md">Upload Forensic Evidence</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+</tr>
+<tr class="hover:bg-surface-container/50">
+<td class="py-space-xs px-space-md">Delete Evidence Files</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+</tr>
+<tr class="hover:bg-surface-container/50">
+<td class="py-space-xs px-space-md">Workspace Flag Submission</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+</tr>
+<tr class="hover:bg-surface-container/50">
+<td class="py-space-xs px-space-md">View Team Operator Directory</td>
+<td class="py-space-xs px-space-md text-primary font-bold">✓</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+</tr>
+<tr class="hover:bg-surface-container/50">
+<td class="py-space-xs px-space-md">Add / Archive / Purge Users</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+<td class="py-space-xs px-space-md text-outline">—</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="text-[11px] font-label-lg text-outline">
+            * Note: System Admin role possesses root override capability spanning all matrix points.
+          </span>
+</div>
+</section>
+<!-- SECTION 12 & 13: ARCHIVE VAULT & SAFE ALTERNATIVE TO DELETION -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-archive">
+<div class="flex flex-col gap-space-2xs">
+<span class="text-error font-label-lg text-[12px] uppercase tracking-wider">MODULE 12 & 13 // RETENTION & PURGING</span>
+<h2 class="font-display-lg text-[28px] text-on-surface">Archive Vault Management & Purge Safety</h2>
+<p class="text-on-surface-variant text-body-lg">
+            Operational guide distinguishing reversible cold-storage archiving from unrecoverable cryptographic purges.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-xs text-secondary font-label-lg text-[14px] font-bold">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+<span>SAFE ARCHIVING (RECOMMENDED)</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">
+              Archiving immediately suspends operator authentication, revokes token refresh headers, and frees the active license seat without destroying mission audit histories.
+            </p>
+<div class="p-space-xs rounded bg-surface-container text-on-surface-variant font-label-lg text-[11px]">
+              RESTORATION: Immediate via single-click "Restore User" in Archive Tab.
+            </div>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-xs text-error font-label-lg text-[14px] font-bold">
+<span class="material-symbols-outlined text-[20px]">delete_forever</span>
+<span>PERMANENT PURGE (DESTRUCTIVE)</span>
+</div>
+<p class="text-[13px] text-on-surface-variant">
+              Permanent deletion initiates an irretrievable 3-pass cryptographic wipe of user telemetry, uploaded artifacts, and private notes complying with SOC 2 Type II and CCPA requirements.
+            </p>
+<div class="p-space-xs rounded bg-surface-container text-error font-label-lg text-[11px]">
+              GATE: Requires manual typing of operator username + MFA confirmation.
+            </div>
+</div>
+</div>
+</section>
+<!-- SECTION 14 & 15: SECURITY, SAFETY & ACCESSIBILITY PROTOCOLS -->
+<section class="flex flex-col gap-space-lg bg-surface-container-low p-space-xl rounded-xl" id="section-security">
+<div class="flex flex-col gap-space-2xs">
+<span class="text-primary font-label-lg text-[12px] uppercase tracking-wider">MODULE 14 & 15 // COMPLIANCE CODES</span>
+<h2 class="font-display-lg text-[28px] text-on-surface">Security & Accessibility Standards</h2>
+<p class="text-on-surface-variant text-body-lg">
+            Architectural compliance standards ensuring low eye-strain tactical contrast and high-assurance isolation.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md text-[13px]">
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-xs">
+<span class="font-label-lg font-bold text-on-surface flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<span>WCAG AA Contrast Guarantee</span>
+</span>
+<p class="text-on-surface-variant">
+              All typography pairs provide minimum 4.5:1 contrast against surface layers. Monospaced indicators maintain 7:1 ratio for critical telemetry figures to avoid misinterpretation in low-light operations.
+            </p>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-xs">
+<span class="font-label-lg font-bold text-on-surface flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">keyboard</span>
+<span>Keyboard Trap Immunity</span>
+</span>
+<p class="text-on-surface-variant">
+              All modal dialogs, drawers, and interactive data tables maintain explicit tab order indices with escape shortcuts (<kbd class="px-1 rounded bg-surface-container text-primary font-label-lg text-[11px]">ESC</kbd>) guaranteeing rapid emergency closure.
+            </p>
+</div>
+</div>
+</section>
+<!-- DOCUMENTATION FOOTER UTILITIES -->
+<footer class="flex flex-col gap-space-lg pt-space-md">
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md p-space-lg rounded-xl bg-surface-container-low">
+<div class="flex flex-col gap-space-2xs">
+<span class="font-label-lg font-bold text-on-surface text-[14px]">WAS THIS OPERATIONAL MANUAL HELPFUL?</span>
+<span class="text-[12px] text-outline">Telemetry packet ID: 0x99B3 // Feedback logged for SOC 2 reviews.</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-md py-space-xs rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-lg text-[12px] transition-colors flex items-center gap-space-2xs" onclick="handleFeedback(true, this)">
+<span class="material-symbols-outlined text-primary text-[16px]">thumb_up</span>
+<span>Affirmative</span>
+</button>
+<button class="px-space-md py-space-xs rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-lg text-[12px] transition-colors flex items-center gap-space-2xs" onclick="handleFeedback(false, this)">
+<span class="material-symbols-outlined text-outline text-[16px]">thumb_down</span>
+<span>Incomplete</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-md font-label-lg text-[12px] text-outline">
+<div class="flex items-center gap-space-xs">
+<span>LAST REVISED:</span>
+<span class="text-on-surface">SEPTEMBER 14, 2026</span>
+<span>•</span>
+<span class="text-primary">SOC 2 TYPE II VERIFIED</span>
+</div>
+<button class="text-primary hover:underline flex items-center gap-space-2xs" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+<span>Back to Surface Top</span>
+<span class="material-symbols-outlined text-[16px]">arrow_upward</span>
+</button>
+</div>
+</footer>
+</main>
+<!-- RIGHT SIDEBAR: Sticky "ON THIS PAGE" Outline -->
+<aside class="hidden xl:flex xl:w-56 xl:shrink-0 xl:sticky xl:top-20 flex-col gap-space-md bg-surface-container-low p-space-md rounded-xl font-label-lg text-[12px]">
+<div class="flex items-center gap-space-2xs text-on-surface font-bold uppercase tracking-wider text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span>ON THIS PAGE</span>
+</div>
+<nav class="flex flex-col gap-space-2xs text-outline">
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-workflow">01. Getting Started</a>
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-architecture">02. Architecture</a>
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-dashboard">03. Arena Dashboard</a>
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-missions">04. Missions & Arenas</a>
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-standings">05. Standings Stream</a>
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-reports">06. Reports Ops</a>
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-vault">07. Evidence Vault</a>
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-workspace">08. Workspace</a>
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-admin">09. Admin Core</a>
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-roles">10. Roles Matrix</a>
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-archive">11. Archive & Purge</a>
+<a class="hover:text-primary transition-colors py-space-2xs truncate" href="#section-security">12. Security & Specs</a>
+</nav>
+<div class="pt-space-xs flex flex-col gap-space-xs">
+<button class="w-full py-space-xs rounded bg-surface-container hover:bg-surface-container-high text-on-surface transition-colors flex items-center justify-center gap-space-2xs text-[11px]" onclick="copyProtocol('SOP-OPS-702-VAULT', this)">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+<span>Copy Protocol Ref</span>
+</button>
+</div>
+</aside>
+</div>
+</div>
+<script>
+  // Copy identifier utility with feedback toast
+  function copyProtocol(text, btn) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    }
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toast-message');
+    if (toast && toastMsg) {
+      toastMsg.innerText = `Protocol "${text}" copied to clipboard`;
+      toast.classList.remove('opacity-0', 'translate-y-12', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-12', 'pointer-events-none');
+      }, 2400);
+    }
+  }
+
+  // Filter left sidebar modules by search input
+  function filterModules(query) {
+    const q = query.toLowerCase().trim();
+    const items = document.querySelectorAll('#module-nav-list .nav-module-item');
+    items.forEach(item => {
+      const match = item.getAttribute('data-title') || item.innerText.toLowerCase();
+      if (!q || match.toLowerCase().includes(q)) {
+        item.style.display = 'flex';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  // Feedback action feedback
+  function handleFeedback(isPositive, button) {
+    const parent = button.parentElement;
+    parent.innerHTML = `<span class="text-primary font-label-lg text-[12px] flex items-center gap-space-2xs"><span class="material-symbols-outlined text-[16px]">check_circle</span> Feedback telemetry recorded</span>`;
+  }
+
+  // Highlight active module link based on scroll position
+  window.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('#module-nav-list .nav-module-item');
+    links.forEach(l => {
+      l.addEventListener('click', function() {
+        links.forEach(x => {
+          x.classList.remove('bg-surface-container-high', 'text-primary');
+          x.classList.add('text-on-surface-variant');
+        });
+        this.classList.add('bg-surface-container-high', 'text-primary');
+        this.classList.remove('text-on-surface-variant');
+      });
+    });
+  });
+</script></div></main><footer class="w-full bg-surface-container-lowest py-space-lg"><div class="w-full px-gutter-desktop flex flex-col md:flex-row items-center justify-between gap-space-md font-label-lg text-label-lg text-outline text-[12px]"><div class="flex items-center gap-space-md"><span class="text-on-surface-variant">CyberNexus Defense Grid v4.12.0</span><span>•</span><span>Collegiate Arena Tier-1 Encrypted</span></div><div class="flex items-center gap-space-lg"><span>TELEMETRY: SYNCHRONIZED</span><span>LATENCY: 12ms</span><span>SYSTEM STATUS: OPTIMAL</span></div></div></footer></body></html>

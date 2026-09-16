@@ -1211,22 +1211,35 @@ module.exports = async function handler(req, res) {
     reqPath = '/login.html';
   }
 
-  const filePath = path.join(__dirname, '..', reqPath);
-  if (!filePath.startsWith(path.join(__dirname, '..'))) {
-    res.writeHead(403, { 'Content-Type': 'text/plain' });
-    res.end('Forbidden');
+  const baseDir = process.cwd();
+  let resolvedFile = null;
+
+  const candidates = [
+    path.join(baseDir, reqPath),
+    path.join(baseDir, 'public', reqPath),
+    path.join(__dirname, '..', reqPath),
+    path.join(baseDir, `${reqPath}.html`),
+    path.join(baseDir, 'public', `${reqPath}.html`),
+    path.join(__dirname, '..', `${reqPath}.html`)
+  ];
+
+  for (const cand of candidates) {
+    try {
+      if (fs.existsSync(cand) && fs.statSync(cand).isFile()) {
+        resolvedFile = cand;
+        break;
+      }
+    } catch (e) {}
+  }
+
+  if (!resolvedFile) {
+    res.writeHead(404, { 'Content-Type': 'text/html; charset=UTF-8' });
+    res.end(`<!DOCTYPE html><html><head><title>404 Not Found</title><style>body{background:#0e1511;color:#5bdcae;font-family:sans-serif;padding:40px;text-align:center;}</style></head><body><h1>404 // RESOURCE UNREACHABLE</h1><p>The requested vector does not exist in the collegiate arena.</p><a href="/login.html" style="color:#fff;text-decoration:underline;">Return to Tactical Login</a></body></html>`);
     return;
   }
 
-  fs.stat(filePath, (err, stats) => {
-    if (err || !stats.isFile()) {
-      res.writeHead(404, { 'Content-Type': 'text/html; charset=UTF-8' });
-      res.end(`<!DOCTYPE html><html><head><title>404 Not Found</title><style>body{background:#0e1511;color:#5bdcae;font-family:sans-serif;padding:40px;text-align:center;}</style></head><body><h1>404 // RESOURCE UNREACHABLE</h1><p>The requested vector does not exist in the collegiate arena.</p><a href="/" style="color:#fff;text-decoration:underline;">Return to Arena Overview</a></body></html>`);
-      return;
-    }
-    const ext = path.extname(filePath).toLowerCase();
-    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-    res.writeHead(200, { 'Content-Type': contentType });
-    fs.createReadStream(filePath).pipe(res);
-  });
+  const ext = path.extname(resolvedFile).toLowerCase();
+  const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+  res.writeHead(200, { 'Content-Type': contentType });
+  fs.createReadStream(resolvedFile).pipe(res);
 };

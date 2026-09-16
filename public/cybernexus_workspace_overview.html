@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Logic CTF - Workspace Settings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            tactical: {
+              bg: '#090E16',
+              surface: '#0F141C',
+              card: '#1A2330',
+              elevated: '#212B3A',
+              border: '#2D3A4B',
+              borderLight: '#3B4A5D',
+              green: '#00FF9D',
+              emerald: '#10B981',
+              muted: '#94A3B8'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      background-color: #090E16;
+      color: #FFFFFF;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090E16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2D3A4B;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3B4A5D;
+    }
+  </style>
+</head>
+<body class="bg-[#090E16] text-white min-h-screen flex flex-col selection:bg-[#00FF9D]/30 selection:text-[#00FF9D]">
+
+  <!-- Main Workspace Area -->
+  <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 flex flex-col gap-6">
+
+    <!-- Breadcrumb & Cluster Meta -->
+    <div class="flex items-center justify-between text-[11px] font-mono text-[#94A3B8] pb-1 border-b border-[#2D3A4B]/40">
+      <div class="flex items-center gap-2">
+        <span class="text-[#00FF9D]">LOGIC CTF</span>
+        <span>//</span>
+        <span>ARENA OPS</span>
+        <span>//</span>
+        <span class="text-white font-bold">WORKSPACE</span>
+      </div>
+      <div class="hidden sm:flex items-center gap-2 text-[#94A3B8]">
+        <span class="w-2 h-2 rounded-full bg-[#00FF9D] animate-pulse"></span>
+        <span>SECURE CLUSTER: US-EAST-COLLEGIATE-09</span>
+      </div>
+    </div>
+
+    <!-- Page Header & Cluster Status -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#2D3A4B]">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="font-mono text-[11px] text-[#00FF9D] uppercase tracking-wider font-semibold px-2 py-0.5 rounded bg-[#1A2330] border border-[#2D3A4B]">
+            SETTINGS // GENERAL CONFIG
+          </span>
+          <span class="font-mono text-xs text-[#94A3B8]">• ARENA ID: CNX-9021</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          Workspace Overview
+        </h1>
+        <p class="text-xs sm:text-sm text-[#94A3B8] mt-1 max-w-2xl leading-relaxed">
+          Manage your workspace profile, mission directives, and public arena telemetry identifiers.
+        </p>
+      </div>
+
+      <!-- Node Telemetry Badge -->
+      <div class="flex items-center gap-3 p-3 rounded-xl bg-[#1A2330] border border-[#2D3A4B] shadow-sm shrink-0">
+        <div class="w-10 h-10 rounded-lg bg-[#212B3A] border border-[#2D3A4B] flex items-center justify-center text-[#00FF9D]">
+          <span class="material-symbols-outlined text-[22px]">verified_user</span>
+        </div>
+        <div class="flex flex-col font-mono">
+          <span class="text-xs font-bold text-white">NODE: VERIFIED TIER-1</span>
+          <span class="text-[10.5px] text-[#94A3B8]">Synced: 12.04ms via SHA-256</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Settings Form Container -->
+    <div class="w-full bg-[#0F141C] border border-[#2D3A4B] rounded-2xl shadow-xl overflow-hidden">
+      
+      <!-- Panel Header Bar -->
+      <div class="px-6 py-3.5 bg-[#161D27] border-b border-[#2D3A4B] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[#00FF9D] text-[18px]">tune</span>
+          <span class="font-mono text-xs font-bold uppercase tracking-wider text-white">
+            Identity &amp; Telemetry Settings
+          </span>
+        </div>
+        <span class="font-mono text-[11px] text-[#94A3B8]">All records secured via Ed25519</span>
+      </div>
+
+      <!-- Form -->
+      <form class="p-6 sm:p-8 flex flex-col gap-6" id="workspace-form" onsubmit="event.preventDefault(); triggerSaveToast();">
+        
+        <!-- Field 1: Workspace Logo -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start">
+          <div class="lg:col-span-4 flex flex-col gap-1">
+            <label class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5 font-mono">
+              <span>Workspace Logo</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-[#00FF9D]"></span>
+            </label>
+            <p class="text-xs text-[#94A3B8] leading-relaxed">
+              Authoritative emblem to represent your collegiate collective across active leaderboards and encrypted mission briefs. Max 5MB (PNG, JPG, SVG).
+            </p>
+          </div>
+
+          <div class="lg:col-span-8 flex flex-col sm:flex-row items-start sm:items-center gap-5 p-4 rounded-xl bg-[#1A2330] border border-[#2D3A4B]">
+            <!-- Logo Display -->
+            <div class="relative group shrink-0">
+              <div class="w-20 h-20 rounded-xl bg-[#0F141C] border border-[#2D3A4B] flex items-center justify-center overflow-hidden p-2 shadow-inner" id="logo-preview-box">
+                <img class="w-full h-full object-contain filter contrast-125 transition-transform duration-200" id="current-logo-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4uyZGDYBbC51vXMa66iUdbxWz-bZtZEUgInG-Lmivm4nMp8TqTu0szqD4C8hwdqoGta0E1WZF0QDx3ez0OgBbzIe6zZe952jcxnUPVD7KuHihlG35tgNSV1YegtcbOE-lBYzmGkgrAnHqZPhKsj5-_uLSVwky4ZFnpAd1p_Tu1SqpOFDlKlXBB29cqoglNEaEGFqXBA75gE9iiFaOLX6Uj0ys8Tri6skZvPZqTzbD2XkFOBtDi2fuKg" style="transform: scale(1);"/>
+              </div>
+              <div class="absolute -bottom-1 -right-1 px-1.5 py-0.5 rounded bg-[#090E16] text-[#00FF9D] font-mono text-[9px] tracking-wider uppercase font-bold border border-[#00FF9D]/30">
+                ACTIVE
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex flex-col gap-2 flex-1">
+              <div class="flex flex-wrap items-center gap-2.5">
+                <button type="button" onclick="openChangeLogoModal()" class="px-3.5 py-2 rounded-lg bg-[#212B3A] hover:bg-[#2D3A4B] border border-[#2D3A4B] hover:border-[#00FF9D]/40 text-xs font-semibold text-white font-mono flex items-center gap-1.5 transition">
+                  <span class="material-symbols-outlined text-[16px] text-[#00FF9D]">upload</span>
+                  <span>Change Logo</span>
+                </button>
+                <button type="button" onclick="openEditLogoModal()" class="px-3.5 py-2 rounded-lg bg-[#212B3A] hover:bg-[#2D3A4B] border border-[#2D3A4B] hover:border-[#00FF9D]/40 text-xs font-semibold text-white font-mono flex items-center gap-1.5 transition">
+                  <span class="material-symbols-outlined text-[16px] text-[#00FF9D]">crop</span>
+                  <span>Edit Framing</span>
+                </button>
+              </div>
+              <p class="text-[11px] font-mono text-[#94A3B8]">
+                Recommended dimensions: 512x512px transparent PNG. Aspect ratio locked 1:1.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-px w-full bg-[#2D3A4B]/60"></div>
+
+        <!-- Field 2: Workspace Name -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start">
+          <div class="lg:col-span-4 flex flex-col gap-1">
+            <label class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5 font-mono" for="ws-name">
+              <span>Workspace Name</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-[#00FF9D]"></span>
+            </label>
+            <p class="text-xs text-[#94A3B8] leading-relaxed">
+              Distinct designation for your workspace. Used on tournament flags and certificate signatures.
+            </p>
+          </div>
+
+          <div class="lg:col-span-8 flex flex-col gap-1.5">
+            <div class="relative flex items-center">
+              <span class="material-symbols-outlined absolute left-3.5 text-slate-500 pointer-events-none text-[18px]">badge</span>
+              <input class="w-full bg-[#1A2330] text-white font-mono text-sm pl-10 pr-4 py-2.5 rounded-xl border border-[#2D3A4B] focus:outline-none focus:border-[#00FF9D] transition-colors" id="ws-name" placeholder="e.g. LOGIC CTF" required type="text" value="LOGIC CTF"/>
+            </div>
+            <div class="flex items-center justify-between text-[#94A3B8] font-mono text-[11px]">
+              <span>Must be between 3 and 32 alphanumeric characters</span>
+              <span id="name-count" class="text-[#00FF9D] font-bold">11 / 32</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-px w-full bg-[#2D3A4B]/60"></div>
+
+        <!-- Field 3: Workspace Description (CHALLENGE 03 SECRET BUFFER) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start">
+          <div class="lg:col-span-4 flex flex-col gap-1">
+            <label class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5 font-mono" for="ws-desc">
+              <span>Workspace Description</span>
+            </label>
+            <p class="text-xs text-[#94A3B8] leading-relaxed">
+              Concise mission briefing or summary displayed in inter-collegiate arena registries and team invites.
+            </p>
+          </div>
+
+          <div class="lg:col-span-8 flex flex-col gap-1.5">
+            <div class="relative w-full">
+              <textarea class="w-full bg-[#1A2330] text-white font-mono text-xs leading-relaxed p-4 rounded-xl border border-[#2D3A4B] focus:outline-none focus:border-[#00FF9D] transition-colors resize-y" id="ws-desc" placeholder="Provide tactical context..." rows="3" style="height: 74px; min-height: 70px; resize: vertical; overflow-y: hidden;">Collegiate cybersecurity competition workspace briefing and active operative node.
+
+
+
+
+
+
+
+
+
+========================================================================
+🚩 CHALLENGE 03 SECRET BUFFER
+========================================================================
+[SYSTEM BUFFER INSPECTION // HIDDEN PAYLOAD DETECTED]
+
+Congratulations! You adjusted the description box and investigated the buffer volume.
+This is the official flag for Challenge 03:
+
+logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}
+========================================================================</textarea>
+
+              <!-- Draggable Corner Grip Handle -->
+              <div id="desc-resize-handle" class="absolute bottom-2 right-2 flex items-center justify-center w-5 h-5 rounded cursor-ns-resize text-slate-400 hover:text-[#00FF9D] active:text-[#00FF9D] transition-colors select-none z-10 bg-[#212B3A] border border-[#2D3A4B] shadow-sm" title="Drag down to expand box">
+                <svg class="w-3.5 h-3.5 pointer-events-none text-current" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M22 22H20V20H22V22ZM22 17H17V19H22V17ZM17 22H15V24H17V22ZM22 12H12V14H22V12ZM12 22H10V24H12V22Z" />
+                </svg>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[#94A3B8] font-mono text-[11px]">
+              <span>Briefing text rendered on public threat index</span>
+              <div class="flex items-center gap-2">
+                <span class="text-slate-400 uppercase text-[10px]">Buffer telemetry:</span>
+                <span id="desc-metrics" class="text-[#00FF9D] font-bold font-mono bg-[#00FF9D]/10 px-2 py-0.5 rounded border border-[#00FF9D]/20">-- words • -- characters</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-px w-full bg-[#2D3A4B]/60"></div>
+
+        <!-- Field 4: Workspace URL -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start">
+          <div class="lg:col-span-4 flex flex-col gap-1">
+            <label class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5 font-mono" for="ws-slug">
+              <span>Workspace URL</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-[#00FF9D]"></span>
+            </label>
+            <p class="text-xs text-[#94A3B8] leading-relaxed">
+              Custom domain endpoint slug for arena team participants and direct telemetry access.
+            </p>
+          </div>
+
+          <div class="lg:col-span-8 flex flex-col gap-1.5">
+            <div class="flex items-center rounded-xl bg-[#1A2330] border border-[#2D3A4B] overflow-hidden">
+              <span class="px-3.5 py-2.5 bg-[#161D27] text-slate-400 font-mono text-xs select-none border-r border-[#2D3A4B]">
+                arena.logicctf.edu/
+              </span>
+              <input class="flex-1 bg-transparent text-[#00FF9D] font-mono text-xs px-3.5 py-2.5 focus:outline-none" id="ws-slug" placeholder="workspace-slug" required type="text" value="cybernexus"/>
+              <button class="px-3.5 text-slate-400 hover:text-[#00FF9D] transition-colors flex items-center gap-1 font-mono text-xs" onclick="copyArenaUrl()" type="button">
+                <span class="material-symbols-outlined text-[16px]">content_copy</span>
+                <span id="copy-label">Copy</span>
+              </button>
+            </div>
+            <p class="font-mono text-[#94A3B8] text-[11px]">
+              Changes to slug take effect immediately. Existing mission links will auto-redirect for 48 hours.
+            </p>
+          </div>
+        </div>
+
+        <div class="h-px w-full bg-[#2D3A4B]/60"></div>
+
+        <!-- Field 5: Linked Project Node Telemetry (CHALLENGE 08 ALTERNATIVE WORKFLOW) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start" id="section-node-services">
+          <div class="lg:col-span-4 flex flex-col gap-1">
+            <label class="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5 font-mono">
+              <span>Linked Project Services</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-[#00FF9D]"></span>
+            </label>
+            <p class="text-xs text-[#94A3B8] leading-relaxed">
+              Institutional project services connected to workspace telemetry. Standby deactivation unlinks node and archives project into cold storage.
+            </p>
+          </div>
+
+          <div class="lg:col-span-8 flex flex-col gap-3">
+            <div id="node-service-card" class="p-4 rounded-xl bg-[#1A2330] border border-[#2D3A4B] flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-[#212B3A] border border-[#2D3A4B] flex items-center justify-center text-[#00FF9D] shrink-0">
+                  <span class="material-symbols-outlined text-[22px]">shield</span>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h4 class="font-bold text-white text-sm font-mono" id="linkedNodeProjectName">Cyber Defense Challenge</h4>
+                    <span id="linkedNodeBadge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#00FF9D]/15 text-[#00FF9D] border border-[#00FF9D]/30 flex items-center gap-1">
+                      <span class="w-1.5 h-1.5 rounded-full bg-[#00FF9D] animate-pulse"></span>
+                      <span>NODE-01 BOUND</span>
+                    </span>
+                  </div>
+                  <p class="text-xs text-[#94A3B8] font-mono mt-0.5" id="linkedNodeSubtitle">
+                    Binding: PRIMARY BROADCAST TELEMETRY // ARENA GRID
+                  </p>
+                </div>
+              </div>
+
+              <!-- Deactivate Action Button -->
+              <button type="button" id="btnOpenDeactivateNode" onclick="openDeactivateNodeModal()" class="px-3.5 py-2 rounded-lg bg-[#212B3A] hover:bg-amber-950/40 hover:text-amber-300 border border-[#2D3A4B] hover:border-amber-500/40 text-slate-200 text-xs font-mono font-bold transition-all flex items-center gap-1.5 shrink-0 shadow-sm active:scale-95 cursor-pointer">
+                <span class="material-symbols-outlined text-[16px] text-amber-400">power_settings_new</span>
+                <span>Deactivate &amp; Standby Node</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Submission Row -->
+        <div class="pt-4 border-t border-[#2D3A4B] flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="flex items-center gap-1.5 text-[#94A3B8] font-mono text-xs">
+            <span class="material-symbols-outlined text-[16px] text-amber-400">lock_reset</span>
+            <span>Changes require Arena Admin Level 4 clearance</span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button class="px-4 py-2 rounded-lg bg-[#1A2330] hover:bg-[#212B3A] border border-[#2D3A4B] text-xs font-semibold text-slate-300 hover:text-white font-mono transition" onclick="resetForm()" type="button">
+              Discard
+            </button>
+            <button class="px-5 py-2 rounded-lg bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-mono text-xs font-bold transition-all shadow-[0_0_15px_rgba(0,255,157,0.25)] flex items-center gap-1.5" type="submit">
+              <span class="material-symbols-outlined text-[16px]">save</span>
+              <span>Save Changes</span>
+            </button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: CHANGE LOGO -->
+  <!-- ============================================================ -->
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200" id="modal-change-logo">
+    <div class="w-full max-w-lg bg-[#0F141C] border border-[#2D3A4B] rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-200" id="modal-change-card">
+      <div class="px-6 py-4 bg-[#161D27] border-b border-[#2D3A4B] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[#00FF9D] text-[20px]">cloud_upload</span>
+          <h3 class="font-mono text-sm font-bold text-white uppercase tracking-wider">Change Workspace Logo</h3>
+        </div>
+        <button class="text-slate-400 hover:text-white" onclick="closeChangeLogoModal()" type="button">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 flex flex-col gap-4">
+        <div class="flex items-center gap-4 p-3 rounded-xl bg-[#1A2330] border border-[#2D3A4B]">
+          <div class="w-16 h-16 rounded-lg bg-[#0F141C] border border-[#2D3A4B] flex items-center justify-center overflow-hidden p-1.5 shrink-0">
+            <img class="w-full h-full object-contain" id="modal-current-logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-_S_DYr4RZRJL04TDdlfYQoITrUFZFXgAc8WTOxeM7mZvu29brev296KTeueffeZYjgqeSeL0tW3QGNKOvb_auXSwBsH7YuwZijvT_oeONdIiEXocBbNxBGpGNPYlK-IWjz70aKMJ7bzDXjJ1y_SkEtWpRJA4Omb2rfSA7F86zTSqyFj3EMGKrRrUU7jU178GPBULEnZskSPDY2EpYOWWF46ncb507KB6hiwNWJV8ZIff5GZt6pzT0w"/>
+          </div>
+          <div class="flex flex-col font-mono text-xs">
+            <span class="font-bold text-white">CURRENT EMBLEM</span>
+            <span class="text-slate-400 text-[11px]">cybernexus_shield_v3.svg</span>
+            <span class="text-[#00FF9D] text-[10px] mt-0.5">Status: Active on Defense Grid</span>
+          </div>
+        </div>
+
+        <label class="flex flex-col items-center justify-center p-8 rounded-xl bg-[#1A2330] hover:bg-[#212B3A] border-2 border-dashed border-[#2D3A4B] hover:border-[#00FF9D]/50 cursor-pointer transition-colors group text-center">
+          <input accept="image/png, image/jpeg, image/svg+xml" class="hidden" id="logo-file-input" onchange="handleFileSelect(event)" type="file"/>
+          <span class="material-symbols-outlined text-slate-500 group-hover:text-[#00FF9D] text-[36px] mb-2 transition-colors">upload_file</span>
+          <span class="font-mono text-xs font-semibold text-white">Drop emblem asset here or click to browse</span>
+          <span class="font-mono text-[11px] text-slate-400 mt-1">PNG, JPG or SVG (Max 5MB)</span>
+        </label>
+
+        <div class="hidden p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-xs font-mono text-emerald-300 flex items-center justify-between" id="file-selection-indicator">
+          <span id="selected-filename">custom_tactical_logo.png</span>
+          <span class="material-symbols-outlined text-[16px]">check_circle</span>
+        </div>
+      </div>
+
+      <div class="px-6 py-3.5 bg-[#161D27] border-t border-[#2D3A4B] flex items-center justify-end gap-2.5">
+        <button class="px-4 py-2 rounded-lg bg-[#1A2330] hover:bg-[#212B3A] border border-[#2D3A4B] text-xs font-mono text-slate-300 hover:text-white transition" onclick="closeChangeLogoModal()" type="button">
+          Cancel
+        </button>
+        <button class="px-5 py-2 rounded-lg bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-mono text-xs font-bold transition-all shadow-md" onclick="confirmReplaceLogo()" type="button">
+          Replace Logo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: EDIT LOGO FRAMING -->
+  <!-- ============================================================ -->
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200" id="modal-edit-logo">
+    <div class="w-full max-w-lg bg-[#0F141C] border border-[#2D3A4B] rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-200" id="modal-edit-card">
+      <div class="px-6 py-4 bg-[#161D27] border-b border-[#2D3A4B] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[#00FF9D] text-[20px]">aspect_ratio</span>
+          <h3 class="font-mono text-sm font-bold text-white uppercase tracking-wider">Edit Logo Framing</h3>
+        </div>
+        <button class="text-slate-400 hover:text-white" onclick="closeEditLogoModal()" type="button">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 flex flex-col gap-6">
+        <div class="relative w-44 h-44 mx-auto rounded-xl bg-[#1A2330] border border-[#2D3A4B] flex items-center justify-center overflow-hidden p-4">
+          <!-- Reticle corners -->
+          <div class="absolute inset-2 pointer-events-none opacity-40 flex flex-col justify-between">
+            <div class="flex justify-between">
+              <div class="w-2 h-2 border-t-2 border-l-2 border-[#00FF9D]"></div>
+              <div class="w-2 h-2 border-t-2 border-r-2 border-[#00FF9D]"></div>
+            </div>
+            <div class="flex justify-between">
+              <div class="w-2 h-2 border-b-2 border-l-2 border-[#00FF9D]"></div>
+              <div class="w-2 h-2 border-b-2 border-r-2 border-[#00FF9D]"></div>
+            </div>
+          </div>
+          <img class="w-full h-full object-contain transition-transform duration-100" id="modal-crop-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArORIOknN7_SJu80zU0ZQ4nPiZ4Hu5Rpcu5VHIkH4rXf__tuvEA-50kNWkZzKJghqVsAn6jwz4gM718SUjiS5LkwIH6WRQBsop7_1YQton21pizFX2_wMo_I9cmlCFntN-2fnIeIX6u2Ko6Fc5UF9q0U64PZQgI-p7t00RvTSuYC54Gtq32LRo897kyksUG1D3UqNKX2msJBrHMFjhR7kBAfk-p7HHL61HeHZ_lQojQ81jTuGPZ0Xu6g" style="transform: scale(1);"/>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <div class="flex justify-between font-mono text-xs">
+            <span class="text-white">OPTICAL ZOOM / SCALE</span>
+            <span class="text-[#00FF9D] font-bold" id="zoom-readout">100%</span>
+          </div>
+          <input class="w-full accent-[#00FF9D] bg-[#212B3A] rounded-lg h-2 cursor-pointer" id="scale-slider" max="1.8" min="0.6" oninput="handleZoomChange(this.value)" step="0.05" type="range" value="1"/>
+          <div class="flex justify-between font-mono text-[10px] text-slate-500">
+            <span>60% (Compact)</span>
+            <span>100% (Default)</span>
+            <span>180% (Bleed)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-6 py-3.5 bg-[#161D27] border-t border-[#2D3A4B] flex items-center justify-between">
+        <button class="px-3.5 py-2 rounded-lg bg-[#1A2330] hover:bg-[#212B3A] border border-[#2D3A4B] text-xs font-mono text-slate-300 hover:text-white flex items-center gap-1 transition" onclick="resetZoom()" type="button">
+          <span class="material-symbols-outlined text-[16px]">restart_alt</span>
+          <span>Reset</span>
+        </button>
+        <div class="flex items-center gap-2.5">
+          <button class="px-4 py-2 rounded-lg bg-[#1A2330] hover:bg-[#212B3A] border border-[#2D3A4B] text-xs font-mono text-slate-300 hover:text-white transition" onclick="closeEditLogoModal()" type="button">
+            Cancel
+          </button>
+          <button class="px-5 py-2 rounded-lg bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-mono text-xs font-bold transition-all shadow-md" onclick="saveFraming()" type="button">
+            Apply Framing
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: DEACTIVATE NODE CONFIRMATION (CHALLENGE 8 ALTERNATIVE WORKFLOW) -->
+  <!-- ============================================================ -->
+  <div id="modalDeactivateNode" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm hidden">
+    <div class="w-full max-w-md bg-[#0F141C] border border-[#2D3A4B] rounded-2xl shadow-2xl overflow-hidden" onclick="event.stopPropagation()">
+      <div class="px-6 py-4 bg-[#161D27] border-b border-[#2D3A4B] flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-amber-400 text-[20px]">power_settings_new</span>
+          <h3 class="font-mono text-sm font-bold text-white uppercase tracking-wider">Standby Node Deactivation</h3>
+        </div>
+        <button class="text-slate-400 hover:text-white" onclick="closeDeactivateNodeModal()" type="button">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="p-6 flex flex-col gap-4">
+        <p class="text-xs text-slate-300 leading-relaxed font-sans">
+          Disconnecting node telemetry will decouple project <strong class="text-white font-mono">Cyber Defense Challenge</strong> from the active arena grid and move it directly to the <strong class="text-amber-400 font-mono">Standby Archive Vault</strong>.
+        </p>
+
+        <div class="p-3 rounded-xl bg-[#1A2330] border border-[#2D3A4B] text-[11px] font-mono text-[#94A3B8] space-y-1">
+          <div class="text-[#00FF9D] font-bold">WORKFLOW ROUTE: WORKSPACE_NODE_STANDBY_DEACTIVATE</div>
+          <div>Result: Project active binding released • Project archived to standby storage</div>
+        </div>
+      </div>
+
+      <div class="px-6 py-3.5 bg-[#161D27] border-t border-[#2D3A4B] flex items-center justify-end gap-2.5">
+        <button class="px-4 py-2 rounded-lg bg-[#1A2330] hover:bg-[#212B3A] border border-[#2D3A4B] text-xs font-mono text-slate-300 hover:text-white transition" onclick="closeDeactivateNodeModal()" type="button">
+          Cancel
+        </button>
+        <button id="btnConfirmDeactivateNode" onclick="confirmDeactivateNodeWorkflow()" class="px-5 py-2 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-mono font-bold transition-all shadow-md active:scale-95 flex items-center gap-1.5 cursor-pointer" type="button">
+          <span class="material-symbols-outlined text-[16px]">check_circle</span>
+          <span id="deactivateBtnText">Confirm Deactivation &amp; Archive</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: CHALLENGE 08 VICTORY FLAG POPUP -->
+  <!-- ============================================================ -->
+  <div id="wrongWorkflowFlagModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden bg-black/85 backdrop-blur-md">
+    <div class="bg-[#0F141C] border-2 border-[#00FF9D] rounded-2xl max-w-lg w-full p-6 sm:p-7 shadow-[0_0_50px_rgba(0,255,157,0.3)] space-y-5 relative animate-in fade-in zoom-in duration-200" onclick="event.stopPropagation()">
+      <div class="flex items-start justify-between border-b border-[#2D3A4B] pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-[#00FF9D]/10 border border-[#00FF9D]/40 flex items-center justify-center text-2xl shadow-[0_0_20px_rgba(0,255,157,0.25)]">
+            🔄
+          </div>
+          <div>
+            <div class="text-[10px] font-mono text-[#00FF9D] font-bold uppercase tracking-wider animate-pulse">
+              ARENA EXPLOIT CONFIRMED // CHALLENGE 08
+            </div>
+            <h3 class="text-xl font-bold text-white tracking-tight font-mono">
+              The Wrong Workflow
+            </h3>
+          </div>
+        </div>
+        <button onclick="closeWrongWorkflowFlagModal()" class="text-[#94A3B8] hover:text-white p-1 rounded-lg transition">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-300 leading-relaxed font-sans">
+        When the normal archiving action was blocked on the projects grid, you investigated the workspace node configuration and achieved the required result through an alternative, legitimate workflow.
+      </p>
+
+      <div class="p-4 rounded-xl bg-[#1A2330] border border-[#00FF9D]/40 space-y-2">
+        <div class="flex items-center justify-between text-[11px] font-mono">
+          <span class="text-[#00FF9D] font-bold">RECOVERED FLAG TOKEN:</span>
+          <span class="text-emerald-400 font-bold">+50 PTS TIER 1</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input id="wrongWorkflowFlagInput" readonly value="logicCTF{wr0ng_w0rkfl0w_4lt3rn4t1v3_p4th_c0mpl3t3d}" class="flex-1 bg-[#090E16] px-3.5 py-2.5 rounded-lg font-mono text-xs text-[#00FF9D] font-bold border border-[#2D3A4B] select-all focus:outline-none focus:border-[#00FF9D]" />
+          <button id="btnCopyWrongWorkflowFlag" onclick="copyWrongWorkflowFlag()" class="px-4 py-2.5 rounded-lg bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-bold text-xs font-mono transition flex items-center gap-1.5 shrink-0 shadow-[0_0_15px_rgba(0,255,157,0.3)] active:scale-95 cursor-pointer">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span id="copyWrongWorkflowFlagText">Copy Flag</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-[#2D3A4B]">
+        <span class="text-[11px] font-mono text-[#94A3B8]">Submit key in Missions console</span>
+        <a href="missions.html" class="px-5 py-2.5 rounded-xl bg-[#00FF9D] hover:bg-[#10B981] text-[#090E16] font-bold text-xs font-mono transition flex items-center gap-2 shadow-lg active:scale-95">
+          <span>Go to Missions</span>
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none" id="toast-container"></div>
+
+  <!-- Global Navigation Header Injection -->
+  <script src="shared_nav.js"></script>
+
+  <!-- Workspace Interactive Logic -->
+  <script>
+    let currentZoom = 1;
+    let stagedZoom = 1;
+
+    // Modals
+    function openChangeLogoModal() {
+      const modal = document.getElementById('modal-change-logo');
+      const card = document.getElementById('modal-change-card');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        card.classList.remove('scale-95');
+        card.classList.add('scale-100');
+      }, 10);
+    }
+
+    function closeChangeLogoModal() {
+      const modal = document.getElementById('modal-change-logo');
+      const card = document.getElementById('modal-change-card');
+      modal.classList.add('opacity-0');
+      card.classList.remove('scale-100');
+      card.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        document.getElementById('file-selection-indicator').classList.add('hidden');
+      }, 200);
+    }
+
+    function openEditLogoModal() {
+      stagedZoom = currentZoom;
+      document.getElementById('scale-slider').value = stagedZoom;
+      handleZoomChange(stagedZoom);
+      const modal = document.getElementById('modal-edit-logo');
+      const card = document.getElementById('modal-edit-card');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        card.classList.remove('scale-95');
+        card.classList.add('scale-100');
+      }, 10);
+    }
+
+    function closeEditLogoModal() {
+      const modal = document.getElementById('modal-edit-logo');
+      const card = document.getElementById('modal-edit-card');
+      modal.classList.add('opacity-0');
+      card.classList.remove('scale-100');
+      card.classList.add('scale-95');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    }
+
+    function handleZoomChange(val) {
+      stagedZoom = parseFloat(val);
+      const pct = Math.round(stagedZoom * 100);
+      document.getElementById('zoom-readout').innerText = pct + '%';
+      document.getElementById('modal-crop-img').style.transform = `scale(${stagedZoom})`;
+    }
+
+    function resetZoom() {
+      handleZoomChange(1);
+      document.getElementById('scale-slider').value = 1;
+    }
+
+    function saveFraming() {
+      currentZoom = stagedZoom;
+      document.getElementById('current-logo-img').style.transform = `scale(${currentZoom})`;
+      closeEditLogoModal();
+      showToast('FRAMING UPDATED', 'Logo scale applied to workspace assets.');
+    }
+
+    function handleFileSelect(e) {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById('selected-filename').innerText = file.name;
+        document.getElementById('file-selection-indicator').classList.remove('hidden');
+      }
+    }
+
+    function confirmReplaceLogo() {
+      closeChangeLogoModal();
+      showToast('LOGO REPLACED', 'New workspace vector insignia deployed across cluster.');
+    }
+
+    function copyArenaUrl() {
+      const slug = document.getElementById('ws-slug').value;
+      const full = `arena.logicctf.edu/${slug}`;
+      navigator.clipboard.writeText(full).then(() => {
+        const label = document.getElementById('copy-label');
+        label.innerText = 'Copied!';
+        setTimeout(() => {
+          label.innerText = 'Copy';
+        }, 2000);
+        showToast('URL COPIED', full + ' copied to clipboard.');
+      });
+    }
+
+    const DEFAULT_DESC_BUFFER = `Collegiate cybersecurity competition workspace briefing and active operative node.
+
+
+
+
+
+
+
+
+
+========================================================================
+🚩 CHALLENGE 03 SECRET BUFFER
+========================================================================
+[SYSTEM BUFFER INSPECTION // HIDDEN PAYLOAD DETECTED]
+
+Congratulations! You adjusted the description box and investigated the buffer volume.
+This is the official flag for Challenge 03:
+
+logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}
+========================================================================`;
+
+    function resetForm() {
+      document.getElementById('ws-name').value = 'LOGIC CTF';
+      document.getElementById('ws-desc').value = DEFAULT_DESC_BUFFER;
+      document.getElementById('ws-slug').value = 'cybernexus';
+      currentZoom = 1;
+      document.getElementById('current-logo-img').style.transform = 'scale(1)';
+      updateDescMetrics();
+      showToast('RESET COMPLETE', 'Form values returned to previously saved state.');
+    }
+
+    function updateDescMetrics() {
+      const desc = document.getElementById('ws-desc');
+      const metrics = document.getElementById('desc-metrics');
+      if (!desc || !metrics) return;
+      const text = desc.value;
+      const words = text.trim() ? text.trim().split(/\s+/).filter(Boolean).length : 0;
+      const chars = text.length;
+      metrics.innerText = `${words} words • ${chars} characters`;
+    }
+
+    function triggerSaveToast() {
+      showToast('WORKSPACE SAVED', 'Workspace settings updated successfully.');
+    }
+
+    function showToast(headline, msg) {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'pointer-events-auto flex items-start gap-3 p-3.5 rounded-xl bg-[#1A2330] border border-[#2D3A4B] text-white shadow-2xl transition-all duration-300 transform translate-y-4 opacity-0 max-w-sm';
+      toast.innerHTML = `
+        <div class="w-8 h-8 rounded-lg bg-[#00FF9D]/20 text-[#00FF9D] flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-[18px]">check</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-mono font-bold text-[#00FF9D] text-xs uppercase tracking-wide">${headline}</span>
+          <span class="text-xs text-slate-300 leading-tight mt-0.5">${msg}</span>
+        </div>
+      `;
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Realtime Char & Word Counters
+    const nameInput = document.getElementById('ws-name');
+    if (nameInput) {
+      nameInput.addEventListener('input', (e) => {
+        document.getElementById('name-count').innerText = `${e.target.value.length} / 32`;
+      });
+    }
+
+    const descInput = document.getElementById('ws-desc');
+    if (descInput) {
+      descInput.addEventListener('input', updateDescMetrics);
+    }
+    document.addEventListener('DOMContentLoaded', updateDescMetrics);
+    updateDescMetrics();
+
+    // Draggable Corner Resize Handle
+    const resizeHandle = document.getElementById('desc-resize-handle');
+    const descTextarea = document.getElementById('ws-desc');
+    if (resizeHandle && descTextarea) {
+      let isDraggingHandle = false;
+      let startY = 0;
+      let startH = 0;
+
+      resizeHandle.addEventListener('pointerdown', (e) => {
+        isDraggingHandle = true;
+        startY = e.clientY;
+        startH = descTextarea.offsetHeight;
+        resizeHandle.setPointerCapture(e.pointerId);
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'ns-resize';
+        e.preventDefault();
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!isDraggingHandle) return;
+        const dy = e.clientY - startY;
+        const newHeight = Math.max(74, Math.min(500, startH + dy));
+        descTextarea.style.height = `${newHeight}px`;
+        if (newHeight > 180) {
+          descTextarea.style.overflowY = 'auto';
+        } else {
+          descTextarea.style.overflowY = 'hidden';
+          descTextarea.scrollTop = 0;
+        }
+      });
+
+      const stopDragging = (e) => {
+        if (isDraggingHandle) {
+          isDraggingHandle = false;
+          document.body.style.userSelect = '';
+          document.body.style.cursor = '';
+          try { resizeHandle.releasePointerCapture(e.pointerId); } catch (_) {}
+        }
+      };
+      window.addEventListener('pointerup', stopDragging);
+      window.addEventListener('pointercancel', stopDragging);
+
+      // Native resize observer
+      const ro = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const h = entry.target.offsetHeight;
+          if (h > 180) {
+            descTextarea.style.overflowY = 'auto';
+          } else {
+            descTextarea.style.overflowY = 'hidden';
+            descTextarea.scrollTop = 0;
+          }
+        }
+      });
+      ro.observe(descTextarea);
+
+      // Lock scroll when small
+      descTextarea.addEventListener('scroll', () => {
+        if (descTextarea.offsetHeight <= 180) {
+          descTextarea.scrollTop = 0;
+        }
+      });
+    }
+
+    // Challenge 08 Logic
+    function openDeactivateNodeModal() {
+      const modal = document.getElementById('modalDeactivateNode');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeDeactivateNodeModal() {
+      const modal = document.getElementById('modalDeactivateNode');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function openWrongWorkflowFlagModal() {
+      const modal = document.getElementById('wrongWorkflowFlagModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeWrongWorkflowFlagModal() {
+      const modal = document.getElementById('wrongWorkflowFlagModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    async function confirmDeactivateNodeWorkflow() {
+      const btn = document.getElementById('btnConfirmDeactivateNode');
+      const btnText = document.getElementById('deactivateBtnText');
+      if (btnText) btnText.textContent = 'Deactivating...';
+      if (btn) btn.disabled = true;
+
+      try {
+        try {
+          await fetch('/api/projects/deactivate-node', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ projectId: 'proj-1', projectName: 'Cyber Defense Challenge' })
+          });
+        } catch (e) {}
+
+        // Update project state in localStorage
+        try {
+          const saved = localStorage.getItem('logic_ctf_projects_state');
+          let projects = [
+            { id: "proj-1", name: "Cyber Defense Challenge", desc: "Inter-college defensive security challenge and active simulated red-team operations.", status: "Active", date: "Sep 12, 2026", icon: "shield", isInstitutional: true },
+            { id: "proj-2", name: "Network Security Audit", desc: "Collegiate sub-tier vulnerability scanning, telemetry sync, and perimeter verification.", status: "Active", date: "Sep 10, 2026", icon: "network" }
+          ];
+          let archivedProjects = [];
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            projects = parsed.projects || projects;
+            archivedProjects = parsed.archivedProjects || archivedProjects;
+          }
+
+          const pIdx = projects.findIndex(p => p.id === 'proj-1');
+          if (pIdx !== -1) {
+            const [archivedProj] = projects.splice(pIdx, 1);
+            archivedProj.archivedDate = "Sep 15, 2026";
+            archivedProj.archivedNote = "Standby Deactivated via Workspace";
+            archivedProjects.unshift(archivedProj);
+            localStorage.setItem('logic_ctf_projects_state', JSON.stringify({ projects, archivedProjects }));
+          }
+        } catch (err) {}
+
+        // Update Node card UI
+        const badge = document.getElementById('linkedNodeBadge');
+        if (badge) {
+          badge.className = 'px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30 flex items-center gap-1';
+          badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span>STANDBY ARCHIVED</span>';
+        }
+        const subtitle = document.getElementById('linkedNodeSubtitle');
+        if (subtitle) {
+          subtitle.textContent = 'Binding: DECOUPLED // MOVED TO STANDBY ARCHIVE VAULT';
+        }
+        const actionBtn = document.getElementById('btnOpenDeactivateNode');
+        if (actionBtn) {
+          actionBtn.disabled = true;
+          actionBtn.classList.add('opacity-50', 'cursor-not-allowed');
+          actionBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">done</span><span>Standby Complete</span>';
+        }
+
+        closeDeactivateNodeModal();
+        showToast('Node Deactivated', 'Project archived via Workspace Node workflow');
+
+        setTimeout(() => {
+          openWrongWorkflowFlagModal();
+        }, 350);
+      } finally {
+        if (btn) btn.disabled = false;
+        if (btnText) btnText.textContent = 'Confirm Deactivation & Archive';
+      }
+    }
+
+    function copyWrongWorkflowFlag() {
+      const input = document.getElementById('wrongWorkflowFlagInput');
+      if (!input) return;
+      const text = input.value;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          updateCopyWrongWorkflowFeedback();
+        }).catch(() => {
+          fallbackCopyWrongWorkflow(input);
+        });
+      } else {
+        fallbackCopyWrongWorkflow(input);
+      }
+    }
+
+    function fallbackCopyWrongWorkflow(input) {
+      input.select();
+      document.execCommand('copy');
+      updateCopyWrongWorkflowFeedback();
+    }
+
+    function updateCopyWrongWorkflowFeedback() {
+      const btnText = document.getElementById('copyWrongWorkflowFlagText');
+      if (btnText) btnText.textContent = 'COPIED!';
+      showToast('Flag Copied', 'Submit key in Missions console');
+      setTimeout(() => {
+        if (btnText) btnText.textContent = 'Copy Flag';
+      }, 2500);
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDeactivateNodeModal();
+        closeWrongWorkflowFlagModal();
+        closeChangeLogoModal();
+        closeEditLogoModal();
+      }
+    });
+  </script>
+</body>
+</html>
