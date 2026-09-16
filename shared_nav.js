@@ -60,7 +60,7 @@
           </a>
 
           <a href="missions.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['missions', 'challenges']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">
-            <span>Missions (16)</span>
+            <span>Missions (18)</span>
           </a>
 
           <a href="files.html" class="nav-link px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${isPage(['files', 'folder']) ? 'bg-[#224f3e] text-[#5bdcae] shadow-sm' : 'text-slate-300 hover:text-white hover:bg-[#1a211d]'}">

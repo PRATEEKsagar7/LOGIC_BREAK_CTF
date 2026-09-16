@@ -316,6 +316,42 @@ const INITIAL_CHALLENGES = [
     file: 'billing.html',
     codeSnippet: '// Cancellation yields simulated transaction failure.\n// Refreshing reveals updated account cancellation status and flag.\n// Flag: logicCTF{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}',
     flag: 'logicCTF{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}'
+  },
+  {
+    id: 'ch17',
+    number: 17,
+    title: 'The Hidden Name',
+    category: 'Business Logic & Forensics',
+    difficulty: 'Beginner',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'Find the hidden clue inside the Add User form and use it to complete the challenge. The field looks empty, but the application may know something you cannot see.',
+    hints: [
+      '“Sometimes a blank field is carrying more than it shows.”',
+      'Open the Add User modal and inspect the Name input field element in DevTools to find the secret identity attribute.'
+    ],
+    file: 'users.html',
+    codeSnippet: '// In Add User form:\n// Input #create-name carries hidden data attribute:\n// data-secret-identity="Cipher Prime"\n// Entering "Cipher Prime" triggers the flag payload!\n// Flag: logicCTF{h1dd3n_n4m3_pl4c3h0ld3r_unm4sk3d}',
+    flag: 'logicCTF{h1dd3n_n4m3_pl4c3h0ld3r_unm4sk3d}'
+  },
+  {
+    id: 'ch18',
+    number: 18,
+    title: 'The Exported Flag',
+    category: 'Business Logic & Analysis',
+    difficulty: 'Beginner',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'Identify the real flag hidden behind an apparently valid export result. The export gives you something that looks ready to submit, but appearances can be misleading.',
+    hints: [
+      '“Before trusting the result, make sure it speaks the same language as the submission.”',
+      'Click Export in Users Directory. Compare the decoy flag against the authentic logicCTF{...} syntax.'
+    ],
+    file: 'users.html',
+    codeSnippet: '// User Directory Export:\n// Decoy flag: FLAG{invalid_syntax_export_test} (rejected)\n// Authentic canonical flag:\n// Flag: logicCTF{3xp0rt_csv_tru3_fl4g_r3v34l3d}',
+    flag: 'logicCTF{3xp0rt_csv_tru3_fl4g_r3v34l3d}'
   }
 ];
 
@@ -624,7 +660,9 @@ module.exports = async function handler(req, res) {
         )) ||
         (challenge.id === 'ch14' && submittedFlag.toLowerCase() === 'logicctf{m1ss1ng_t4sk_unl1st3d_c0mpl3t3d}') ||
         (challenge.id === 'ch15' && submittedFlag.toLowerCase() === 'logicctf{unsck3dul4bl3_sh4r3_c4l3nd4r_p4th}') ||
-        (challenge.id === 'ch16' && submittedFlag.toLowerCase() === 'logicctf{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}');
+        (challenge.id === 'ch16' && submittedFlag.toLowerCase() === 'logicctf{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}') ||
+        (challenge.id === 'ch17' && (submittedFlag === 'logicCTF{h1dd3n_n4m3_pl4c3h0ld3r_unm4sk3d}' || submittedFlag === 'logicCTF{hidden_name_placeholder_unmasked}')) ||
+        (challenge.id === 'ch18' && (submittedFlag === 'logicCTF{3xp0rt_csv_tru3_fl4g_r3v34l3d}' || submittedFlag === 'logicCTF{export_csv_true_flag_revealed}'));
 
       if (isCorrect) {
         team.solved.push(challenge.id);

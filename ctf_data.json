@@ -61,10 +61,13 @@
       "password": "Logic#03Pass!",
       "college": "Collegiate Arena",
       "confirmed": true,
-      "score": 0,
-      "solved": [],
+      "score": 100,
+      "solved": [
+        "ch17",
+        "ch18"
+      ],
       "penalties": 0,
-      "lastSolve": 0,
+      "lastSolve": 1789587680886,
       "partner1": {
         "name": "Operative 03-A",
         "userId": "TEAM-03"
@@ -582,6 +585,24 @@
     }
   ],
   "submissions": [
+    {
+      "id": "sub-1789587680886",
+      "team": "Team 03",
+      "challengeId": "ch18",
+      "challengeTitle": "The Exported Flag",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789587680886
+    },
+    {
+      "id": "sub-1789587680883",
+      "team": "Team 03",
+      "challengeId": "ch17",
+      "challengeTitle": "The Hidden Name",
+      "status": "CORRECT",
+      "delta": "+50",
+      "timestamp": 1789587680883
+    },
     {
       "id": "sub-1789586829621",
       "team": "Team 02",
