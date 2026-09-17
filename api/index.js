@@ -1032,14 +1032,36 @@ module.exports = async function handler(req, res) {
         return;
       }
 
-      const participant = ctfState.teams.find(t =>
-        (t.userId && t.userId.toUpperCase() === usernameInput.toUpperCase()) ||
-        (t.partner1UserId && t.partner1UserId.toUpperCase() === usernameInput.toUpperCase()) ||
-        (t.partner2UserId && t.partner2UserId.toUpperCase() === usernameInput.toUpperCase()) ||
-        (t.name && t.name.toLowerCase() === usernameInput.toLowerCase())
-      );
+      function normUid(s) {
+        if (!s) return '';
+        let u = s.toUpperCase().trim().replace(/\s+/g, '-');
+        return u.replace(/^TEAM-0+([0-9]+)$/, 'TEAM-$1');
+      }
+      function normName(s) {
+        if (!s) return '';
+        return s.toLowerCase().replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').replace(/[_\-\s]+/g, ' ').trim();
+      }
 
-      if (!participant || participant.password !== passwordInput) {
+      const cleanUser = usernameInput.trim();
+      const cleanPass = passwordInput.replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
+      const nUser = normUid(cleanUser);
+      const nName = normName(cleanUser);
+
+      const participant = ctfState.teams.find(t => {
+        if (!t) return false;
+        const tUid = (t.userId || '').toUpperCase().trim();
+        const tP1 = (t.partner1UserId || '').toUpperCase().trim();
+        const tP2 = (t.partner2UserId || '').toUpperCase().trim();
+        const tName = (t.name || '').toLowerCase().trim();
+
+        if (tUid === cleanUser.toUpperCase() || tP1 === cleanUser.toUpperCase() || tP2 === cleanUser.toUpperCase()) return true;
+        if (normUid(tUid) === nUser || normUid(tP1) === nUser || normUid(tP2) === nUser) return true;
+        if (tName === cleanUser.toLowerCase() || normName(tName) === nName) return true;
+        if (t.id && t.id.toLowerCase() === cleanUser.toLowerCase()) return true;
+        return false;
+      });
+
+      if (!participant || participant.password.trim() !== cleanPass) {
         res.writeHead(401, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ success: false, message: 'Invalid User ID or Password. Only confirmed participants can enter.' }));
         return;
