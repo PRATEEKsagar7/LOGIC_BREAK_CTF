@@ -209,19 +209,19 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch11',
     number: 11,
-    title: 'The Invisible User',
-    category: 'Business Logic & Recon',
+    title: 'SSRF Cloud Metadata',
+    category: 'Cloud Security & Recon',
     difficulty: 'Beginner',
     tier: 1,
     points: 50,
     penalty: 15,
-    description: 'Find a user who is missing from the User Directory. Not seeing a user does not always mean the user is gone.',
+    description: 'Inspect cloud metadata endpoints and decoupled telemetry APIs to uncover concealed server credentials.',
     hints: [
-      '“Try looking where actions are remembered.”',
-      'Inspect the audit logs or search filters in Users Directory to discover the unlisted operative.'
+      '“Decoupled shadow endpoints often query internal metadata services.”',
+      'Look for instance metadata queries in challenge_11_shadow_api.json to extract the authentic access key.'
     ],
-    file: 'users.html',
-    codeSnippet: '// Directory filter suppresses unlisted active operator.\n// Search or filter to reveal the hidden record.\n// Flag: logicCTF{ssrf_cl0ud_m3t4d4t4_cr3ds_pwn}',
+    file: 'challenge_11_shadow_api.json',
+    codeSnippet: '// Cloud Metadata Gateway: 169.254.169.254\n// Shadow API relays unauthenticated internal credentials.\n// Flag: logicCTF{ssrf_cl0ud_m3t4d4t4_cr3ds_pwn}',
     flag: 'logicCTF{ssrf_cl0ud_m3t4d4t4_cr3ds_pwn}'
   },
   {
@@ -350,6 +350,42 @@ const INITIAL_CHALLENGES = [
     file: 'users.html',
     codeSnippet: '// User Directory Export:\n// Decoy flag: FLAG{invalid_syntax_export_test} (rejected)\n// Authentic canonical flag:\n// Flag: logicCTF{3xp0rt_csv_tru3_fl4g_r3v34l3d}',
     flag: 'logicCTF{3xp0rt_csv_tru3_fl4g_r3v34l3d}'
+  },
+  {
+    id: 'ch19',
+    number: 19,
+    title: 'The Forgotten Menu',
+    category: 'Business Logic & Branding',
+    difficulty: 'Beginner',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'You need to change the workspace logo, but the usual settings do not show the option. Discover the branding and appearance controls to update the logo and retrieve the flag.',
+    hints: [
+      '“A missing option doesn\'t always mean a missing feature.”',
+      'Inspect Workspace Settings or Appearance to change the active workspace emblem.'
+    ],
+    file: 'workspace.html',
+    codeSnippet: '// Workspace Settings / Branding:\n// Missing direct control on primary overview.\n// Trigger Change Logo via Appearance/Branding workflow:\n// Flag: logicCTF{f0rg0tt3n_m3nu_br4nd1ng_l0g0_ch4ng3d}',
+    flag: 'logicCTF{f0rg0tt3n_m3nu_br4nd1ng_l0g0_ch4ng3d}'
+  },
+  {
+    id: 'ch20',
+    number: 20,
+    title: 'The Archive Vault Recovery',
+    category: 'Business Logic & Archival',
+    difficulty: 'Beginner',
+    tier: 1,
+    points: 50,
+    penalty: 15,
+    description: 'Direct modification of archived records is locked by security controls. Find and restore an unlisted deactivated account from the Archive Vault cold storage to verify compliance.',
+    hints: [
+      '“What is kept in the vault can still be summoned back.”',
+      'Explore Archived Users, locate the restricted deactivated record, and restore the operational clearance.'
+    ],
+    file: 'archived_users.html',
+    codeSnippet: '// Retention & Security Vault:\n// Archived user accounts held in cold storage.\n// Restore deactivated user record to unlock compliance verification.\n// Flag: logicCTF{4rch1v3_v4ult_r3c0v3ry_c0mpl14nc3}',
+    flag: 'logicCTF{4rch1v3_v4ult_r3c0v3ry_c0mpl14nc3}'
   }
 ];
 
@@ -641,7 +677,9 @@ const server = http.createServer(async (req, res) => {
         (challenge.id === 'ch15' && submittedFlag.toLowerCase() === 'logicctf{unsck3dul4bl3_sh4r3_c4l3nd4r_p4th}') ||
         (challenge.id === 'ch16' && submittedFlag.toLowerCase() === 'logicctf{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}') ||
         (challenge.id === 'ch17' && (submittedFlag === 'logicCTF{h1dd3n_n4m3_pl4c3h0ld3r_unm4sk3d}' || submittedFlag === 'logicCTF{hidden_name_placeholder_unmasked}')) ||
-        (challenge.id === 'ch18' && (submittedFlag === 'logicCTF{3xp0rt_csv_tru3_fl4g_r3v34l3d}' || submittedFlag === 'logicCTF{export_csv_true_flag_revealed}'));
+        (challenge.id === 'ch18' && (submittedFlag === 'logicCTF{3xp0rt_csv_tru3_fl4g_r3v34l3d}' || submittedFlag === 'logicCTF{export_csv_true_flag_revealed}')) ||
+        (challenge.id === 'ch19' && (submittedFlag.toLowerCase() === 'logicctf{f0rg0tt3n_m3nu_br4nd1ng_l0g0_ch4ng3d}' || submittedFlag.toLowerCase() === 'logicctf{forgotten_menu_branding_logo_changed}')) ||
+        (challenge.id === 'ch20' && (submittedFlag.toLowerCase() === 'logicctf{4rch1v3_v4ult_r3c0v3ry_c0mpl14nc3}' || submittedFlag.toLowerCase() === 'logicctf{archive_vault_recovery_compliance}'));
 
       if (isCorrect) {
         // TIER 1: +50 PTS | TIER 2: +100 PTS
