@@ -1,13 +1,13 @@
 {
   "teams": [
     {
-      "id": "team_01",
+      "id": "team_codepirate",
       "type": "DUO",
-      "userId": "TEAM-01",
-      "partner1UserId": "TEAM-01",
-      "partner2UserId": "TEAM-01-B",
-      "name": "Team 01",
-      "password": "Logic#01Pass!",
+      "userId": "CODEPIRATE",
+      "partner1UserId": "CODEPIRATE",
+      "partner2UserId": "CODEPIRATE-B",
+      "name": "CODEPIRATE",
+      "password": "CodePirate#2026",
       "college": "Collegiate Arena",
       "confirmed": true,
       "score": 0,
@@ -15,22 +15,22 @@
       "penalties": 0,
       "lastSolve": 0,
       "partner1": {
-        "name": "Operative 01-A",
-        "userId": "TEAM-01"
+        "name": "Operative Alpha",
+        "userId": "CODEPIRATE"
       },
       "partner2": {
-        "name": "Operative 01-B",
-        "userId": "TEAM-01-B"
+        "name": "Operative Bravo",
+        "userId": "CODEPIRATE-B"
       }
     },
     {
-      "id": "team_02",
+      "id": "team_logiclord",
       "type": "DUO",
-      "userId": "TEAM-02",
-      "partner1UserId": "TEAM-02",
-      "partner2UserId": "TEAM-02-B",
-      "name": "Team 02",
-      "password": "Logic#02Pass!",
+      "userId": "LOGIC-LORD",
+      "partner1UserId": "LOGIC-LORD",
+      "partner2UserId": "LOGIC-LORD-B",
+      "name": "LOGIC LORD",
+      "password": "LogicLord#2026",
       "college": "Collegiate Arena",
       "confirmed": true,
       "score": 0,
@@ -38,22 +38,22 @@
       "penalties": 0,
       "lastSolve": 0,
       "partner1": {
-        "name": "Operative 02-A",
-        "userId": "TEAM-02"
+        "name": "Operative Alpha",
+        "userId": "LOGIC-LORD"
       },
       "partner2": {
-        "name": "Operative 02-B",
-        "userId": "TEAM-02-B"
+        "name": "Operative Bravo",
+        "userId": "LOGIC-LORD-B"
       }
     },
     {
-      "id": "team_03",
+      "id": "team_lumora",
       "type": "DUO",
-      "userId": "TEAM-03",
-      "partner1UserId": "TEAM-03",
-      "partner2UserId": "TEAM-03-B",
-      "name": "Team 03",
-      "password": "Logic#03Pass!",
+      "userId": "LUMORA",
+      "partner1UserId": "LUMORA",
+      "partner2UserId": "LUMORA-B",
+      "name": "LUMORA",
+      "password": "Lumora#2026",
       "college": "Collegiate Arena",
       "confirmed": true,
       "score": 0,
@@ -61,518 +61,12 @@
       "penalties": 0,
       "lastSolve": 0,
       "partner1": {
-        "name": "Operative 03-A",
-        "userId": "TEAM-03"
+        "name": "Operative Alpha",
+        "userId": "LUMORA"
       },
       "partner2": {
-        "name": "Operative 03-B",
-        "userId": "TEAM-03-B"
-      }
-    },
-    {
-      "id": "team_04",
-      "type": "DUO",
-      "userId": "TEAM-04",
-      "partner1UserId": "TEAM-04",
-      "partner2UserId": "TEAM-04-B",
-      "name": "Team 04",
-      "password": "Logic#04Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 04-A",
-        "userId": "TEAM-04"
-      },
-      "partner2": {
-        "name": "Operative 04-B",
-        "userId": "TEAM-04-B"
-      }
-    },
-    {
-      "id": "team_05",
-      "type": "DUO",
-      "userId": "TEAM-05",
-      "partner1UserId": "TEAM-05",
-      "partner2UserId": "TEAM-05-B",
-      "name": "Team 05",
-      "password": "Logic#05Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 05-A",
-        "userId": "TEAM-05"
-      },
-      "partner2": {
-        "name": "Operative 05-B",
-        "userId": "TEAM-05-B"
-      }
-    },
-    {
-      "id": "team_06",
-      "type": "DUO",
-      "userId": "TEAM-06",
-      "partner1UserId": "TEAM-06",
-      "partner2UserId": "TEAM-06-B",
-      "name": "Team 06",
-      "password": "Logic#06Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 06-A",
-        "userId": "TEAM-06"
-      },
-      "partner2": {
-        "name": "Operative 06-B",
-        "userId": "TEAM-06-B"
-      }
-    },
-    {
-      "id": "team_07",
-      "type": "DUO",
-      "userId": "TEAM-07",
-      "partner1UserId": "TEAM-07",
-      "partner2UserId": "TEAM-07-B",
-      "name": "Team 07",
-      "password": "Logic#07Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 07-A",
-        "userId": "TEAM-07"
-      },
-      "partner2": {
-        "name": "Operative 07-B",
-        "userId": "TEAM-07-B"
-      }
-    },
-    {
-      "id": "team_08",
-      "type": "DUO",
-      "userId": "TEAM-08",
-      "partner1UserId": "TEAM-08",
-      "partner2UserId": "TEAM-08-B",
-      "name": "Team 08",
-      "password": "Logic#08Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 08-A",
-        "userId": "TEAM-08"
-      },
-      "partner2": {
-        "name": "Operative 08-B",
-        "userId": "TEAM-08-B"
-      }
-    },
-    {
-      "id": "team_09",
-      "type": "DUO",
-      "userId": "TEAM-09",
-      "partner1UserId": "TEAM-09",
-      "partner2UserId": "TEAM-09-B",
-      "name": "Team 09",
-      "password": "Logic#09Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 09-A",
-        "userId": "TEAM-09"
-      },
-      "partner2": {
-        "name": "Operative 09-B",
-        "userId": "TEAM-09-B"
-      }
-    },
-    {
-      "id": "team_10",
-      "type": "DUO",
-      "userId": "TEAM-10",
-      "partner1UserId": "TEAM-10",
-      "partner2UserId": "TEAM-10-B",
-      "name": "Team 10",
-      "password": "Logic#10Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 10-A",
-        "userId": "TEAM-10"
-      },
-      "partner2": {
-        "name": "Operative 10-B",
-        "userId": "TEAM-10-B"
-      }
-    },
-    {
-      "id": "team_11",
-      "type": "DUO",
-      "userId": "TEAM-11",
-      "partner1UserId": "TEAM-11",
-      "partner2UserId": "TEAM-11-B",
-      "name": "Team 11",
-      "password": "Logic#11Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 11-A",
-        "userId": "TEAM-11"
-      },
-      "partner2": {
-        "name": "Operative 11-B",
-        "userId": "TEAM-11-B"
-      }
-    },
-    {
-      "id": "team_12",
-      "type": "DUO",
-      "userId": "TEAM-12",
-      "partner1UserId": "TEAM-12",
-      "partner2UserId": "TEAM-12-B",
-      "name": "Team 12",
-      "password": "Logic#12Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 12-A",
-        "userId": "TEAM-12"
-      },
-      "partner2": {
-        "name": "Operative 12-B",
-        "userId": "TEAM-12-B"
-      }
-    },
-    {
-      "id": "team_13",
-      "type": "DUO",
-      "userId": "TEAM-13",
-      "partner1UserId": "TEAM-13",
-      "partner2UserId": "TEAM-13-B",
-      "name": "Team 13",
-      "password": "Logic#13Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 13-A",
-        "userId": "TEAM-13"
-      },
-      "partner2": {
-        "name": "Operative 13-B",
-        "userId": "TEAM-13-B"
-      }
-    },
-    {
-      "id": "team_14",
-      "type": "DUO",
-      "userId": "TEAM-14",
-      "partner1UserId": "TEAM-14",
-      "partner2UserId": "TEAM-14-B",
-      "name": "Team 14",
-      "password": "Logic#14Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 14-A",
-        "userId": "TEAM-14"
-      },
-      "partner2": {
-        "name": "Operative 14-B",
-        "userId": "TEAM-14-B"
-      }
-    },
-    {
-      "id": "team_15",
-      "type": "DUO",
-      "userId": "TEAM-15",
-      "partner1UserId": "TEAM-15",
-      "partner2UserId": "TEAM-15-B",
-      "name": "Team 15",
-      "password": "Logic#15Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 15-A",
-        "userId": "TEAM-15"
-      },
-      "partner2": {
-        "name": "Operative 15-B",
-        "userId": "TEAM-15-B"
-      }
-    },
-    {
-      "id": "team_16",
-      "type": "DUO",
-      "userId": "TEAM-16",
-      "partner1UserId": "TEAM-16",
-      "partner2UserId": "TEAM-16-B",
-      "name": "Team 16",
-      "password": "Logic#16Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 16-A",
-        "userId": "TEAM-16"
-      },
-      "partner2": {
-        "name": "Operative 16-B",
-        "userId": "TEAM-16-B"
-      }
-    },
-    {
-      "id": "team_17",
-      "type": "DUO",
-      "userId": "TEAM-17",
-      "partner1UserId": "TEAM-17",
-      "partner2UserId": "TEAM-17-B",
-      "name": "Team 17",
-      "password": "Logic#17Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 17-A",
-        "userId": "TEAM-17"
-      },
-      "partner2": {
-        "name": "Operative 17-B",
-        "userId": "TEAM-17-B"
-      }
-    },
-    {
-      "id": "team_18",
-      "type": "DUO",
-      "userId": "TEAM-18",
-      "partner1UserId": "TEAM-18",
-      "partner2UserId": "TEAM-18-B",
-      "name": "Team 18",
-      "password": "Logic#18Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 18-A",
-        "userId": "TEAM-18"
-      },
-      "partner2": {
-        "name": "Operative 18-B",
-        "userId": "TEAM-18-B"
-      }
-    },
-    {
-      "id": "team_19",
-      "type": "DUO",
-      "userId": "TEAM-19",
-      "partner1UserId": "TEAM-19",
-      "partner2UserId": "TEAM-19-B",
-      "name": "Team 19",
-      "password": "Logic#19Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 19-A",
-        "userId": "TEAM-19"
-      },
-      "partner2": {
-        "name": "Operative 19-B",
-        "userId": "TEAM-19-B"
-      }
-    },
-    {
-      "id": "team_20",
-      "type": "DUO",
-      "userId": "TEAM-20",
-      "partner1UserId": "TEAM-20",
-      "partner2UserId": "TEAM-20-B",
-      "name": "Team 20",
-      "password": "Logic#20Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 20-A",
-        "userId": "TEAM-20"
-      },
-      "partner2": {
-        "name": "Operative 20-B",
-        "userId": "TEAM-20-B"
-      }
-    },
-    {
-      "id": "team_21",
-      "type": "DUO",
-      "userId": "TEAM-21",
-      "partner1UserId": "TEAM-21",
-      "partner2UserId": "TEAM-21-B",
-      "name": "Team 21",
-      "password": "Logic#21Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 21-A",
-        "userId": "TEAM-21"
-      },
-      "partner2": {
-        "name": "Operative 21-B",
-        "userId": "TEAM-21-B"
-      }
-    },
-    {
-      "id": "team_22",
-      "type": "DUO",
-      "userId": "TEAM-22",
-      "partner1UserId": "TEAM-22",
-      "partner2UserId": "TEAM-22-B",
-      "name": "Team 22",
-      "password": "Logic#22Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 22-A",
-        "userId": "TEAM-22"
-      },
-      "partner2": {
-        "name": "Operative 22-B",
-        "userId": "TEAM-22-B"
-      }
-    },
-    {
-      "id": "team_23",
-      "type": "DUO",
-      "userId": "TEAM-23",
-      "partner1UserId": "TEAM-23",
-      "partner2UserId": "TEAM-23-B",
-      "name": "Team 23",
-      "password": "Logic#23Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 23-A",
-        "userId": "TEAM-23"
-      },
-      "partner2": {
-        "name": "Operative 23-B",
-        "userId": "TEAM-23-B"
-      }
-    },
-    {
-      "id": "team_24",
-      "type": "DUO",
-      "userId": "TEAM-24",
-      "partner1UserId": "TEAM-24",
-      "partner2UserId": "TEAM-24-B",
-      "name": "Team 24",
-      "password": "Logic#24Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 24-A",
-        "userId": "TEAM-24"
-      },
-      "partner2": {
-        "name": "Operative 24-B",
-        "userId": "TEAM-24-B"
-      }
-    },
-    {
-      "id": "team_25",
-      "type": "DUO",
-      "userId": "TEAM-25",
-      "partner1UserId": "TEAM-25",
-      "partner2UserId": "TEAM-25-B",
-      "name": "Team 25",
-      "password": "Logic#25Pass!",
-      "college": "Collegiate Arena",
-      "confirmed": true,
-      "score": 0,
-      "solved": [],
-      "penalties": 0,
-      "lastSolve": 0,
-      "partner1": {
-        "name": "Operative 25-A",
-        "userId": "TEAM-25"
-      },
-      "partner2": {
-        "name": "Operative 25-B",
-        "userId": "TEAM-25-B"
+        "name": "Operative Bravo",
+        "userId": "LUMORA-B"
       }
     }
   ],
