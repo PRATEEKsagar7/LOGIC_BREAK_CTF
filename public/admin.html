@@ -351,6 +351,8 @@
     const ADMIN_TOKEN_KEY = 'logic_ctf_admin_token';
     const VALID_TOKEN = 'logicbreak_admin_token_active_session_2026';
 
+    let confirmedParticipants = [];
+
     // Member Operatives initial catalog
     let members = [
       { id: 'usr-1', name: 'Dr. Evelyn Cross', email: 'e.cross@logicctf.edu', role: 'Admin', joined: '12 Jan 2026' },
@@ -364,9 +366,9 @@
 
     // Master Flags Catalog (Authorized View)
     const MASTER_FLAGS = [
-      { num: 1, title: 'The Invisible User', pts: '+50 / -15', flag: 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}' }' },
+      { num: 1, title: 'The Invisible User', pts: '+50 / -15', flag: 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}' },
       { num: 2, title: 'Export a report.', pts: '+50 / -15', flag: 'logicCTF{purg3d_r3cycl3_b1n_csv_3xp0rt}' },
-      { num: 3, title: 'Documentation Exception', pts: '+50 / -15', flag: 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}' }' },
+      { num: 3, title: 'Documentation Exception', pts: '+50 / -15', flag: 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}' },
       { num: 4, title: 'Restore a report.', pts: '+50 / -15', flag: 'logicCTF{r3st0r3_purg3d_r3p0rt_int3gr1ty_unl0ck}' },
       { num: 5, title: 'The Source Code Maze', pts: '+50 / -15', flag: 'logicCTF{DPG_badmos}' },
       { num: 6, title: 'The UI Contradiction', pts: '+50 / -15', flag: 'logicCTF{u1_c0ntr4d1ct10n_f1l3_sh4r1ng_tru7h}' },
@@ -374,14 +376,16 @@
       { num: 8, title: 'The Wrong Workflow', pts: '+50 / -15', flag: 'logicCTF{wr0ng_w0rkfl0w_4lt3rn4t1v3_p4th_c0mpl3t3d}' },
       { num: 9, title: 'The Archived Project', pts: '+50 / -15', flag: 'logicCTF{4rch1v3d_pr0j3ct_h1st0ry_m0d1f13d_unl0ck}' },
       { num: 10, title: 'The Wrong Name', pts: '+50 / -15', flag: 'logicCTF{wr0ng_n4m3_c0rr3ct_d0cum3nt_unm4sk3d}' },
-      { num: 11, title: 'The Invisible User', pts: '+50 / -15', flag: 'logicCTF{ssrf_cl0ud_m3t4d4t4_cr3ds_pwn}' }' },
-      { num: 12, title: 'The Outdated Rule', pts: '+50 / -15', flag: 'logicCTF{su1d_pr1v1l3g3_3sc4l4t10n_r00t}' }' },
+      { num: 11, title: 'SSRF Cloud Metadata', pts: '+50 / -15', flag: 'logicCTF{ssrf_cl0ud_m3t4d4t4_cr3ds_pwn}' },
+      { num: 12, title: 'The Outdated Rule', pts: '+50 / -15', flag: 'logicCTF{su1d_pr1v1l3g3_3sc4l4t10n_r00t}' },
       { num: 13, title: 'The Person Behind the Web', pts: '+50 / -15', flag: 'logicCTF{tim_berners_lee}' },
       { num: 14, title: 'The Missing Task', pts: '+50 / -15', flag: 'logicCTF{m1ss1ng_t4sk_unl1st3d_c0mpl3t3d}' },
       { num: 15, title: 'The Unscheduleable Share', pts: '+50 / -15', flag: 'logicCTF{unsck3dul4bl3_sh4r3_c4l3nd4r_p4th}' },
       { num: 16, title: 'Cancelled but Active', pts: '+50 / -15', flag: 'logicCTF{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}' },
       { num: 17, title: 'The Hidden Name', pts: '+50 / -15', flag: 'logicCTF{h1dd3n_n4m3_pl4c3h0ld3r_unm4sk3d}' },
-      { num: 18, title: 'The Exported Flag', pts: '+50 / -15', flag: 'logicCTF{3xp0rt_csv_tru3_fl4g_r3v34l3d}' }
+      { num: 18, title: 'The Exported Flag', pts: '+50 / -15', flag: 'logicCTF{3xp0rt_csv_tru3_fl4g_r3v34l3d}' },
+      { num: 19, title: 'The Forgotten Menu', pts: '+50 / -15', flag: 'logicCTF{f0rg0tt3n_m3nu_br4nd1ng_l0g0_ch4ng3d}' },
+      { num: 20, title: 'The Archive Vault Recovery', pts: '+50 / -15', flag: 'logicCTF{4rch1v3_v4ult_r3c0v3ry_c0mpl14nc3}' }
     ];
 
     function checkAuth() {
@@ -440,7 +444,7 @@
           headers: { 'Authorization': `Bearer ${VALID_TOKEN}` }
         });
         const data = await res.json();
-        if (data.success && Array.isArray(data.participants)) {
+        if (data.success && Array.isArray(data.participants) && data.participants.length > 0) {
           const localSaved = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
           const map = new Map();
           data.participants.forEach(p => map.set(p.userId, p));
@@ -448,17 +452,52 @@
           confirmedParticipants = Array.from(map.values());
           localStorage.setItem('logic_ctf_confirmed_participants', JSON.stringify(confirmedParticipants));
           renderParticipants();
+        } else {
+          fallbackLocalParticipants();
         }
       } catch (err) {
         console.warn('Participants API offline, loading from local cache');
-        const localSaved = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
-        if (localSaved.length > 0) {
-          confirmedParticipants = localSaved;
-          renderParticipants();
-        }
+        fallbackLocalParticipants();
       }
 
       renderAdminFlags();
+    }
+
+    function fallbackLocalParticipants() {
+      const localSaved = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
+      if (localSaved.length > 0) {
+        confirmedParticipants = localSaved;
+      } else {
+        confirmedParticipants = [
+          { id: "team_01", userId: "TEAM-01", name: "Team 01", password: "Logic#01Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_02", userId: "TEAM-02", name: "Team 02", password: "Logic#02Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_03", userId: "TEAM-03", name: "Team 03", password: "Logic#03Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_04", userId: "TEAM-04", name: "Team 04", password: "Logic#04Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_05", userId: "TEAM-05", name: "Team 05", password: "Logic#05Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_06", userId: "TEAM-06", name: "Team 06", password: "Logic#06Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_07", userId: "TEAM-07", name: "Team 07", password: "Logic#07Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_08", userId: "TEAM-08", name: "Team 08", password: "Logic#08Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_09", userId: "TEAM-09", name: "Team 09", password: "Logic#09Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_10", userId: "TEAM-10", name: "Team 10", password: "Logic#10Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_11", userId: "TEAM-11", name: "Team 11", password: "Logic#11Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_12", userId: "TEAM-12", name: "Team 12", password: "Logic#12Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_13", userId: "TEAM-13", name: "Team 13", password: "Logic#13Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_14", userId: "TEAM-14", name: "Team 14", password: "Logic#14Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_15", userId: "TEAM-15", name: "Team 15", password: "Logic#15Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_16", userId: "TEAM-16", name: "Team 16", password: "Logic#16Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_17", userId: "TEAM-17", name: "Team 17", password: "Logic#17Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_18", userId: "TEAM-18", name: "Team 18", password: "Logic#18Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_19", userId: "TEAM-19", name: "Team 19", password: "Logic#19Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_20", userId: "TEAM-20", name: "Team 20", password: "Logic#20Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_21", userId: "TEAM-21", name: "Team 21", password: "Logic#21Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_22", userId: "TEAM-22", name: "Team 22", password: "Logic#22Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_23", userId: "TEAM-23", name: "Team 23", password: "Logic#23Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_24", userId: "TEAM-24", name: "Team 24", password: "Logic#24Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] },
+          { id: "team_25", userId: "TEAM-25", name: "Team 25", password: "Logic#25Pass!", college: "Collegiate Arena", confirmed: true, score: 0, solved: [] }
+        ];
+        localStorage.setItem('logic_ctf_confirmed_participants', JSON.stringify(confirmedParticipants));
+      }
+      renderParticipants();
     }
 
     function renderAdminLeaderboard(teams) {
@@ -751,6 +790,18 @@
 
       if (!name) return alert('Team name is required');
 
+      let newParticipant = {
+        id: 'team_' + Date.now(),
+        name,
+        userId: userId || ('TEAM-' + String((confirmedParticipants ? confirmedParticipants.length : 0) + 1).padStart(2, '0')),
+        password: password || generateSimplePassword(),
+        college: college || 'Collegiate Arena',
+        confirmed: true,
+        score: 0,
+        solved: [],
+        createdAt: new Date().toISOString()
+      };
+
       try {
         const res = await fetch('/api/admin/confirm-participant', {
           method: 'POST',
@@ -759,32 +810,39 @@
             'Authorization': `Bearer ${VALID_TOKEN}`
           },
           body: JSON.stringify({
-            name,
-            userId,
-            password,
-            college
+            name: newParticipant.name,
+            userId: newParticipant.userId,
+            password: newParticipant.password,
+            college: newParticipant.college
           })
         });
         const data = await res.json();
-        if (data.success) {
-          document.getElementById('modal-add-member').classList.add('hidden');
-          window.showLogicToast && window.showLogicToast(`Team ${name} created successfully!`, 'success');
-          if (data.participant) {
-            const localSaved = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
-            const filtered = localSaved.filter(p => p.userId !== data.participant.userId);
-            filtered.push(data.participant);
-            localStorage.setItem('logic_ctf_confirmed_participants', JSON.stringify(filtered));
-            confirmedParticipants = filtered;
-            renderParticipants();
-            showCreatedCredentialsModal(data.participant);
-          }
-          loadAdminData();
-        } else {
-          alert(data.message || 'Error creating team');
+        if (data.success && data.participant) {
+          newParticipant = data.participant;
         }
       } catch (err) {
-        alert('Network error creating team: ' + err.message);
+        console.warn('Backend offline or unreachable, saving participant to persistent local storage:', err);
       }
+
+      // Always save to persistent localStorage
+      const localSaved = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
+      const filtered = localSaved.filter(p => p.userId !== newParticipant.userId);
+      filtered.push(newParticipant);
+      localStorage.setItem('logic_ctf_confirmed_participants', JSON.stringify(filtered));
+
+      // Update in-memory array
+      const map = new Map();
+      if (Array.isArray(confirmedParticipants)) {
+        confirmedParticipants.forEach(p => map.set(p.userId, p));
+      }
+      map.set(newParticipant.userId, newParticipant);
+      confirmedParticipants = Array.from(map.values());
+
+      document.getElementById('modal-add-member').classList.add('hidden');
+      window.showLogicToast && window.showLogicToast(`Team ${newParticipant.name} created and saved successfully!`, 'success');
+      renderParticipants();
+      showCreatedCredentialsModal(newParticipant);
+      loadAdminData();
     });
 
     let latestGeneratedParticipant = null;

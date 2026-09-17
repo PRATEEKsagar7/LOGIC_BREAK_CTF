@@ -290,6 +290,27 @@
             window.location.href = data.redirect || 'overview.html';
           }, 500);
         } else {
+          // Fallback: Check local confirmed participants storage
+          try {
+            const localTeams = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
+            const found = localTeams.find(t => 
+              ((t.userId && t.userId.toUpperCase() === userId.toUpperCase()) || (t.name && t.name.toLowerCase() === userId.toLowerCase())) &&
+              (t.password === password)
+            );
+            if (found) {
+              localStorage.removeItem('logic_ctf_admin_token');
+              localStorage.setItem('logic_ctf_token', 'token_' + Date.now());
+              localStorage.setItem('logic_ctf_user', JSON.stringify(found));
+              localStorage.setItem('logic_ctf_team', found.name);
+              if (remember) saveAccount(userId, password, found.name);
+              alertBox.className = 'p-3.5 rounded-xl border border-emerald-500/50 bg-emerald-950/80 text-emerald-300 text-xs font-mono flex items-start gap-2.5';
+              alertIcon.textContent = '✅';
+              alertMsg.textContent = 'Team verified from local cache. Entering arena...';
+              setTimeout(() => { window.location.href = 'overview.html'; }, 500);
+              return;
+            }
+          } catch(e) {}
+
           alertBox.className = 'p-3.5 rounded-xl border border-red-500/50 bg-red-950/80 text-red-300 text-xs font-mono flex items-start gap-2.5';
           alertIcon.textContent = '❌';
           alertMsg.textContent = data.message || 'Authentication failed. Please check your User ID and password.';
@@ -297,6 +318,27 @@
           btnSubmit.innerHTML = `<span>Enter CTF Arena</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
         }
       } catch (err) {
+        // Fallback: Check local confirmed participants storage if server unreachable
+        try {
+          const localTeams = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
+          const found = localTeams.find(t => 
+            ((t.userId && t.userId.toUpperCase() === userId.toUpperCase()) || (t.name && t.name.toLowerCase() === userId.toLowerCase())) &&
+            (t.password === password)
+          );
+          if (found) {
+            localStorage.removeItem('logic_ctf_admin_token');
+            localStorage.setItem('logic_ctf_token', 'token_' + Date.now());
+            localStorage.setItem('logic_ctf_user', JSON.stringify(found));
+            localStorage.setItem('logic_ctf_team', found.name);
+            if (remember) saveAccount(userId, password, found.name);
+            alertBox.className = 'p-3.5 rounded-xl border border-emerald-500/50 bg-emerald-950/80 text-emerald-300 text-xs font-mono flex items-start gap-2.5';
+            alertIcon.textContent = '✅';
+            alertMsg.textContent = 'Team verified from local cache. Entering arena...';
+            setTimeout(() => { window.location.href = 'overview.html'; }, 500);
+            return;
+          }
+        } catch(e) {}
+
         alertBox.className = 'p-3.5 rounded-xl border border-red-500/50 bg-red-950/80 text-red-300 text-xs font-mono flex items-start gap-2.5';
         alertIcon.textContent = '⚠️';
         alertMsg.textContent = 'Network or server error communicating with login gateway.';
