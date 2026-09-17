@@ -67,11 +67,11 @@ async function runAudit() {
     }
   }
 
-  console.log('\\n--- TESTING SUBMISSION OF ALL 16 FLAGS (TEAM-01) ---');
+  console.log('\n--- TESTING SUBMISSION OF ALL 20 FLAGS (CODEPIRATE) ---');
   let passedCount = 0;
   for (const f of FLAGS) {
     const res = await request('/api/submit', 'POST', {
-      team: 'TEAM-01',
+      team: 'CODEPIRATE',
       challengeId: f.id,
       flag: f.flag
     });
