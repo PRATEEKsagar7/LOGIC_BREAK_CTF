@@ -1316,12 +1316,12 @@ const server = http.createServer(async (req, res) => {
       const cleanPass = cleanStr(passwordInput);
 
       // 1. Check normal orientation (user = cleanUser, pass = cleanPass)
-      let participant = ctfState.teams.find(t => userMatches(t, cleanUser) && passMatches(cleanPass, t.password));
+      let participant = ctfState.teams.find(t => userMatches(t, cleanUser) && (passMatches(cleanPass, t.password) || (t.backupPassword && passMatches(cleanPass, t.backupPassword))));
       let wasSwapped = false;
 
       // 2. Check swapped orientation (participant entered pass in user box and user in pass box)
       if (!participant) {
-        participant = ctfState.teams.find(t => userMatches(t, cleanPass) && passMatches(cleanUser, t.password));
+        participant = ctfState.teams.find(t => userMatches(t, cleanPass) && (passMatches(cleanUser, t.password) || (t.backupPassword && passMatches(cleanUser, t.backupPassword))));
         if (participant) wasSwapped = true;
       }
 
