@@ -68,6 +68,167 @@
         "name": "Operative Bravo",
         "userId": "LUMORA-B"
       }
+    },
+    {
+      "id": "team_logic_lords",
+      "type": "DUO",
+      "userId": "TEAM-2",
+      "partner1UserId": "TEAM-2",
+      "partner2UserId": "TEAM-2-B",
+      "name": "Logic Lords",
+      "password": "Nexus#rnU789",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "TEAM-2"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "TEAM-2-B"
+      }
+    },
+    {
+      "id": "team_lumina",
+      "type": "DUO",
+      "userId": "TEAM-07",
+      "partner1UserId": "TEAM-07",
+      "partner2UserId": "TEAM-07-B",
+      "name": "LUMINA",
+      "password": "Nexus#LPrc43",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "TEAM-07"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "TEAM-07-B"
+      }
+    },
+    {
+      "id": "team_code_breakers",
+      "type": "DUO",
+      "userId": "TEAM-08",
+      "partner1UserId": "TEAM-08",
+      "partner2UserId": "TEAM-08-B",
+      "name": "Code Breakers ⚡",
+      "password": "Nexus#wp4765",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "TEAM-08"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "TEAM-08-B"
+      }
+    },
+    {
+      "id": "team_syntax_terro",
+      "type": "DUO",
+      "userId": "TEAM-09",
+      "partner1UserId": "TEAM-09",
+      "partner2UserId": "TEAM-09-B",
+      "name": "Syntax Terro",
+      "password": "Nexus#PHen76",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "TEAM-09"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "TEAM-09-B"
+      }
+    },
+    {
+      "id": "team_platinum_coders",
+      "type": "DUO",
+      "userId": "TEAM-10",
+      "partner1UserId": "TEAM-10",
+      "partner2UserId": "TEAM-10-B",
+      "name": "Platinum_coders",
+      "password": "Nexus#jAFp27",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "TEAM-10"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "TEAM-10-B"
+      }
+    },
+    {
+      "id": "team_bug_buster",
+      "type": "DUO",
+      "userId": "TEAM-11",
+      "partner1UserId": "TEAM-11",
+      "partner2UserId": "TEAM-11-B",
+      "name": "Bug Buster",
+      "password": "Nexus#RbnZ62",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "TEAM-11"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "TEAM-11-B"
+      }
+    },
+    {
+      "id": "team_sharaturi",
+      "type": "DUO",
+      "userId": "TEAM-12",
+      "partner1UserId": "TEAM-12",
+      "partner2UserId": "TEAM-12-B",
+      "name": "Sharaturi",
+      "password": "Nexus#5KLL12",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "TEAM-12"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "TEAM-12-B"
+      }
     }
   ],
   "submissions": [],
