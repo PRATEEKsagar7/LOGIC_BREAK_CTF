@@ -1003,7 +1003,10 @@ module.exports = async function handler(req, res) {
         return;
       }
 
+      const reqTeamId = (data.teamId || data.userId || '').trim();
       const team = ctfState.teams.find(t =>
+        (reqTeamId && t.id && t.id === reqTeamId) ||
+        (reqTeamId && t.userId && t.userId.toUpperCase() === reqTeamId.toUpperCase()) ||
         (t.userId && t.userId.toUpperCase() === teamName.toUpperCase()) ||
         (t.partner1UserId && t.partner1UserId.toUpperCase() === teamName.toUpperCase()) ||
         (t.partner2UserId && t.partner2UserId.toUpperCase() === teamName.toUpperCase()) ||
