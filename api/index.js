@@ -436,7 +436,61 @@ const BUNDLED_DATA_PATHS = [
   path.join(process.cwd(), 'ctf_data.json')
 ];
 
-let ctfState = { teams: [], submissions: [], purgedArtifacts: [] };
+const DEFAULT_TEAMS = [
+  {
+    id: "team_codepirate",
+    type: "DUO",
+    userId: "CODEPIRATE",
+    partner1UserId: "CODEPIRATE",
+    partner2UserId: "CODEPIRATE-B",
+    name: "CODEPIRATE",
+    password: "CodePirate#2026",
+    college: "Collegiate Arena",
+    confirmed: true,
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0,
+    partner1: { name: "Operative Alpha", userId: "CODEPIRATE" },
+    partner2: { name: "Operative Bravo", userId: "CODEPIRATE-B" }
+  },
+  {
+    id: "team_logiclord",
+    type: "DUO",
+    userId: "LOGIC-LORD",
+    partner1UserId: "LOGIC-LORD",
+    partner2UserId: "LOGIC-LORD-B",
+    name: "LOGIC LORD",
+    password: "LogicLord#2026",
+    college: "Collegiate Arena",
+    confirmed: true,
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0,
+    partner1: { name: "Operative Alpha", userId: "LOGIC-LORD" },
+    partner2: { name: "Operative Bravo", userId: "LOGIC-LORD-B" }
+  },
+  {
+    id: "team_lumora",
+    type: "DUO",
+    userId: "LUMORA",
+    partner1UserId: "LUMORA",
+    partner2UserId: "LUMORA-B",
+    name: "LUMORA",
+    password: "Lumora#2026",
+    college: "Collegiate Arena",
+    confirmed: true,
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0,
+    partner1: { name: "Operative Alpha", userId: "LUMORA" },
+    partner2: { name: "Operative Bravo", userId: "LUMORA-B" }
+  }
+];
+
+let ctfState = { teams: DEFAULT_TEAMS, submissions: [], purgedArtifacts: [] };
 
 function loadStateFromDisk() {
   try {
@@ -456,7 +510,7 @@ function loadStateFromDisk() {
     try {
       if (fs.existsSync(p)) {
         const saved = JSON.parse(fs.readFileSync(p, 'utf8'));
-        if (saved && Array.isArray(saved.teams)) {
+        if (saved && Array.isArray(saved.teams) && saved.teams.length > 0) {
           ctfState = saved;
           ctfState.purgedArtifacts = ctfState.purgedArtifacts || [];
           console.log('[CTF] Loaded state from:', p, 'with', ctfState.teams.length, 'teams');
@@ -470,6 +524,9 @@ function loadStateFromDisk() {
 }
 
 loadStateFromDisk();
+if (!ctfState.teams || ctfState.teams.length === 0) {
+  ctfState.teams = DEFAULT_TEAMS;
+}
 
 // Save state to /tmp (writable on Vercel Serverless) and local disk if possible
 function saveState() {

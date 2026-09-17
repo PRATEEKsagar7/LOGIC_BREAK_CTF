@@ -1,0 +1,75 @@
+{
+  "teams": [
+    {
+      "id": "team_codepirate",
+      "type": "DUO",
+      "userId": "CODEPIRATE",
+      "partner1UserId": "CODEPIRATE",
+      "partner2UserId": "CODEPIRATE-B",
+      "name": "CODEPIRATE",
+      "password": "CodePirate#2026",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "CODEPIRATE"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "CODEPIRATE-B"
+      }
+    },
+    {
+      "id": "team_logiclord",
+      "type": "DUO",
+      "userId": "LOGIC-LORD",
+      "partner1UserId": "LOGIC-LORD",
+      "partner2UserId": "LOGIC-LORD-B",
+      "name": "LOGIC LORD",
+      "password": "LogicLord#2026",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "LOGIC-LORD"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "LOGIC-LORD-B"
+      }
+    },
+    {
+      "id": "team_lumora",
+      "type": "DUO",
+      "userId": "LUMORA",
+      "partner1UserId": "LUMORA",
+      "partner2UserId": "LUMORA-B",
+      "name": "LUMORA",
+      "password": "Lumora#2026",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "LUMORA"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "LUMORA-B"
+      }
+    }
+  ],
+  "submissions": [],
+  "purgedArtifacts": []
+}
