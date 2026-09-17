@@ -474,19 +474,20 @@ const DEFAULT_TEAMS = [
   {
     id: "team_lumora",
     type: "DUO",
-    userId: "LUMORA",
-    partner1UserId: "LUMORA",
-    partner2UserId: "LUMORA-B",
+    userId: "TEAM-3",
+    partner1UserId: "TEAM-3",
+    partner2UserId: "TEAM-3-B",
     name: "LUMORA",
-    password: "Lumora#2026",
+    password: "Nexus#Y4h832",
+    backupPassword: "Lumora#2026",
     college: "Collegiate Arena",
     confirmed: true,
     score: 0,
     solved: [],
     penalties: 0,
     lastSolve: 0,
-    partner1: { name: "Operative Alpha", userId: "LUMORA" },
-    partner2: { name: "Operative Bravo", userId: "LUMORA-B" }
+    partner1: { name: "Operative Alpha", userId: "TEAM-3" },
+    partner2: { name: "Operative Bravo", userId: "TEAM-3-B" }
   },
   {
     id: "team_logic_lords",
@@ -776,6 +777,23 @@ const DEFAULT_TEAMS = [
     lastSolve: 0,
     partner1: { name: "Operative Alpha", userId: "TEAM-01" },
     partner2: { name: "Operative Bravo", userId: "TEAM-01-B" }
+  },
+  {
+    id: "team_setu",
+    type: "DUO",
+    userId: "TEAM-13",
+    partner1UserId: "TEAM-13",
+    partner2UserId: "TEAM-13-B",
+    name: "Setu",
+    password: "Nexus#uvDe80",
+    college: "Collegiate Arena",
+    confirmed: true,
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0,
+    partner1: { name: "Operative Alpha", userId: "TEAM-13" },
+    partner2: { name: "Operative Bravo", userId: "TEAM-13-B" }
   }
 ];
 
