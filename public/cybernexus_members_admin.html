@@ -105,6 +105,10 @@
           </p>
         </div>
         <div class="flex items-center gap-2">
+          <button onclick="clearAllTeams()" class="px-3.5 py-2 bg-red-950/60 hover:bg-red-900/80 text-red-300 font-label-lg text-xs font-bold rounded-lg border border-red-500/40 transition flex items-center gap-1.5 cursor-pointer" title="Wipe all registered teams to start completely fresh">
+            <span class="material-symbols-outlined text-[16px]">delete_sweep</span>
+            <span>Wipe All Teams</span>
+          </button>
           <button id="btn-export-credentials" onclick="exportAllCredentials()" class="px-3.5 py-2 bg-surface-container-high hover:bg-surface-bright text-white font-label-lg text-xs font-bold rounded-lg border border-outline-variant transition flex items-center gap-1.5 cursor-pointer">
             <span class="material-symbols-outlined text-[16px] text-tertiary">content_copy</span>
             <span>Copy All Roster</span>
@@ -444,14 +448,13 @@
           headers: { 'Authorization': `Bearer ${VALID_TOKEN}` }
         });
         const data = await res.json();
-        const localSaved = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
         if (data.success && Array.isArray(data.participants)) {
-          confirmedParticipants = sanitizeAndFilterParticipants([...data.participants, ...localSaved]);
+          confirmedParticipants = sanitizeAndFilterParticipants(data.participants);
+          localStorage.setItem('logic_ctf_confirmed_participants', JSON.stringify(confirmedParticipants));
+          renderParticipants();
         } else {
-          confirmedParticipants = sanitizeAndFilterParticipants(localSaved);
+          fallbackLocalParticipants();
         }
-        localStorage.setItem('logic_ctf_confirmed_participants', JSON.stringify(confirmedParticipants));
-        renderParticipants();
       } catch (err) {
         console.warn('Participants API offline, loading from local cache');
         fallbackLocalParticipants();
@@ -477,27 +480,6 @@
           if (!map.has(key)) map.set(key, p);
         }
       });
-
-      // Ensure user's permanent teams are always present
-      const ensureTeam = (targetName, defaultUid, defaultPass) => {
-        const key = defaultUid.toUpperCase().trim();
-        if (!map.has(key) && !map.has(targetName.toUpperCase().trim())) {
-          map.set(key, {
-            id: 'team_' + targetName.toLowerCase().replace(/[^a-z0-9]/g, '_'),
-            name: targetName,
-            userId: defaultUid,
-            password: defaultPass,
-            college: 'Collegiate Arena',
-            confirmed: true,
-            score: 0,
-            solved: []
-          });
-        }
-      };
-
-      ensureTeam('CODEPIRATE', 'CODEPIRATE', 'CodePirate#2026');
-      ensureTeam('LOGIC LORD', 'LOGIC-LORD', 'LogicLord#2026');
-      ensureTeam('LUMORA', 'LUMORA', 'Lumora#2026');
 
       return Array.from(map.values());
     }
@@ -641,7 +623,7 @@
               <button onclick="resetTeamScore('${p.id}', '${escapeJs(p.name)}')" class="p-1.5 rounded-lg text-amber-400 hover:text-amber-300 hover:bg-amber-950/40 border border-transparent hover:border-amber-500/30 transition cursor-pointer" title="Reset Team Score">
                 <span class="material-symbols-outlined text-[16px]">restart_alt</span>
               </button>
-              <button onclick="removeParticipant('${p.id}', '${escapeJs(p.name)}')" class="p-1.5 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-950/40 border border-transparent hover:border-red-500/30 transition cursor-pointer" title="Delete Team">
+              <button onclick="removeParticipant('${p.id || ''}', '${escapeJs(p.name)}', '${p.userId || ''}')" class="p-1.5 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-950/40 border border-transparent hover:border-red-500/30 transition cursor-pointer" title="Delete Team">
                 <span class="material-symbols-outlined text-[16px]">delete</span>
               </button>
             </div>
@@ -698,21 +680,58 @@
       });
     }
 
-    async function removeParticipant(id, name) {
-      if (!confirm(`Are you sure you want to remove participant "${name}"?`)) return;
+    async function removeParticipant(id, name, userId) {
+      if (!confirm(`Are you sure you want to remove team "${name || userId || id}"?`)) return;
+
+      const matchId = (id || '').toLowerCase().trim();
+      const matchName = (name || '').toLowerCase().trim();
+      const matchUser = (userId || '').toLowerCase().trim();
+
+      // 1. Immediately remove from memory and localStorage
+      confirmedParticipants = confirmedParticipants.filter(p => {
+        const pId = (p.id || '').toLowerCase().trim();
+        const pUser = (p.userId || '').toLowerCase().trim();
+        const pName = (p.name || '').toLowerCase().trim();
+
+        if (matchId && (pId === matchId || pUser === matchId)) return false;
+        if (matchUser && (pUser === matchUser || pId === matchUser)) return false;
+        if (!matchId && !matchUser && matchName && pName === matchName) return false;
+        if (matchUser && pUser === matchUser && matchName && pName === matchName) return false;
+        return true;
+      });
+
+      localStorage.setItem('logic_ctf_confirmed_participants', JSON.stringify(confirmedParticipants));
+      renderParticipants();
+      window.showLogicToast && window.showLogicToast(`Team "${name || userId}" removed.`, 'info');
+
+      // 2. Call server delete
       try {
-        const res = await fetch(`/api/admin/participant/${id}`, {
+        const targetQuery = encodeURIComponent(id || userId || name);
+        await fetch(`/api/admin/participant/${targetQuery}?userId=${encodeURIComponent(userId || '')}&name=${encodeURIComponent(name || '')}`, {
           method: 'DELETE',
           headers: { 'Authorization': `Bearer ${VALID_TOKEN}` }
         });
-        const data = await res.json();
-        if (data.success) {
-          window.showLogicToast && window.showLogicToast(`Participant "${name}" removed.`, 'info');
-          loadAdminData();
-        }
       } catch (err) {
-        alert('Failed to remove participant');
+        console.warn('Backend delete participant failed:', err);
       }
+    }
+
+    async function clearAllTeams() {
+      if (!confirm('CAUTION // Are you sure you want to wipe ALL teams from the roster?')) return;
+      confirmedParticipants = [];
+      localStorage.setItem('logic_ctf_confirmed_participants', '[]');
+      renderParticipants();
+      try {
+        await fetch('/api/admin/reset', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-token': VALID_TOKEN
+          },
+          body: JSON.stringify({ type: 'ALL_TEAMS' })
+        });
+      } catch (err) {}
+      window.showLogicToast && window.showLogicToast('All teams wiped successfully.', 'info');
     }
 
     async function resetTeamScore(teamId, teamName) {

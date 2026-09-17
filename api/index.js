@@ -1079,8 +1079,21 @@ module.exports = async function handler(req, res) {
       res.end(JSON.stringify({ success: false, message: 'Unauthorized' }));
       return;
     }
-    const targetId = pathname.split('/')[4];
-    ctfState.teams = ctfState.teams.filter(t => t.id !== targetId && t.userId !== targetId);
+    const rawTarget = pathname.split('/')[4] || '';
+    const targetId = decodeURIComponent(rawTarget).toLowerCase().trim();
+    const parsedUrl = url.parse(req.url, true);
+    const qUser = (parsedUrl.query && parsedUrl.query.userId ? String(parsedUrl.query.userId) : '').toLowerCase().trim();
+    const qName = (parsedUrl.query && parsedUrl.query.name ? String(parsedUrl.query.name) : '').toLowerCase().trim();
+
+    ctfState.teams = ctfState.teams.filter(t => {
+      const tId = (t.id || '').toLowerCase().trim();
+      const tUser = (t.userId || '').toLowerCase().trim();
+      const tName = (t.name || '').toLowerCase().trim();
+      if (targetId && (tId === targetId || tUser === targetId || tName === targetId)) return false;
+      if (qUser && (tUser === qUser || tId === qUser)) return false;
+      if (qName && tName === qName && (!qUser || tUser === qUser)) return false;
+      return true;
+    });
     saveState();
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ success: true, message: 'Participant removed successfully.' }));
@@ -1114,6 +1127,15 @@ module.exports = async function handler(req, res) {
     }
     try {
       const body = await parseJsonBody(req);
+      if (body.type === 'ALL_TEAMS') {
+        ctfState.teams = [];
+        ctfState.submissions = [];
+        saveState();
+        broadcastSSE({ type: 'ARENA_RESET', leaderboard: [] });
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, message: 'All teams wiped successfully' }));
+        return;
+      }
       if (body.type === 'ALL') {
         ctfState.teams.forEach(t => { t.score = 0; t.solved = []; t.penalties = 0; t.lastSolve = 0; });
         ctfState.submissions = [];
