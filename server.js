@@ -594,6 +594,91 @@ const INITIAL_PARTICIPANTS = [
     lastSolve: 0,
     partner1: { name: "Operative Alpha", userId: "TEAM-04" },
     partner2: { name: "Operative Bravo", userId: "TEAM-04-B" }
+  },
+  {
+    id: "team_mooncoderz",
+    type: "DUO",
+    userId: "TEAM-12",
+    partner1UserId: "TEAM-12",
+    partner2UserId: "TEAM-12-B",
+    name: "Mooncoderz",
+    password: "Nexus#gyvz92",
+    college: "Collegiate Arena",
+    confirmed: true,
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0,
+    partner1: { name: "Operative Alpha", userId: "TEAM-12" },
+    partner2: { name: "Operative Bravo", userId: "TEAM-12-B" }
+  },
+  {
+    id: "team_as2",
+    type: "DUO",
+    userId: "TEAM-45",
+    partner1UserId: "TEAM-45",
+    partner2UserId: "TEAM-45-B",
+    name: "As2",
+    password: "Nexus#KVB748",
+    college: "Collegiate Arena",
+    confirmed: true,
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0,
+    partner1: { name: "Operative Alpha", userId: "TEAM-45" },
+    partner2: { name: "Operative Bravo", userId: "TEAM-45-B" }
+  },
+  {
+    id: "team_yogesh_33",
+    type: "DUO",
+    userId: "TEAM-33",
+    partner1UserId: "TEAM-33",
+    partner2UserId: "TEAM-33-B",
+    name: "Yogesh",
+    password: "Nexus#W63X16",
+    college: "Collegiate Arena",
+    confirmed: true,
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0,
+    partner1: { name: "Operative Alpha", userId: "TEAM-33" },
+    partner2: { name: "Operative Bravo", userId: "TEAM-33-B" }
+  },
+  {
+    id: "team_hydra",
+    type: "DUO",
+    userId: "TEAM_%%",
+    partner1UserId: "TEAM_%%",
+    partner2UserId: "TEAM_%%-B",
+    name: "HYDRA",
+    password: "Nexus#JQ2p54",
+    college: "Collegiate Arena",
+    confirmed: true,
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0,
+    partner1: { name: "Operative Alpha", userId: "TEAM_%%" },
+    partner2: { name: "Operative Bravo", userId: "TEAM_%%-B" }
+  },
+  {
+    id: "team_yogesh_22",
+    type: "DUO",
+    userId: "TEAM-22",
+    partner1UserId: "TEAM-22",
+    partner2UserId: "TEAM-22-B",
+    name: "Yogesh",
+    password: "Nexus#BrdJ15",
+    college: "Collegiate Arena",
+    confirmed: true,
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0,
+    partner1: { name: "Operative Alpha", userId: "TEAM-22" },
+    partner2: { name: "Operative Bravo", userId: "TEAM-22-B" }
   }
 ];
 
@@ -1048,8 +1133,7 @@ const server = http.createServer(async (req, res) => {
       const nUser = normUid(cleanUser);
       const nName = normName(cleanUser);
 
-      // Check Confirmed Participant Credentials (supports squad ID, partner aliases -A/-B, or team name)
-      const participant = ctfState.teams.find(t => {
+      function matchesUser(t) {
         if (!t) return false;
         const tUid = (t.userId || '').toUpperCase().trim();
         const tP1 = (t.partner1UserId || '').toUpperCase().trim();
@@ -1061,7 +1145,11 @@ const server = http.createServer(async (req, res) => {
         if (tName === cleanUser.toLowerCase() || normName(tName) === nName) return true;
         if (t.id && t.id.toLowerCase() === cleanUser.toLowerCase()) return true;
         return false;
-      });
+      }
+
+      // Check Confirmed Participant Credentials (supports squad ID, partner aliases -A/-B, or team name)
+      const participant = ctfState.teams.find(t => matchesUser(t) && t.password && t.password.trim() === cleanPass) ||
+                          ctfState.teams.find(t => matchesUser(t));
 
       if (!participant || participant.password.trim() !== cleanPass) {
         res.writeHead(401, { 'Content-Type': 'application/json' });
