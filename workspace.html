@@ -926,7 +926,134 @@ logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}
         closeEditLogoModal();
       }
     });
+
+    // Challenge 19: The Forgotten Menu (Change Workspace Logo)
+    function openChangeLogoModal() {
+      const modal = document.getElementById('modal-change-logo');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeChangeLogoModal() {
+      const modal = document.getElementById('modal-change-logo');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function openEditLogoModal() {
+      openChangeLogoModal();
+    }
+
+    function closeEditLogoModal() {
+      closeChangeLogoModal();
+    }
+
+    function applyNewWorkspaceLogo(logoUrl) {
+      const img = document.getElementById('current-logo-img');
+      if (img && logoUrl) {
+        img.src = logoUrl;
+      }
+      try {
+        localStorage.setItem('logic_ctf_workspace_logo', logoUrl || '');
+      } catch (e) {}
+
+      closeChangeLogoModal();
+      showToast('Emblem Updated', 'Workspace branding saved to cluster');
+      setTimeout(() => {
+        const flagModal = document.getElementById('modal-forgotten-menu-flag');
+        if (flagModal) flagModal.classList.remove('hidden');
+      }, 400);
+    }
   </script>
+
+  <!-- MODAL: CHANGE LOGO (The Forgotten Menu) -->
+  <div id="modal-change-logo" class="hidden fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-[#161d19] border border-[#2d3a43] rounded-2xl p-6 shadow-2xl space-y-5">
+      <div class="flex items-center justify-between border-b border-[#2d3a43] pb-3">
+        <div class="flex items-center gap-2.5">
+          <span class="material-symbols-outlined text-[20px] text-emerald-400">palette</span>
+          <h3 class="text-base font-bold text-white font-mono uppercase">Workspace Branding</h3>
+        </div>
+        <button onclick="closeChangeLogoModal()" class="text-slate-400 hover:text-white p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-300 font-mono leading-relaxed">
+        Select an authoritative tournament emblem or upload custom tactical insignia for your collective:
+      </p>
+
+      <!-- Preset Emblems Grid -->
+      <div class="grid grid-cols-3 gap-3">
+        <button type="button" onclick="applyNewWorkspaceLogo('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&auto=format&fit=crop&q=80')" class="group p-3 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-400 flex flex-col items-center gap-2 transition">
+          <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl font-bold font-mono">
+            🛡️
+          </div>
+          <span class="text-[10px] font-mono text-slate-300 group-hover:text-emerald-300">Defense Aegis</span>
+        </button>
+        <button type="button" onclick="applyNewWorkspaceLogo('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=150&auto=format&fit=crop&q=80')" class="group p-3 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-400 flex flex-col items-center gap-2 transition">
+          <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl font-bold font-mono">
+            ⚡
+          </div>
+          <span class="text-[10px] font-mono text-slate-300 group-hover:text-emerald-300">Quantum Core</span>
+        </button>
+        <button type="button" onclick="applyNewWorkspaceLogo('https://images.unsplash.com/photo-1614680376593-902f749f7ffc?w=150&auto=format&fit=crop&q=80')" class="group p-3 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-emerald-400 flex flex-col items-center gap-2 transition">
+          <div class="w-12 h-12 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl font-bold font-mono">
+            💠
+          </div>
+          <span class="text-[10px] font-mono text-slate-300 group-hover:text-emerald-300">Logic Matrix</span>
+        </button>
+      </div>
+
+      <!-- File Upload Simulation -->
+      <div class="p-3 rounded-xl bg-[#0e1511] border border-dashed border-[#2d3a43] text-center">
+        <label class="cursor-pointer block text-xs font-mono text-slate-400 hover:text-emerald-400 transition">
+          <span>Click to select custom insignia (PNG/SVG)</span>
+          <input type="file" accept="image/*" class="hidden" onchange="if(this.files[0]) applyNewWorkspaceLogo('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=150&auto=format&fit=crop&q=80')" />
+        </label>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeChangeLogoModal()" class="px-4 py-2 rounded-xl bg-[#212b3a] hover:bg-[#2d3a4b] text-slate-300 text-xs font-mono font-bold">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: VICTORY POPUP (The Forgotten Menu - Challenge 19) -->
+  <div id="modal-forgotten-menu-flag" class="hidden fixed inset-0 z-[110] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="w-full max-w-lg bg-[#161d19] border-2 border-emerald-500/60 rounded-2xl p-6 shadow-2xl space-y-4 animate-scale-up">
+      <div class="flex items-center gap-3 border-b border-[#2d3a43] pb-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
+          <span class="material-symbols-outlined text-[24px]">verified</span>
+        </div>
+        <div>
+          <h3 class="text-base font-black text-white font-mono uppercase tracking-wide">MISSION 19 // THE FORGOTTEN MENU</h3>
+          <p class="text-xs text-slate-400 font-mono">You found the branding customization option and updated the logo!</p>
+        </div>
+      </div>
+      <div class="p-4 rounded-xl bg-[#0e1511] border border-[#2d3a43] space-y-2.5">
+        <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+          <span class="text-emerald-400 font-bold">CAPTURED FLAG:</span>
+          <span class="text-slate-500 font-mono text-[11px]">+50 PTS</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input readonly id="inputForgottenMenuFlag" value="logicCTF{f0rg0tt3n_m3nu_br4nd1ng_l0g0_ch4ng3d}" class="flex-1 bg-[#161d19] px-3 py-2 rounded-lg text-emerald-300 font-mono text-xs font-bold border border-emerald-500/40 select-all focus:outline-none" />
+          <button type="button" onclick="navigator.clipboard.writeText('logicCTF{f0rg0tt3n_m3nu_br4nd1ng_l0g0_ch4ng3d}'); alert('Flag copied to clipboard!');" class="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-mono text-xs font-bold uppercase transition cursor-pointer">
+            Copy
+          </button>
+        </div>
+        <p class="text-[11px] text-slate-400 font-mono">Submit in Missions to claim your +50 points.</p>
+      </div>
+      <div class="flex justify-between items-center pt-1">
+        <a href="missions.html" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-mono text-xs font-bold transition">
+          Go to Missions
+        </a>
+        <button type="button" onclick="document.getElementById('modal-forgotten-menu-flag').classList.add('hidden')" class="px-4 py-2 rounded-xl bg-[#252b28] hover:bg-[#303632] text-slate-200 font-mono text-xs font-bold transition cursor-pointer">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Outdated Rule Modal -->
   <div id="modal-outdated-flag" class="hidden fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
