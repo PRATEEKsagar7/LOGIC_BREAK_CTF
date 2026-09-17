@@ -740,6 +740,28 @@ let ctfState = {
   purgedArtifacts: []
 };
 
+function mergeDefaultTeams(targetTeams, defaultTeams) {
+  if (!Array.isArray(targetTeams)) targetTeams = [];
+  for (const def of defaultTeams) {
+    const existing = targetTeams.find(t =>
+      (t.id && def.id && t.id === def.id) ||
+      (t.userId && def.userId && t.userId.toUpperCase() === def.userId.toUpperCase() && t.name && def.name && t.name.toLowerCase() === def.name.toLowerCase())
+    );
+    if (!existing) {
+      targetTeams.push(JSON.parse(JSON.stringify(def)));
+    } else {
+      if (def.password) existing.password = def.password;
+      if (def.userId) existing.userId = def.userId;
+      if (def.name) existing.name = def.name;
+      if (def.partner1UserId) existing.partner1UserId = def.partner1UserId;
+      if (def.partner2UserId) existing.partner2UserId = def.partner2UserId;
+      if (def.partner1) existing.partner1 = def.partner1;
+      if (def.partner2) existing.partner2 = def.partner2;
+    }
+  }
+  return targetTeams;
+}
+
 // Load saved state if exists
 if (fs.existsSync(DATA_FILE)) {
   try {
@@ -753,6 +775,9 @@ if (fs.existsSync(DATA_FILE)) {
     console.error('[CTF Server] Error reading persisted state, using defaults.', err.message);
   }
 }
+
+// Guarantee all registered participants are present
+ctfState.teams = mergeDefaultTeams(ctfState.teams, INITIAL_PARTICIPANTS);
 
 function saveState() {
   try {
@@ -1154,9 +1179,16 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      // Check Admin Credentials
-      if (usernameInput === ADMIN_CREDENTIALS.username &&
-        (passwordInput === ADMIN_CREDENTIALS.password || passwordInput === ADMIN_CREDENTIALS.backupPassword)) {
+      // Check Admin Credentials (case-tolerant & trimmed)
+      const uTrim = usernameInput.toLowerCase().trim();
+      const pTrim = passwordInput.trim();
+      if (
+        (uTrim === ADMIN_CREDENTIALS.username.toLowerCase()) &&
+        (pTrim === ADMIN_CREDENTIALS.password ||
+         pTrim === ADMIN_CREDENTIALS.backupPassword ||
+         pTrim.toLowerCase() === ADMIN_CREDENTIALS.password.toLowerCase() ||
+         pTrim.toLowerCase() === ADMIN_CREDENTIALS.backupPassword.toLowerCase())
+      ) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
           success: true,
@@ -1169,51 +1201,113 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      function normUid(s) {
+      function cleanStr(s) {
         if (!s) return '';
-        let u = s.toUpperCase().trim().replace(/\s+/g, '-');
-        return u.replace(/^TEAM-0+([0-9]+)$/, 'TEAM-$1');
-      }
-      function normName(s) {
-        if (!s) return '';
-        return s.toLowerCase().replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').replace(/[_\-\s]+/g, ' ').trim();
+        return String(s)
+          .replace(/[\u200B-\u200D\uFEFF\u00A0]/g, '')
+          .trim();
       }
 
-      const cleanUser = usernameInput.trim();
-      const cleanPass = passwordInput.replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
-      const nUser = normUid(cleanUser);
-      const nName = normName(cleanUser);
+      function normAlphanumeric(s) {
+        if (!s) return '';
+        return String(s)
+          .toLowerCase()
+          .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '')
+          .replace(/[^a-z0-9]/g, '');
+      }
 
-      function matchesUser(t) {
-        if (!t) return false;
-        const tUid = (t.userId || '').toUpperCase().trim();
-        const tP1 = (t.partner1UserId || '').toUpperCase().trim();
-        const tP2 = (t.partner2UserId || '').toUpperCase().trim();
-        const tName = (t.name || '').toLowerCase().trim();
+      function extractTeamNumber(s) {
+        if (!s) return null;
+        const m = String(s).match(/(?:team\s*[-_]?\s*)?0*([0-9]+)$/i);
+        return m ? m[1] : null;
+      }
 
-        if (tUid === cleanUser.toUpperCase() || tP1 === cleanUser.toUpperCase() || tP2 === cleanUser.toUpperCase()) return true;
-        if (normUid(tUid) === nUser || normUid(tP1) === nUser || normUid(tP2) === nUser) return true;
-        if (tName === cleanUser.toLowerCase() || normName(tName) === nName) return true;
-        if (t.id && t.id.toLowerCase() === cleanUser.toLowerCase()) return true;
+      function passMatches(inputPass, storedPass) {
+        if (!inputPass || !storedPass) return false;
+        const i = cleanStr(inputPass);
+        const s = cleanStr(storedPass);
+        if (i === s) return true;
+        if (i.toLowerCase() === s.toLowerCase()) return true;
+        const iAlpha = i.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        const sAlpha = s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+        if (iAlpha && sAlpha && iAlpha === sAlpha) return true;
         return false;
       }
 
-      // Check Confirmed Participant Credentials (supports squad ID, partner aliases -A/-B, or team name)
-      const participant = ctfState.teams.find(t => matchesUser(t) && t.password && t.password.trim() === cleanPass) ||
-                          ctfState.teams.find(t => matchesUser(t));
+      function userMatches(t, input) {
+        if (!t || !input) return false;
+        const rawIn = cleanStr(input).toLowerCase();
+        if (!rawIn) return false;
 
-      if (!participant || participant.password.trim() !== cleanPass) {
+        const candidates = [
+          t.userId,
+          t.partner1UserId,
+          t.partner2UserId,
+          t.name,
+          t.id,
+          t.partner1 ? t.partner1.userId : null,
+          t.partner2 ? t.partner2.userId : null
+        ].filter(Boolean);
+
+        for (const c of candidates) {
+          if (cleanStr(c).toLowerCase() === rawIn) return true;
+        }
+
+        const inAlpha = normAlphanumeric(rawIn);
+        if (inAlpha) {
+          for (const c of candidates) {
+            if (normAlphanumeric(c) === inAlpha) return true;
+          }
+        }
+
+        const inNum = extractTeamNumber(rawIn);
+        if (inNum !== null) {
+          const tNum = extractTeamNumber(t.userId);
+          if (tNum !== null && tNum === inNum) return true;
+        }
+
+        if ((rawIn.includes('%%') || rawIn.includes('hydra')) && 
+            ((t.userId && t.userId.includes('%%')) || (t.name && t.name.toLowerCase().includes('hydra')))) {
+          return true;
+        }
+
+        return false;
+      }
+
+      const cleanUser = cleanStr(usernameInput);
+      const cleanPass = cleanStr(passwordInput);
+
+      // 1. Check normal orientation (user = cleanUser, pass = cleanPass)
+      let participant = ctfState.teams.find(t => userMatches(t, cleanUser) && passMatches(cleanPass, t.password));
+      let wasSwapped = false;
+
+      // 2. Check swapped orientation (participant entered pass in user box and user in pass box)
+      if (!participant) {
+        participant = ctfState.teams.find(t => userMatches(t, cleanPass) && passMatches(cleanUser, t.password));
+        if (participant) wasSwapped = true;
+      }
+
+      if (!participant) {
+        // Helpful diagnostic to see if user was recognized
+        const recognizedUser = ctfState.teams.find(t => userMatches(t, cleanUser));
         res.writeHead(401, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
-          success: false,
-          message: 'Invalid User ID or Password. Only confirmed participants can enter.'
-        }));
+        if (recognizedUser) {
+          res.end(JSON.stringify({
+            success: false,
+            message: `Invalid password for team '${recognizedUser.name}' (${recognizedUser.userId}). Please check your password spelling.`
+          }));
+        } else {
+          res.end(JSON.stringify({
+            success: false,
+            message: 'Invalid User ID or Password. Only confirmed participants can enter.'
+          }));
+        }
         return;
       }
 
-      // Check if logged in with a partner-specific ID
-      const isPartner2 = participant.partner2UserId && participant.partner2UserId.toUpperCase() === usernameInput.toUpperCase();
-      const isPartner1 = participant.partner1UserId && participant.partner1UserId.toUpperCase() === usernameInput.toUpperCase();
+      const effectiveUser = wasSwapped ? cleanPass : cleanUser;
+      const isPartner2 = participant.partner2UserId && participant.partner2UserId.toUpperCase() === effectiveUser.toUpperCase();
+      const isPartner1 = participant.partner1UserId && participant.partner1UserId.toUpperCase() === effectiveUser.toUpperCase();
       const activePartnerName = isPartner2
         ? (participant.partner2 && participant.partner2.name ? participant.partner2.name : 'Partner 2')
         : (isPartner1 && participant.partner1 && participant.partner1.name ? participant.partner1.name : participant.name);

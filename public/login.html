@@ -292,11 +292,30 @@
         } else {
           // Fallback: Check local confirmed participants storage
           try {
+            function cleanStr(s) { return String(s || '').replace(/[\u200B-\u200D\uFEFF\u00A0]/g, '').trim(); }
+            function normAlpha(s) { return String(s || '').toLowerCase().replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').replace(/[^a-z0-9]/g, ''); }
+            function extractNum(s) { const m = String(s || '').match(/(?:team\s*[-_]?\s*)?0*([0-9]+)$/i); return m ? m[1] : null; }
+            function passMatches(iP, sP) {
+              if (!iP || !sP) return false;
+              const i = cleanStr(iP), s = cleanStr(sP);
+              if (i === s || i.toLowerCase() === s.toLowerCase()) return true;
+              return normAlpha(i) === normAlpha(s);
+            }
+            function userMatches(t, inU) {
+              if (!t || !inU) return false;
+              const raw = cleanStr(inU).toLowerCase();
+              const cand = [t.userId, t.partner1UserId, t.partner2UserId, t.name, t.id].filter(Boolean);
+              for (const c of cand) {
+                if (cleanStr(c).toLowerCase() === raw || normAlpha(c) === normAlpha(raw)) return true;
+              }
+              const inN = extractNum(raw);
+              if (inN !== null && extractNum(t.userId) === inN) return true;
+              return false;
+            }
+
             const localTeams = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
-            const found = localTeams.find(t => 
-              ((t.userId && t.userId.toUpperCase() === userId.toUpperCase()) || (t.name && t.name.toLowerCase() === userId.toLowerCase())) &&
-              (t.password === password)
-            );
+            const found = localTeams.find(t => userMatches(t, userId) && passMatches(password, t.password)) ||
+                          localTeams.find(t => userMatches(t, password) && passMatches(userId, t.password));
             if (found) {
               localStorage.removeItem('logic_ctf_admin_token');
               localStorage.setItem('logic_ctf_token', 'token_' + Date.now());
@@ -320,11 +339,30 @@
       } catch (err) {
         // Fallback: Check local confirmed participants storage if server unreachable
         try {
+          function cleanStr(s) { return String(s || '').replace(/[\u200B-\u200D\uFEFF\u00A0]/g, '').trim(); }
+          function normAlpha(s) { return String(s || '').toLowerCase().replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').replace(/[^a-z0-9]/g, ''); }
+          function extractNum(s) { const m = String(s || '').match(/(?:team\s*[-_]?\s*)?0*([0-9]+)$/i); return m ? m[1] : null; }
+          function passMatches(iP, sP) {
+            if (!iP || !sP) return false;
+            const i = cleanStr(iP), s = cleanStr(sP);
+            if (i === s || i.toLowerCase() === s.toLowerCase()) return true;
+            return normAlpha(i) === normAlpha(s);
+          }
+          function userMatches(t, inU) {
+            if (!t || !inU) return false;
+            const raw = cleanStr(inU).toLowerCase();
+            const cand = [t.userId, t.partner1UserId, t.partner2UserId, t.name, t.id].filter(Boolean);
+            for (const c of cand) {
+              if (cleanStr(c).toLowerCase() === raw || normAlpha(c) === normAlpha(raw)) return true;
+            }
+            const inN = extractNum(raw);
+            if (inN !== null && extractNum(t.userId) === inN) return true;
+            return false;
+          }
+
           const localTeams = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
-          const found = localTeams.find(t => 
-            ((t.userId && t.userId.toUpperCase() === userId.toUpperCase()) || (t.name && t.name.toLowerCase() === userId.toLowerCase())) &&
-            (t.password === password)
-          );
+          const found = localTeams.find(t => userMatches(t, userId) && passMatches(password, t.password)) ||
+                        localTeams.find(t => userMatches(t, password) && passMatches(userId, t.password));
           if (found) {
             localStorage.removeItem('logic_ctf_admin_token');
             localStorage.setItem('logic_ctf_token', 'token_' + Date.now());
