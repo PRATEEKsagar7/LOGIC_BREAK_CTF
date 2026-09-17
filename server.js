@@ -38,7 +38,7 @@ const INITIAL_CHALLENGES = [
       'Inspect the Activity Log audit or search filters in Users Directory to discover the unlisted operative.'
     ],
     file: 'users.html',
-    codeSnippet: '// Directory filter suppresses unlisted active operator.\n// Inspect Activity Log audit or search filters in Users Directory to discover the unlisted operative.\n// Flag: logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}',
+    codeSnippet: '// Directory filter suppresses unlisted active operator.\n// Inspect Activity Log audit or search filters in Users Directory to discover the unlisted operative.\n// Format: logicCTF{...}',
     flag: 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}'
   },
   {
@@ -73,7 +73,7 @@ const INITIAL_CHALLENGES = [
       'Compare the role permissions matrix in Documentation with the actions available in the live application.'
     ],
     file: 'documentation.html',
-    codeSnippet: '// Documentation states viewers cannot modify user accounts.\n// Explore the User Directory workflows to discover the alternate permitted path.\n// Flag: logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}',
+    codeSnippet: '// Documentation states viewers cannot modify user accounts.\n// Explore the User Directory workflows to discover the alternate permitted path.\n// Format: logicCTF{...}',
     flag: 'logicCTF{t3xt4r34_r3s1z3_h1dd3n_buff3r_unl0ck}'
   },
   {
@@ -147,7 +147,7 @@ const INITIAL_CHALLENGES = [
       'Not visible is not the same as unavailable.'
     ],
     file: 'billing.html',
-    codeSnippet: '// Billing Archive Engine:\n// Normal view filters out unlisted vouchers.\n// Search query indexes unlisted allocation records:\n// Search "secret" -> INV-SECRET-077 -> Claim Voucher -> Flag revealed!',
+    codeSnippet: '// Billing Archive Engine:\n// Normal view filters out unlisted vouchers.\n// Search query indexes unlisted allocation records:\n// Search keywords -> locate unlisted allocation -> claim voucher.',
     flag: 'logicCTF{s3cr3t_s34rch_unl1st3d_inv01c3_r3v34l3d}'
   },
   {
@@ -166,7 +166,7 @@ const INITIAL_CHALLENGES = [
       'There may be more than one way to reach the same result.'
     ],
     file: 'projects.html',
-    codeSnippet: '// Normal Workflow (Projects Grid): Direct archive rejected due to bound node telemetry.\n// Alternative Workflow (Workspace Node): Disconnecting node service archives project to standby storage!\n// Flag unlocked: logicCTF{wr0ng_w0rkfl0w_4lt3rn4t1v3_p4th_c0mpl3t3d}',
+    codeSnippet: '// Normal Workflow (Projects Grid): Direct archive rejected due to bound node telemetry.\n// Alternative Workflow (Workspace Node): Disconnecting node service archives project to standby storage!\n// Format: logicCTF{...}',
     flag: 'logicCTF{wr0ng_w0rkfl0w_4lt3rn4t1v3_p4th_c0mpl3t3d}'
   },
   {
@@ -185,7 +185,7 @@ const INITIAL_CHALLENGES = [
       'Where you open something can change what you can do with it.'
     ],
     file: 'projects.html',
-    codeSnippet: '// Normal projects dashboard blocks modification of archived items:\n// "Archived projects cannot be modified."\n// Accessing via Recent Activity / Audit History exposes action workflow:\n// Flag: logicCTF{4rch1v3d_pr0j3ct_h1st0ry_m0d1f13d_unl0ck}',
+    codeSnippet: '// Normal projects dashboard blocks modification of archived items:\n// "Archived projects cannot be modified."\n// Accessing via Recent Activity / Audit History exposes action workflow:\n// Format: logicCTF{...}',
     flag: 'logicCTF{4rch1v3d_pr0j3ct_h1st0ry_m0d1f13d_unl0ck}'
   },
   {
@@ -203,7 +203,7 @@ const INITIAL_CHALLENGES = [
       'The file that guides you may point you closer than you think. Compare Movie Reference Notes with Annual Project Report.'
     ],
     file: 'Movie Reference Notes.md',
-    codeSnippet: '// Identified document under wrong generic title: "Annual Project Report.md"\n// Reference guide describes a movie about dreams within dreams, artificial layers, and memories.\n// The document itself mentions: "The final stage was described internally as an inception"\n// Correct Canonical Name: "Inception.md"\n// Flag: logicCTF{wr0ng_n4m3_c0rr3ct_d0cum3nt_unm4sk3d}',
+    codeSnippet: '// Identified document under wrong generic title: "Annual Project Report.md"\n// Reference guide describes a movie about dreams within dreams, artificial layers, and memories.\n// The document itself mentions: "The final stage was described internally as an inception"\n// Correct Canonical Name required.\n// Format: logicCTF{...}',
     flag: 'logicCTF{wr0ng_n4m3_c0rr3ct_d0cum3nt_unm4sk3d}'
   },
   {
@@ -221,7 +221,7 @@ const INITIAL_CHALLENGES = [
       'Look for instance metadata queries in challenge_11_shadow_api.json to extract the authentic access key.'
     ],
     file: 'challenge_11_shadow_api.json',
-    codeSnippet: '// Cloud Metadata Gateway: 169.254.169.254\n// Shadow API relays unauthenticated internal credentials.\n// Flag: logicCTF{ssrf_cl0ud_m3t4d4t4_cr3ds_pwn}',
+    codeSnippet: '// Cloud Metadata Gateway: 169.254.169.254\n// Shadow API relays unauthenticated internal credentials.\n// Format: logicCTF{...}',
     flag: 'logicCTF{ssrf_cl0ud_m3t4d4t4_cr3ds_pwn}'
   },
   {
@@ -239,7 +239,7 @@ const INITIAL_CHALLENGES = [
       'Compare what the documentation claims is unavailable with what the live application allows.'
     ],
     file: 'documentation.html',
-    codeSnippet: '// Documentation marks feature as read-only/deprecated.\n// Live application execution path remains enabled.\n// Flag: logicCTF{su1d_pr1v1l3g3_3sc4l4t10n_r00t}',
+    codeSnippet: '// Documentation marks feature as read-only/deprecated.\n// Live application execution path remains enabled.\n// Format: logicCTF{...}',
     flag: 'logicCTF{su1d_pr1v1l3g3_3sc4l4t10n_r00t}'
   },
   {
@@ -258,7 +258,7 @@ const INITIAL_CHALLENGES = [
       'Submit the flag in standard format: logicCTF{<first>_<last>} (e.g. logicCTF{tim_berners_lee}).'
     ],
     file: 'challenge_13_the_unknown_person.txt',
-    codeSnippet: '// Historical Intelligence Dossier: ARCH-HIST-1955-WWW\n// "The person you are looking for was born on 8 June 1955."\n// Inventor of the World Wide Web at CERN.\n// Flag: logicCTF{tim_berners_lee}',
+    codeSnippet: '// Historical Intelligence Dossier: ARCH-HIST-1955-WWW\n// "The person you are looking for was born on 8 June 1955."\n// Inventor of the World Wide Web at CERN.\n// Format: logicCTF{first_last}',
     flag: 'logicCTF{tim_berners_lee}'
   },
   {
@@ -276,7 +276,7 @@ const INITIAL_CHALLENGES = [
       'Inspect the Tactical Schedule dashboard. Use the search bar or the Activity & Audit log filter to uncover hidden background tasks, then mark it complete.'
     ],
     file: 'schedule.html',
-    codeSnippet: '// Main view suppresses background maintenance daemons.\n// Filter by activity/audit or search for cold-storage/unlisted tasks.\n// Flag: logicCTF{m1ss1ng_t4sk_unl1st3d_c0mpl3t3d}',
+    codeSnippet: '// Main view suppresses background maintenance daemons.\n// Filter by activity/audit or search for cold-storage/unlisted tasks.\n// Format: logicCTF{...}',
     flag: 'logicCTF{m1ss1ng_t4sk_unl1st3d_c0mpl3t3d}'
   },
   {
@@ -294,7 +294,7 @@ const INITIAL_CHALLENGES = [
       'The Files & Docs interface insists scheduling is unavailable, but perhaps a dedicated scheduling workflow looks at it differently.'
     ],
     file: 'schedule.html',
-    codeSnippet: '// Files portal disables scheduling with policy restriction.\n// Schedule portal alternative workflow permits calendar share.\n// Flag: logicCTF{unsck3dul4bl3_sh4r3_c4l3nd4r_p4th}',
+    codeSnippet: '// Files portal disables scheduling with policy restriction.\n// Schedule portal alternative workflow permits calendar share.\n// Format: logicCTF{...}',
     flag: 'logicCTF{unsck3dul4bl3_sh4r3_c4l3nd4r_p4th}'
   },
   {
@@ -312,7 +312,7 @@ const INITIAL_CHALLENGES = [
       'A cancellation error message in the interface may disguise state synchronization on the underlying subscription record.'
     ],
     file: 'billing.html',
-    codeSnippet: '// Cancellation yields simulated transaction failure.\n// Refreshing reveals updated account cancellation status and flag.\n// Flag: logicCTF{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}',
+    codeSnippet: '// Cancellation yields simulated transaction failure.\n// Refreshing reveals updated account cancellation status and flag.\n// Format: logicCTF{...}',
     flag: 'logicCTF{c4nc3ll3d_but_4ct1v3_st4t3_d1sc0v3r3d}'
   },
   {
@@ -330,7 +330,7 @@ const INITIAL_CHALLENGES = [
       'Open the Add User modal and inspect the Name input field element in DevTools to find the secret identity attribute.'
     ],
     file: 'users.html',
-    codeSnippet: '// In Add User form:\n// Input #create-name carries hidden data attribute:\n// data-secret-identity="Cipher Prime"\n// Entering "Cipher Prime" triggers the flag payload!\n// Flag: logicCTF{h1dd3n_n4m3_pl4c3h0ld3r_unm4sk3d}',
+    codeSnippet: '// In Add User form:\n// Input #create-name carries hidden data attribute:\n// data-secret-identity="Cipher Prime"\n// Entering "Cipher Prime" triggers the flag payload!\n// Format: logicCTF{...}',
     flag: 'logicCTF{h1dd3n_n4m3_pl4c3h0ld3r_unm4sk3d}'
   },
   {
@@ -348,7 +348,7 @@ const INITIAL_CHALLENGES = [
       'Click Export in Users Directory. Compare the decoy flag against the authentic logicCTF{...} syntax.'
     ],
     file: 'users.html',
-    codeSnippet: '// User Directory Export:\n// Decoy flag: FLAG{invalid_syntax_export_test} (rejected)\n// Authentic canonical flag:\n// Flag: logicCTF{3xp0rt_csv_tru3_fl4g_r3v34l3d}',
+    codeSnippet: '// User Directory Export:\n// Decoy flag: FLAG{invalid_syntax_export_test} (rejected)\n// Authentic canonical flag:\n// Format: logicCTF{...}',
     flag: 'logicCTF{3xp0rt_csv_tru3_fl4g_r3v34l3d}'
   },
   {
@@ -366,7 +366,7 @@ const INITIAL_CHALLENGES = [
       'Inspect Workspace Settings or Appearance to change the active workspace emblem.'
     ],
     file: 'workspace.html',
-    codeSnippet: '// Workspace Settings / Branding:\n// Missing direct control on primary overview.\n// Trigger Change Logo via Appearance/Branding workflow:\n// Flag: logicCTF{f0rg0tt3n_m3nu_br4nd1ng_l0g0_ch4ng3d}',
+    codeSnippet: '// Workspace Settings / Branding:\n// Missing direct control on primary overview.\n// Trigger Change Logo via Appearance/Branding workflow:\n// Format: logicCTF{...}',
     flag: 'logicCTF{f0rg0tt3n_m3nu_br4nd1ng_l0g0_ch4ng3d}'
   },
   {
@@ -384,7 +384,7 @@ const INITIAL_CHALLENGES = [
       'Explore Archived Users, locate the restricted deactivated record, and restore the operational clearance.'
     ],
     file: 'archived_users.html',
-    codeSnippet: '// Retention & Security Vault:\n// Archived user accounts held in cold storage.\n// Restore deactivated user record to unlock compliance verification.\n// Flag: logicCTF{4rch1v3_v4ult_r3c0v3ry_c0mpl14nc3}',
+    codeSnippet: '// Retention & Security Vault:\n// Archived user accounts held in cold storage.\n// Restore deactivated user record to unlock compliance verification.\n// Format: logicCTF{...}',
     flag: 'logicCTF{4rch1v3_v4ult_r3c0v3ry_c0mpl14nc3}'
   }
 ];
@@ -952,7 +952,7 @@ const server = http.createServer(async (req, res) => {
       description: ch.description,
       hintsCount: ch.hints.length,
       file: ch.file,
-      codeSnippet: ch.codeSnippet,
+      codeSnippet: (ch.codeSnippet || '').replace(/logicCTF\{[^}]+\}/gi, 'logicCTF{...}'),
       isSolved: solvedSet.has(ch.id)
     }));
 

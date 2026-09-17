@@ -30,5 +30,5 @@ INVESTIGATION BRIEF & HINTS:
   something the whole world could use.
 • Hint: “The person you are looking for was born on 8 June 1955.”
 • Objective: Uncover the pioneer's identity and submit the flag.
-• Flag Format: logicCTF{first_last} (e.g. logicCTF{tim_berners_lee})
+• Flag Format: logicCTF{first_last} (e.g. logicCTF{first_last})
 ================================================================================
