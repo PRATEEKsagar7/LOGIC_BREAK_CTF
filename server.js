@@ -730,6 +730,23 @@ const INITIAL_PARTICIPANTS = [
     lastSolve: 0,
     partner1: { name: "Operative Alpha", userId: "TEAM-77" },
     partner2: { name: "Operative Bravo", userId: "TEAM-77-B" }
+  },
+  {
+    id: "team_01",
+    type: "DUO",
+    userId: "TEAM-01",
+    partner1UserId: "TEAM-01",
+    partner2UserId: "TEAM-01-B",
+    name: "Team 01",
+    password: "Nexus#QUBg57",
+    college: "Collegiate Arena",
+    confirmed: true,
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0,
+    partner1: { name: "Operative Alpha", userId: "TEAM-01" },
+    partner2: { name: "Operative Bravo", userId: "TEAM-01-B" }
   }
 ];
 
