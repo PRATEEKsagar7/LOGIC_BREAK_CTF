@@ -606,6 +606,23 @@ const DEFAULT_TEAMS = [
     lastSolve: 0,
     partner1: { name: "Operative Alpha", userId: "TEAM-12" },
     partner2: { name: "Operative Bravo", userId: "TEAM-12-B" }
+  },
+  {
+    id: "team_swanik",
+    type: "DUO",
+    userId: "TEAM-04",
+    partner1UserId: "TEAM-04",
+    partner2UserId: "TEAM-04-B",
+    name: "Swanik",
+    password: "Nexus#dpfa12",
+    college: "Collegiate Arena",
+    confirmed: true,
+    score: 0,
+    solved: [],
+    penalties: 0,
+    lastSolve: 0,
+    partner1: { name: "Operative Alpha", userId: "TEAM-04" },
+    partner2: { name: "Operative Bravo", userId: "TEAM-04-B" }
   }
 ];
 
