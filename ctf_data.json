@@ -367,6 +367,52 @@
         "name": "Operative Bravo",
         "userId": "TEAM-22-B"
       }
+    },
+    {
+      "id": "team_syntax_404",
+      "type": "DUO",
+      "userId": "TEAM-15",
+      "partner1UserId": "TEAM-15",
+      "partner2UserId": "TEAM-15-B",
+      "name": "Team syntax 404",
+      "password": "Nexus#YAYh24",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "TEAM-15"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "TEAM-15-B"
+      }
+    },
+    {
+      "id": "team_error_404",
+      "type": "DUO",
+      "userId": "TEAM-14",
+      "partner1UserId": "TEAM-14",
+      "partner2UserId": "TEAM-14-B",
+      "name": "Error 404",
+      "password": "Nexus#rKXm90",
+      "college": "Collegiate Arena",
+      "confirmed": true,
+      "score": 0,
+      "solved": [],
+      "penalties": 0,
+      "lastSolve": 0,
+      "partner1": {
+        "name": "Operative Alpha",
+        "userId": "TEAM-14"
+      },
+      "partner2": {
+        "name": "Operative Bravo",
+        "userId": "TEAM-14-B"
+      }
     }
   ],
   "submissions": [],
