@@ -464,34 +464,24 @@
       const list = Array.isArray(rawList) ? rawList : [];
       const isPremadeDummy = (p) => {
         if (!p) return true;
-        const name = (p.name || '').trim().toUpperCase();
-        const uid = (p.userId || '').trim().toUpperCase();
-        
-        // NEVER delete user-created teams
-        if (name === 'CODEPIRATE' || uid === 'CODEPIRATE') return false;
-        if (name === 'LOGIC LORD' || uid === 'LOGIC-LORD' || uid === 'LOGIC_LORD' || uid === 'LOGIC LORD') return false;
-        if (name === 'LUMORA' || uid === 'LUMORA') return false;
-
-        // Dummy patterns
-        if (/^TEAM[\s-_]*0*[0-9]+$/i.test(name)) return true;
-        if (/^TEAM-0*[0-9]+$/i.test(uid)) return true;
-        if (name.includes('TEST') || uid === 'TEAM-99') return true;
-
+        // ONLY remove the old auto-generated dummy filler teams that have "Logic#XXPass!" password
+        if (p.password && /^Logic#[0-9]+Pass!$/i.test(p.password)) return true;
+        if (p.name === 'Test Persistent Team' || p.userId === 'TEAM-99') return true;
         return false;
       };
 
       const map = new Map();
       list.forEach(p => {
-        if (!isPremadeDummy(p)) {
-          const key = (p.userId || p.name || '').toUpperCase();
+        if (!isPremadeDummy(p) && p.name) {
+          const key = (p.userId || p.name).toUpperCase().trim();
           if (!map.has(key)) map.set(key, p);
         }
       });
 
-      // Ensure the 3 user-specified teams are present
+      // Ensure user's permanent teams are always present
       const ensureTeam = (targetName, defaultUid, defaultPass) => {
-        const key = defaultUid.toUpperCase();
-        if (!map.has(key) && !map.has(targetName.toUpperCase())) {
+        const key = defaultUid.toUpperCase().trim();
+        if (!map.has(key) && !map.has(targetName.toUpperCase().trim())) {
           map.set(key, {
             id: 'team_' + targetName.toLowerCase().replace(/[^a-z0-9]/g, '_'),
             name: targetName,
@@ -516,6 +506,7 @@
       const localSaved = JSON.parse(localStorage.getItem('logic_ctf_confirmed_participants') || '[]');
       confirmedParticipants = sanitizeAndFilterParticipants(localSaved);
       localStorage.setItem('logic_ctf_confirmed_participants', JSON.stringify(confirmedParticipants));
+      renderParticipants();
     }
 
     function renderAdminLeaderboard(teams) {
