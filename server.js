@@ -1100,7 +1100,8 @@ const server = http.createServer(async (req, res) => {
           pointsGained: challenge.points,
           newScore: team.score,
           timestamp: Date.now(),
-          leaderboard: getSortedLeaderboard()
+          leaderboard: getSortedLeaderboard(),
+          recentActivity: ctfState.submissions.slice(0, 15)
         });
 
         res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -1138,7 +1139,8 @@ const server = http.createServer(async (req, res) => {
           penalty: challenge.penalty,
           newScore: team.score,
           timestamp: Date.now(),
-          leaderboard: getSortedLeaderboard()
+          leaderboard: getSortedLeaderboard(),
+          recentActivity: ctfState.submissions.slice(0, 15)
         });
 
         const isFakeFlag = submittedFlag.toUpperCase().includes('FAKE_FLAG') ||

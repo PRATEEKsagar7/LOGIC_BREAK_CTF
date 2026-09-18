@@ -960,7 +960,7 @@ module.exports = async function handler(req, res) {
     sseClients.add(res);
     req.on('close', () => sseClients.delete(res));
     // Send initial state
-    res.write(`event: message\ndata: ${JSON.stringify({ type: 'INIT', leaderboard: getSortedLeaderboard() })}\n\n`);
+    res.write(`event: message\ndata: ${JSON.stringify({ type: 'INIT', leaderboard: getSortedLeaderboard(), recentActivity: ctfState.submissions.slice(0, 15) })}\n\n`);
     return;
   }
 
@@ -1119,8 +1119,13 @@ module.exports = async function handler(req, res) {
           type: 'FLAG_SOLVED',
           team: team.name,
           challenge: challenge.title,
+          challengeTitle: challenge.title,
           points: challenge.points,
-          leaderboard: getSortedLeaderboard()
+          pointsGained: challenge.points,
+          newScore: team.score,
+          timestamp: Date.now(),
+          leaderboard: getSortedLeaderboard(),
+          recentActivity: ctfState.submissions.slice(0, 15)
         });
 
         res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -1149,11 +1154,15 @@ module.exports = async function handler(req, res) {
         saveState();
 
         broadcastSSE({
-          type: 'FLAG_FAILED',
+          type: 'FLAG_PENALTY',
           team: team.name,
           challenge: challenge.title,
+          challengeTitle: challenge.title,
           penalty: challenge.penalty,
-          leaderboard: getSortedLeaderboard()
+          newScore: team.score,
+          timestamp: Date.now(),
+          leaderboard: getSortedLeaderboard(),
+          recentActivity: ctfState.submissions.slice(0, 15)
         });
 
         const penaltyMsg = `Incorrect flag! -${challenge.penalty} pts penalty applied. Score: ${team.score} pts.`;

@@ -274,31 +274,40 @@
           }
 
           // Top 3 preview
-          const top3 = data.leaderboard.slice(0, 3);
-          document.getElementById('overview-leader-preview').innerHTML = top3.map((t, i) => `
-            <div class="flex items-center justify-between p-2.5 bg-[#0e1511] rounded-xl border border-[#2d3a43] text-xs font-mono">
-              <div class="flex items-center gap-2">
-                <span class="w-5 h-5 rounded-full ${i === 0 ? 'bg-amber-400 text-slate-950' : i === 1 ? 'bg-slate-300 text-slate-950' : 'bg-amber-700 text-white'} font-black text-[10px] flex items-center justify-center">
-                  ${i + 1}
-                </span>
-                <span class="font-bold text-white">${t.name}</span>
-                <span class="text-slate-500 hidden sm:inline">(${t.college || ''})</span>
+          const top3 = (data.leaderboard || []).slice(0, 3);
+          const top3Sig = top3.map(t => `${t.id}:${t.score}:${t.solvedCount}`).join('|');
+          if (top3Sig !== lastOverviewLeaderSig) {
+            lastOverviewLeaderSig = top3Sig;
+            document.getElementById('overview-leader-preview').innerHTML = top3.map((t, i) => `
+              <div class="flex items-center justify-between p-2.5 bg-[#0e1511] rounded-xl border border-[#2d3a43] text-xs font-mono">
+                <div class="flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full ${i === 0 ? 'bg-amber-400 text-slate-950' : i === 1 ? 'bg-slate-300 text-slate-950' : 'bg-amber-700 text-white'} font-black text-[10px] flex items-center justify-center">
+                    ${i + 1}
+                  </span>
+                  <span class="font-bold text-white">${t.name}</span>
+                  <span class="text-slate-500 hidden sm:inline">(${t.college || ''})</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-emerald-400">${t.solvedCount} flags</span>
+                  <strong class="text-white">${t.score} pts</strong>
+                </div>
               </div>
-              <div class="flex items-center gap-3">
-                <span class="text-emerald-400">${t.solvedCount} flags</span>
-                <strong class="text-white">${t.score} pts</strong>
-              </div>
-            </div>
-          `).join('');
+            `).join('');
+          }
         }
       } catch (err) {
         console.warn('Overview telemetry fetch offline');
       }
     }
 
+    let lastOverviewLeaderSig = '';
+
     // Auto-Sync hook
-    window.onLeaderboardEvent = () => {
-      loadOverviewData();
+    let overviewDebounceTimer = null;
+    window.onLeaderboardEvent = (data) => {
+      if (data && data.type === 'INIT') return;
+      if (overviewDebounceTimer) clearTimeout(overviewDebounceTimer);
+      overviewDebounceTimer = setTimeout(loadOverviewData, 500);
     };
 
     window.onTeamChanged = () => {

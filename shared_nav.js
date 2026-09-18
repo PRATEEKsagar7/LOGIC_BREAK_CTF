@@ -284,15 +284,34 @@
   // Setup Server-Sent Events (SSE)
   function setupGlobalSync() {
     try {
+      let lastInitLeaderboardHash = '';
       const eventSource = new EventSource('/api/events');
 
       eventSource.onmessage = (e) => {
         try {
           const data = JSON.parse(e.data);
+
+          // If this is an INIT event (sent on initial connect and every reconnect),
+          // check if scores/ranks actually changed. If not, suppress redundant event!
+          if (data.type === 'INIT') {
+            const currentHash = JSON.stringify((data.leaderboard || []).map(t => [t.id, t.score, t.solvedCount, t.penalties]));
+            if (currentHash === lastInitLeaderboardHash) {
+              return; // Silently ignore duplicate reconnect data
+            }
+            lastInitLeaderboardHash = currentHash;
+          } else if (data.leaderboard) {
+            // Update the cache hash on real game events too
+            lastInitLeaderboardHash = JSON.stringify((data.leaderboard || []).map(t => [t.id, t.score, t.solvedCount, t.penalties]));
+          }
+
           if (data.type === 'FLAG_SOLVED') {
-            window.showLogicToast(`🎉 ${data.team} solved "${data.challengeTitle}" (+${data.pointsGained} pts)!`, 'success');
-          } else if (data.type === 'FLAG_PENALTY') {
-            window.showLogicToast(`⚠️ ${data.team} failed attempt on "${data.challengeTitle}" (-${data.penalty} pts penalty)`, 'error');
+            const title = data.challengeTitle || data.challenge || 'Challenge';
+            const pts = data.pointsGained || data.points || 50;
+            window.showLogicToast(`🎉 ${data.team} solved "${title}" (+${pts} pts)!`, 'success');
+          } else if (data.type === 'FLAG_PENALTY' || data.type === 'FLAG_FAILED') {
+            const title = data.challengeTitle || data.challenge || 'Challenge';
+            const penalty = data.penalty || 15;
+            window.showLogicToast(`⚠️ ${data.team} failed attempt on "${title}" (-${penalty} pts penalty)`, 'error');
           }
 
           if (window.onLeaderboardEvent) {

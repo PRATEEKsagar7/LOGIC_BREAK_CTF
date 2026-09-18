@@ -491,8 +491,14 @@
       renderParticipants();
     }
 
+    let lastAdminLeaderboardSig = '';
     function renderAdminLeaderboard(teams) {
       const tbody = document.getElementById('admin-leaderboard-tbody');
+      if (!tbody) return;
+      const sig = (teams || []).map(t => `${t.id}:${t.score}:${t.solvedCount}:${t.penalties || 0}`).join('|');
+      if (sig === lastAdminLeaderboardSig && tbody.children.length === teams.length) return;
+      lastAdminLeaderboardSig = sig;
+
       tbody.innerHTML = teams.map((t, i) => `
         <tr class="hover:bg-surface-container-high/60 transition">
           <td class="py-3 px-4 text-center font-bold text-slate-300">#${i + 1}</td>
@@ -512,8 +518,14 @@
       `).join('');
     }
 
+    let lastAdminSubmissionsSig = '';
     function renderAdminSubmissions(subs) {
       const tbody = document.getElementById('admin-submissions-tbody');
+      if (!tbody) return;
+      const sig = (subs || []).slice(0, 20).map(s => `${s.id || s.timestamp}:${s.team}:${s.delta}`).join('|');
+      if (sig === lastAdminSubmissionsSig && tbody.children.length > 0) return;
+      lastAdminSubmissionsSig = sig;
+
       tbody.innerHTML = subs.map(s => {
         const isCorrect = s.status === 'CORRECT';
         return `
@@ -918,8 +930,11 @@
     }
 
     // Auto-Sync Hook
-    window.onLeaderboardEvent = () => {
-      loadAdminData();
+    let adminDebounceTimer = null;
+    window.onLeaderboardEvent = (data) => {
+      if (data && data.type === 'INIT') return;
+      if (adminDebounceTimer) clearTimeout(adminDebounceTimer);
+      adminDebounceTimer = setTimeout(loadAdminData, 800);
     };
 
     // Initialize

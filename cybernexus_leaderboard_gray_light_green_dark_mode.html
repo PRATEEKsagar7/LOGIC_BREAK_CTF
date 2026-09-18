@@ -197,6 +197,9 @@
 
   <script>
     let currentLeaderboard = [];
+    let lastTableSig = '';
+    let lastPodiumSig = '';
+    let lastActivitySig = '';
 
     // Load initial leaderboard
     async function loadLeaderboard() {
@@ -205,9 +208,12 @@
         const data = await res.json();
         if (data.success) {
           currentLeaderboard = data.leaderboard;
-          document.getElementById('stat-total-teams').textContent = data.totalTeams;
-          document.getElementById('stat-total-flags').textContent = data.totalFlagsClaimed;
-          document.getElementById('stat-top-score').textContent = `${data.topScore} PTS`;
+          const statTeams = document.getElementById('stat-total-teams');
+          const statFlags = document.getElementById('stat-total-flags');
+          const statTop = document.getElementById('stat-top-score');
+          if (statTeams) statTeams.textContent = data.totalTeams;
+          if (statFlags) statFlags.textContent = data.totalFlagsClaimed;
+          if (statTop) statTop.textContent = `${data.topScore} PTS`;
 
           renderPodium(currentLeaderboard);
           renderTable(currentLeaderboard);
@@ -222,6 +228,9 @@
 
     function renderPodium(teams) {
       if (!teams || teams.length === 0) return;
+      const sig = teams.slice(0, 3).map(t => `${t.id}:${t.score}:${t.solvedCount}`).join('|');
+      if (sig === lastPodiumSig) return;
+      lastPodiumSig = sig;
 
       // Rank 1
       if (teams[0]) {
@@ -250,10 +259,21 @@
 
     function renderTable(teams) {
       const tbody = document.getElementById('leaderboardTableBody');
-      const searchTerm = document.getElementById('leaderboardSearchInput').value.toLowerCase();
+      if (!tbody) return;
+      const searchInput = document.getElementById('leaderboardSearchInput');
+      const searchTerm = (searchInput ? searchInput.value : '').toLowerCase().trim();
       const activeTeam = (localStorage.getItem('logic_ctf_team') || '').toLowerCase();
 
-      const filtered = teams.filter(t => t.name.toLowerCase().includes(searchTerm) || (t.college && t.college.toLowerCase().includes(searchTerm)));
+      const filtered = (teams || []).filter(t => t.name.toLowerCase().includes(searchTerm) || (t.college && t.college.toLowerCase().includes(searchTerm)));
+
+      // Generate a signature of search term and all team state
+      const currentSig = `${searchTerm}::${activeTeam}::` + filtered.map(t => `${t.id}:${t.score}:${t.solvedCount}:${t.penalties || 0}`).join('|');
+      
+      // If signature is unchanged and DOM already has the rows, skip re-render to avoid DOM flash
+      if (currentSig === lastTableSig && tbody.children.length === filtered.length) {
+        return;
+      }
+      lastTableSig = currentSig;
 
       tbody.innerHTML = filtered.map((team, index) => {
         const isMyTeam = team.name.toLowerCase() === activeTeam;
@@ -298,6 +318,11 @@
 
     function renderActivityFeed(submissions) {
       const feed = document.getElementById('activityFeedContainer');
+      if (!feed || !submissions) return;
+      const sig = submissions.slice(0, 10).map(s => `${s.id || s.timestamp}:${s.team}:${s.delta}`).join('|');
+      if (sig === lastActivitySig && feed.children.length > 0) return;
+      lastActivitySig = sig;
+
       feed.innerHTML = submissions.map(sub => {
         const isCorrect = sub.status === 'CORRECT';
         return `
@@ -335,25 +360,55 @@
 
     // Auto-Sync Event Hook from shared_nav.js
     window.onLeaderboardEvent = (data) => {
+      if (!data) return;
+
       if (data.leaderboard) {
         currentLeaderboard = data.leaderboard;
         renderPodium(currentLeaderboard);
         renderTable(currentLeaderboard);
 
         // Highlight the updated row
-        const targetRow = document.querySelector(`tr[id*="${data.team}"]`);
-        if (targetRow) {
-          targetRow.classList.remove('pulse-green', 'pulse-red');
-          void targetRow.offsetWidth; // trigger reflow
-          targetRow.classList.add(data.type === 'FLAG_SOLVED' ? 'pulse-green' : 'pulse-red');
+        if (data.team) {
+          const targetRow = Array.from(document.querySelectorAll('#leaderboardTableBody tr')).find(tr =>
+            tr.textContent.toLowerCase().includes(data.team.toLowerCase())
+          );
+          if (targetRow) {
+            targetRow.classList.remove('pulse-green', 'pulse-red');
+            void targetRow.offsetWidth; // trigger reflow
+            targetRow.classList.add((data.type === 'FLAG_SOLVED' || data.type === 'CORRECT') ? 'pulse-green' : 'pulse-red');
+          }
         }
       }
-      // Re-fetch activity stream
-      loadLeaderboard();
+
+      if (data.recentActivity) {
+        renderActivityFeed(data.recentActivity);
+      } else if (data.type === 'FLAG_SOLVED' || data.type === 'FLAG_PENALTY' || data.type === 'FLAG_FAILED') {
+        const feed = document.getElementById('activityFeedContainer');
+        if (feed) {
+          const isCorrect = data.type === 'FLAG_SOLVED';
+          const card = document.createElement('div');
+          card.className = `p-3 bg-[#0e1511] rounded-xl border ${isCorrect ? 'border-emerald-500/30' : 'border-red-500/30'} space-y-1`;
+          card.innerHTML = `
+            <div class="flex items-center justify-between text-[10px] font-mono">
+              <span class="font-bold ${isCorrect ? 'text-emerald-400' : 'text-red-400'}">
+                ${isCorrect ? '🚩 FLAG CAPTURED' : '❌ INCORRECT ATTEMPT'}
+              </span>
+              <span class="text-slate-500">just now</span>
+            </div>
+            <div class="text-xs font-semibold text-white">${data.team}</div>
+            <div class="text-[11px] text-slate-400 flex items-center justify-between">
+              <span>Vector: ${data.challengeTitle || data.challenge || 'Challenge'}</span>
+              <strong class="${isCorrect ? 'text-emerald-400' : 'text-red-400'} font-mono">${isCorrect ? '+' + (data.pointsGained || data.points || 50) : '-' + (data.penalty || 15)} PTS</strong>
+            </div>
+          `;
+          feed.insertBefore(card, feed.firstChild);
+          if (feed.children.length > 15) feed.removeChild(feed.lastChild);
+        }
+      }
     };
 
-    // Periodic Fallback Poll every 6 seconds
-    setInterval(loadLeaderboard, 6000);
+    // Periodic Fallback Poll every 15 seconds (passive background sync)
+    setInterval(loadLeaderboard, 15000);
 
     // Initial Load
     loadLeaderboard();
