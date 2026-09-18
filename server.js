@@ -1901,8 +1901,21 @@ const server = http.createServer(async (req, res) => {
   if (pathname.startsWith('/api/files/') || pathname.startsWith('/challenge_files/')) {
     const rawFilename = path.basename(pathname);
     const filename = decodeURIComponent(rawFilename);
-    const safePath = path.join(__dirname, 'challenge_files', filename);
-    if (fs.existsSync(safePath)) {
+    const candidates = [
+      path.join(__dirname, 'challenge_files', filename),
+      path.join(__dirname, 'public', 'challenge_files', filename),
+      path.join(process.cwd(), 'challenge_files', filename),
+      path.join(process.cwd(), 'public', 'challenge_files', filename)
+    ];
+    let safePath = null;
+    for (const c of candidates) {
+      if (fs.existsSync(c)) {
+        safePath = c;
+        break;
+      }
+    }
+
+    if (safePath) {
       const ext = path.extname(safePath).toLowerCase();
       const mime = MIME_TYPES[ext] || 'application/octet-stream';
       const stat = fs.statSync(safePath);

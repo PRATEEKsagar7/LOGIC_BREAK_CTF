@@ -1,344 +1,427 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logic Break CTF // Operative Gateway Login</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logic Break CTF // Operative Gateway Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              mono: ["JetBrains Mono", "monospace"],
+            },
+            colors: {
+              primary: "#5bdcae",
+              "primary-dark": "#224f3e",
+              "surface-dark": "#0e1511",
+              "card-dark": "#161d19",
+              "border-dark": "#2d3a43",
+            },
           },
-          colors: {
-            primary: '#5bdcae',
-            'primary-dark': '#224f3e',
-            'surface-dark': '#0e1511',
-            'card-dark': '#161d19',
-            'border-dark': '#2d3a43',
-          }
-        }
-      }
-    }
-  </script>
-</head>
-<body class="bg-[#090e16] text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-300">
-
-  <!-- Background Ambient Glow -->
-  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
-    <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[140px]"></div>
-    <div class="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[140px]"></div>
-  </div>
-
-  <!-- Top Minimal Header -->
-  <header class="relative z-10 w-full border-b border-[#2d3a43]/60 bg-[#0e1511]/90 backdrop-blur-md px-6 py-4 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-xl bg-[#161d19] border border-emerald-500/40 flex items-center justify-center text-[#5bdcae] shadow-[0_0_15px_rgba(91,220,174,0.2)]">
-        <span class="material-symbols-outlined text-[20px]">terminal</span>
-      </div>
-      <div>
-        <span class="text-sm font-black tracking-wider text-white uppercase font-mono">LOGIC BREAK CTF</span>
-        <p class="text-[10px] font-mono text-slate-400 leading-none">Collegiate Arena &bull; Gateway</p>
-      </div>
+        },
+      };
+    </script>
+  </head>
+  <body
+    class="bg-[#090e16] text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-emerald-500/30 selection:text-emerald-300"
+  >
+    <!-- Background Ambient Glow -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      <div
+        class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[140px]"
+      ></div>
+      <div
+        class="absolute -bottom-40 -right-40 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[140px]"
+      ></div>
     </div>
-    
 
-  </header>
-
-  <!-- Login Form Container -->
-  <main class="relative z-10 flex-1 flex items-center justify-center p-4 sm:p-6">
-    <div class="w-full max-w-md bg-[#161d19] border border-[#2d3a43] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden backdrop-blur-xl">
-      
-      <!-- Top Decorative Accent -->
-      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500"></div>
-
-      <div class="space-y-1.5 text-center">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px] font-mono mb-2">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>OPERATIVE AUTHENTICATION</span>
+    <!-- Top Minimal Header -->
+    <header
+      class="relative z-10 w-full border-b border-[#2d3a43]/60 bg-[#0e1511]/90 backdrop-blur-md px-6 py-4 flex items-center justify-between"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="w-9 h-9 rounded-xl bg-[#161d19] border border-emerald-500/40 flex items-center justify-center text-[#5bdcae] shadow-[0_0_15px_rgba(91,220,174,0.2)]"
+        >
+          <span class="material-symbols-outlined text-[20px]">terminal</span>
         </div>
-        <h1 class="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight font-sans">
-          Operative Gateway
-        </h1>
-        <p class="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
-          Sign in using your team User ID and password to access challenges.
-        </p>
-      </div>
-
-      <!-- Saved Logins Quick Selector (shown when saved logins exist) -->
-      <div id="saved-logins-section" class="hidden p-3.5 rounded-2xl bg-[#0e1511] border border-[#2d3a43] space-y-2">
-        <div class="flex items-center justify-between text-xs font-mono">
-          <span class="text-slate-300 font-bold flex items-center gap-1.5">
-            <span class="material-symbols-outlined text-[16px] text-emerald-400">history</span>
-            <span>Saved Quick Logins:</span>
-          </span>
-          <button type="button" onclick="clearSavedLogins()" class="text-[10px] text-slate-500 hover:text-red-400 underline cursor-pointer">
-            Clear Saved
-          </button>
-        </div>
-        <div id="saved-logins-list" class="space-y-1.5">
-          <!-- Populated by JavaScript -->
-        </div>
-      </div>
-
-      <!-- Round 2 Lockdown Banner (Permanently Visible) -->
-      <div id="login-alert-box" class="p-4 rounded-xl border border-amber-500/60 bg-amber-950/80 text-amber-300 text-xs font-mono flex items-start gap-2.5 shadow-lg">
-        <span id="login-alert-icon" class="text-lg leading-none">🔒</span>
-        <div id="login-alert-msg" class="leading-relaxed font-semibold">
-          Round 1 has concluded. All team logins are temporarily disabled while Round 2 is being prepared. Please wait for the event coordinators to open Round 2!
-        </div>
-      </div>
-
-      <!-- Login Form -->
-      <form id="participant-login-form" class="space-y-4">
         <div>
-          <label for="inputUserId" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5 font-mono">
-            User ID (e.g. TEAM-01)
-          </label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-              <span class="material-symbols-outlined text-[18px]">badge</span>
-            </span>
-            <input 
-              type="text" 
-              id="inputUserId" 
-              required 
-              placeholder="TEAM-01"
-              class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 text-sm font-mono text-white placeholder-slate-600 focus:outline-none transition uppercase"
-            />
+          <span
+            class="text-sm font-black tracking-wider text-white uppercase font-mono"
+            >LOGIC BREAK CTF</span
+          >
+          <p class="text-[10px] font-mono text-slate-400 leading-none">
+            Collegiate Arena &bull; Gateway
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Login Form Container -->
+    <main
+      class="relative z-10 flex-1 flex items-center justify-center p-4 sm:p-6"
+    >
+      <div
+        class="w-full max-w-md bg-[#161d19] border border-[#2d3a43] rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden backdrop-blur-xl"
+      >
+        <!-- Top Decorative Accent -->
+        <div
+          class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500"
+        ></div>
+
+        <div class="space-y-1.5 text-center">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px] font-mono mb-2"
+          >
+            <span
+              class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"
+            ></span>
+            <span>OPERATIVE AUTHENTICATION</span>
           </div>
+          <h1
+            class="text-2xl sm:text-3xl font-black text-white uppercase tracking-tight font-sans"
+          >
+            Operative Gateway
+          </h1>
+          <p class="text-xs text-slate-400 max-w-xs mx-auto leading-relaxed">
+            Sign in using your team User ID and password to access challenges.
+          </p>
         </div>
 
-        <div>
-          <label for="inputPassword" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5 font-mono">
-            Password
-          </label>
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
-              <span class="material-symbols-outlined text-[18px]">lock</span>
+        <!-- Saved Logins Quick Selector (shown when saved logins exist) -->
+        <div
+          id="saved-logins-section"
+          class="hidden p-3.5 rounded-2xl bg-[#0e1511] border border-[#2d3a43] space-y-2"
+        >
+          <div class="flex items-center justify-between text-xs font-mono">
+            <span class="text-slate-300 font-bold flex items-center gap-1.5">
+              <span
+                class="material-symbols-outlined text-[16px] text-emerald-400"
+                >history</span
+              >
+              <span>Saved Quick Logins:</span>
             </span>
-            <input 
-              type="password" 
-              id="inputPassword" 
-              required 
-              placeholder="••••••••••••"
-              class="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 text-sm font-mono text-white placeholder-slate-600 focus:outline-none transition"
-            />
-            <button type="button" id="btnTogglePassword" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300 cursor-pointer">
-              <span class="material-symbols-outlined text-[18px]" id="iconPasswordEye">visibility</span>
+            <button
+              type="button"
+              onclick="clearSavedLogins()"
+              class="text-[10px] text-slate-500 hover:text-red-400 underline cursor-pointer"
+            >
+              Clear Saved
             </button>
           </div>
+          <div id="saved-logins-list" class="space-y-1.5">
+            <!-- Populated by JavaScript -->
+          </div>
         </div>
 
-        <!-- Remember Me Checkbox -->
-        <div class="flex items-center justify-between text-xs font-mono text-slate-400 pt-1">
-          <label class="flex items-center gap-2 cursor-pointer select-none">
-            <input type="checkbox" id="chkRememberMe" checked class="rounded border-[#2d3a43] bg-[#0e1511] text-emerald-500 focus:ring-0 focus:ring-offset-0">
-            <span class="text-slate-300">Remember login on this device</span>
-          </label>
-        </div>
-
-        <button 
-          type="submit" 
-          id="btnSubmitLogin"
-          class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-bold text-sm uppercase tracking-wider transition-all duration-200 shadow-[0_0_20px_rgba(91,220,174,0.3)] active:scale-98 flex items-center justify-center gap-2 cursor-pointer mt-2"
+        <!-- Round 2 Lockdown Banner (Permanently Visible) -->
+        <div
+          id="login-alert-box"
+          class="p-4 rounded-xl border border-amber-500/60 bg-amber-950/80 text-amber-300 text-xs font-mono flex items-start gap-2.5 shadow-lg"
         >
-          <span>Enter CTF Arena</span>
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </form>
+          <span id="login-alert-icon" class="text-lg leading-none">🔒</span>
+          <div id="login-alert-msg" class="leading-relaxed font-semibold">
+            Round 1 has concluded. All team logins are temporarily disabled
+            while Round 2 is being prepared. Please wait for the event
+            coordinators to open Round 2!
+          </div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="participant-login-form" class="space-y-4">
+          <div>
+            <label
+              for="inputUserId"
+              class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5 font-mono"
+            >
+              User ID (e.g. TEAM-01)
+            </label>
+            <div class="relative">
+              <span
+                class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500"
+              >
+                <span class="material-symbols-outlined text-[18px]">badge</span>
+              </span>
+              <input
+                type="text"
+                id="inputUserId"
+                required
+                placeholder="TEAM-01"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 text-sm font-mono text-white placeholder-slate-600 focus:outline-none transition uppercase"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="inputPassword"
+              class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5 font-mono"
+            >
+              Password
+            </label>
+            <div class="relative">
+              <span
+                class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500"
+              >
+                <span class="material-symbols-outlined text-[18px]">lock</span>
+              </span>
+              <input
+                type="password"
+                id="inputPassword"
+                required
+                placeholder="••••••••••••"
+                class="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#0e1511] border border-[#2d3a43] focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 text-sm font-mono text-white placeholder-slate-600 focus:outline-none transition"
+              />
+              <button
+                type="button"
+                id="btnTogglePassword"
+                class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300 cursor-pointer"
+              >
+                <span
+                  class="material-symbols-outlined text-[18px]"
+                  id="iconPasswordEye"
+                  >visibility</span
+                >
+              </button>
+            </div>
+          </div>
+
+          <!-- Remember Me Checkbox -->
+          <div
+            class="flex items-center justify-between text-xs font-mono text-slate-400 pt-1"
+          >
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                id="chkRememberMe"
+                checked
+                class="rounded border-[#2d3a43] bg-[#0e1511] text-emerald-500 focus:ring-0 focus:ring-offset-0"
+              />
+              <span class="text-slate-300">Remember login on this device</span>
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            id="btnSubmitLogin"
+            class="w-full py-3 rounded-xl bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 font-bold text-sm uppercase tracking-wider transition-all duration-200 shadow-[0_0_20px_rgba(91,220,174,0.3)] active:scale-98 flex items-center justify-center gap-2 cursor-pointer mt-2"
+          >
+            <span>Enter CTF Arena</span>
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <!-- Minimal Footer -->
+    <footer
+      class="relative z-10 w-full py-4 text-center text-xs font-mono text-slate-500 border-t border-[#2d3a43]/40"
+    >
+      <span
+        >Collegiate Arena Tier-1 Encrypted Gateway &bull; Session
+        Authenticated</span
+      >
+    </footer>
+
+    <script>
+          const SAVED_LOGINS_KEY = 'logic_ctf_saved_accounts';
+
+          // Check if Arena is locked for Round 2 prep
+          fetch('/api/login-status')
+            .then(r => r.json())
+            .then(st => {
+              if (st.locked) {
+                const alertBox = document.getElementById('login-alert-box');
+                const alertMsg = document.getElementById('login-alert-msg');
+                const alertIcon = document.getElementById('login-alert-icon');
+                if (alertBox && alertMsg && alertIcon) {
+                  alertBox.className = 'p-3.5 rounded-xl border border-amber-500/60 bg-amber-950/80 text-amber-300 text-xs font-mono flex items-start gap-2.5';
+                  alertIcon.textContent = '🔒';
+                  alertMsg.textContent = st.message;
+                }
+              }
+            })
+            .catch(() => {});
 
 
+          // Toggle Password Visibility
+          const btnToggle = document.getElementById('btnTogglePassword');
+          const pwdInput = document.getElementById('inputPassword');
+          const eyeIcon = document.getElementById('iconPasswordEye');
 
-    </div>
-  </main>
+          btnToggle.addEventListener('click', () => {
+            if (pwdInput.type === 'password') {
+              pwdInput.type = 'text';
+              eyeIcon.textContent = 'visibility_off';
+            } else {
+              pwdInput.type = 'password';
+              eyeIcon.textContent = 'visibility';
+            }
+          });
 
-  <!-- Minimal Footer -->
-  <footer class="relative z-10 w-full py-4 text-center text-xs font-mono text-slate-500 border-t border-[#2d3a43]/40">
-    <span>Collegiate Arena Tier-1 Encrypted Gateway &bull; Session Authenticated</span>
-  </footer>
+          // Saved Accounts Management
+          function getSavedAccounts() {
+            try {
+              const raw = localStorage.getItem(SAVED_LOGINS_KEY);
+              return raw ? JSON.parse(raw) : [];
+            } catch (e) {
+              return [];
+            }
+          }
 
-  <script>
-    const SAVED_LOGINS_KEY = 'logic_ctf_saved_accounts';
+          function saveAccount(userId, password, teamName) {
+            try {
+              let accounts = getSavedAccounts();
+              accounts = accounts.filter(a => a.userId.toUpperCase() !== userId.toUpperCase());
+              accounts.unshift({
+                userId: userId.toUpperCase(),
+                password: password,
+                teamName: teamName || userId.toUpperCase(),
+                savedAt: Date.now()
+              });
+              if (accounts.length > 15) accounts.pop();
+              localStorage.setItem(SAVED_LOGINS_KEY, JSON.stringify(accounts));
+            } catch (e) {}
+          }
 
-    // Check if Arena is locked for Round 2 prep
-    fetch('/api/login-status')
-      .then(r => r.json())
-      .then(st => {
-        if (st.locked) {
+          function clearSavedLogins() {
+            localStorage.removeItem(SAVED_LOGINS_KEY);
+            renderSavedLogins();
+          }
+
+          function renderSavedLogins() {
+            const accounts = getSavedAccounts();
+            const container = document.getElementById('saved-logins-section');
+            const list = document.getElementById('saved-logins-list');
+
+            if (!accounts || accounts.length === 0) {
+              container.classList.add('hidden');
+              return;
+            }
+
+            container.classList.remove('hidden');
+            list.innerHTML = accounts.map(a => `
+              <button type="button" onclick="fillCredentials('${a.userId}', '${a.password}')" class="w-full px-3 py-1.5 rounded-lg bg-[#161d19] hover:bg-[#1a2330] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group cursor-pointer">
+                <div class="flex items-center gap-2">
+                  <span class="text-emerald-400 font-bold">${a.userId}</span>
+                  <span class="text-slate-400 text-[11px]">(${a.teamName})</span>
+                </div>
+                <span class="text-slate-500 group-hover:text-emerald-300 text-[11px]">&rarr; Auto-fill</span>
+              </button>
+            `).join('');
+          }
+
+          function fillCredentials(uid, pass) {
+            document.getElementById('inputUserId').value = uid;
+            document.getElementById('inputPassword').value = pass;
+          }
+
+          // Form Submission
+          const form = document.getElementById('participant-login-form');
           const alertBox = document.getElementById('login-alert-box');
           const alertMsg = document.getElementById('login-alert-msg');
           const alertIcon = document.getElementById('login-alert-icon');
-          if (alertBox && alertMsg && alertIcon) {
-            alertBox.className = 'p-3.5 rounded-xl border border-amber-500/60 bg-amber-950/80 text-amber-300 text-xs font-mono flex items-start gap-2.5';
-            alertIcon.textContent = '🔒';
-            alertMsg.textContent = st.message;
-          }
-        }
-      })
-      .catch(() => {});
+          const btnSubmit = document.getElementById('btnSubmitLogin');
 
+          form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userId = document.getElementById('inputUserId').value.trim();
+            const password = document.getElementById('inputPassword').value.trim();
 
-    // Toggle Password Visibility
-    const btnToggle = document.getElementById('btnTogglePassword');
-    const pwdInput = document.getElementById('inputPassword');
-    const eyeIcon = document.getElementById('iconPasswordEye');
+            // HARD LOCK: Team login is disabled during Round 2 setup!
+            const isCoord = (userId.toLowerCase() === 'admin' && (password === 'logicbreak_admin_2026' || password === 'admin123'));
+            if (!isCoord) {
+              alertBox.className = 'p-4 rounded-xl border border-amber-500/80 bg-amber-950/90 text-amber-300 text-xs font-mono flex items-start gap-2.5 shadow-lg';
+              alertIcon.textContent = '🔒';
+              alertMsg.textContent = 'Round 1 has concluded. All team logins are temporarily disabled while Round 2 is being prepared. Please wait for the event coordinators to open Round 2!';
+              btnSubmit.disabled = false;
+              btnSubmit.innerHTML = `<span>Enter CTF Arena</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+              return;
+            }
 
-    btnToggle.addEventListener('click', () => {
-      if (pwdInput.type === 'password') {
-        pwdInput.type = 'text';
-        eyeIcon.textContent = 'visibility_off';
-      } else {
-        pwdInput.type = 'password';
-        eyeIcon.textContent = 'visibility';
-      }
-    });
+            // Admin Coordinator Login Flow
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<span>Verifying Admin Authorization...</span>';
 
-    // Saved Accounts Management
-    function getSavedAccounts() {
-      try {
-        const raw = localStorage.getItem(SAVED_LOGINS_KEY);
-        return raw ? JSON.parse(raw) : [];
-      } catch (e) {
-        return [];
-      }
-    }
+            try {
+              const res = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, password })
+              });
+              const data = await res.json();
 
-    function saveAccount(userId, password, teamName) {
-      try {
-        let accounts = getSavedAccounts();
-        accounts = accounts.filter(a => a.userId.toUpperCase() !== userId.toUpperCase());
-        accounts.unshift({
-          userId: userId.toUpperCase(),
-          password: password,
-          teamName: teamName || userId.toUpperCase(),
-          savedAt: Date.now()
-        });
-        if (accounts.length > 15) accounts.pop();
-        localStorage.setItem(SAVED_LOGINS_KEY, JSON.stringify(accounts));
-      } catch (e) {}
-    }
+              if (data.success && data.isAdmin) {
+                localStorage.setItem('logic_ctf_token', data.token);
+                localStorage.setItem('logic_ctf_admin_token', data.token);
+                localStorage.setItem('logic_ctf_user', JSON.stringify(data.user));
+                localStorage.setItem('logic_ctf_team', data.user.name);
 
-    function clearSavedLogins() {
-      localStorage.removeItem(SAVED_LOGINS_KEY);
-      renderSavedLogins();
-    }
+                alertBox.className = 'p-3.5 rounded-xl border border-emerald-500/50 bg-emerald-950/80 text-emerald-300 text-xs font-mono flex items-start gap-2.5';
+                alertIcon.textContent = '✅';
+                alertMsg.textContent = 'Admin authorization granted. Entering coordinator control...';
+                setTimeout(() => {
+                  window.location.href = 'admin.html';
+                }, 500);
+                return;
+              }
 
-    function renderSavedLogins() {
-      const accounts = getSavedAccounts();
-      const container = document.getElementById('saved-logins-section');
-      const list = document.getElementById('saved-logins-list');
+              alertBox.className = 'p-3.5 rounded-xl border border-red-500/50 bg-red-950/80 text-red-300 text-xs font-mono flex items-start gap-2.5';
+              alertIcon.textContent = '❌';
+              alertMsg.textContent = data.message || 'Invalid administrator credentials.';
+            } catch (err) {
+              if (password === 'logicbreak_admin_2026' || password === 'admin123') {
+                localStorage.setItem('logic_ctf_token', 'logicbreak_admin_token_active_session_2026');
+                localStorage.setItem('logic_ctf_admin_token', 'logicbreak_admin_token_active_session_2026');
+                localStorage.setItem('logic_ctf_user', JSON.stringify({ name: 'Admin Coordinator', userId: 'ADMIN' }));
+                window.location.href = 'admin.html';
+                return;
+              }
+              alertBox.className = 'p-3.5 rounded-xl border border-red-500/50 bg-red-950/80 text-red-300 text-xs font-mono flex items-start gap-2.5';
+              alertIcon.textContent = '⚠️';
+              alertMsg.textContent = 'Connection error communicating with arena gateway.';
+            } finally {
+      ```        btnSubmit.disabled = false;
+              btnSubmit.innerHTML = `<span>Enter CTF Arena</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+            }
+          });
 
-      if (!accounts || accounts.length === 0) {
-        container.classList.add('hidden');
-        return;
-      }
-
-      container.classList.remove('hidden');
-      list.innerHTML = accounts.map(a => `
-        <button type="button" onclick="fillCredentials('${a.userId}', '${a.password}')" class="w-full px-3 py-1.5 rounded-lg bg-[#161d19] hover:bg-[#1a2330] border border-[#2d3a43] text-left text-xs font-mono flex items-center justify-between transition group cursor-pointer">
-          <div class="flex items-center gap-2">
-            <span class="text-emerald-400 font-bold">${a.userId}</span>
-            <span class="text-slate-400 text-[11px]">(${a.teamName})</span>
-          </div>
-          <span class="text-slate-500 group-hover:text-emerald-300 text-[11px]">&rarr; Auto-fill</span>
-        </button>
-      `).join('');
-    }
-
-    function fillCredentials(uid, pass) {
-      document.getElementById('inputUserId').value = uid;
-      document.getElementById('inputPassword').value = pass;
-    }
-
-    // Form Submission
-    const form = document.getElementById('participant-login-form');
-    const alertBox = document.getElementById('login-alert-box');
-    const alertMsg = document.getElementById('login-alert-msg');
-    const alertIcon = document.getElementById('login-alert-icon');
-    const btnSubmit = document.getElementById('btnSubmitLogin');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const userId = document.getElementById('inputUserId').value.trim();
-      const password = document.getElementById('inputPassword').value.trim();
-
-      // HARD LOCK: Team login is disabled during Round 2 setup!
-      const isCoord = (userId.toLowerCase() === 'admin' && (password === 'logicbreak_admin_2026' || password === 'admin123'));
-      if (!isCoord) {
-        alertBox.className = 'p-4 rounded-xl border border-amber-500/80 bg-amber-950/90 text-amber-300 text-xs font-mono flex items-start gap-2.5 shadow-lg';
-        alertIcon.textContent = '🔒';
-        alertMsg.textContent = 'Round 1 has concluded. All team logins are temporarily disabled while Round 2 is being prepared. Please wait for the event coordinators to open Round 2!';
-        btnSubmit.disabled = false;
-        btnSubmit.innerHTML = `<span>Enter CTF Arena</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-        return;
-      }
-
-      // Admin Coordinator Login Flow
-      btnSubmit.disabled = true;
-      btnSubmit.innerHTML = '<span>Verifying Admin Authorization...</span>';
-
-      try {
-        const res = await fetch('/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, password })
-        });
-        const data = await res.json();
-
-        if (data.success && data.isAdmin) {
-          localStorage.setItem('logic_ctf_token', data.token);
-          localStorage.setItem('logic_ctf_admin_token', data.token);
-          localStorage.setItem('logic_ctf_user', JSON.stringify(data.user));
-          localStorage.setItem('logic_ctf_team', data.user.name);
-
-          alertBox.className = 'p-3.5 rounded-xl border border-emerald-500/50 bg-emerald-950/80 text-emerald-300 text-xs font-mono flex items-start gap-2.5';
-          alertIcon.textContent = '✅';
-          alertMsg.textContent = 'Admin authorization granted. Entering coordinator control...';
-          setTimeout(() => {
-            window.location.href = 'admin.html';
-          }, 500);
-          return;
-        }
-
-        alertBox.className = 'p-3.5 rounded-xl border border-red-500/50 bg-red-950/80 text-red-300 text-xs font-mono flex items-start gap-2.5';
-        alertIcon.textContent = '❌';
-        alertMsg.textContent = data.message || 'Invalid administrator credentials.';
-      } catch (err) {
-        if (password === 'logicbreak_admin_2026' || password === 'admin123') {
-          localStorage.setItem('logic_ctf_token', 'logicbreak_admin_token_active_session_2026');
-          localStorage.setItem('logic_ctf_admin_token', 'logicbreak_admin_token_active_session_2026');
-          localStorage.setItem('logic_ctf_user', JSON.stringify({ name: 'Admin Coordinator', userId: 'ADMIN' }));
-          window.location.href = 'admin.html';
-          return;
-        }
-        alertBox.className = 'p-3.5 rounded-xl border border-red-500/50 bg-red-950/80 text-red-300 text-xs font-mono flex items-start gap-2.5';
-        alertIcon.textContent = '⚠️';
-        alertMsg.textContent = 'Connection error communicating with arena gateway.';
-      } finally {
-        btnSubmit.disabled = false;
-        btnSubmit.innerHTML = `<span>Enter CTF Arena</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-      }
-    });
-
-    // Auto-fill from saved accounts on load
-    window.addEventListener('DOMContentLoaded', () => {
-      // Purge any existing team session so no team is remembered/active during Round 2 prep
-      if (!localStorage.getItem('logic_ctf_admin_token')) {
-        localStorage.removeItem('logic_ctf_token');
-        localStorage.removeItem('logic_ctf_user');
-        localStorage.removeItem('logic_ctf_team');
-      }
-      renderSavedLogins();
-    });
-  </script>
-</body>
+          // Auto-fill from saved accounts on load
+          window.addEventListener('DOMContentLoaded', () => {
+            // Purge any existing team session so no team is remembered/active during Round 2 prep
+            if (!localStorage.getItem('logic_ctf_admin_token')) {
+              localStorage.removeItem('logic_ctf_token');
+              localStorage.removeItem('logic_ctf_user');
+              localStorage.removeItem('logic_ctf_team');
+            }
+            renderSavedLogins();
+          });
+    </script>
+  </body>
 </html>

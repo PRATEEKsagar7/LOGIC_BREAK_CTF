@@ -438,7 +438,7 @@
       if (openTargetBtn) openTargetBtn.classList.add('hidden');
 
       dlBtn.classList.remove('hidden');
-      dlBtn.href = `/api/files/${fileName}`;
+      dlBtn.href = `/challenge_files/${fileName}`;
       dlBtn.setAttribute('download', fileName);
       dlBtn.innerHTML = `
         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>

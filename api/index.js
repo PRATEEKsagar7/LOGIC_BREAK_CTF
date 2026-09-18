@@ -1861,9 +1861,22 @@ module.exports = async function handler(req, res) {
   if (pathname.startsWith('/api/files/') || pathname.startsWith('/challenge_files/')) {
     const rawFilename = path.basename(pathname);
     const filename = decodeURIComponent(rawFilename);
-    // On Vercel, __dirname is the /api directory, so challenge_files is one level up
-    const safePath = path.join(__dirname, '..', 'challenge_files', filename);
-    if (fs.existsSync(safePath)) {
+    const candidates = [
+      path.join(__dirname, '..', 'public', 'challenge_files', filename),
+      path.join(__dirname, '..', 'challenge_files', filename),
+      path.join(process.cwd(), 'public', 'challenge_files', filename),
+      path.join(process.cwd(), 'challenge_files', filename),
+      path.join(__dirname, 'challenge_files', filename)
+    ];
+    let safePath = null;
+    for (const c of candidates) {
+      if (fs.existsSync(c)) {
+        safePath = c;
+        break;
+      }
+    }
+
+    if (safePath) {
       const ext = path.extname(safePath).toLowerCase();
       const mime = MIME_TYPES[ext] || 'application/octet-stream';
       const stat = fs.statSync(safePath);
@@ -1875,8 +1888,9 @@ module.exports = async function handler(req, res) {
       fs.createReadStream(safePath).pipe(res);
       return;
     } else {
-      res.writeHead(404, { 'Content-Type': 'text/plain' });
-      res.end('File not found');
+      // Fallback: Redirect to Vercel static asset path
+      res.writeHead(302, { 'Location': `/challenge_files/${encodeURIComponent(filename)}` });
+      res.end();
       return;
     }
   }
