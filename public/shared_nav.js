@@ -30,20 +30,6 @@
     return;
   }
 
-  // Round 2 Lockdown Guard: Non-admin users are locked out during round transition
-  if (!isLoginPage && !isAdminPage && !adminToken) {
-    fetch('/api/login-status')
-      .then(r => r.json())
-      .then(st => {
-        if (st.locked) {
-          localStorage.removeItem('logic_ctf_token');
-          sessionStorage.setItem('logic_ctf_lock_msg', st.message || 'Round 1 has concluded. Arena login is temporarily locked while Round 2 is being prepared.');
-          window.location.href = 'login.html';
-        }
-      })
-      .catch(() => {});
-  }
-
   // Create Header HTML with full collegiate CTF navigation flow (LEADERBOARD REMOVED FOR PARTICIPANTS)
   const navHtml = `
     <header class="sticky top-0 z-50 w-full bg-[#0e1511]/95 backdrop-blur-xl border-b border-[#2d3a4b] shadow-lg">

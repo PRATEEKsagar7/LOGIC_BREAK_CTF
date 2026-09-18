@@ -1004,19 +1004,6 @@ module.exports = async function handler(req, res) {
   // API: GET CHALLENGES
   // ------------------------------------------
   if (pathname === '/api/challenges' && req.method === 'GET') {
-    const adminToken = req.headers['x-admin-token'] || parsedUrl.searchParams.get('adminToken');
-    const isAdmin = adminToken === ADMIN_TOKEN || parsedUrl.searchParams.get('admin') === 'true';
-    if (TEAM_LOGIN_LOCKED && !isAdmin) {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({
-        success: false,
-        isLocked: true,
-        message: 'Round 1 has concluded. Round 2 challenges are currently locked during arena transition.',
-        challenges: []
-      }));
-      return;
-    }
-
     const teamName = parsedUrl.searchParams.get('team') || '';
     const team = ctfState.teams.find(t =>
       (t.name && t.name.toLowerCase() === teamName.toLowerCase()) ||

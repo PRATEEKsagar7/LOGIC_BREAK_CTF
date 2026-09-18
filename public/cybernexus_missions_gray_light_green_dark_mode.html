@@ -203,8 +203,11 @@
       try {
         const res = await fetch(`/api/challenges?team=${encodeURIComponent(activeTeam)}`);
         const json = await res.json();
-        if (json.success) {
-          challengesData = json.challenges;
+        if (json && (json.success || Array.isArray(json.challenges) || Array.isArray(json))) {
+          challengesData = json.challenges || (Array.isArray(json) ? json : getFallbackChallenges());
+          renderChallenges();
+        } else {
+          challengesData = getFallbackChallenges();
           renderChallenges();
         }
       } catch (e) {
