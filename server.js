@@ -22,6 +22,8 @@ const ADMIN_TOKEN = 'logicbreak_admin_token_active_session_2026';
 // 12 Realistic Logic Break CTF Challenges
 // Challenges 1-10 (Tier 1): +50 pts solve, -15 pts penalty on wrong
 // Challenges 11-12 (Tier 2): +100 pts solve, -25 pts penalty on wrong
+let TEAM_LOGIN_LOCKED = true; // Set to true to disable all team logins and challenge view before Round 2
+
 const INITIAL_CHALLENGES = [
   {
     id: 'ch1',
@@ -927,9 +929,56 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ==========================================
+  // API: LOGIN STATUS & ROUND 2 LOCK STATUS
+  // ==========================================
+  if (pathname === '/api/login-status' && req.method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      locked: TEAM_LOGIN_LOCKED,
+      message: TEAM_LOGIN_LOCKED
+        ? 'Round 1 has concluded. Arena login is temporarily locked while Round 2 is being prepared.'
+        : 'Arena login is active.'
+    }));
+    return;
+  }
+
+  // ==========================================
+  // API: ADMIN TOGGLE ROUND 2 LOCK
+  // ==========================================
+  if (pathname === '/api/admin/toggle-round2-lock' && req.method === 'POST') {
+    try {
+      const data = await parseJsonBody(req);
+      if (typeof data.locked === 'boolean') {
+        TEAM_LOGIN_LOCKED = data.locked;
+      } else {
+        TEAM_LOGIN_LOCKED = !TEAM_LOGIN_LOCKED;
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, locked: TEAM_LOGIN_LOCKED, message: `Team login is now ${TEAM_LOGIN_LOCKED ? 'LOCKED' : 'UNLOCKED'}.` }));
+    } catch (e) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, error: e.message }));
+    }
+    return;
+  }
+
+  // ==========================================
   // API: GET CHALLENGES
   // ==========================================
   if (pathname === '/api/challenges' && req.method === 'GET') {
+    const adminToken = req.headers['x-admin-token'] || parsedUrl.searchParams.get('adminToken');
+    const isAdmin = adminToken === ADMIN_TOKEN || parsedUrl.searchParams.get('admin') === 'true';
+    if (TEAM_LOGIN_LOCKED && !isAdmin) {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        success: false,
+        isLocked: true,
+        message: 'Round 1 has concluded. Round 2 challenges are currently locked during arena transition.',
+        challenges: []
+      }));
+      return;
+    }
+
     const teamName = parsedUrl.searchParams.get('team') || '';
     const team = ctfState.teams.find(t =>
       (t.name && t.name.toLowerCase() === teamName.toLowerCase()) ||
@@ -950,7 +999,9 @@ const server = http.createServer(async (req, res) => {
       points: ch.points,
       penalty: ch.penalty,
       description: ch.description,
-      hintsCount: ch.hints.length,
+      hintsCount: 1,
+      hasDownload: Boolean(ch.hasDownload || (ch.file && !ch.file.endsWith('.html'))),
+      downloadFile: ch.downloadFile || (ch.file && !ch.file.endsWith('.html') ? ch.file : null),
       file: ch.file,
       codeSnippet: (ch.codeSnippet || '').replace(/logicCTF\{[^}]+\}/gi, 'logicCTF{...}'),
       isSolved: solvedSet.has(ch.id)
@@ -962,7 +1013,7 @@ const server = http.createServer(async (req, res) => {
   }
 
   // ==========================================
-  // API: GET CHALLENGE HINT
+  // API: GET CHALLENGE HINT (MAX 1 HINT PER MISSION)
   // ==========================================
   if (pathname.startsWith('/api/hint/') && req.method === 'GET') {
     const challengeId = pathname.split('/')[3];
@@ -973,7 +1024,7 @@ const server = http.createServer(async (req, res) => {
       return;
     }
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ success: true, hints: ch.hints, title: ch.title }));
+    res.end(JSON.stringify({ success: true, hints: (ch.hints || []).slice(0, 1), title: ch.title }));
     return;
   }
 
@@ -1237,6 +1288,17 @@ const server = http.createServer(async (req, res) => {
           user: { name: 'Admin Coordinator', userId: 'ADMIN' },
           redirect: 'admin.html',
           message: 'Admin authorization granted. Welcome Coordinator.'
+        }));
+        return;
+      }
+
+      // Check if team login is temporarily locked for Round 2 prep
+      if (TEAM_LOGIN_LOCKED) {
+        res.writeHead(403, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          success: false,
+          isLocked: true,
+          message: 'Round 1 has concluded. Arena login is temporarily locked while Round 2 is being prepared. Please wait for the event coordinators to open Round 2!'
         }));
         return;
       }

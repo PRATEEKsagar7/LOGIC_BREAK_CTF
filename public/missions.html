@@ -267,15 +267,21 @@
 
           <!-- Bottom: All Three Buttons Below the Objective -->
           <div class="flex items-center gap-2 pt-2">
-            <!-- Hint Button -->
-            <button onclick="openHintsModal('${ch.id}')" title="View Hints" class="w-9 h-9 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-amber-400/50 text-slate-400 hover:text-amber-300 flex items-center justify-center text-sm transition">
+            <!-- Hint Button (Single hint per mission) -->
+            <button onclick="openHintsModal('${ch.id}')" title="View Mission Hint" class="w-9 h-9 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-amber-400/50 text-slate-400 hover:text-amber-300 flex items-center justify-center text-sm transition cursor-pointer">
               💡
             </button>
 
-            <!-- File / Code Preview Button -->
-            <button onclick="openCodePreviewModal('${ch.id}')" title="Inspect Code / Download Artifact" class="w-9 h-9 rounded-xl bg-[#0e1511] border border-[#2d3a43] hover:border-cyan-400/50 text-slate-400 hover:text-cyan-300 flex items-center justify-center text-sm transition">
-              📄
-            </button>
+            <!-- Artifact Download Button (Enabled ONLY when mission has a downloadable file) -->
+            ${(ch.hasDownload || (ch.file && !ch.file.endsWith('.html'))) ? `
+              <button onclick="openCodePreviewModal('${ch.id}')" title="Download Mission Artifact (${ch.downloadFile || ch.file})" class="w-9 h-9 rounded-xl bg-[#0e1511] border border-cyan-500/50 hover:border-cyan-400 text-cyan-300 hover:text-white flex items-center justify-center text-sm transition cursor-pointer shadow-sm">
+                📄
+              </button>
+            ` : `
+              <button disabled title="No downloadable artifact file for this mission" class="w-9 h-9 rounded-xl bg-[#0e1511]/40 border border-[#2d3a43]/30 text-slate-600 flex items-center justify-center text-sm cursor-not-allowed opacity-35">
+                📄
+              </button>
+            `}
 
             <!-- Primary Action: Submit Flag or View Solved -->
             <button onclick="openSubmitModal('${ch.id}')" class="px-5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${ch.isSolved ? 'bg-[#1a211d] text-emerald-400 border border-emerald-500/40 hover:bg-[#224f3e]' : 'bg-emerald-500 hover:bg-[#5bdcae] text-slate-950 shadow-md active:scale-95'}">
@@ -377,69 +383,64 @@
       }
     });
 
-    // Open Hints Modal
+    // Open Hints Modal (Exactly 1 hint per mission)
     async function openHintsModal(challengeId) {
       const ch = challengesData.find(c => c.id === challengeId);
       if (!ch) return;
 
-      document.getElementById('modal-hints-title').textContent = `Hints // ${ch.title}`;
+      document.getElementById('modal-hints-title').textContent = `Mission Hint // ${ch.title}`;
       const content = document.getElementById('modal-hints-content');
-      content.innerHTML = '<div class="py-4 text-center text-slate-400">Loading encrypted hints...</div>';
+      content.innerHTML = '<div class="py-4 text-center text-slate-400 font-mono text-xs">Accessing intelligence channel...</div>';
       document.getElementById('modal-hints-view').classList.remove('hidden');
 
       try {
         const res = await fetch(`/api/hint/${challengeId}`);
         const data = await res.json();
-        if (data.success && data.hints) {
-          content.innerHTML = data.hints.map((h, i) => `
-            <div class="p-3 bg-[#090e16] border border-[#2d3a43] rounded-xl">
-              <span class="text-amber-400 font-bold block mb-1">Hint 0${i + 1}:</span>
-              <p class="text-slate-300 leading-relaxed">${h}</p>
+        if (data.success && data.hints && data.hints.length > 0) {
+          const hint = data.hints[0];
+          content.innerHTML = `
+            <div class="p-4 bg-[#090e16] border border-[#2d3a43] rounded-xl space-y-2">
+              <div class="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-wider">
+                <span>💡</span>
+                <span>Tactical Hint</span>
+              </div>
+              <p class="text-slate-200 text-sm font-sans leading-relaxed">${hint}</p>
             </div>
-          `).join('');
+          `;
+        } else {
+          content.innerHTML = `<div class="p-3 bg-[#090e16] border border-[#2d3a43] rounded-xl text-slate-400 text-xs">No hint attached to this mission.</div>`;
         }
       } catch (e) {
-        content.innerHTML = `<div class="p-3 bg-[#090e16] border border-[#2d3a43] rounded-xl text-slate-400">Hints available on live server connection.</div>`;
+        content.innerHTML = `<div class="p-3 bg-[#090e16] border border-[#2d3a43] rounded-xl text-slate-400 text-xs">Hints available on live server connection.</div>`;
       }
     }
 
-    // Open Code & File Preview Modal
+    // Open Code & File Preview Modal (Enabled ONLY for missions with downloadable files)
     function openCodePreviewModal(challengeId) {
       const ch = challengesData.find(c => c.id === challengeId);
       if (!ch) return;
 
-      const isInteractivePlatform = (ch.number <= 4) || (ch.file && ch.file.endsWith('.html'));
+      const isDownloadable = Boolean(ch.hasDownload || (ch.file && !ch.file.endsWith('.html')));
+      if (!isDownloadable) return;
+
+      const fileName = ch.downloadFile || ch.file;
       const dlBtn = document.getElementById('modal-code-download-btn');
       const openTargetBtn = document.getElementById('modal-code-open-target-btn');
-      const openTargetText = document.getElementById('modal-code-open-target-text');
 
-      document.getElementById('modal-code-title').textContent = `${ch.title} // Code & Vector`;
-      const rawSnippet = ch.codeSnippet || '// No code snippet attached.';
+      document.getElementById('modal-code-title').textContent = `${ch.title} // Mission Artifact`;
+      document.getElementById('modal-code-filename').textContent = `Artifact File: ${fileName}`;
+      const rawSnippet = ch.codeSnippet || '// Click the download button below to inspect the challenge artifact file.';
       document.getElementById('modal-code-body').textContent = rawSnippet.replace(/logicCTF\{[^}]+\}/gi, 'logicCTF{...}');
 
-      if (isInteractivePlatform) {
-        document.getElementById('modal-code-filename').textContent = `Target: ${ch.targetLocation || ch.file} (Live Arena Platform Vector)`;
-        dlBtn.classList.add('hidden');
-        if (openTargetBtn) {
-          openTargetBtn.classList.remove('hidden');
-          openTargetBtn.href = ch.file;
-          if (openTargetText) {
-            openTargetText.textContent = `Launch Target Page (${ch.file})`;
-          }
-        }
-      } else {
-        document.getElementById('modal-code-filename').textContent = `Artifact: ${ch.file}`;
-        if (openTargetBtn) {
-          openTargetBtn.classList.add('hidden');
-        }
-        dlBtn.classList.remove('hidden');
-        dlBtn.href = `/api/files/${ch.file}`;
-        dlBtn.setAttribute('download', ch.file);
-        dlBtn.innerHTML = `
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>Download Artifact ${ch.file && ch.file.endsWith('.zip') ? '(ZIP)' : ''}</span>
-        `;
-      }
+      if (openTargetBtn) openTargetBtn.classList.add('hidden');
+
+      dlBtn.classList.remove('hidden');
+      dlBtn.href = `/api/files/${fileName}`;
+      dlBtn.setAttribute('download', fileName);
+      dlBtn.innerHTML = `
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Download Artifact (${fileName})</span>
+      `;
 
       document.getElementById('modal-code-preview').classList.remove('hidden');
     }
