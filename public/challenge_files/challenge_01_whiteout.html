@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Document // Logic Arena</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      user-select: none;
+    }
+
+    /* Core container */
+    .viewport-canvas {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
+    }
+
+    /* The target flag payload - positioned in the center */
+    .target-matrix {
+      position: absolute;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .flag-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #71717a;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      font-family: monospace;
+    }
+
+    #flag-cipher-core {
+      font-size: 46px;
+      font-weight: 900;
+      color: #09090b;
+      letter-spacing: 2px;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 24px 44px;
+      background: #f4f4f5;
+      border: 3px solid #18181b;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+      line-height: 1.2;
+    }
+
+    /* 
+      Geometric obstruction layer.
+      Huge widths and thick borders create a seamless white-out blanket.
+      Subtle border-color (#f8f8f8 to #f2f2f2) creates faint geometric seams visible only upon close inspection.
+    */
+    .obstruction-grid {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      pointer-events: auto;
+      overflow: hidden;
+    }
+
+    .shape-barrier {
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      background-color: #ffffff;
+      border: 110px solid #fbfbfb;
+      border-radius: 4px;
+      transform: rotate(var(--rot, 0deg));
+      box-shadow: 0 0 2px 1px #f5f5f5;
+    }
+
+    .shape-barrier:nth-child(even) {
+      border-color: #fafafa;
+      border-radius: 18px;
+    }
+
+    .shape-barrier:nth-child(3n) {
+      border-color: #f7f7f7;
+      border-radius: 0;
+    }
+
+    .shape-barrier:nth-child(5n) {
+      border-color: #fcfcfc;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="viewport-canvas">
+    
+    <!-- Flag Container (Behind the obstruction) -->
+    <div class="target-matrix">
+      <span class="flag-label">Flag Vector Captured</span>
+      <div id="flag-cipher-core"></div>
+    </div>
+
+    <!-- Obscuring Shape Matrix -->
+    <div class="obstruction-grid" id="barrier-matrix">
+      <!-- Random geometric shapes with thick borders that overlap to white out the canvas -->
+      <div class="shape-barrier" style="top: 20%; left: 22%; --rot: 12deg;"></div>
+      <div class="shape-barrier" style="top: 28%; left: 40%; --rot: -8deg;"></div>
+      <div class="shape-barrier" style="top: 15%; left: 58%; --rot: 24deg;"></div>
+      <div class="shape-barrier" style="top: 42%; left: 18%; --rot: -16deg;"></div>
+      <div class="shape-barrier" style="top: 38%; left: 35%; --rot: 5deg;"></div>
+      <div class="shape-barrier" style="top: 40%; left: 52%; --rot: -12deg;"></div>
+      <div class="shape-barrier" style="top: 35%; left: 68%; --rot: 18deg;"></div>
+      <div class="shape-barrier" style="top: 55%; left: 26%; --rot: -22deg;"></div>
+      <div class="shape-barrier" style="top: 58%; left: 45%; --rot: 14deg;"></div>
+      <div class="shape-barrier" style="top: 52%; left: 62%; --rot: -7deg;"></div>
+      <div class="shape-barrier" style="top: 10%; left: 32%; --rot: 30deg;"></div>
+      <div class="shape-barrier" style="top: 65%; left: 38%; --rot: -35deg;"></div>
+      <div class="shape-barrier" style="top: 30%; left: 48%; --rot: 40deg;"></div>
+      <div class="shape-barrier" style="top: 45%; left: 42%; --rot: -10deg;"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // Obfuscated dynamic DOM reconstruction
+    // No plain-text flag appears anywhere in the raw static source code.
+    (function() {
+      const _0x9b = 0x5b;
+      const _0x4d = [55,52,60,50,56,24,15,29,32,40,46,57,47,55,104,4,57,107,41,63,104,41,4,44,106,63,47,51,4,46,53,54,111,40,48,104,63,38];
+      
+      window.addEventListener('DOMContentLoaded', function() {
+        const decoded = _0x4d.map(function(b) {
+          return String.fromCharCode(b ^ _0x9b);
+        }).join('');
+        
+        const core = document.getElementById('flag-cipher-core');
+        if (core) {
+          core.textContent = decoded;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

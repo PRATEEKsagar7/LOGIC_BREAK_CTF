@@ -28,20 +28,21 @@ const INITIAL_CHALLENGES = [
   {
     id: 'ch1',
     number: 1,
-    title: 'The Invisible User',
-    category: 'Business Logic & Recon',
-    difficulty: 'Beginner',
+    title: 'The Blank Canvas',
+    category: 'DOM Forensics & Steganography',
+    difficulty: 'Intermediate',
     tier: 1,
-    points: 50,
-    penalty: 15,
-    description: 'Find a user who is missing from the User Directory. Not seeing a user does not always mean the user is gone.',
+    points: 75,
+    penalty: 20,
+    description: 'Download the provided web artifact and inspect its rendered presentation. At first glance it appears to be a blank canvas, but subtle geometric boundaries reveal hidden layers.',
     hints: [
-      '“Try looking where actions are remembered.”',
-      'Inspect the Activity Log audit or search filters in Users Directory to discover the unlisted operative.'
+      'Look closely for faint shape borders. Open Developer Tools (Inspect), locate the shape barriers, and reduce their widths or border styles to uncover the hidden layer.'
     ],
-    file: 'users.html',
-    codeSnippet: '// Directory filter suppresses unlisted active operator.\n// Inspect Activity Log audit or search filters in Users Directory to discover the unlisted operative.\n// Format: logicCTF{...}',
-    flag: 'logicCTF{pr0j3ct_l1m1t_byp4ss_dupl1c4t3}'
+    hasDownload: true,
+    downloadFile: 'challenge_01_whiteout.html',
+    file: 'challenge_01_whiteout.html',
+    codeSnippet: '// Challenge Artifact: challenge_01_whiteout.html\n// Download and open the artifact in your browser.\n// Inspect the DOM elements and examine their geometric boundaries.\n// Format: logicCTF{...}',
+    flag: 'logicCTF{subtl3_b0rd3r_w1dth_unm4sk3d}'
   },
   {
     id: 'ch2',

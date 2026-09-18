@@ -485,6 +485,16 @@
       }
     }
   ],
-  "submissions": [],
+  "submissions": [
+    {
+      "id": "sub-1789711836786",
+      "team": "Setu",
+      "challengeId": "ch1",
+      "challengeTitle": "The Blank Canvas",
+      "status": "CORRECT",
+      "delta": "+75",
+      "timestamp": 1789711836786
+    }
+  ],
   "purgedArtifacts": []
 }
